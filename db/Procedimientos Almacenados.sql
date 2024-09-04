@@ -14,6 +14,7 @@ BEGIN
         WHERE COL.nomusuario = _nomusuario AND COL.inactive_at IS NULL; 
 END $$
 CALL spu_colaboradores_login('DanielBr');
+select * from colaboradores;
 -- ------------------------------------------------------- Procedimiento Registrar Persona -------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE spu_personas_registrar
