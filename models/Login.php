@@ -2,7 +2,7 @@
 
 require_once 'Conexion.php';
 
-class Colaborador extends Conexion{
+class Login extends Conexion{
 
     private $pdo;
 

@@ -3,7 +3,7 @@ session_start();
 
 require_once '../models/Login.php';
 
-$colaborador = new Colaborador();
+$colaborador = new Login();
 
 //Función para el login, donde se evalua si el usuario existe y si su clave esta encriptada y registrada
 if(isset($_GET['operacion'])){
