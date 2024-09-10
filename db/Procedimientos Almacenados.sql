@@ -14,7 +14,6 @@ BEGIN
         WHERE COL.nomusuario = _nomusuario AND COL.inactive_at IS NULL; 
 END $$
 CALL spu_colaboradores_login('DanielBr');
-select * from colaboradores;
 -- ------------------------------------------------------- Procedimiento Registrar Persona -------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE spu_personas_registrar
@@ -67,3 +66,16 @@ BEGIN
         WHERE nrodocumento = _nrodocumento;
 END $$
 CALL spu_colaborador_buscar_dni(12314788);
+
+ -- ------------------------------------------- Registrar productos ----------------------------------------------------- 
+DELIMITER $$
+CREATE PROCEDURE spu_registrar_productos(
+IN _producto VARCHAR(60),
+IN _descripcion VARCHAR(60))
+BEGIN
+	INSERT INTO productos 
+		(producto, descripcion) VALUES 
+        (_producto, _descripcion);
+END $$
+
+select * from productos;
