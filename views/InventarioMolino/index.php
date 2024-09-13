@@ -107,5 +107,6 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
+        <script src="../../js/KardexHuevo.js"></script>
     </body>
 </html>

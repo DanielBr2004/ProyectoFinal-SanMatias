@@ -13,7 +13,6 @@ BEGIN
         INNER JOIN personas PER ON PER.idpersona = COL.idpersona
         WHERE COL.nomusuario = _nomusuario AND COL.inactive_at IS NULL; 
 END $$
-CALL spu_colaboradores_login('DanielBr');
 -- ------------------------------------------------------- Procedimiento Registrar Persona -------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE spu_personas_registrar
@@ -29,9 +28,6 @@ BEGIN
         (_apepaterno, _apematerno, _nombres, _nrodocumento);
 	SELECT @@last_insert_id 'idpersona';
 END $$
-CALL spu_personas_registrar ('Buleje','Rojas','Daniel',12314788);
-
-
 -- ----------------------------------------- Procedimiento Registrar Colaborador -------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE spu_colaboradores_registrar
@@ -46,10 +42,6 @@ BEGIN
         (_idpersona, _nomusuario, _passusuario);
 	SELECT @@last_insert_id 'idcolaborador';
 END $$
-CALL spu_colaboradores_registrar(1,'DanielBr','');
-UPDATE colaboradores SET passusuario = '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK' WHERE idcolaborador = 1;
-SELECT * FROM COLABORADORES
-
  -- ------------------------------------------- Buscar Colaborador por su DNI ----------------------------------------------------- 
 DELIMITER $$
 CREATE PROCEDURE spu_colaborador_buscar_dni(IN _nrodocumento CHAR(8))
@@ -65,8 +57,6 @@ BEGIN
         ON COL.idpersona = PER.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$
-CALL spu_colaborador_buscar_dni(12314788);
-
  -- ------------------------------------------- Registrar productos ----------------------------------------------------- 
 DELIMITER $$
 CREATE PROCEDURE spu_registrar_productos(
@@ -77,5 +67,31 @@ BEGIN
 		(producto, descripcion) VALUES 
         (_producto, _descripcion);
 END $$
+-- ------------------------------------------ Procedimiento de Validaciones para el Kardex --------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE spu_insertar_kardexhuevo
+(
+    IN _idcolaborador INT,
+    IN _idhuevo INT,
+    IN _tipomovimiento CHAR(1),
+    IN _motivomoviento VARCHAR(500),
+    IN _cantidad SMALLINT
+)
+BEGIN
+	-- Stock Actual declarada por defecto en 0
+    DECLARE _stockProducto INT DEFAULT 0;
 
-select * from productos;
+    -- Se obtendrá el stock actual dependiendo que producto se seleccione 
+    SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idhuevo = _idhuevo ORDER BY creado DESC LIMIT 1;
+
+    -- Se realiza una condicion dependiendo del tipo movimiento E(entrada) S(salida) 
+    IF _tipomovimiento = 'E' THEN
+        SET _stockProducto = _stockProducto + _cantidad;
+    ELSEIF _tipomovimiento = 'S' THEN
+        SET _stockProducto = _stockProducto - _cantidad;
+    END IF;
+
+    -- Registramos el kardex 
+    INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, creado)
+    VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NOW());
+END $$

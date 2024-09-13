@@ -2,7 +2,7 @@
                 <!-- Page content-->
                 <div class="container">
             <div class="text-center mt-5">
-                <h1>Control de Inventario</h1>
+                <h1>Control de Inventario del Almacen de Huevos</h1>
             </div>
             <br>
             <br>
@@ -11,25 +11,30 @@
                     Complete los datos
                 </div>
                 <div class="card-body">
-                <form action="" id="form-validaciones-kardex" autocomplete="off">
+                <form action="" id="form-kardex-huevos" autocomplete="off">
                 <!-- primera fila -->
                 <div class="row g-2 m-b2">
 
                     <div class="col-md">
                         <div class="input-group">
                             <div class="form-floating">
-                                <select name="" id="" class="form-select" required>
+                                <select name="idhuevo" id="idhuevo" class="form-select" required>
                                     <option value="">Seleccione</option>
+                                    <option value="1">Comercial</option>
+                                    <option value="2">Pardo</option>
+                                    <option value="3">Sucio</option>
+                                    <option value="4">Doble Yema</option>
+                                    <option value="5">Merma</option>
                                 </select>
-                                <label for="">Producto</label>
+                                <label for="idhuevo">Producto</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="" disabled>
-                            <label for="">Stock Actual</label>
+                            <input type="number" class="form-control" id="stockProducto" disabled>
+                            <label for="stockProducto">Stock Actual</label>
                         </div>
                     </div>
 
@@ -39,16 +44,18 @@
                     <div class="col-md">
                         <div class="input-group">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="" >
-                                <label for="">Motivo de movimiento</label>
+                                <input type="text" class="form-control" id="Motivomovimiento" >
+                                <label for="Motivomovimiento">Motivo de movimiento</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md">
-                        <div class="form-floating">
-                            <input type="number" class="form-control" id="" disabled>
-                            <label for="">Colaborador</label>
+                    <div class="form-floating">
+                            <select name="idcolaborador" id="idcolaborador" class="form-select" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                            <label for="idcolaborador">Colaborador</label>
                         </div>
                     </div>
                 </div>
@@ -58,19 +65,19 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <select name="tipomovimiento" id="" class="form-select" required>
+                            <select name="tipomovimiento" id="tipomovimiento" class="form-select" required>
                                 <option value="">Seleccione</option>
                                 <option value="E">Entrada</option>
                                 <option value="S">Salida</option>
                             </select>
-                            <label for="">Tipo de Movimiento</label>
+                            <label for="tipomovimiento">Tipo de Movimiento</label>
                         </div>
                     </div>
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="number" minlength="0" class="form-control" id="" required>
-                            <label for="">Cantidad</label>
+                            <input type="number" minlength="0" class="form-control" id="cantidad" required>
+                            <label for="cantidad">Cantidad</label>
                         </div>
                     </div>
 
@@ -85,28 +92,13 @@
             </form>        
                 </div>
             </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                        Generar reporte Historico del producto
-                </div>
-                <div class="card-body">
-
-                    <label for="idtipoproducto" class="form-label">Seleccione un Producto:</label>
-
-                    <div class="input-group">
-                        <select name="ProductoReporte" id="" class="form-select">
-                            <option value="">Seleccione</option>
-                        </select>
-                        <button type="button" class="btn btn-primary" id=""><i class="fa-solid fa-file-export"></i> Generar PDF</button>
-                    </div>
-                </div>   
-                        
-            </div>
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
+        <script src="../../js/KardexHuevo.js"></script>
     </body>
+    
 </html>

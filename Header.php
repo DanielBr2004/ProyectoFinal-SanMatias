@@ -37,7 +37,7 @@ $host = "http://localhost/proyectosanmatias/";
                         <li class="nav-item dropdown">
                             <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
+                                <p style="text-align: center;"><?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['nombres'] ?></p>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes"">Clientes</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"">Colaboradores</a></li>
