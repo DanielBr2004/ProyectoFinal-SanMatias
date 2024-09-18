@@ -84,6 +84,23 @@
             </form>        
                 </div>
             </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                        
+                </div>
+                <div class="card-body">
+
+                    <label for="idtipoproducto" class="form-label">Seleccione un Producto:</label>
+
+                    <div class="input-group">
+                        <select name="" id="" class="form-select">
+                            <option value="">Seleccione</option>
+                        </select>
+                        <button type="button" class="btn btn-primary" id=""><i class="fa-solid fa-file-export"></i> Generar PDF</button>
+                    </div>
+                </div>   
+                        
+            </div>
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
