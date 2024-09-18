@@ -95,13 +95,13 @@ descripcion			VARCHAR(100)
 CREATE TABLE KardexAlmHuevo
 (
 idAlmacenHuevos		INT AUTO_INCREMENT PRIMARY KEY,
+idcolaborador			INT NOT NULL,
+idhuevo					INT NOT NULL,
 tipomovimiento			CHAR(1) NOT NULL,
-stockProducto			VARCHAR(100),
-cantidad				VARCHAR(50),
-motivomovimiento		VARCHAR(100),
+motivomovimiento		VARCHAR(100) NOT NULL,
+stockProducto			VARCHAR(100) NOT NULL,
+cantidad				VARCHAR(50) NOT NULL,
 creado					DATETIME NULL,
-idhuevo					INT NULL,
-idcolaborador			INT NULL,
 CONSTRAINT fk_idhuevo  FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
 CONSTRAINT fk_idcolaborador_huevo FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
 )ENGINE = INNODB;
@@ -143,7 +143,7 @@ idventa				INT AUTO_INCREMENT primary key ,
 iddistrito			INT NULL ,
 idcliente			INT NULL,
 idcolaborador		INT NULL,
-fecha 				DATETIME NULL,
+fecha 				DATETIME DEFAULT NOW(),
 precioUnitario		DECIMAL(10, 2),
 precioTotal			DECIMAL(10, 2),
 cantidad_solicitada INT NOT NULL,
