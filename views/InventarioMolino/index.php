@@ -68,7 +68,7 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="number" minlength="1" class="form-control" id="" required>
+                            <input type="number" minlength="1" class="form-control" pattern="[0-9]+"  id="cantidad" required>
                             <label for="cantidad">Cantidad</label>
                         </div>
                     </div>

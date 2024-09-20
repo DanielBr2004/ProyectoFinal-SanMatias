@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const idhuevo = document.querySelector("#idhuevo");
   const StockActual = document.querySelector("#stockProducto");
+  const CantidadEntrada = document.querySelector("#cantidad");
 
 
   idhuevo.addEventListener("change", () =>{
@@ -26,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ShowStockActual(idhuevo.value);
   }
 
+  // desactivado momentaneamente
+/*
   (() => {
     fetch(`../../controllers/colaborador.controller.php?operacion=getAll`)
         .then(response => response.json())
@@ -39,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         })
         .catch(e => { console.error(e) })
-})();
+})();*/
 
   function ValidarCantidadSalida(){
     if (tipomovimiento.value === 'S') {
@@ -90,14 +93,27 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#form-kardex-huevos").addEventListener("submit", (event) => {
     event.preventDefault();
 
-    //Si la cantidad es mayor que el stock actual
-    if(!ValidarCantidadSalida()){
-        return;
+    const ValorIngresado = parseInt(CantidadEntrada.value);
+
+    if(ValorIngresado < 0){
+        event.preventDefault();
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "La cantidad ingresada debe ser Mayor a 0",
+        })
+    }else{
+              //Si la cantidad es mayor que el stock actual
+        if(!ValidarCantidadSalida()){
+          return;
+      }
+
+      if(confirm("¿Estás seguro de realizar esta Actualización?")){
+          GuardarKardex();
+      }
     }
 
-    if(confirm("¿Estás seguro de realizar esta Actualización?")){
-        GuardarKardex();
-    }
+
 });
 
 
