@@ -52,8 +52,8 @@
 
                     <div class="col-md">
                     <div class="form-floating">
-                            <select name="idcolaborador" id="idcolaborador" class="form-select" required>
-                                <option value="">Seleccione</option>
+                            <select name="idcolaborador" id="idcolaborador" class="form-select" required disabled>
+                                <option value="<?= $_SESSION['login']['idcolaborador'] ?>"><?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['nombres'] ?></option>
                             </select>
                             <label for="idcolaborador">Colaborador</label>
                         </div>
