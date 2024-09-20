@@ -13,6 +13,11 @@ CALL spu_insertar_kardexhuevo(1,1,'E','Venta realizada',200);
 
 select * from KardexAlmHuevo;
 
+<<<<<<< HEAD
+=======
+SELECT * FROM VENTAS;
+
+>>>>>>> DevSENATI
 select * from  KardexAlmHuevo;
 
 SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC LIMIT 1
