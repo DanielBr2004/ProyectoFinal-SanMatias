@@ -42,12 +42,17 @@
 
                 <div class="row g-2 mt-2">
                     <div class="col-md">
-                        <div class="input-group">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="Motivomovimiento" >
+                        <div class="form-floating">
+                                <select name="Motivomovimiento" id="Motivomovimiento" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                    <option value="E">Entrada por Produccion</option>
+                                    <option value="E">Entrada por compra</option>
+                                    <option value="S">Salida por venta</option>
+                                    <option value="S">Salida por merma</option>
+                                    <option value="S">Salida por Contingencia</option>
+                                </select>
                                 <label for="Motivomovimiento">Motivo de movimiento</label>
                             </div>
-                        </div>
                     </div>
 
                     <div class="col-md">
@@ -62,17 +67,6 @@
 
                 <!-- segunda fila -->
                 <div class="row g-2 mt-2">
-
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select name="tipomovimiento" id="tipomovimiento" class="form-select" required>
-                                <option value="">Seleccione</option>
-                                <option value="E">Entrada</option>
-                                <option value="S">Salida</option>
-                            </select>
-                            <label for="tipomovimiento">Tipo de Movimiento</label>
-                        </div>
-                    </div>
 
                     <div class="col-md">
                         <div class="form-floating">

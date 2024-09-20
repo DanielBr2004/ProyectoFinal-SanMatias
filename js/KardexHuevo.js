@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const StockActual = document.querySelector("#stockProducto");
   const CantidadEntrada = document.querySelector("#cantidad");
 
-
   idhuevo.addEventListener("change", () =>{
     const huevo = idhuevo.value;
     if(huevo){
@@ -44,8 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(e => { console.error(e) })
 })();*/
 
+
   function ValidarCantidadSalida(){
-    if (tipomovimiento.value === 'S') {
+    if (Motivomovimiento.value === 'S') {
       if (parseInt(cantidad.value) > parseInt(StockActual.value)) {
           Swal.fire({
               icon: "error",
@@ -59,12 +59,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function GuardarKardex(){
+
+    const itemselecionado = document.getElementById('Motivomovimiento');
+    const valueitem = itemselecionado.selectedIndex;
+    const motivoselecionado = itemselecionado.options[valueitem].text;
+
+
     const params = new FormData()
     params.append("operacion", "add")
     params.append("idcolaborador", document.querySelector("#idcolaborador").value)
     params.append("idhuevo", document.querySelector("#idhuevo").value)
-    params.append("tipomovimiento", document.querySelector("#tipomovimiento").value)
-    params.append("motivomovimiento", document.querySelector("#Motivomovimiento").value)
+    params.append("tipomovimiento", document.querySelector("#Motivomovimiento").value)
+    params.append("motivomovimiento", motivoselecionado)
     params.append("cantidad", document.querySelector("#cantidad").value)
 
     //options > fetch
@@ -108,8 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
       }
 
-      if(confirm("¿Estás seguro de realizar esta Actualización?")){
-          GuardarKardex();
+      if(Swal.fire({
+        title: "Deseas Guardar los cambios",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Guardar",
+        denyButtonText: `No guardar`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire(GuardarKardex());
+        } else if (result.isDenied) {
+          Swal.fire("Cancelado", "", "error", document.querySelector("#form-kardex-huevos").reset());
+        }
+      })){
       }
     }
 
