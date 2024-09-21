@@ -83,7 +83,7 @@
                     <button type="reset" id="" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
                 </div>
                 
-            </form>        
+                </form>        
                 </div>
             </div>
         </div>

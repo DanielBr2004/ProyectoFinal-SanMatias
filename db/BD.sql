@@ -27,10 +27,10 @@ use GranjaSanMatias;
    CREATE TABLE personas 
    (
    	idpersona		INT AUTO_INCREMENT PRIMARY KEY,
-    apematerno		VARCHAR(50)			NOT NULL,
-    apepaterno		VARCHAR(50)			NOT NULL,
-    nombres			VARCHAR(50) 		NOT NULL,
-    nrodocumento	CHAR(8)				NOT NULL,
+    apematerno		VARCHAR(50)			NULL,
+    apepaterno		VARCHAR(50)			NULL,
+    nombres			VARCHAR(50) 		NULL,
+    nrodocumento	CHAR(12)			NOT NULL,
     create_at		DATETIME			NOT NULL DEFAULT NOW(),
     inactive_at		DATETIME			NULL,
     CONSTRAINT uk_nrodocumento_per UNIQUE (nrodocumento)
@@ -64,8 +64,8 @@ use GranjaSanMatias;
 CREATE TABLE Productos 
 (
 idproducto 		INT AUTO_INCREMENT PRIMARY KEY,
-producto		VARCHAR(100),
-descripcion		VARCHAR(100)
+producto		VARCHAR(100) NOT NULL,
+descripcion		VARCHAR(100) NULL
 )ENGINE = INNODB;
 
 -- TABLA KARDEX ALMACEN DE PRODUCTOS O INSUMOS --
@@ -132,36 +132,30 @@ CONSTRAINT fk_provincia FOREIGN KEY (idprovincia) REFERENCES provincias (idprovi
 CREATE TABLE cliente
 (
 idcliente 			INT AUTO_INCREMENT PRIMARY KEY,
-idpersona			INT NULL,
-cliente				varchar(50),
+idpersona			INT NOT NULL,
+telefono			CHAR(9) NULL,
+razonsocial			VARCHAR(90) NULL,
+direccion			VARCHAR(90) NULL,
 CONSTRAINT fk_idpersona_cliente FOREIGN KEY (idpersona) REFERENCES personas(idpersona)
 )engine = InnoDB;
 -- VENTAS -- 
 CREATE TABLE ventas
 (
 idventa				INT AUTO_INCREMENT primary key ,
-iddistrito			INT NULL ,
-idcliente			INT NULL,
-idcolaborador		INT NULL,
-fecha 				DATETIME DEFAULT NOW(),
+idcliente			INT NOT NULL,
+idcolaborador		INT NOT NULL,
+fecha 				DATETIME DEFAULT NOW() NOT NULL,
+iddistrito			INT NOT NULL ,
 precioUnitario		DECIMAL(10, 2),
 precioTotal			DECIMAL(10, 2),
 cantidad_solicitada INT NOT NULL,
+idAlmacenHuevos		INT NOT NULL,
+CONSTRAINT fk_idAlmacenHuevos_venta FOREIGN KEY (idAlmacenHuevos) REFERENCES KardexAlmHuevo(idAlmacenHuevos),
 CONSTRAINT fk_iddistrito_venta FOREIGN KEY (iddistrito) REFERENCES distritos(iddistrito),
 CONSTRAINT fk_idcliente_venta FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
 CONSTRAINT fk_idcolaborador_venta FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
 )engine = InnoDB;
 
--- DETALLE VENTA -- // REVISAR
-CREATE TABLE peso
-(
-idpeso				INT AUTO_INCREMENT PRIMARY KEY,
-idhuevo				INT NULL,
-idventa				INT NOT NULL,
-peso				DECIMAL(10, 2),
-CONSTRAINT fk_idhuevo_peso  FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
-CONSTRAINT fk_idventa_peso FOREIGN KEY (idventa) REFERENCES ventas(idventa)
-)ENGINE = INNODB;
 
 
 

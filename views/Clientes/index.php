@@ -20,8 +20,8 @@
                 <div class="col-md">
                     <div class="input-group">
                         <div class="form-floating">
-                            <input type="number" class="form-control" maxlength="8" minlength="8" pattern="[0-9]+" title="Solo Números" id="" autofocus required>
-                            <label for="nrodocumento">Número Documento</label>
+                        <input type="tel" class="form-control" maxlength="12" minlength="8"  id="nrodocumento" autofocus required>
+                        <label for="nrodocumento">Número Documento</label>
                         </div>
                         <button class="input-group-text btn btn-secondary" type="button" id=""><i class="bi bi-search"></i></button>
                     </div>
@@ -57,12 +57,19 @@
 
             <!-- Tercera Fila -->
             <div class="row g-2">
-                <div class="col-md mb-3">
+                <div class="col-md-3 mb-3">
                     <div class="form-floating">
                         <input type="number" id="" maxlength="150" class="form-control">
                         <label for="">Telefono</label>
                     </div>
                 </div>
+                <div class="col-md-9 mb-3">
+                    <div class="form-floating">
+                        <input type="text" id="" maxlength="150" class="form-control">
+                        <label for="">Rozan Social</label>
+                    </div>
+                </div>
+                
             </div> <!-- ./tercera fila -->
             
             <div class="text-end">

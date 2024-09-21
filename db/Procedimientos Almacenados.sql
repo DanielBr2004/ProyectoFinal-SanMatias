@@ -148,5 +148,4 @@ END //
 
 DELIMITER ;
 
-CALL sp_listar_distritos_por_nombre('pueblo')
 
