@@ -29,8 +29,8 @@
 
                 <div class="col-md">
                     <div class="form-floating">
-                        <input type="text" class="form-control" maxlength="50" id="" required>
-                        <label for="">Nombres</label>
+                        <input type="text" class="form-control" maxlength="50" id="nombres" required>
+                        <label for="nombres">Nombres</label>
                     </div>
                 </div> 
             </div> <!-- ./primera fila -->
@@ -40,15 +40,15 @@
 
                 <div class="col-md">
                     <div class="form-floating">
-                        <input type="text" class="form-control" maxlength="50" id="" required>
-                        <label for="">Apellido Paterno</label>
+                        <input type="text" class="form-control" maxlength="50" id="apepaterno" required>
+                        <label for="apepaterno">Apellido Paterno</label>
                     </div>
                 </div> 
 
                 <div class="col-md">
                     <div class="form-floating">
-                        <input type="text" class="form-control" maxlength="50" id="" required>
-                        <label for="">Apellido Materno</label>
+                        <input type="text" class="form-control" maxlength="50" id="apematerno" required>
+                        <label for="apematerno">Apellido Materno</label>
                     </div>
                 </div>
             </div> <!-- ./segunda fila -->
@@ -59,14 +59,14 @@
             <div class="row g-2">
                 <div class="col-md-3 mb-3">
                     <div class="form-floating">
-                        <input type="number" id="" maxlength="150" class="form-control">
-                        <label for="">Telefono</label>
+                        <input type="number" id="telefonmo" maxlength="150" class="form-control">
+                        <label for="telefonmo">Telefono</label>
                     </div>
                 </div>
                 <div class="col-md-9 mb-3">
                     <div class="form-floating">
-                        <input type="text" id="" maxlength="150" class="form-control">
-                        <label for="">Rozan Social</label>
+                        <input type="text" id="razonsocial" maxlength="150" class="form-control">
+                        <label for="razonsocial">Rozan Social</label>
                     </div>
                 </div>
                 
