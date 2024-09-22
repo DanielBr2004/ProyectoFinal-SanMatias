@@ -14,7 +14,7 @@
                     Complete los datos
                 </div>
                 <div class="card-body">
-                    <form action="" id="form-registro-usuarios" autocomplete="off">
+                    <form action="" id="form-registro-clientes" autocomplete="off">
                 <!-- Primera Fila -->
             <div class="row g-2 mb-2">
                 <div class="col-md">
@@ -23,7 +23,7 @@
                         <input type="tel" class="form-control" maxlength="12" minlength="8"  id="nrodocumento" autofocus required>
                         <label for="nrodocumento">Número Documento</label>
                         </div>
-                        <button class="input-group-text btn btn-secondary" type="button" id=""><i class="bi bi-search"></i></button>
+                        <button class="input-group-text btn btn-secondary" type="button" id="buscar-nrodocumento"><i class="bi bi-search"></i></button>
                     </div>
                 </div> 
 
@@ -59,8 +59,8 @@
             <div class="row g-2">
                 <div class="col-md-3 mb-3">
                     <div class="form-floating">
-                        <input type="number" id="telefonmo" maxlength="150" class="form-control">
-                        <label for="telefonmo">Telefono</label>
+                        <input type="number" id="telefono" maxlength="150" class="form-control">
+                        <label for="telefono">Telefono</label>
                     </div>
                 </div>
                 <div class="col-md-9 mb-3">
@@ -71,10 +71,19 @@
                 </div>
                 
             </div> <!-- ./tercera fila -->
+            <!-- cuarta Fila -->
+            <div class="row g-2">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="text" id="direccion" maxlength="150" class="form-control">
+                        <label for="direccion">Direccion</label>
+                    </div>
+                </div>
+            </div> <!-- ./cuarta fila -->
             
             <div class="text-end">
                 <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm">Registrar Nuevo Colaborador</button>
-                <button type="reset" id="" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
+                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
             </div>
                     </form>
                 </div>
@@ -83,7 +92,9 @@
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
+        <script src="../../js/clientes/clientes.js"></script>
     </body>
 </html>

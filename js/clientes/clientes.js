@@ -28,12 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //Función registrar Usuario (se obtiene le idpersona)
-  async function registrarUsuario(idpersona){
+  async function registrarCliente(idpersona){
       const params = new FormData();
       params.append("operacion", "add");
       params.append("idpersona", idpersona);
-      params.append("nomusuario", document.querySelector("#nomusuario").value);
-      params.append("passusuario", document.querySelector("#passusuario").value);
+      params.append("telefono", document.querySelector("#telefono").value);
+      params.append("razonsocial", document.querySelector("#razonsocial").value);
+      params.append("direccion", document.querySelector("#direccion").value);
 
 
       const options = {
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
           body: params
       }
 
-      const idcolaborador = await fetch(`../../controllers/colaborador.controller.php`, options);
+      const idcolaborador = await fetch(`../../controllers/Clientes.controller.php`, options);
       return idcolaborador.json();
   }
 
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       params.append("operacion", "searchByDoc");
       params.append("nrodocumento", nrodocumento.value);
 
-      const response = await fetch(`../../controllers/colaborador.controller.php?${params}`);
+      const response = await fetch(`../../controllers/Clientes.controller.php?${params}`);
       return response.json();
   }
 
@@ -62,6 +63,10 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("#apepaterno").value = ``;
           document.querySelector("#apematerno").value = ``;
           document.querySelector("#nombres").value = ``;
+
+          document.querySelector("#telefono").value = ``;
+          document.querySelector("#razonsocial").value = ``;
+          document.querySelector("#direccion").value = ``;
           //Activar el formulario para poder registrarse
           adPersona(true);
           adUsuario(true);
@@ -77,6 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("#apepaterno").value = response[0].apepaterno;
           document.querySelector("#apematerno").value = response[0].apematerno;
           document.querySelector("#nombres").value = response[0].nombres;
+
+          document.querySelector("#telefono").value = response[0].telefono;
+          document.querySelector("#razonsocial").value = response[0].razonsocial;
+          document.querySelector("#direccion").value = response[0].direccion;
 
           //Se encontró a la persona
           //Bloqueamos los controles porque ya está registrado
@@ -125,17 +134,20 @@ document.addEventListener("DOMContentLoaded", () => {
   //Método para habilitar/deshabilitar el formulario de usuarios
   function adUsuario(sw = false){
       if(!sw){
-          document.querySelector("#nomusuario").setAttribute("disabled", true);
-          document.querySelector("#passusuario").setAttribute("disabled", true);
+          document.querySelector("#telefono").setAttribute("disabled", true);
+          document.querySelector("#razonsocial").setAttribute("disabled", true);
           document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
+          document.querySelector("#direccion").setAttribute("disabled", true);
       }else{
-          document.querySelector("#nomusuario").removeAttribute("disabled");
-          document.querySelector("#passusuario").removeAttribute("disabled");
+          document.querySelector("#telefono").removeAttribute("disabled");
+          document.querySelector("#razonsocial").removeAttribute("disabled");
           document.querySelector("#registrar-colaborador").removeAttribute("disabled");
+          document.querySelector("#direccion").removeAttribute("disabled");
+
       }
   }
 
-  document.querySelector("#form-registro-usuarios").addEventListener("submit", async (event) => {
+  document.querySelector("#form-registro-clientes").addEventListener("submit", async (event) => {
       event.preventDefault();
 
       if(confirm("¿Estás seguro de proceder?")){
@@ -156,19 +168,21 @@ document.addEventListener("DOMContentLoaded", () => {
               Swal.fire("No se pudo registrar los datos del usuario, verifique DNI");
           }else{
               //Tenemos idpersona
-              response2 = await registrarUsuario(idpersona);
+              response2 = await registrarCliente(idpersona);
               if(response2.idcolaborador == -1){
                   Swal.fire("No se pudo crear tu cuenta de Usuario, Verifique el Email");
               }else{
                   Swal.fire({
                       position: "center",
                       icon: "success",
-                      title: "Usuario creado Correctamente",
+                      title: "Cliente creado Correctamente",
                       showConfirmButton: false,
                       timer: 1500
                   });
                   //Ambos procesos han finalizado correctamente
-                  document.querySelector("#form-registro-usuarios").reset();
+                  document.querySelector("#form-registro-clientes").reset();
+                  adPersona();
+                  adUsuario();
               }
           }
       }
@@ -176,10 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Cancelar 
   document.querySelector("#cancelar").addEventListener("click", async () => {
-      adPersona(true);
-      adUsuario(true);
+      adPersona();
+      adUsuario();
   });
 
   //Método de Inicio
   adPersona();
+  adUsuario();
 })

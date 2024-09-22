@@ -18,16 +18,19 @@ END $$
 
  -- ------------------------------------------- Buscar Colaborador por su DNI ----------------------------------------------------- 
 DELIMITER $$
-CREATE PROCEDURE spu_cliente_documento_dni(IN _nrodocumento CHAR(8))
+CREATE PROCEDURE spu_cliente_documento_dni(IN _nrodocumento CHAR(12))
 BEGIN
 	SELECT 
 		PER.idpersona,
         CLI.idcliente,
         PER.apepaterno, 
         PER.apematerno,
-        PER.nombres
+        PER.nombres,
+        CLI.telefono,
+        CLI.razonsocial,
+        CLI.direccion
 		FROM personas PER 
         LEFT JOIN cliente CLI
         ON CLI.idpersona = PER.idpersona 
-        WHERE nrodocumento = 12457852147;
+        WHERE nrodocumento = _nrodocumento;
 END $$

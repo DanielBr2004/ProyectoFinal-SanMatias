@@ -33,4 +33,18 @@ class Cliente extends Conexion{
           return $idcliente;
         }
 
+        //Función para buscar a la persona por el numero de documento 
+      public function searchByDoc($params = []):array{
+        try{
+        $query = $this->pdo->prepare("call spu_cliente_documento_dni(?)");
+        $query->execute(
+            array($params['nrodocumento'])
+        );
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(Exception $e){
+        die($e->getMessage());
+        }
+      }
   }
