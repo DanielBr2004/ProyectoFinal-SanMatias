@@ -11,15 +11,19 @@
                     Complete los datos
                 </div>
                 <div class="card-body">
-                <form action="" id="form-validaciones-kardex" autocomplete="off">
+                <form action="" id="form-kardex-Productos" autocomplete="off">
                 <!-- primera fila -->
                 <div class="row g-2 m-b2">
 
                     <div class="col-md">
                         <div class="input-group">
-                            <div class="form-floating">
-                                <select name="" id="" class="form-select" required>
+                        <div class="form-floating">
+                                <select name="idproducto" id="idproducto" class="form-select" required>
                                     <option value="">Seleccione</option>
+                                    <option value="1">Soya</option>
+                                    <option value="2">Afrecho</option>
+                                    <option value="3">Maiz</option>
+                                    <option value="4">Carbonato</option>
                                 </select>
                                 <label for="idproducto">Producto</label>
                             </div>
@@ -28,16 +32,8 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="" disabled>
+                            <input type="number" class="form-control" id="stockProducto" disabled>
                             <label for="stockactual">Stock Actual</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md">
-                        <div class="form-floating">
-                        <div class="form-floating">
-                            <input type="number" class="form-control" id="" disabled>
-                            <label for="stockactual">Colaborador</label>
                         </div>
                     </div>
 
@@ -46,25 +42,31 @@
                 <div class="row g-2 mt-2">
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="text" minlength="1" maxlength="200" class="form-control" id="" required>
-                            <label for="cantidad">Motivo de Movimiento</label>
+                                <select name="Motivomovimiento" id="Motivomovimiento" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                    <option value="E">Entrada por Escazes</option>
+                                    <option value="S">Salida </option>
+                                </select>
+                                <label for="Motivomovimiento">Motivo de movimiento</label>
+                            </div>
+                    </div>
+
+                    <div class="col-md">
+                    <div class="form-floating">
+                            <select name="idcolaborador" id="idcolaborador" class="form-select" required disabled>
+                                <option value="<?= $_SESSION['login']['idcolaborador'] ?>"><?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['nombres'] ?></option>
+                            </select>
+                            <label for="idcolaborador">Colaborador</label>
                         </div>
                     </div>
                 </div>
 
+
+                
+
                 <!-- segunda fila -->
                 <div class="row g-2 mt-2">
 
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select name="" id="" class="form-select" required>
-                                <option value="">Seleccione</option>
-                                <option value="E">Entrada</option>
-                                <option value="S">Salida</option>
-                            </select>
-                            <label for="tipomovimiento">Tipo de Movimiento</label>
-                        </div>
-                    </div>
 
                     <div class="col-md">
                         <div class="form-floating">
@@ -90,6 +92,6 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="../../js/KardexHuevo.js"></script>
+        <script src="../../js/KardexProducto.js"></script>
     </body>
 </html>
