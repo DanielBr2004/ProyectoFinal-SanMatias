@@ -32,6 +32,17 @@ class Producto extends Conexion{
   }
      
 
+    public function getAll(){
+        try{
+        $consulta = $this->pdo->prepare("SELECT idproducto, producto FROM Productos ORDER BY Producto;");
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        catch(Exception $e){
+        die($e->getMessage());
+        }
+    }
+
     
 
 

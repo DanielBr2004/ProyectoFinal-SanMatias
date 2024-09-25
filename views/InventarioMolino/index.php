@@ -2,7 +2,7 @@
                 <!-- Page content-->
                 <div class="container">
             <div class="text-center mt-5">
-                <h1>Control de Inventario</h1>
+                <h1>Control del Inventario del Area de Molino</h1>
             </div>
             <br>
             <br>
@@ -20,10 +20,6 @@
                         <div class="form-floating">
                                 <select name="idproducto" id="idproducto" class="form-select" required>
                                     <option value="">Seleccione</option>
-                                    <option value="1">Soya</option>
-                                    <option value="2">Afrecho</option>
-                                    <option value="3">Maiz</option>
-                                    <option value="4">Carbonato</option>
                                 </select>
                                 <label for="idproducto">Producto</label>
                             </div>
@@ -44,8 +40,9 @@
                         <div class="form-floating">
                                 <select name="Motivomovimiento" id="Motivomovimiento" class="form-select" required>
                                 <option value="">Seleccione...</option>
-                                    <option value="E">Entrada por Escazes</option>
-                                    <option value="S">Salida </option>
+                                    <option value="E">Entrada por compra</option>
+                                    <option value="S">Salida por uso</option>
+                                    <option value="S">Salida por merma</option>
                                 </select>
                                 <label for="Motivomovimiento">Motivo de movimiento</label>
                             </div>

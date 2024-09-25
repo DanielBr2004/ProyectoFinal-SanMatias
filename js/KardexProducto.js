@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if(producto){
         ShowStockActual(producto);
       }
-    })
+    });
   
     async function ShowStockActual(idproducto) {
       try{
@@ -25,8 +25,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if(idproducto.value){
       ShowStockActual(idproducto.value);
     }
-  
-  
+
+    (() => {
+      fetch(`../../controllers/producto.controller.php?operacion=getAll`)
+          .then(response => response.json())
+          .then(data => {
+              const productos = document.querySelector("#idproducto")
+              data.forEach(row => {
+                  const tagOption = document.createElement("option")
+                  tagOption.value = row.idproducto
+                  tagOption.innerHTML = row.producto
+                  productos.appendChild(tagOption)
+              });
+          })
+          .catch(e => { console.error(e) })
+  })();
   
     function ValidarCantidadSalida(){
       if (Motivomovimiento.value === 'S') {
