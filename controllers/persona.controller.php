@@ -3,6 +3,8 @@ session_start();
 
 require_once '../models/Personas.php';
 
+header("Content-type: application/json; charset=utf-8");
+
 $persona = new Personas();
 
   //Insertar persona  
@@ -11,10 +13,10 @@ $persona = new Personas();
     switch($_POST['operacion']){
         case 'add':
         $datos = [
-            "apepaterno"    => $_POST['apepaterno'],
-            "apematerno"    => $_POST['apematerno'],
-            "nombres"       => $_POST['nombres'],
-            "nrodocumento"  => $_POST['nrodocumento']
+            "apepaterno"    => $persona->limpiarCadena($_POST['apepaterno']),
+            "apematerno"    => $persona->limpiarCadena($_POST['apematerno']),
+            "nombres"       => $persona->limpiarCadena($_POST['nombres']),
+            "nrodocumento"  => $persona->limpiarCadena($_POST['nrodocumento'])
         ];
         $idobtenido = $persona->add($datos);
         echo json_encode(["idpersona" => $idobtenido]);

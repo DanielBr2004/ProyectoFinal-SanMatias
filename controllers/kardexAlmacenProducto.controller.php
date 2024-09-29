@@ -3,6 +3,8 @@ session_start();
 
 require_once '../models/kardexAlmacenProducto.php';
 
+header("Content-type: application/json; charset=utf-8");
+
 $kardexproducto = new KardexProducto();
 
 if(isset($_POST['operacion'])){
@@ -10,12 +12,12 @@ if(isset($_POST['operacion'])){
   switch($_POST['operacion']){
       case 'add':
           $datosEnviar = [
-              "idcolaborador"        => $_POST['idcolaborador'],
-              "idproducto"           => $_POST['idproducto'],
-              "tipomovimiento"       => $_POST['tipomovimiento'],
-              "motivomovimiento"     => $_POST['motivomovimiento'],
-              "cantidad"             => $_POST['cantidad'],
-              "descripcion"           => $_POST['descripcion']
+              "idcolaborador"        => $kardexproducto->limpiarCadena($_POST['idcolaborador']),
+              "idproducto"           => $kardexproducto->limpiarCadena($_POST['idproducto']),
+              "tipomovimiento"       => $kardexproducto->limpiarCadena($_POST['tipomovimiento']),
+              "motivomovimiento"     => $kardexproducto->limpiarCadena($_POST['motivomovimiento']),
+              "cantidad"             => $kardexproducto->limpiarCadena($_POST['cantidad']),
+              "descripcion"          => $kardexproducto->limpiarCadena($_POST['descripcion'])
           ];
           $status = $kardexproducto->add($datosEnviar);
           echo json_encode(["estado" => $status]);

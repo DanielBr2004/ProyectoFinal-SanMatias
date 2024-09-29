@@ -3,6 +3,8 @@ session_start();
 
 require_once '../models/Login.php';
 
+header("Content-type: application/json; charset=utf-8");
+
 $colaborador = new Login();
 
 //Función para el login, donde se evalua si el usuario existe y si su clave esta encriptada y registrada

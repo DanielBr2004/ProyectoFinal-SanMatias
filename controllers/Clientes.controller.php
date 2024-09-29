@@ -3,6 +3,8 @@ session_start();
 
 require_once '../models/Clientes.php';
 
+header("Content-type: application/json; charset=utf-8");
+
 $cliente = new Cliente();
 
   //Función de Registrar Colaborador, guardando el id
@@ -11,10 +13,10 @@ $cliente = new Cliente();
     switch($_POST['operacion']){
         case 'add':
             $datos = [
-                "idpersona"     => $_POST['idpersona'],
-                "telefono"    => $_POST['telefono'],
-                "razonsocial"   => $_POST['razonsocial'],
-                "direccion"   => $_POST['direccion']
+                "idpersona"       => $cliente->limpiarCadena($_POST['idpersona']),
+                "telefono"        => $cliente->limpiarCadena($_POST['telefono']),
+                "razonsocial"     => $cliente->limpiarCadena($_POST['razonsocial']),
+                "direccion"       => $cliente->limpiarCadena($_POST['direccion'])
 
             ];
             $idobtenido = $cliente->add($datos);

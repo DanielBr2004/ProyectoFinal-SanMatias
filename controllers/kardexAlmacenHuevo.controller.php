@@ -3,6 +3,8 @@ session_start();
 
 require_once '../models/kardexAlmcenHuevos.php';
 
+header("Content-type: application/json; charset=utf-8");
+
 $kardexhuevo = new KardexHuevo();
 
 if(isset($_POST['operacion'])){
@@ -10,12 +12,12 @@ if(isset($_POST['operacion'])){
   switch($_POST['operacion']){
       case 'add':
           $datosEnviar = [
-              "idcolaborador"     => $_POST['idcolaborador'],
-              "idhuevo"           => $_POST['idhuevo'],
-              "tipomovimiento"    => $_POST['tipomovimiento'],
-              "motivomovimiento"  => $_POST['motivomovimiento'],
-              "cantidad"          => $_POST['cantidad'],
-              "descripcion"        => $_POST['descripcion']
+              "idcolaborador"     => $kardexhuevo->limpiarCadena($_POST['idcolaborador']),
+              "idhuevo"           => $kardexhuevo->limpiarCadena($_POST['idhuevo']),
+              "tipomovimiento"    => $kardexhuevo->limpiarCadena($_POST['tipomovimiento']),
+              "motivomovimiento"  => $kardexhuevo->limpiarCadena($_POST['motivomovimiento']),
+              "cantidad"          => $kardexhuevo->limpiarCadena($_POST['cantidad']),
+              "descripcion"       => $kardexhuevo->limpiarCadena($_POST['descripcion'])
           ];
           //Retornará un booleano 
           $status = $kardexhuevo->add($datosEnviar);

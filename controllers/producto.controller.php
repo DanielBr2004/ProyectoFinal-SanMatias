@@ -4,14 +4,16 @@ require_once '../models/Productos.php';
 
 $producto = new Producto();
 
+header("Content-type: application/json; charset=utf-8");
+
   if(isset($_POST['operacion'])){
 
     switch($_POST['operacion']){
         case 'add':
           if (isset($_POST['Producto']) && trim($_POST['Producto']) != '') {
               $datos = [
-                "Producto"    => $_POST['Producto'],
-                "descripcion"       => $_POST['descripcion']
+                "Producto"      => $producto->limpiarCadena($_POST['Producto']),
+                "descripcion"   => $producto->limpiarCadena($_POST['descripcion'])
             ];
             $idobtenido = $producto->add($datos);
             //Lo retornará como un JSON

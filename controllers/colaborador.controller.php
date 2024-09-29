@@ -3,6 +3,8 @@ session_start();
 
 require_once '../models/Colaboradores.php';
 
+header("Content-type: application/json; charset=utf-8");
+
 $colaborador = new Colaborador();
 
   //Función de Registrar Colaborador, guardando el id
@@ -11,9 +13,9 @@ $colaborador = new Colaborador();
     switch($_POST['operacion']){
         case 'add':
             $datos = [
-                "idpersona"     => $_POST['idpersona'],
-                "nomusuario"    => $_POST['nomusuario'],
-                "passusuario"   => $_POST['passusuario']
+                "idpersona"     => $colaborador->limpiarCadena($_POST['idpersona']),
+                "nomusuario"    => $colaborador->limpiarCadena($_POST['nomusuario']),
+                "passusuario"   => $colaborador->limpiarCadena($_POST['passusuario'])
             ];
             $idobtenido = $colaborador->add($datos);
             //Lo retonará en la vista como un JSON
