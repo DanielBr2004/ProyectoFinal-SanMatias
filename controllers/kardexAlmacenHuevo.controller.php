@@ -28,10 +28,12 @@ if(isset($_POST['operacion'])){
 }
 
 if(isset($_GET['operacion'])){
-
   switch($_GET['operacion']){
       case 'mostrarStockActual':
           echo json_encode($kardexhuevo->mostrarStockActual(['idhuevo' => $_GET['idhuevo']]));
           break;
+      case 'getAll':
+          echo json_encode($kardexhuevo->getAll());
+        break;
   }
 }

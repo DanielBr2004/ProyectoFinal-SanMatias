@@ -45,5 +45,9 @@ class KardexHuevo extends Conexion{
         }
     }
 
+    public function getAll():array{
+        return parent::getData('spu_vista_kardexhuevo');
+    }
+
 
   }

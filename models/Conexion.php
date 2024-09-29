@@ -64,4 +64,15 @@ class Conexion{
       $cadena = stripslashes($cadena);
       return $cadena;
     }
+
+
+    public function getData($spu_name = ""):array{
+      try{
+        $cmd = $this->getConexion()->prepare("call {$spu_name}()");
+        $cmd->execute();
+        return $cmd->fetchAll(PDO::FETCH_ASSOC);
+      }catch(Exception $e){
+  
+      }
+    }
 }

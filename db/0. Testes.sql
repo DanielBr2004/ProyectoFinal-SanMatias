@@ -19,6 +19,10 @@ SELECT * FROM VENTAS;
 
 select * from  KardexAlmHuevo;
 
+select * from tipoHuevo;
+
+select * from colaboradores;
+
 select * from KardexAlmProducto;
 
 select * from personas;
@@ -33,3 +37,5 @@ CALL spu_insertar_KardexAlmProducto(1,1,'E','Stock Repuesto',200,'');
 
 CALL spu_insertar_kardexhuevo(1,1,'E','por produccion',150,'dwdwdw');
 SELECT stockProducto  FROM KardexAlmProducto WHERE idproducto = 1 ORDER BY creado DESC LIMIT 1;
+
+CALL spu_vista_kardexhuevo();
