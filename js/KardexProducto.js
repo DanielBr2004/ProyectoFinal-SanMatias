@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const idproducto = document.querySelector("#idproducto");
     const StockActual = document.querySelector("#stockProducto");
     const CantidadEntrada = document.querySelector("#cantidad");
+
+    const Motivomovimiento = document.querySelector("#Motivomovimiento");
   
     idproducto.addEventListener("change", () =>{
       const producto = idproducto.value;
@@ -69,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       params.append("tipomovimiento", document.querySelector("#Motivomovimiento").value)
       params.append("motivomovimiento", motivoselecionado)
       params.append("cantidad", document.querySelector("#cantidad").value)
+      params.append("descripcion", document.querySelector("#mermaInput").value)
   
       const options = {
           'method' : 'POST',
@@ -128,8 +131,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
   
+    });
+  
+    Motivomovimiento.addEventListener('change', function() {
+      var mermaInputContainer = document.getElementById('mermaInputContainer');
+
+      const itemselecionado = document.getElementById('Motivomovimiento');
+      const valueitem = itemselecionado.selectedIndex;
+      const motivoselecionado = itemselecionado.options[valueitem].text;
+
+      if (motivoselecionado === 'Salida por merma') {
+          mermaInputContainer.style.display = 'block';
+      } else {
+          mermaInputContainer.style.display = 'none';
+      }
   });
   
-  
-  
   })
+
+  

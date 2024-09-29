@@ -1,13 +1,15 @@
-USE granjasanmatias
+USE granjasanmatias;
 -- ------------------------------------------ Procedimiento de Validaciones para el Kardex --------------------------------------------------
+drop procedure if exists `spu_insertar_KardexAlmProducto`;
 DELIMITER $$
 CREATE PROCEDURE spu_insertar_KardexAlmProducto
 (
     IN _idcolaborador INT,
     IN _idproducto INT,
     IN _tipomovimiento CHAR(1),
-    IN _motivomoviento VARCHAR(500),
-    IN _cantidad SMALLINT
+    IN _motivomoviento VARCHAR(100),
+    IN _cantidad SMALLINT,
+    IN _descripcion 	VARCHAR(100)
 )
 BEGIN
 	-- Stock Actual declarada por defecto en 0
@@ -24,6 +26,6 @@ BEGIN
     END IF;
 
     -- Registramos el kardex 
-    INSERT INTO KardexAlmProducto (idcolaborador, idproducto, tipomovimiento, motivomovimiento, stockProducto, cantidad, creado)
-    VALUES (_idcolaborador, _idproducto, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NOW());
+    INSERT INTO KardexAlmProducto (idcolaborador, idproducto, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
+    VALUES (_idcolaborador, _idproducto, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion, ''), NOW());
 END $$

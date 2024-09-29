@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const StockActual = document.querySelector("#stockProducto");
   const CantidadEntrada = document.querySelector("#cantidad");
 
+  const Motivomovimiento = document.querySelector("#Motivomovimiento");
+
   idhuevo.addEventListener("change", () =>{
     const huevo = idhuevo.value;
     if(huevo){
@@ -72,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     params.append("tipomovimiento", document.querySelector("#Motivomovimiento").value)
     params.append("motivomovimiento", motivoselecionado)
     params.append("cantidad", document.querySelector("#cantidad").value)
+    params.append("descripcion", document.querySelector("#mermaInput").value)
 
     //options > fetch
     const options = {
@@ -96,43 +99,57 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch( e => { console.error(e) })
   }
 
-  document.querySelector("#form-kardex-huevos").addEventListener("submit", (event) => {
-    event.preventDefault();
+    document.querySelector("#form-kardex-huevos").addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    const ValorIngresado = parseInt(CantidadEntrada.value);
+      const ValorIngresado = parseInt(CantidadEntrada.value);
 
-    if(ValorIngresado < 0){
-        event.preventDefault();
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "La cantidad ingresada debe ser Mayor a 0",
-        })
-    }else{
-              //Si la cantidad es mayor que el stock actual
-        if(!ValidarCantidadSalida()){
-          return;
-      }
-
-      if(Swal.fire({
-        title: "Deseas Guardar los cambios",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Guardar",
-        denyButtonText: `No guardar`
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire(GuardarKardex());
-        } else if (result.isDenied) {
-          Swal.fire("Cancelado", "", "error", document.querySelector("#form-kardex-huevos").reset());
+      if(ValorIngresado < 0){
+          event.preventDefault();
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "La cantidad ingresada debe ser Mayor a 0",
+          })
+      }else{
+                //Si la cantidad es mayor que el stock actual
+          if(!ValidarCantidadSalida()){
+            return;
         }
-      })){
+
+        if(Swal.fire({
+          title: "Deseas Guardar los cambios",
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: "Guardar",
+          denyButtonText: `No guardar`
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            Swal.fire(GuardarKardex());
+          } else if (result.isDenied) {
+            Swal.fire("Cancelado", "", "error", document.querySelector("#form-kardex-huevos").reset());
+          }
+        })){
+        }
       }
+
+
+  });
+
+  Motivomovimiento.addEventListener('change', function() {
+    var mermaInputContainer = document.getElementById('mermaInputContainer');
+
+    const itemselecionado = document.getElementById('Motivomovimiento');
+    const valueitem = itemselecionado.selectedIndex;
+    const motivoselecionado = itemselecionado.options[valueitem].text;
+
+    if (motivoselecionado === 'Salida por Contingencia') {
+        mermaInputContainer.style.display = 'block';
+    } else {
+        mermaInputContainer.style.display = 'none';
     }
-
-
-});
+  });
 
 
 

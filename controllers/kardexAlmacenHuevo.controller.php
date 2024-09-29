@@ -14,7 +14,8 @@ if(isset($_POST['operacion'])){
               "idhuevo"           => $_POST['idhuevo'],
               "tipomovimiento"    => $_POST['tipomovimiento'],
               "motivomovimiento"  => $_POST['motivomovimiento'],
-              "cantidad"          => $_POST['cantidad']
+              "cantidad"          => $_POST['cantidad'],
+              "descripcion"        => $_POST['descripcion']
           ];
           //Retornará un booleano 
           $status = $kardexhuevo->add($datosEnviar);

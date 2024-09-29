@@ -27,14 +27,15 @@ class KardexHuevo extends Conexion{
     public function add($params = []):bool{
         $status = false; 
         try{
-            $query = $this->pdo->prepare("call spu_insertar_kardexhuevo(?,?,?,?,?)"); 
+            $query = $this->pdo->prepare("call spu_insertar_kardexhuevo(?,?,?,?,?,?)"); 
             $status = $query->execute(
                 array(
                     $params['idcolaborador'],
                     $params['idhuevo'],
                     $params['tipomovimiento'],
                     $params['motivomovimiento'],
-                    $params['cantidad']
+                    $params['cantidad'],
+                    $params['descripcion']
                 )
             );
             return $status; 

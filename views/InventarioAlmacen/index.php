@@ -1,6 +1,10 @@
 <?php require_once '../../Header.php'; ?>
                 <!-- Page content-->
                 <div class="container">
+                <br>
+                    <div>
+                        <h5 class="text-end"><strong>Encargado:</strong>  <?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['apematerno'] ?> <?= $_SESSION['login']['nombres'] ?></h5>
+                    </div>   
             <div class="text-center mt-5">
                 <h1>Control de Inventario del Almacen de Huevos</h1>
             </div>
@@ -55,11 +59,9 @@
                             </div>
                     </div>
 
-                    <div class="col-md">
-                    <div class="form-floating">
-                            <select name="idcolaborador" id="idcolaborador" class="form-select" required disabled>
-                                <option value="<?= $_SESSION['login']['idcolaborador'] ?>"><?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['nombres'] ?></option>
-                            </select>
+                    <div class="col-md invisible">
+                        <div class="form-floating">
+                            <input type="text" name="idcolaborador" id="idcolaborador" class="form-control" value="<?= $_SESSION['login']['idcolaborador'] ?>" disabled>
                             <label for="idcolaborador">Colaborador</label>
                         </div>
                     </div>
@@ -76,6 +78,14 @@
                     </div>
 
                 </div> <!-- ./segunda fila -->
+                <div class="row g-2 mt-2">
+                    <div class="col-md" id="mermaInputContainer" style="display: none;">
+                        <div class="form-floating">
+                            <input type="text" id="mermaInput" class="form-control">
+                            <label for="mermaInput">Detalles de la merma</label>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Botones -->
                 <div class="text-end mt-2">

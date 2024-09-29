@@ -14,7 +14,8 @@ if(isset($_POST['operacion'])){
               "idproducto"           => $_POST['idproducto'],
               "tipomovimiento"       => $_POST['tipomovimiento'],
               "motivomovimiento"     => $_POST['motivomovimiento'],
-              "cantidad"             => $_POST['cantidad']
+              "cantidad"             => $_POST['cantidad'],
+              "descripcion"           => $_POST['descripcion']
           ];
           $status = $kardexproducto->add($datosEnviar);
           echo json_encode(["estado" => $status]);

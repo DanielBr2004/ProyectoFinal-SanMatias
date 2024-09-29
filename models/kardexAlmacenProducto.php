@@ -25,14 +25,15 @@ class KardexProducto extends Conexion{
     public function add($params = []):bool{
         $status = false; 
         try{
-            $query = $this->pdo->prepare("call spu_insertar_KardexAlmProducto(?,?,?,?,?)"); 
+            $query = $this->pdo->prepare("call spu_insertar_KardexAlmProducto(?,?,?,?,?,?)"); 
             $status = $query->execute(
                 array(
                     $params['idcolaborador'],
                     $params['idproducto'],
                     $params['tipomovimiento'],
                     $params['motivomovimiento'],
-                    $params['cantidad']
+                    $params['cantidad'],
+                    $params['descripcion']
                 )
             );
             return $status; 

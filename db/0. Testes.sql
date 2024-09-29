@@ -4,8 +4,8 @@ CALL spu_personas_registrar ('Buleje','Rojas','Daniel',12314788);
 
 CALL spu_personas_registrar ('','','',12457852147);
 
-CALL spu_colaboradores_registrar(4,'DanielBr','');
-UPDATE colaboradores SET passusuario = '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK' WHERE idcolaborador = 4;
+CALL spu_colaboradores_registrar(1,'DanielBr','');
+UPDATE colaboradores SET passusuario = '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK' WHERE idcolaborador = 1;
 
 CALL spu_colaboradores_login('DanielBr');
 
@@ -19,6 +19,8 @@ SELECT * FROM VENTAS;
 
 select * from  KardexAlmHuevo;
 
+select * from KardexAlmProducto;
+
 select * from personas;
 
 select * from cliente;
@@ -27,5 +29,7 @@ SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC 
 
 CALL spu_clientes_registrar(3,'','Avicola San Matias S.A.C.','Av la mar S/N');
 
-CALL spu_insertar_KardexAlmProducto(1,1,'E','Stock Repuesto',200);
+CALL spu_insertar_KardexAlmProducto(1,1,'E','Stock Repuesto',200,'');
+
+CALL spu_insertar_kardexhuevo(1,1,'E','por produccion',150,'dwdwdw');
 SELECT stockProducto  FROM KardexAlmProducto WHERE idproducto = 1 ORDER BY creado DESC LIMIT 1;
