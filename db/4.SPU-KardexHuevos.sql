@@ -30,18 +30,3 @@ BEGIN
     INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
     VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
 END $$
--- ------------------------------------------ Procedimiento de vista para el Kardex --------------------------------------------------
-drop procedure if exists `spu_vista_kardexhuevo`;
-DELIMITER $$
-CREATE PROCEDURE spu_vista_kardexhuevo()
-BEGIN 
-	SELECT 
-		CL.nomusuario,
-        TH.tiposHuevos,
-        KH.tipomovimiento, KH.motivomovimiento, KH.stockProducto, KH.cantidad, KH.descripcion, KH.creado
-        FROM KardexAlmHuevo KH
-        INNER JOIN tipoHuevo TH ON TH.idhuevo = KH.idhuevo
-        INNER JOIN colaboradores CL ON CL.idcolaborador = KH.idcolaborador
-        ORDER BY KH.idAlmacenHuevos DESC;
-        
-END $$

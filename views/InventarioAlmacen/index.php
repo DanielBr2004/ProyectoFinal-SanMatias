@@ -102,7 +102,8 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="../../js/KardexHuevo.js"></script>
+        <script src="../../js/Kardex_Huevos/KardexHuevo.js"></script>
+        <script src="../../js/Kardex_Huevos/Tabla_Registros.js"></script>
     </body>
     
 </html>
