@@ -14,21 +14,10 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" id="nrodocumento" required>
-                                    <label for="nrodocumento">Numero de Documento</label>
+                                    <input type="number" class="form-control" id="ruc" autofocus required>
+                                    <label for="ruc">Numero de Documento</label>
                                 </div>
                             </div>
-
-                            <div class="col-md-9 mb-3">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="nombres" required>
-                                    <label for="nombres">Nombre </label>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row g-2">
 
                             <div class="col-md-3 mb-3">
                                 <div class="input-group">
@@ -41,13 +30,32 @@
                                     </select>
                                     <label for="tipodocumento">Tipo de Documento</label>
                                 </div>
-                            </div>
+                                </div>
                             </div>
 
-                            <div class="col-md-9 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-floating">
-                                    <input type="number" id="telefono" maxlength="150" class="form-control" required>
-                                    <label for="telefono">Direccion Fiscal</label>
+                                    <input type="text" class="form-control" id="nombres" required disabled>
+                                    <label for="nombres">Nombre </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row g-2">
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input type="text" id="razonsocial" maxlength="150" class="form-control" required disabled>
+                                    <label for="razonsocial">Razon Social</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input type="text" id="direccion" maxlength="150" class="form-control" required>
+                                    <label for="direccion">Direccion Fiscal</label>
                                 </div>
                             </div>
 
@@ -68,6 +76,11 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="text-end p-3">
+                            <a href="#" class="btn btn-sm btn-primary">Registrar usuario</a>
+                        </div>
+
                         <div class="card-header">
                             Detalle de Venta
                         </div>
@@ -76,7 +89,7 @@
                     <div class="input-group">
                     <button class="input-group-text btn btn-success" type="button" id="buscar-nrodocumento"><i class="bi bi-plus-lg"></i></button>
                         <div class="form-floating">
-                        <input type="tel" class="form-control" maxlength="12" minlength="8"  id="nrodocumento" autofocus required>
+                        <input type="tel" class="form-control" maxlength="12" minlength="8"  id="nrodocumento" required>
                         <label for="nrodocumento">Buscar Producto</label>
                         </div>
                         <button class="input-group-text btn btn-secondary" type="button" id="buscar-nrodocumento"><i class="bi bi-search"></i></button>
@@ -123,5 +136,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
+        <!-- Proceso En JS-->
+         <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
+
+        <!-- Sweet Alert Simplificado-->
+         <script src="http://localhost/proyectosanmatias/js/swalcustom.js"></script>
     </body>
 </html>

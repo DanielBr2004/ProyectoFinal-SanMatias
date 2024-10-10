@@ -15,14 +15,14 @@
 
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="Producto" required>
+                                    <input type="text"  class="form-control" id="Producto" required>
                                     <label for="Producto">Producto</label>
                                 </div>
                             </div>
 
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="descripcion" required>
+                                    <input type="text" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ ]+"  class="form-control" id="descripcion" required>
                                     <label for="descripcion">Descripcion del producto</label>
                                 </div>
                             </div> 
