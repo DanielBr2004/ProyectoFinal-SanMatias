@@ -20,10 +20,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }else{
           $("#razonsocial").value = data['razonSocial'];
           $("#direccion").value = data['direccion'];
+          $("#nombres").value = '';
         }
+      }else if (ruc.length == 8){
+        const response = await fetch(`../../Api/api.buscarDNI.php?dni=${ruc}`, { method: 'GET' });
+        const data = await response.json();
+        
+
+        if (data.hasOwnProperty("message")){
+          $("#nombres").value = '';
+        }else{
+          $("#nombres").value = data['nombres'] + " " + data['apellidoPaterno'] + " " + data['apellidoMaterno'];
+          $("#razonsocial").value = '';
+          $("#direccion").value = '';
       }
     }
-
+  }
 
     $("#ruc").addEventListener("keypress", async (event) => {
       if (event.keyCode == 13) {
