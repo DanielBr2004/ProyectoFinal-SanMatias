@@ -15,13 +15,15 @@ class Cliente extends Conexion{
         public function add($params = []):int{
           $idcliente = null;
           try{
-          $query = $this->pdo->prepare("call spu_clientes_registrar(?,?,?,?)");
+          $query = $this->pdo->prepare("call spu_clientes_registrar(?,?,?,?,?,?)");
           $query->execute(
               array(
               $params['idpersona'],
               $params['telefono'],
+              $params['tipodocumento'],
               $params['razonsocial'],
-              $params['direccion']
+              $params['direccion'],
+              $params['email']
               )
           );
           $row = $query->fetch(PDO::FETCH_ASSOC);

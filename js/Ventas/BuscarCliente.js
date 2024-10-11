@@ -4,10 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return document.querySelector(object);
     }
 
-    //Funciones
-    //Lógica comunicación con el API
-    async function buscarRUC() {
-      const ruc = $("#ruc").value;
+
+
+
+    async function buscarRUC(){
+      const ruc = $("#nrodocumento").value;
 
       if (ruc.length == 11){
         const response = await fetch(`../../Api/api.buscarRUC.php?ruc=${ruc}`, { method: 'GET' });
@@ -21,30 +22,65 @@ document.addEventListener("DOMContentLoaded", () => {
           $("#razonsocial").value = data['razonSocial'];
           $("#direccion").value = data['direccion'];
           $("#nombres").value = '';
+          $("#apepaterno").value = '';
+          $("#apematerno").value = '';
         }
-      }else if (ruc.length == 8){
+        return data;
+      }
+    }
+
+    async function buscarDNI(){
+      const ruc = $("#nrodocumento").value;
+
+      if(ruc.length == 8){
         const response = await fetch(`../../Api/api.buscarDNI.php?dni=${ruc}`, { method: 'GET' });
         const data = await response.json();
         
 
         if (data.hasOwnProperty("message")){
           $("#nombres").value = '';
+          $("#apepaterno").value = '';
+          $("#apematerno").value = '';
         }else{
-          $("#nombres").value = data['nombres'] + " " + data['apellidoPaterno'] + " " + data['apellidoMaterno'];
+          $("#nombres").value = data['nombres'];
+          $("#apepaterno").value = data['apellidoPaterno'];
+          $("#apematerno").value = data['apellidoMaterno'];
           $("#razonsocial").value = '';
           $("#direccion").value = '';
       }
+      return data;
+      }
     }
+
+    //Funciones
+    //Lógica comunicación con el API
+    async function ValidaDocumento() {
+
+      const ruc = $("#nrodocumento").value;
+      let data = null;
+
+      if (ruc.length == 11){
+        data = await buscarRUC();
+        return data;
+      }else if(ruc.length == 8){
+        data = await buscarDNI();
+        return data;
+      }
+
+      
   }
 
-    $("#ruc").addEventListener("keypress", async (event) => {
+
+    //EVENTOS DE EJECUCION
+    $("#nrodocumento").addEventListener("keypress", async (event) => {
       if (event.keyCode == 13) {
-        buscarRUC();
+         await ValidaDocumento();
       }
     });
 
-    $("#ruc").addEventListener("input", async () => {
-        buscarRUC();
+    $("#nrodocumento").addEventListener("input", async () => {
+        await ValidaDocumento();
     });
+    
 
 });

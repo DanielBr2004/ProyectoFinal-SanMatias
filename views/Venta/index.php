@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="text-end p-3">
-                            <a href="#" class="btn btn-sm btn-primary">Registrar usuario</a>
+                            <a href="RegistrarCliente.php" class="btn btn-sm btn-primary">Registrar usuario</a>
                         </div>
 
                         <div class="card-header">

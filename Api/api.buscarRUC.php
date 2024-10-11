@@ -2,7 +2,7 @@
     header("Content-Type: application/json");
 
 // Datos
-$token = 'apis-token-10913.44T74Lnfp2fnLE3zUmyTJstHm6BB4Ptl';
+$token = 'apis-token-10945.B5Ahi3TxfoSBfm2Go81cfjnEALfhlojB';
 $ruc = $_GET['ruc'];
 
 // Iniciar llamada a API
