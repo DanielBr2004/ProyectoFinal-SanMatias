@@ -1,13 +1,13 @@
 use granjasanmatias;
 
-CALL spu_personas_registrar ('Buleje','Rojas','Daniel',12314788);
+CALL spu_personas_registrar ('Buleje','Rojas','Daniel',76363997);
 
 CALL spu_personas_registrar ('','','',12457852147);
 
-CALL spu_colaboradores_registrar(1,'DanielBr','');
+CALL spu_colaboradores_registrar(1,'BBuleje','');
 UPDATE colaboradores SET passusuario = '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK' WHERE idcolaborador = 1;
 
-CALL spu_colaboradores_login('DanielBr');
+CALL spu_colaboradores_login('BBuleje');
 
 CALL spu_colaborador_buscar_dni(12314788);
 
