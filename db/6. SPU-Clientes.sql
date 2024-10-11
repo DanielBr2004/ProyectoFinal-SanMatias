@@ -6,13 +6,15 @@ CREATE PROCEDURE spu_clientes_registrar
 (
 	IN _idpersona 		INT,
     IN _telefono 		CHAR(9),
+    IN _tipodocumento	CHAR(3),
     IN _razonsocial		VARCHAR(90),
-    IN _direccion		VARCHAR(90)
+    IN _direccion		VARCHAR(90),
+    IN _email			VARCHAR(90)
 )
 BEGIN 
 	INSERT INTO Cliente
-		(idpersona, telefono , razonsocial, direccion) VALUES
-        (_idpersona, _telefono, _razonsocial, _direccion);
+		(idpersona, telefono , tipodocumento, razonsocial, direccion, email) VALUES
+        (_idpersona, _telefono,_tipodocumento, _razonsocial, _direccion, _email);
 	SELECT @@last_insert_id 'idcliente';
 END $$
 

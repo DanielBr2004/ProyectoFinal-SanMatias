@@ -135,8 +135,8 @@ CREATE TABLE cliente
 (
 idcliente 			INT AUTO_INCREMENT PRIMARY KEY,
 idpersona			INT NOT NULL,
-telefono			   CHAR(9) NULL,
-tipodocumento		CHAR(3) NULL,
+telefono			CHAR(9) NULL,
+tipodocumento		CHAR(3) NOT NULL,
 razonsocial			VARCHAR(90) NULL,
 direccion			VARCHAR(90) NULL,
 email             VARCHAR(90) NULL,  
