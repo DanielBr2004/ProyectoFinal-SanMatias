@@ -15,8 +15,10 @@ $cliente = new Cliente();
             $datos = [
                 "idpersona"       => $cliente->limpiarCadena($_POST['idpersona']),
                 "telefono"        => $cliente->limpiarCadena($_POST['telefono']),
+                "tipodocumento"   => $cliente->limpiarCadena($_POST['tipodocumento']),
                 "razonsocial"     => $cliente->limpiarCadena($_POST['razonsocial']),
-                "direccion"       => $cliente->limpiarCadena($_POST['direccion'])
+                "direccion"       => $cliente->limpiarCadena($_POST['direccion']),
+                "email"           => $cliente->limpiarCadena($_POST['email'])
 
             ];
             $idobtenido = $cliente->add($datos);

@@ -31,7 +31,7 @@ select * from cliente;
 
 SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC LIMIT 1;
 
-CALL spu_clientes_registrar(3,'','Avicola San Matias S.A.C.','Av la mar S/N');
+CALL spu_clientes_registrar(1,'','DNI','','sunampe','daniel@gmail.com');
 
 CALL spu_insertar_KardexAlmProducto(1,1,'E','Stock Repuesto',200,'');
 
