@@ -65,10 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }else if(ruc.length == 8){
         data = await buscarDNI();
         return data;
-      }
+      }  
+    }
 
-      
-  }
+
+
 
 
     //EVENTOS DE EJECUCION
