@@ -34,3 +34,21 @@ header("Content-type: application/json; charset=utf-8");
             break;
     }
 }
+
+if(isset($_POST['operacion'])){
+
+  switch($_POST['operacion']){
+      case 'add':
+          // ... Código existente para agregar producto
+          break;
+      
+      case 'eliminar': 
+          if (isset($_POST['idproducto'])) {
+              $producto->eliminarProducto($_POST['idproducto']);
+              echo json_encode(["status" => "success"]);
+          } else {
+              echo json_encode(["status" => "error", "message" => "ID no proporcionado."]);
+          }
+          break; 
+  }
+}

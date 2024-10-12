@@ -43,6 +43,15 @@ class Producto extends Conexion{
     }
 }
 
+public function eliminarProducto($idproducto = 0){
+    try {
+      $consulta = $this->pdo->prepare("CALL spu_eliminar_productos(?)");
+      $consulta->execute(array($idproducto));
+    } 
+    catch (Exception $e) {
+      die($e->getMessage());
+    }
+   }
     
 
 

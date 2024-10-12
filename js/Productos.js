@@ -1,3 +1,26 @@
+async function eliminarProducto(idproducto) {
+    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+        const params = new FormData();
+        params.append("operacion", "eliminar");
+        params.append("idproducto", idproducto);
+
+        const options = {
+            method: 'POST',
+            body: params
+        };
+
+        const response = await fetch('../../controllers/producto.controller.php', options);
+        const result = await response.json();
+
+        if (result.status === "success") {
+            Swal.fire("Producto eliminado correctamente");
+            listarProductos(); 
+        } else {
+            Swal.fire("Error al eliminar el producto: " + result.message);
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   //Bandera
@@ -55,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const productos = await response.json();
         console.log(productos); 
         let tbody = document.querySelector("#productos-body");
-        tbody.innerHTML = ''; // Limpiar cualquier contenido previo
+        tbody.innerHTML = ''; 
         productos.forEach(producto => {
             let row = `
                 <tr>
@@ -68,21 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     </td>
                 </tr>
             `;
-            tbody.innerHTML += row; // Agregar la fila a la tabla
+            tbody.innerHTML += row; 
         });
     } catch (error) {
         console.error('Error al listar los productos:', error);
     }
 }
 listarProductos();
-
-
-
-
-
-
-
-
 
 
 
