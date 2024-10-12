@@ -66,11 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         const response = await buscarDocumento();
         if (response && response.length > 0) {
-            alert("El usuario ya existe.");
+            console.log("El usuario ya existe.");
             adUsuario();
         } else {
-            // Permitir registro
-            // Aquí puedes agregar la lógica para permitir el registro
+
             console.log("Usuario no encontrado. Permitir registro.");
             adUsuario(true);
         }
