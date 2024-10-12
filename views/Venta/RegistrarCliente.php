@@ -106,12 +106,12 @@
         <!-- Proceso En JS-->
          <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
         <!-- Preceso Registrar Usuario-->
-         <script src="http://localhost/proyectosanmatias/js/Ventas/registrarCliente.js"></script>
+         <script src="<?= $host ?>/js/Ventas/registrarCliente.js"></script>
 
          <!-- Sweet Alert -->
          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
          
         <!-- Sweet Alert Simplificado-->
-         <script src="http://localhost/proyectosanmatias/js/swalcustom.js"></script>
+         <script src="<?= $host ?>/js/swalcustom.js"></script>
     </body>
 </html>
