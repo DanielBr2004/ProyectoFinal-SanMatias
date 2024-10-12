@@ -72,6 +72,34 @@
     </div>
 </div>
 <!-- FIN LISTADO -->
+ <!--MODAL-->
+ <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarProductoLabel">Editar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-editar-producto" autocomplete="off">
+          <input type="hidden" id="idproducto-editar" />
+          <div class="mb-3">
+            <label for="Producto-editar" class="form-label">Producto</label>
+            <input type="text" class="form-control" id="Producto-editar" required>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion-editar" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion-editar" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!--FIN MODAL-->
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
