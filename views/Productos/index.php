@@ -39,6 +39,68 @@
                 </div>
             </div>
         </div>
+<!-- LISTADO -->
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Listado</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Productos
+        </div>
+        <div class="card-body">
+            <div id="tabla-productos">
+                <!-- Tabla de productos será insertada aquí -->
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Descripción</th>
+                            <th>Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos-body">
+                        <!-- Los productos serán insertados dinámicamente desde JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN LISTADO -->
+ <!--MODAL-->
+ <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarProductoLabel">Editar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-editar-producto" autocomplete="off">
+          <input type="hidden" id="idproducto-editar" />
+          <div class="mb-3">
+            <label for="Producto-editar" class="form-label">Producto</label>
+            <input type="text" class="form-control" id="Producto-editar" required>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion-editar" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion-editar" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!--FIN MODAL-->
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
