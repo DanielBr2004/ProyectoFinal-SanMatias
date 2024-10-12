@@ -13,6 +13,8 @@ CALL spu_colaborador_buscar_dni(12314788);
 
 CALL spu_insertar_kardexhuevo(1,1,'E','Venta realizada',200);
 
+CALL spu_cliente_documento_dni(20131376503 );
+
 select * from KardexAlmHuevo;
 
 SELECT * FROM VENTAS;

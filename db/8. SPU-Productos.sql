@@ -1,6 +1,7 @@
-USE granjasanmatias
+USE granjasanmatias;
 
  -- ------------------------------------------- Registrar productos ----------------------------------------------------- 
+ drop procedure if exists `spu_registrar_productos`;
 DELIMITER $$
 CREATE PROCEDURE spu_registrar_productos(
 IN _producto VARCHAR(60),
@@ -11,6 +12,7 @@ BEGIN
         (_producto, _descripcion);
 END $$
  -- ------------------------------------------- Listado productos ----------------------------------------------------- 
+ drop procedure if exists `spu_listar_productos`;
 DELIMITER $$
 CREATE PROCEDURE spu_listar_productos()
 BEGIN
@@ -18,6 +20,7 @@ BEGIN
 END $$
 CALL spu_listar_productos();
  -- ------------------------------------------- Editar productos -----------------------------------------------------
+ drop procedure if exists `spu_editar_productos`;
  DELIMITER $$
 CREATE PROCEDURE spu_editar_productos(
     IN _idproducto INT,
@@ -32,6 +35,7 @@ BEGIN
 END $$
 CALL spu_editar_productos(1, 'Soyas', '	Granos de soya ricos en proteínas para la alimentacion de los animales');
  -- ------------------------------------------- Eliminar productos -----------------------------------------------------
+ drop procedure if exists `spu_eliminar_productos`;
  DELIMITER $$
 CREATE PROCEDURE spu_eliminar_productos(
     IN _idproducto INT

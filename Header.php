@@ -5,7 +5,7 @@ if(!isset($_SESSION['login']) || (isset($_SESSION['login']) && !$_SESSION['login
     header('Location:index.php');
 }
 //Usando .ENV
-$host = "http://localhost/proyectosanmatias/";
+$host = "http://localhost/ProyectoFinal-SanMatias/";
 ?>
 
 <!DOCTYPE html>
