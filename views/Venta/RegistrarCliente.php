@@ -46,7 +46,7 @@
                             <div class="col-md-2 mb-3">
                                     <div class="form-floating">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control" id="tipodocumento"  disabled>
+                                            <input type="number" class="form-control" id="tipodocumento"  disabled/>
                                             <label for="tipodocumento">Tipo de Documento</label>
                                         </div>
                                     </div>

@@ -14,22 +14,15 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" id="ruc" autofocus required>
-                                    <label for="ruc">Numero de Documento</label>
+                                    <input type="text" class="form-control" id="tipodocumento" autofocus required>
+                                    <label for="tipodocumento">Numero de Documento</label>
                                 </div>
                             </div>
 
                             <div class="col-md-3 mb-3">
-                                <div class="input-group">
                                 <div class="form-floating">
-                                    <select name="tipodocumento" id="tipodocumento" class="form-select" required >
-                                        <option value="">Seleccione</option>
-                                        <option value="1">RUC</option>
-                                        <option value="2">DNI</option>
-                                        <option value="3">CARNET EXTRANGERIA</option>
-                                    </select>
-                                    <label for="tipodocumento">Tipo de Documento</label>
-                                </div>
+                                    <input type="number" class="form-control" id="ruc" autofocus required>
+                                    <label for="ruc">Tipo de Documento</label>
                                 </div>
                             </div>
 

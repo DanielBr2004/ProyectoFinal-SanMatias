@@ -58,20 +58,37 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
   }
 
+  //funcion para validar si es dni o ruc
+    async function validarDocumento(dni){
+        //const nrodocumento = document.querySelector("#nrodocumento").value;
+        const tipodocumento = document.querySelector("#tipodocumento");
+
+        if(dni.length === 8){
+            console.log("DNI");
+            tipodocumento.value = "DNI";
+        }else if(dni.length === 11){
+            console.log("RUC");
+            tipodocumento.value = "RUC";
+        }
+    }
 
 
+
+let dni = "";
 
   //Buscador del documento al pulsar Enter #01
   nrodocumento.addEventListener("input", async (event) => {
         event.preventDefault();
+        dni = document.querySelector("#nrodocumento").value;
+        console.log(dni.length);
         const response = await buscarDocumento();
         if (response && response.length > 0) {
             console.log("El usuario ya existe.");
             adUsuario();
         } else {
-
             console.log("Usuario no encontrado. Permitir registro.");
             adUsuario(true);
+            await validarDocumento(dni);
         }
 });
 
@@ -132,5 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   //Método de Inicio
+
   adUsuario();
 })

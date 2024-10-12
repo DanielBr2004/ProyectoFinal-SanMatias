@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 
 // Datos
-$token = 'apis-token-10916.4vOvw0p3X6flWTk3HGiSSLTjpWxnAKuh';
+$token = 'apis-token-10966.mtARhsEizsgvqznDWZoRrF1KVBdDmary';
 $dni = $_GET['dni'];
 
 // Iniciar llamada a API
