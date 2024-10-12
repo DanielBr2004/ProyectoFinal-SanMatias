@@ -39,6 +39,40 @@
                 </div>
             </div>
         </div>
+<!-- LISTADO -->
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Listado</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Productos
+        </div>
+        <div class="card-body">
+            <div id="tabla-productos">
+                <!-- Tabla de productos será insertada aquí -->
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Descripción</th>
+                            <th>Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos-body">
+                        <!-- Los productos serán insertados dinámicamente desde JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN LISTADO -->
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

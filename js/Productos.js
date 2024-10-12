@@ -47,4 +47,44 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       }
   })
+
+
+  async function listarProductos() {
+    try {
+        const response = await fetch('../../controllers/producto.controller.php?operacion=getAll');
+        const productos = await response.json();
+        console.log(productos); 
+        let tbody = document.querySelector("#productos-body");
+        tbody.innerHTML = ''; // Limpiar cualquier contenido previo
+        productos.forEach(producto => {
+            let row = `
+                <tr>
+                    <td>${producto.idproducto}</td>
+                    <td>${producto.producto}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editarProducto(${producto.idproducto})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${producto.idproducto})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row; // Agregar la fila a la tabla
+        });
+    } catch (error) {
+        console.error('Error al listar los productos:', error);
+    }
+}
+listarProductos();
+
+
+
+
+
+
+
+
+
+
+
+
 })

@@ -28,7 +28,9 @@ header("Content-type: application/json; charset=utf-8");
   if(isset($_GET['operacion'])){
     switch($_GET['operacion']){
         case 'getAll':
-            echo json_encode($producto->getAll());
+            // Llamamos al procedimiento almacenado para listar productos
+            $consulta = $producto->getAll(); // Asumiendo que has implementado el método para llamar al procedimiento
+            echo json_encode($consulta);
             break;
     }
-  }
+}

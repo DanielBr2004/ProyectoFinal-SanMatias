@@ -10,3 +10,10 @@ BEGIN
 		(producto, descripcion) VALUES 
         (_producto, _descripcion);
 END $$
+
+DELIMITER $$
+CREATE PROCEDURE spu_listar_productos()
+BEGIN
+    SELECT * FROM productos;
+END $$
+CALL spu_listar_productos();
