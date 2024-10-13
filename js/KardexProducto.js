@@ -1,5 +1,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  
+  $('#tabla-productos').DataTable({
+    "language": {
+        "url": "../views/js/Spanish.json"
+    }
+});
 
     const idproducto = document.querySelector("#idproducto");
     const StockActual = document.querySelector("#stockProducto");
@@ -146,7 +152,35 @@ document.addEventListener("DOMContentLoaded", () => {
           mermaInputContainer.style.display = 'none';
       }
   });
-  
+
+  async function cargarProductos() {
+    try {
+        const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
+        const data = await response.json();
+
+        const tbody = document.getElementById("tbody-productos");
+        tbody.innerHTML = ""; // Limpiamos el contenido previo
+
+        data.forEach(item => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${item.ID}</td>
+                <td>${item.Colaborador}</td>
+                <td>${item.Producto}</td>
+                <td>${item['Stock Actual']}</td>
+                <td>${item['Motivo de Movimiento']}</td>
+                <td>${item.Cantidad}</td>
+                <td>${item.Creado}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Error al cargar productos:", error);
+    }
+}
+
+ cargarProductos();
+
   })
 
   

@@ -89,9 +89,50 @@
                 </div>
             </div>
         </div>
+
+        <div class="container mt-5">
+    <div class="card">
+        <h2 class="text-center" style="color: #007bff;">Inventario</h2>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" id="tabla-productos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Colaborador</th>
+                            <th>Producto</th>
+                            <th>Stock Actual</th>
+                            <th>Motivo de Movimiento</th>
+                            <th>Cantidad</th>
+                            <th>Creado</th>
+                            <th>Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-productos">
+                        <!-- Los datos se llenarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <!--DATATABLE-->
+
+<!--JQuery-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<!--extension BS5-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!--datatable core-->
+<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+<!-- datatable estilo BS5-->
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+ 
+
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="../../js/KardexProducto.js"></script>

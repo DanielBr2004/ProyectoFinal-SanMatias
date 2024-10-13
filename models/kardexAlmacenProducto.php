@@ -43,5 +43,15 @@ class KardexProducto extends Conexion{
         }
     }
 
+    public function getAll(){
+        try {
+            $query = $this->pdo->prepare("CALL spu_listar_KardexAlmProducto()");
+            $query->execute();
+            $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
   }
