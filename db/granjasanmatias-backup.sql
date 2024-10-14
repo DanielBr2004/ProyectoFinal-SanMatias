@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2024 a las 20:18:07
+-- Tiempo de generación: 14-10-2024 a las 18:59:27
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,7 +41,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_documento_dni` (IN `_nr
         PER.nombres,
         CLI.telefono,
         CLI.razonsocial,
-        CLI.direccion
+        CLI.direccion,
+        CLI.email,
+        CLI.tipodocumento
 		FROM personas PER 
         LEFT JOIN cliente CLI
         ON CLI.idpersona = PER.idpersona 
@@ -78,6 +80,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_colaborador_buscar_dni` (IN `_n
         LEFT JOIN colaboradores COL
         ON COL.idpersona = PER.idpersona 
         WHERE nrodocumento = _nrodocumento;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_editar_productos` (IN `_idproducto` INT, IN `_producto` VARCHAR(100), IN `_descripcion` VARCHAR(100))   BEGIN
+    UPDATE productos
+    SET producto = _producto,
+        descripcion = _descripcion
+    WHERE idproducto = _idproducto;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_eliminar_productos` (IN `_idproducto` INT)   BEGIN
+    DELETE FROM productos
+    WHERE idproducto = _idproducto;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_insertar_KardexAlmProducto` (IN `_idcolaborador` INT, IN `_idproducto` INT, IN `_tipomovimiento` CHAR(1), IN `_motivomoviento` VARCHAR(100), IN `_cantidad` SMALLINT, IN `_descripcion` VARCHAR(100))   BEGIN
@@ -118,6 +132,29 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_insertar_kardexhuevo` (IN `_idc
     VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_KardexAlmProducto` ()   BEGIN
+    SELECT 
+        k.idAlmacenProducto AS ID, -- Este es el ID que te falta
+        c.nomusuario AS Colaborador,
+        p.producto AS Producto,
+        k.stockProducto AS 'Stock Actual',
+        k.motivomovimiento AS 'Motivo de Movimiento',
+        k.cantidad AS Cantidad,
+        k.creado AS Creado
+    FROM 
+        KardexAlmProducto k
+    JOIN 
+        Productos p ON k.idproducto = p.idproducto
+    JOIN 
+        colaboradores c ON k.idcolaborador = c.idcolaborador
+    ORDER BY 
+        k.creado DESC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_productos` ()   BEGIN
+    SELECT * FROM productos;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_personas_registrar` (IN `_apepaterno` VARCHAR(60), IN `_apematerno` VARCHAR(60), IN `_nombres` VARCHAR(40), IN `_nrodocumento` CHAR(12))   BEGIN
 	INSERT INTO personas 
 		(apepaterno, apematerno, nombres, nrodocumento) VALUES 
@@ -143,11 +180,24 @@ CREATE TABLE `cliente` (
   `idcliente` int(11) NOT NULL,
   `idpersona` int(11) NOT NULL,
   `telefono` char(9) DEFAULT NULL,
-  `tipodocumento` char(3) NOT NULL,
+  `tipodocumento` char(3) DEFAULT NULL,
   `razonsocial` varchar(90) DEFAULT NULL,
   `direccion` varchar(90) DEFAULT NULL,
   `email` varchar(90) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idcliente`, `idpersona`, `telefono`, `tipodocumento`, `razonsocial`, `direccion`, `email`) VALUES
+(1, 1, '', 'DNI', '', 'sunampe', 'daniel@gmail.com'),
+(2, 2, '789456123', 'DNI', '', 'sunampe', 'dwedwqde@gmail.com'),
+(3, 3, '123456789', '', 'AVICOLA SAN MATIAS S.A.C.', 'AV. LA MAR NRO S/N', 'dwedwewef'),
+(4, 4, '123456789', '', 'SERVIC NAC DE ADIESTRAM EN TRABAJ INDUST', 'AV. ALFREDO MENDIOLA NRO 3520', 'SENATI@GMAIL.COM'),
+(5, 5, '123456789', '', '', '', 'loyola@gmail.com'),
+(6, 6, '123456789', 'DNI', '', '', 'nose@gmail.com'),
+(7, 7, '123456789', 'DNI', '', 'Av Sunampe # 812', 'javier123@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -169,7 +219,7 @@ CREATE TABLE `colaboradores` (
 --
 
 INSERT INTO `colaboradores` (`idcolaborador`, `nomusuario`, `passusuario`, `idpersona`, `create_at`, `inactive_at`) VALUES
-(1, 'DanielBr', '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK', 1, '2024-10-11 18:17:45', NULL);
+(1, 'DanielBr', '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK', 1, '2024-10-10 22:51:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -230,6 +280,14 @@ CREATE TABLE `kardexalmproducto` (
   `idcolaborador` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `kardexalmproducto`
+--
+
+INSERT INTO `kardexalmproducto` (`idAlmacenProducto`, `tipomovimiento`, `stockProducto`, `cantidad`, `motivomovimiento`, `descripcion`, `creado`, `idproducto`, `idcolaborador`) VALUES
+(1, 'E', '150', '150', 'Entrada por compra', NULL, '2024-10-13 18:08:26', 2, 1),
+(2, 'E', '300', '150', 'Entrada por compra', NULL, '2024-10-13 18:29:17', 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -274,7 +332,13 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`idpersona`, `apematerno`, `apepaterno`, `nombres`, `nrodocumento`, `create_at`, `inactive_at`) VALUES
-(1, 'Rojas', 'Buleje', 'Daniel', '76363997', '2024-10-11 18:17:33', NULL);
+(1, 'Rojas', 'Buleje', 'Daniel', '76363997', '2024-10-10 22:51:19', NULL),
+(2, 'Rojas', 'Buleje', 'Javier', '78451296', '2024-10-10 23:05:47', NULL),
+(3, '', '', '', '20602439217', '2024-10-11 22:21:03', NULL),
+(4, '', '', '', '20131376503', '2024-10-11 22:24:17', NULL),
+(5, 'TORRES', 'LOYOLA', 'MIGUEL ALEXANDER', '73217990', '2024-10-11 22:27:40', NULL),
+(6, 'CRUZ', 'LLALLICO', 'LUCERO ROSSMARY', '76853214', '2024-10-13 19:27:13', NULL),
+(7, 'ROJAS', 'BULEJE', 'JAVIER FELICIANO', '76363996', '2024-10-13 22:03:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -287,6 +351,13 @@ CREATE TABLE `productos` (
   `producto` varchar(100) NOT NULL,
   `descripcion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`idproducto`, `producto`, `descripcion`) VALUES
+(2, 'soya', 'producto marca rico');
 
 -- --------------------------------------------------------
 
@@ -484,7 +555,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `colaboradores`
@@ -514,7 +585,7 @@ ALTER TABLE `kardexalmhuevo`
 -- AUTO_INCREMENT de la tabla `kardexalmproducto`
 --
 ALTER TABLE `kardexalmproducto`
-  MODIFY `idAlmacenProducto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAlmacenProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -532,13 +603,13 @@ ALTER TABLE `permisosasignados`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `provincias`
