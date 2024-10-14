@@ -17,8 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
   async function llenarDatos(response){
     if(response.length == 0){
+      $("#tipodocumento").value = '';
+      $("#nombres").value = '';
       $("#razonsocial").value = '';
       $("#direccion").value = '';
+      $("#email").value = '';
+      $("#telefono").value = '';
     }else{
       $("#tipodocumento").value = response[0].tipodocumento;
       $("#nombres").value = response[0].apepaterno + " " + response[0].apematerno + " " + response[0].nombres;
