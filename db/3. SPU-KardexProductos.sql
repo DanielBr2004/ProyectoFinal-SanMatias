@@ -30,8 +30,8 @@ BEGIN
     VALUES (_idcolaborador, _idproducto, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion, ''), NOW());
 END $$
 -- ------------------------------- LISTADO ----------------------------------
+drop procedure if exists `spu_listar_KardexAlmProducto`;
 DELIMITER $$
-
 CREATE PROCEDURE spu_listar_KardexAlmProducto()
 BEGIN
     SELECT 
@@ -51,4 +51,3 @@ BEGIN
     ORDER BY 
         k.creado DESC;
 END $$
-CALL spu_listar_KardexAlmProducto();

@@ -8,27 +8,28 @@
             <div class="card mb-4">
                 <div class="card-header">
                     Datos del Cliente
+
                 </div>
                 <div class="card-body">
                     <form action="" id="form-kardex-huevos" autocomplete="off">
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="tipodocumento" autofocus required>
-                                    <label for="tipodocumento">Numero de Documento</label>
+                                    <input type="text" class="form-control" minlength="8" maxlength="11"  id="nrodocumento" autofocus required>
+                                    <label for="nrodocumento">Numero de Documento</label>
                                 </div>
                             </div>
 
                             <div class="col-md-3 mb-3">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" id="ruc" autofocus required>
-                                    <label for="ruc">Tipo de Documento</label>
+                                    <input type="text" class="form-control" id="tipodocumento" disabled>
+                                    <label for="tipodocumento">Tipo de Documento</label>
                                 </div>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="nombres" required disabled>
+                                    <input type="text" class="form-control" id="nombres"  disabled>
                                     <label for="nombres">Nombre </label>
                                 </div>
                             </div>
@@ -40,14 +41,14 @@
 
                             <div class="col-md-6 mb-3">
                                 <div class="form-floating">
-                                    <input type="text" id="razonsocial" maxlength="150" class="form-control" required disabled>
+                                    <input type="text" id="razonsocial" maxlength="150" class="form-control" disabled>
                                     <label for="razonsocial">Razon Social</label>
                                 </div>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <div class="form-floating">
-                                    <input type="text" id="direccion" maxlength="150" class="form-control" required>
+                                    <input type="text" id="direccion" maxlength="150" class="form-control" disabled>
                                     <label for="direccion">Direccion Fiscal</label>
                                 </div>
                             </div>
@@ -57,22 +58,19 @@
                         <div class="row g-2">
                             <div class="col-md-3 mb-3">
                                 <div class="form-floating">
-                                    <input type="number" id="telefono" maxlength="150" class="form-control">
-                                    <label for="telefono">Email</label>
+                                    <input type="text" id="email" maxlength="150" class="form-control" disabled>
+                                    <label for="email">Email</label>
                                 </div>
                             </div>
 
                             <div class="col-md-3 mb-3">
                                 <div class="form-floating">
-                                    <input type="number" id="telefono" maxlength="150" class="form-control">
+                                    <input type="number" id="telefono" maxlength="150" class="form-control" disabled>
                                     <label for="telefono">Telefono</label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="text-end p-3">
-                            <a href="RegistrarCliente.php" class="btn btn-sm btn-primary">Registrar usuario</a>
-                        </div>
 
                         <div class="card-header">
                             Detalle de Venta
@@ -115,7 +113,7 @@
 
                 <div class="card-footer">
                     <div class="text-end">
-                        <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm">Registrar Venta</button>
+                        <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm" disabled>Registrar Venta</button>
                         <button type="reset" id="cancelar" class="btn btn-secondary btn-sm">Cancelar Venta</button>
                     </div>
                 </div>
@@ -129,10 +127,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <!-- Proceso En JS-->
-         <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
+
 
         <!-- Sweet Alert Simplificado-->
-         <script src="http://localhost/proyectosanmatias/js/swalcustom.js"></script>
+         <script src="<?= $host ?>js/swalcustom.js"></script>
+
+         <script src="<?= $host ?>js/ventas/buscarClienteRegistrado.js"></script>
     </body>
 </html>

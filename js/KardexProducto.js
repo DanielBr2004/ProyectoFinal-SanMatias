@@ -164,13 +164,13 @@ document.addEventListener("DOMContentLoaded", () => {
         data.forEach(item => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td>${item.ID}</td>
-                <td>${item.Colaborador}</td>
-                <td>${item.Producto}</td>
-                <td>${item['Stock Actual']}</td>
-                <td>${item['Motivo de Movimiento']}</td>
-                <td>${item.Cantidad}</td>
-                <td>${item.Creado}</td>
+                <td class="text-center">${item.ID}</td>
+                <td class="text-center">${item.Colaborador}</td>
+                <td class="text-center">${item.Producto}</td>
+                <td class="text-center">${item['Stock Actual']}</td>
+                <td class="text-center">${item['Motivo de Movimiento']}</td>
+                <td class="text-center">${item.Cantidad}</td>
+                <td class="text-center">${item.Creado}</td>
             `;
             tbody.appendChild(tr);
         });

@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
             
+    //Función de referencia GLOBAL
+    function $(object = null) {
+        return document.querySelector(object);
+      }
+
   //Referencia a la caja de texto DNI
   const nrodocumento = document.querySelector("#nrodocumento");
   //Variable de persona que indicará negativo (persona no identificada)
@@ -58,50 +63,34 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
   }
 
-  //funcion para validar si es dni o ruc
-    async function validarDocumento(dni){
-        //const nrodocumento = document.querySelector("#nrodocumento").value;
-        const tipodocumento = document.querySelector("#tipodocumento");
 
-        if(dni.length === 8){
-            console.log("DNI");
-            tipodocumento.value = "DNI";
-        }else if(dni.length === 11){
-            console.log("RUC");
-            tipodocumento.value = "RUC";
-        }
-    }
-
-
-
-let dni = "";
-
-  //Buscador del documento al pulsar Enter #01
   nrodocumento.addEventListener("input", async (event) => {
         event.preventDefault();
-        dni = document.querySelector("#nrodocumento").value;
-        console.log(dni.length);
         const response = await buscarDocumento();
-        if (response && response.length > 0) {
+        if ( response && response.length > 0) {
             console.log("El usuario ya existe.");
             adUsuario();
         } else {
             console.log("Usuario no encontrado. Permitir registro.");
+            if(nrodocumento.value.length == 8){
+                document.querySelector("#registrar-cliente").removeAttribute("disabled");
+                document.querySelector("#direccion").removeAttribute("disabled");
+            }
             adUsuario(true);
-            await validarDocumento(dni);
         }
 });
+
 
 
   //Método para habilitar/deshabilitar el formulario de usuarios
   function adUsuario(sw = false){
       if(!sw){
           document.querySelector("#telefono").setAttribute("disabled", true);
-          document.querySelector("#registrar-cliente").setAttribute("disabled", true);
           document.querySelector("#email").setAttribute("disabled", true);
       }else{
+
+
           document.querySelector("#telefono").removeAttribute("disabled");
-          document.querySelector("#registrar-cliente").removeAttribute("disabled");
           document.querySelector("#email").removeAttribute("disabled");
 
       }
@@ -148,7 +137,8 @@ let dni = "";
   });
 
 
+
   //Método de Inicio
 
-  adUsuario();
-})
+    adUsuario();
+});
