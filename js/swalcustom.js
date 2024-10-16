@@ -4,7 +4,7 @@
  * @param {string} modulo Módulo de la aplicación desde donde se genera (créditos, clientes, ventas, etc.)
  * @returns {boolean} Retorna un valor lógico basado en una promesa
  */
-async function ask(pregunta = ``, modulo = `Lino Fino`){
+async function ask(pregunta = ``, modulo = `San Matias`){
   const respuesta = await Swal.fire({
     title: pregunta,
     text: modulo,
@@ -13,7 +13,7 @@ async function ask(pregunta = ``, modulo = `Lino Fino`){
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
     confirmButtonColor: '#3498db',
-    footer: 'Lino Fino Ver. 1.0'
+    footer: 'San Matias Ver. 1.0'
   });
 
   return respuesta.isConfirmed;

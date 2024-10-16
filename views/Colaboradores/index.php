@@ -72,8 +72,8 @@
             </div> <!-- ./tercera fila -->
             
             <div class="text-end">
-                <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm">Registrar Nuevo Colaborador</button>
-                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
+                <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm" disabled>Registrar Nuevo Colaborador</button>
+                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm" >Cancelar Proceso</button>
             </div>
                     </form>
                 </div>
@@ -86,5 +86,6 @@
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="../../js/Colaboradores.js"></script>
+        <script src="../../js/swalcustom.js"></script>
     </body>
 </html>

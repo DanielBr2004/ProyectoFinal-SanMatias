@@ -37,7 +37,7 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= $host ?>/home.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen">Inventario Almacen</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen"><i class="fa-solid fa-users-viewfinder"></i> Inventario Almacen</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioMolino">Inventario Molino</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/Venta">Venta</a></li>
                         <li class="nav-item dropdown">
@@ -45,10 +45,10 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <p style="text-align: center;"><?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['nombres'] ?></p>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes"">Clientes</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"">Colaboradores</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/ActualizarDatos"">Actualizar Datos</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/Productos"">Productos</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes">Clientes</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"><i class="fa-solid fa-users-viewfinder"></i> Usuarios</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/ActualizarDatos">Actualizar Datos</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/Productos">Productos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy">Cerrar sesion</a></li>
                             </ul>
