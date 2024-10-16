@@ -4,17 +4,16 @@ CALL spu_personas_registrar ('Buleje','Rojas','Daniel',76363997);
 
 CALL spu_personas_registrar ('','','',12457852147);
 
-CALL spu_colaboradores_registrar(1,'DanielBr','');
-UPDATE colaboradores SET passusuario = '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK' WHERE idcolaborador = 1;
+CALL spu_colaboradores_registrar(1,'BBuleje','');
+UPDATE colaboradores SET passusuario = '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK' WHERE idcolaborador = 3;
 
-CALL spu_colaboradores_login('DanielBr');
+CALL spu_colaboradores_login('BBuleje');
 
 CALL spu_colaborador_buscar_dni(12314788);
 
 CALL spu_insertar_kardexhuevo(1,1,'E','Venta realizada',200);
 
-CALL spu_cliente_documento_dni(76363997);
-
+CALL spu_cliente_documento_dni(76363996);
 select * from KardexAlmHuevo;
 
 SELECT * FROM VENTAS;
@@ -39,5 +38,5 @@ CALL spu_insertar_KardexAlmProducto(1,1,'E','Stock Repuesto',200,'');
 
 CALL spu_insertar_kardexhuevo(1,1,'E','por produccion',150,'dwdwdw');
 SELECT stockProducto  FROM KardexAlmProducto WHERE idproducto = 1 ORDER BY creado DESC LIMIT 1;
-
+CALL spu_listar_Colaboradores();
 CALL spu_vista_kardexhuevo();

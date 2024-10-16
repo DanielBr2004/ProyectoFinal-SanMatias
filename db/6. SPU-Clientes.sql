@@ -1,7 +1,6 @@
-USE granjasanmatias;
+USE granjasanmatias
 
 -- ----------------------------------------- Procedimiento Registrar cliente -------------------------------------------
-drop procedure if exists `spu_clientes_registrar`;
 DELIMITER $$
 CREATE PROCEDURE spu_clientes_registrar
 (
@@ -20,7 +19,6 @@ BEGIN
 END $$
 
  -- ------------------------------------------- Buscar Colaborador por su DNI ----------------------------------------------------- 
-drop procedure if exists `spu_cliente_documento_dni`;
 DELIMITER $$
 CREATE PROCEDURE spu_cliente_documento_dni(IN _nrodocumento CHAR(12))
 BEGIN
@@ -30,13 +28,12 @@ BEGIN
         PER.apepaterno, 
         PER.apematerno,
         PER.nombres,
+        CLI.tipodocumento,
         CLI.telefono,
         CLI.razonsocial,
-        CLI.direccion,
-        CLI.email,
-        CLI.tipodocumento
-		FROM cliente CLI 
-        LEFT JOIN personas PER
-        ON PER.idpersona = CLI.idpersona 
+        CLI.direccion
+		FROM personas PER 
+        LEFT JOIN cliente CLI
+        ON CLI.idpersona = PER.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$

@@ -34,6 +34,9 @@ $colaborador = new Colaborador();
         case 'searchByDoc':
             echo json_encode($colaborador->searchByDoc(['nrodocumento' => $_GET['nrodocumento']]));
             break;
+        case 'getAllUser':
+          echo json_encode($colaborador->getAllUser());
+          break;
     }
   }
 

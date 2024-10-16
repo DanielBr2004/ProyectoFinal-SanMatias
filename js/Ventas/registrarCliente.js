@@ -72,11 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
             adUsuario();
         } else {
             console.log("Usuario no encontrado. Permitir registro.");
-            if(nrodocumento.value.length == 8){
-                document.querySelector("#registrar-cliente").removeAttribute("disabled");
-                document.querySelector("#direccion").removeAttribute("disabled");
+            showToast("este Nro de Documento No Existe", "ERROR", 1500);
+            if($("nombres").value == "" && $("apepaterno").value == "" && $("apematerno").value == ""){
+                if(nrodocumento.value.length == 8){
+                    document.querySelector("#registrar-cliente").removeAttribute("disabled");
+                    document.querySelector("#direccion").removeAttribute("disabled");
+                }
+                adUsuario(true);
             }
-            adUsuario(true);
         }
 });
 
@@ -111,23 +114,19 @@ document.addEventListener("DOMContentLoaded", () => {
               response1 = await registrarPersona(); //Registramos nueva persona
               idpersona = response1.idpersona;      //Obtenemos el ID de la nueva persona
           }
+          
 
           //¿El idpersona es correcto?
           if(idpersona == -1){
-              Swal.fire("No se pudo registrar los datos del usuario, verifique DNI");
+              showToast("Error en Registrar al Usuario", "ERROR", 1500);
           }else{
               //Tenemos idpersona
               response2 = await registrarCliente(idpersona);
-              if(response2.idcolaborador == -1){
-                  Swal.fire("No se pudo crear tu cuenta de Usuario, Verifique el Email");
+              console.log(response2);
+              if(response2.idcliente == -1){
+                  showToast("Error en Registrar al Usuario", "ERROR", 1500);
               }else{
-                  Swal.fire({
-                      position: "center",
-                      icon: "success",
-                      title: "Cliente creado Correctamente",
-                      showConfirmButton: false,
-                      timer: 1500
-                  });
+                 showToast("Cliente Registrado", "SUCCESS", 1500);
                   //Ambos procesos han finalizado correctamente
                   document.querySelector("#form-registro-clientes").reset();
                   adUsuario();

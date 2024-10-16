@@ -117,6 +117,6 @@
          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
          
         <!-- Sweet Alert Simplificado-->
-         <script src="<?= $host ?>/js/swalcustom.js"></script>
+         <script src="../../js/swalcustom.js"></script>
     </body>
 </html>
