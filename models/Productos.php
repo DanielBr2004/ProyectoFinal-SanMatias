@@ -32,18 +32,41 @@ class Producto extends Conexion{
   }
      
 
-    public function getAll(){
-        try{
-        $consulta = $this->pdo->prepare("SELECT idproducto, producto FROM Productos ORDER BY Producto;");
+  public function getAll() {
+    try {
+        $consulta = $this->pdo->prepare("CALL spu_listar_productos()");
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
-        } 
-        catch(Exception $e){
+    } 
+    catch(Exception $e) {
         die($e->getMessage());
-        }
     }
+}
 
+public function eliminarProducto($idproducto = 0){
+    try {
+      $consulta = $this->pdo->prepare("CALL spu_eliminar_productos(?)");
+      $consulta->execute(array($idproducto));
+    } 
+    catch (Exception $e) {
+      die($e->getMessage());
+    }
+   }
     
 
+   public function editarProducto($params = []): bool {
+    try {
+        $consulta = $this->pdo->prepare("CALL spu_editar_productos(?,?,?)");
+        $consulta->execute(array(
+            $params['idproducto'],  
+            $params['Producto'],      
+            $params['descripcion']    
+        ));
+        return true; 
+    } 
+    catch (Exception $e) {
+        die($e->getMessage()); 
+    }
+}
 
   }

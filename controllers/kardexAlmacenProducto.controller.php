@@ -33,3 +33,12 @@ if(isset($_GET['operacion'])){
           break;
   }
 }
+
+if (isset($_GET['operacion'])) {
+  switch ($_GET['operacion']) {
+      case 'getAll':
+          echo json_encode($kardexproducto->getAll());
+          break;
+      // Otros casos...
+  }
+}

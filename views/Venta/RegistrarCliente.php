@@ -46,7 +46,7 @@
                             <div class="col-md-2 mb-3">
                                     <div class="form-floating">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control" id="tipodocumento"  disabled>
+                                            <input type="text" class="form-control" id="tipodocumento"  disabled/>
                                             <label for="tipodocumento">Tipo de Documento</label>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
 
                 <div class="card-footer">
                     <div class="text-end">
-                        <button type="submit" id="registrar-cliente" class="btn btn-primary btn-sm">Registrar Cliente</button>
+                        <button type="submit" id="registrar-cliente" class="btn btn-primary btn-sm" disabled>Registrar Cliente</button>
                         <a href="../Venta/" class="btn btn-sm btn-secondary">Volver</a>
 
                     </div>
@@ -102,16 +102,16 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="<?= $host ?>/js/scripts.js"></script>
+        <script src="<?= $host ?>js/scripts.js"></script>
         <!-- Proceso En JS-->
-         <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
+         <script src="<?= $host ?>js/ventas/BuscarCliente.js"></script>
         <!-- Preceso Registrar Usuario-->
-         <script src="http://localhost/proyectosanmatias/js/Ventas/registrarCliente.js"></script>
+         <script src="<?= $host ?>js/Ventas/registrarCliente.js"></script>
 
          <!-- Sweet Alert -->
          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
          
         <!-- Sweet Alert Simplificado-->
-         <script src="http://localhost/proyectosanmatias/js/swalcustom.js"></script>
+         <script src="<?= $host ?>js/swalcustom.js"></script>
     </body>
 </html>

@@ -72,19 +72,46 @@
             </div> <!-- ./tercera fila -->
             
             <div class="text-end">
-                <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm">Registrar Nuevo Colaborador</button>
-                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
+                <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm" disabled>Registrar Nuevo Colaborador</button>
+                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm" >Cancelar Proceso</button>
             </div>
                     </form>
+                </div>
+            </div>
+
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    Lista de Usuarios Registrados
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nro Documento</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
+                                <th>Nombres</th>
+                                <th>Nombre de Usuario</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-usuarios">
+                            <!--datos de la DB-->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         
         </div>
         <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="../../js/Colaboradores.js"></script>
+        <script src="<?= $host ?>/js/Colaboradores/Colaboradores.js"></script>
+        <script src="<?= $host ?>/js/Colaboradores/DatosUsuarios.js"></script>
+        <script src="<?= $host ?>/js/swalcustom.js"></script>
     </body>
 </html>

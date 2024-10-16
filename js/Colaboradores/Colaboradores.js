@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    //Función de referencia GLOBAL
+    function $(object = null) {
+        return document.querySelector(object);
+      }
             
   //Referencia a la caja de texto DNI
   const nrodocumento = document.querySelector("#nrodocumento");
@@ -45,6 +50,29 @@ document.addEventListener("DOMContentLoaded", () => {
       return idcolaborador.json();
   }
 
+
+    async function buscarDNI(){
+        const ruc = $("#nrodocumento").value;
+
+        if(ruc.length == 8){
+        const response = await fetch(`../../Api/api.buscarDNI.php?dni=${ruc}`, { method: 'GET' });
+        const data = await response.json();
+        
+            console.log(data);
+        if (data.hasOwnProperty("message")){
+            $("#nombres").value = '';
+            $("#apepaterno").value = '';
+            $("#apematerno").value = '';
+        }else{
+            $("#nombres").value = data['nombres'];
+            $("#apepaterno").value = data['apellidoPaterno'];
+            $("#apematerno").value = data['apellidoMaterno'];
+        }
+        return data;
+        }
+    }
+
+
   //Función asíncrona de buscar el documento por DNI 
   async function buscarDocumento(){
       const params = new URLSearchParams();
@@ -56,13 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //Esta función será utilizada desde el evento click - keypress usando buscarDocumento()
-  function validarDocumento(response){
+  async function validarDocumento(response){
       if(response.length == 0){
-          //No encontró a la persona
-          document.querySelector("#apepaterno").value = ``;
-          document.querySelector("#apematerno").value = ``;
-          document.querySelector("#nombres").value = ``;
-          //Activar el formulario para poder registrarse
+        const nrodocumento = document.querySelector("#nrodocumento").value;
+        let data = null  
+        if(nrodocumento.length == 8){
+            data = await buscarDNI();
+            adUsuario(true);
+            return data;
+          }else{
+            //Activar el formulario para poder registrarse
           adPersona(true);
           adUsuario(true);
           //El usuario debe completar los datos de persona y registrarse 
@@ -70,6 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
           //idpersona obtiene el valor de "response1"
           idpersona = -1;
           document.querySelector("#apepaterno").focus();
+          }
+          
       }else{
           //Mostrar datos de la persona
           datosNuevos = false;
@@ -89,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }else{
               //Registrada como Persona y como Usuario (NO SE PUEDE HACER NADA MÁS)
               adUsuario(false);
-              Swal.fire("Esta Persona ya cuenta con un Perfil de Usuario");
+              showToast("Persona ya Registrada", "ERROR", 1500);
           }
       }
   }
@@ -99,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if(event.keyCode == 13){
           event.preventDefault();
           const response = await buscarDocumento();
-          validarDocumento(response);
+          await validarDocumento(response);
       }
   });
 
@@ -135,10 +168,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   }
 
+
+
   document.querySelector("#form-registro-usuarios").addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if(confirm("¿Estás seguro de proceder?")){
+      if( await ask("¿Está seguro de registrar al Colaborador?", "Colaboradores")){
 
           //Control de Personas
           let response1;
@@ -153,20 +188,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
           //¿El idpersona es correcto?
           if(idpersona == -1){
-              Swal.fire("No se pudo registrar los datos del usuario, verifique DNI");
+                showToast("Error en Registrar al Usuario", "ERROR", 1500);
           }else{
               //Tenemos idpersona
               response2 = await registrarUsuario(idpersona);
               if(response2.idcolaborador == -1){
-                  Swal.fire("No se pudo crear tu cuenta de Usuario, Verifique el Email");
+                  showToast("Error en Registrar al Usuario", "ERROR", 1500);
               }else{
-                  Swal.fire({
-                      position: "center",
-                      icon: "success",
-                      title: "Usuario creado Correctamente",
-                      showConfirmButton: false,
-                      timer: 1500
-                  });
+                  showToast("Colaborador Registrado", "SUCCESS", 1500);
+                  adPersona();  
+                  adUsuario();
                   //Ambos procesos han finalizado correctamente
                   document.querySelector("#form-registro-usuarios").reset();
               }
@@ -176,10 +207,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Cancelar 
   document.querySelector("#cancelar").addEventListener("click", async () => {
-      adPersona(true);
-      adUsuario(true);
+    showToast("Operación Cancelada", "ERROR", 1500);
+      adPersona();
+      adUsuario();
   });
 
   //Método de Inicio
-  adPersona();
+  adPersona();  
+  adUsuario();
 })

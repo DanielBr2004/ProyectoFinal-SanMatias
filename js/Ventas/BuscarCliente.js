@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (ruc.length == 11){
         const response = await fetch(`../../Api/api.buscarRUC.php?ruc=${ruc}`, { method: 'GET' });
         const data = await response.json();
+
         
 
         if (data.hasOwnProperty("message")){
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }else{
           $("#razonsocial").value = data['razonSocial'];
           $("#direccion").value = data['direccion'];
+          $("#tipodocumento").value = 'RUC';
           $("#nombres").value = '';
           $("#apepaterno").value = '';
           $("#apematerno").value = '';
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
           $("#nombres").value = data['nombres'];
           $("#apepaterno").value = data['apellidoPaterno'];
           $("#apematerno").value = data['apellidoMaterno'];
+          $("#tipodocumento").value = 'DNI';
           $("#razonsocial").value = '';
           $("#direccion").value = '';
       }

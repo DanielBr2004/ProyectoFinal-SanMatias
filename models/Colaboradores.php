@@ -11,6 +11,10 @@ class Colaborador extends Conexion{
         $this->pdo = parent::getConexion();
     }
 
+    public function getAllUser():array{
+        return parent::getData('spu_listar_Colaboradores');
+    }
+
     //Función para registrar al colaborador  
     public function add($params = []):int{
       $idcolaborador = null;

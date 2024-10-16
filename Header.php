@@ -15,12 +15,30 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <link rel="stylesheet" href="<?= $host ?>css/StyleHome.css">
-        <link rel="icon" href="<?= $host ?>/../img/icon.png">
+        <link rel="icon" href="<?= $host ?>/img/icon.png">
+        <link rel="stylesheet" href="<?= $host ?>js/Spanish.json">
+
+        <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <!--/BOOTSTRAP CSS-->
+
+        <!--DATATABLE-->
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+        <!--/DATATABLE -->
+
+
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
+
+      
+
         <title>Inicio</title>
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="<?= $host ?>/css/StylesPag.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -31,7 +49,7 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= $host ?>/home.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen">Inventario Almacen</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen"><i class="fa-solid fa-users-viewfinder"></i> Inventario Almacen</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioMolino">Inventario Molino</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/Venta">Venta</a></li>
                         <li class="nav-item dropdown">
@@ -39,10 +57,10 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <p style="text-align: center;"><?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['nombres'] ?></p>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes"">Clientes</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"">Colaboradores</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/ActualizarDatos"">Actualizar Datos</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/Productos"">Productos</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes">Clientes</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"><i class="fa-solid fa-users-viewfinder"></i> Usuarios</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/ActualizarDatos">Actualizar Datos</a></li>
+                                <li><a class="dropdown-item" href="<?= $host ?>/views/Productos">Productos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy">Cerrar sesion</a></li>
                             </ul>

@@ -28,6 +28,7 @@ BEGIN
         PER.apepaterno, 
         PER.apematerno,
         PER.nombres,
+        CLI.tipodocumento,
         CLI.telefono,
         CLI.razonsocial,
         CLI.direccion

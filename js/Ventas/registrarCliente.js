@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
             
+    //Función de referencia GLOBAL
+    function $(object = null) {
+        return document.querySelector(object);
+      }
+
   //Referencia a la caja de texto DNI
   const nrodocumento = document.querySelector("#nrodocumento");
   //Variable de persona que indicará negativo (persona no identificada)
@@ -59,33 +64,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-
-
-  //Buscador del documento al pulsar Enter #01
   nrodocumento.addEventListener("input", async (event) => {
         event.preventDefault();
         const response = await buscarDocumento();
-        if (response && response.length > 0) {
-            alert("El usuario ya existe.");
+        if ( response && response.length > 0) {
+            console.log("El usuario ya existe.");
             adUsuario();
         } else {
-            // Permitir registro
-            // Aquí puedes agregar la lógica para permitir el registro
             console.log("Usuario no encontrado. Permitir registro.");
-            adUsuario(true);
+            showToast("este Nro de Documento No Existe", "ERROR", 1500);
+            if($("nombres").value == "" && $("apepaterno").value == "" && $("apematerno").value == ""){
+                if(nrodocumento.value.length == 8){
+                    document.querySelector("#registrar-cliente").removeAttribute("disabled");
+                    document.querySelector("#direccion").removeAttribute("disabled");
+                }
+                adUsuario(true);
+            }
         }
 });
+
 
 
   //Método para habilitar/deshabilitar el formulario de usuarios
   function adUsuario(sw = false){
       if(!sw){
           document.querySelector("#telefono").setAttribute("disabled", true);
-          document.querySelector("#registrar-cliente").setAttribute("disabled", true);
           document.querySelector("#email").setAttribute("disabled", true);
       }else{
+
+
           document.querySelector("#telefono").removeAttribute("disabled");
-          document.querySelector("#registrar-cliente").removeAttribute("disabled");
           document.querySelector("#email").removeAttribute("disabled");
 
       }
@@ -106,23 +114,19 @@ document.addEventListener("DOMContentLoaded", () => {
               response1 = await registrarPersona(); //Registramos nueva persona
               idpersona = response1.idpersona;      //Obtenemos el ID de la nueva persona
           }
+          
 
           //¿El idpersona es correcto?
           if(idpersona == -1){
-              Swal.fire("No se pudo registrar los datos del usuario, verifique DNI");
+              showToast("Error en Registrar al Usuario", "ERROR", 1500);
           }else{
               //Tenemos idpersona
               response2 = await registrarCliente(idpersona);
-              if(response2.idcolaborador == -1){
-                  Swal.fire("No se pudo crear tu cuenta de Usuario, Verifique el Email");
+              console.log(response2);
+              if(response2.idcliente == -1){
+                  showToast("Error en Registrar al Usuario", "ERROR", 1500);
               }else{
-                  Swal.fire({
-                      position: "center",
-                      icon: "success",
-                      title: "Cliente creado Correctamente",
-                      showConfirmButton: false,
-                      timer: 1500
-                  });
+                 showToast("Cliente Registrado", "SUCCESS", 1500);
                   //Ambos procesos han finalizado correctamente
                   document.querySelector("#form-registro-clientes").reset();
                   adUsuario();
@@ -132,6 +136,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+
   //Método de Inicio
-  adUsuario();
-})
+
+    adUsuario();
+});

@@ -29,3 +29,25 @@ BEGIN
     INSERT INTO KardexAlmProducto (idcolaborador, idproducto, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
     VALUES (_idcolaborador, _idproducto, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion, ''), NOW());
 END $$
+-- ------------------------------- LISTADO ----------------------------------
+drop procedure if exists `spu_listar_KardexAlmProducto`;
+DELIMITER $$
+CREATE PROCEDURE spu_listar_KardexAlmProducto()
+BEGIN
+    SELECT 
+        k.idAlmacenProducto AS ID, -- Este es el ID que te falta
+        c.nomusuario AS Colaborador,
+        p.producto AS Producto,
+        k.stockProducto AS 'Stock Actual',
+        k.motivomovimiento AS 'Motivo de Movimiento',
+        k.cantidad AS Cantidad,
+        k.creado AS Creado
+    FROM 
+        KardexAlmProducto k
+    JOIN 
+        Productos p ON k.idproducto = p.idproducto
+    JOIN 
+        colaboradores c ON k.idcolaborador = c.idcolaborador
+    ORDER BY 
+        k.creado DESC;
+END $$

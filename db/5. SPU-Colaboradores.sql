@@ -44,3 +44,21 @@ BEGIN
         ON COL.idpersona = PER.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$
+
+ -- ------------------------------------------- Listar colaboradores ----------------------------------------------------- 
+ 
+ DELIMITER $$
+CREATE PROCEDURE spu_listar_Colaboradores()
+BEGIN
+	SELECT 
+		PER.nrodocumento,
+        PER.apepaterno,
+        PER.apematerno,
+        PER.nombres,
+		COL.nomusuario
+		FROM colaboradores COL 
+        LEFT JOIN personas PER
+        ON PER.idpersona = COL.idpersona 
+        ORDER BY idcolaborador DESC ;
+END $$
+
