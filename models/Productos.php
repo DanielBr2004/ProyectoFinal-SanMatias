@@ -43,6 +43,21 @@ class Producto extends Conexion{
     }
 }
 
+
+    public function searchProducto($params = []):array{
+        try{
+        $query = $this->pdo->prepare("call spu_existe_producto(?)");
+        $query->execute(
+            array($params['producto'])
+        );
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(Exception $e){
+        die($e->getMessage());
+        }
+      }
+
 public function eliminarProducto($idproducto = 0){
     try {
       $consulta = $this->pdo->prepare("CALL spu_eliminar_productos(?)");

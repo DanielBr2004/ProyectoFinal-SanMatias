@@ -64,7 +64,7 @@ use GranjaSanMatias;
 CREATE TABLE Productos 
 (
 idproducto 		INT AUTO_INCREMENT PRIMARY KEY,
-producto		VARCHAR(100) NOT NULL,
+producto		VARCHAR(100) NOT NULL UNIQUE,
 descripcion		VARCHAR(100) NULL
 )ENGINE = INNODB;
 
@@ -73,7 +73,7 @@ CREATE TABLE KardexAlmProducto
 (
 idAlmacenProducto		INT AUTO_INCREMENT PRIMARY KEY,
 tipomovimiento			CHAR(1) NOT NULL,
-stockProducto			VARCHAR(100) NOT NULL,
+stockProducto			DECIMAL(6,2) NOT NULL,
 cantidad				VARCHAR(50) NOT NULL,
 motivomovimiento		VARCHAR(100)NOT NULL,
 descripcion         	VARCHAR(100) NULL,

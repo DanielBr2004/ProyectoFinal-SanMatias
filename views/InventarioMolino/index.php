@@ -64,7 +64,7 @@
                 <div class="row g-2 mt-2">
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="number" minlength="1" class="form-control" pattern="[0-9]+"  id="cantidad" required>
+                            <input type="number"  class="form-control" minlength="1" pattern="[0-9]" step="0.01" id="cantidad" required>
                             <label for="cantidad">Cantidad</label>
                         </div>
                     </div>
@@ -138,5 +138,6 @@
         <!-- JS del Proyecto-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="../../js/KardexProducto.js"></script>
+        <script src="<?= $host ?>/js/swalcustom.js"></script>
     </body>
 </html>

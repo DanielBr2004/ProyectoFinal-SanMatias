@@ -8,7 +8,7 @@ CREATE PROCEDURE spu_insertar_KardexAlmProducto
     IN _idproducto INT,
     IN _tipomovimiento CHAR(1),
     IN _motivomoviento VARCHAR(100),
-    IN _cantidad SMALLINT,
+    IN _cantidad DECIMAL(5,2),
     IN _descripcion 	VARCHAR(100)
 )
 BEGIN
