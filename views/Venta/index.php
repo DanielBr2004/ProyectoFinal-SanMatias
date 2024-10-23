@@ -76,41 +76,27 @@
                             Detalle de Venta
                         </div>
                         <div class="card-body">
-                        <div class="col-md">
-                    <div class="input-group">
-                    <button class="input-group-text btn btn-success" type="button" id="buscar-nrodocumento"><i class="bi bi-plus-lg"></i></button>
-                        <div class="form-floating">
-                        <input type="tel" class="form-control" maxlength="12" minlength="8"  id="nrodocumento" required>
-                        <label for="nrodocumento">Buscar Producto</label>
+                        <div class="container mt-5">
+                            <div>
+                            <button id="agregar-item" _ngcontent-ng-c943880071="" tooltipposition="top" ptooltip="Agregar item" pbutton="" type="button" icon="fa fa-plus" class="btn btn-success p-element p-button-success p-button p-component p-button-icon-only ng-star-inserted" style="">
+                                <span class="p-button-icon fa fa-plus" aria-hidden="true"> Agregar Producto a la Lista</span>
+                            </button>
+                            </div>
+                            <table class="tabla-detalle table table-bordered table-striped table-hover mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Las filas se agregarán aquí -->
+                                </tbody>
+                            </table>
                         </div>
-                        <button class="input-group-text btn btn-secondary" type="button" id="buscar-nrodocumento"><i class="bi bi-search"></i></button>
-                    </div>
-
-                    <div class="card-body">
-                    <table class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                            <th scope="col">Stock</th>
-                            <th scope="col">ID</th>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Precio Unitario</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        
-                        </tbody>
-                        </table>
-                    </div>
-                </div> 
                         </div>
-
-
-                
-                </div>
-
                 <div class="card-footer">
                     <div class="text-end">
                         <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm" disabled>Registrar Venta</button>
@@ -132,6 +118,7 @@
         <!-- Sweet Alert Simplificado-->
          <script src="<?= $host ?>js/swalcustom.js"></script>
 
+         <script src="<?= $host ?>js/ventas/agregarDetalle.js"></script>
          <script src="<?= $host ?>js/ventas/buscarClienteRegistrado.js"></script>
     </body>
 </html>
