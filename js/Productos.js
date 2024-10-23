@@ -13,10 +13,10 @@ async function eliminarProducto(idproducto) {
         const result = await response.json();
 
         if (result.status === "success") {
-            Swal.fire("Producto eliminado correctamente");
+            showToast("Producto eliminado correctamente", "SUCCESS", 1000);
             listarProductos(); 
         } else {
-            Swal.fire("Error al eliminar el producto: " + result.message);
+            showToast("Error al eliminar el producto", "ERROR", 1000);
         }
     }
 }
@@ -57,13 +57,13 @@ document.querySelector("#form-editar-producto").addEventListener("submit", async
     const result = await response.json();
 
     if (result.status === "success") {
-        Swal.fire("Producto actualizado correctamente");
+        showToast("Producto actualizado correctamente","SUCCESS", 1000);
         listarProductos(); // Refrescamos la lista
         // Cerramos el modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditarProducto'));
         modal.hide();
     } else {
-        Swal.fire("Error al actualizar el producto: " + result.message);
+        showToast("Error al actualizar el producto: ", "ERROR", 1000);
     }
 });
 
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#form-registro-productos").addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if(confirm("¿Estás seguro de Proceder?")){
+      if(await ask("¿Estás seguro de que deseas registrar este producto?")){
 
           let response2;
 
@@ -103,15 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
           //Tenemos el idtipoproducto
           response2 =  registrarProducto(Producto);
           if(response2.idproducto == -1){
-              Swal.fire("No se pudo Registrar el producto");
+              showToast("Error al registrar el Producto", "ERROR", 1000);
           }else{
-              Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Producto creado Correctamente",
-                  showConfirmButton: false,
-                  timer: 1500
-              });
+              showToast("Producto registrado correctamente", "SUCCESS", 1000);
               //producto creado se limpia el formulario
               document.querySelector("#form-registro-productos").reset();
           }

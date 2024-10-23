@@ -22,7 +22,7 @@
 
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="text" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ ]+"  class="form-control" id="descripcion" required>
+                                    <input type="text" class="form-control" id="descripcion">
                                     <label for="descripcion">Descripcion del producto</label>
                                 </div>
                             </div> 
@@ -106,6 +106,7 @@
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="../../js/Productos.js"></script>
+        <script src="<?= $host ?>/js/Productos.js"></script>
+        <script src="<?= $host ?>/js/swalcustom.js"></script>
     </body>
 </html>
