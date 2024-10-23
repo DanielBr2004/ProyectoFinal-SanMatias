@@ -37,3 +37,13 @@ BEGIN
         ON CLI.idpersona = PER.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$
+
+ -- ------------------------------------------- Listar Clientes ----------------------------------------------------- 
+ 
+ DELIMITER $$
+CREATE PROCEDURE spu_listar_Colaboradores()
+BEGIN
+	SELECT 
+			*
+		FROM cliente ;
+END $$
