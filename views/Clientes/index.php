@@ -113,8 +113,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
-                                <th>Apellido Paterno</th>
-                                <th>Apellido Materno</th>
+                                <th>Apellidos</th>
+                                <th></th>
                                 <th>Telefono</th>
                                 <th>Razon Social</th>
                                 <th>Direcion</th>
