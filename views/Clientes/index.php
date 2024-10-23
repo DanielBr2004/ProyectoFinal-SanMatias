@@ -99,11 +99,39 @@
                     </div>
                 </div>
                     </form>
-
-                
             </div>
 
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    Lista de Usuarios Registrados
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
+                                <th>Telefono</th>
+                                <th>Razon Social</th>
+                                <th>Direcion</th>
+                                <th>Email</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-usuarios">
+                            <!--datos de la DB-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
+        
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

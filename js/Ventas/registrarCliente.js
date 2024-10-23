@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             console.log("Usuario no encontrado. Permitir registro.");
             showToast("este Nro de Documento No Existe", "ERROR", 1500);
-            if($("nombres").value == "" && $("apepaterno").value == "" && $("apematerno").value == ""){
+            if($("#nombres").value == "" && $("#apepaterno").value == "" && $("#apematerno").value == ""){
                 if(nrodocumento.value.length == 8){
                     document.querySelector("#registrar-cliente").removeAttribute("disabled");
                     document.querySelector("#direccion").removeAttribute("disabled");
