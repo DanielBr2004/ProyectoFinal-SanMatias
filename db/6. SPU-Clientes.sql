@@ -41,7 +41,7 @@ END $$
  -- ------------------------------------------- Listar Clientes ----------------------------------------------------- 
  
  DELIMITER $$
-CREATE PROCEDURE spu_listar_Colaboradores()
+CREATE PROCEDURE spu_listar_Cliente()
 BEGIN
 	SELECT 
 			*
