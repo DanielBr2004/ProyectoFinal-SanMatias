@@ -60,5 +60,24 @@ class KardexHuevo extends Conexion{
         }
     }
 
+    public function editarKardexHuevo($params = []): bool {
+        $status = false;
+        try {
+            $query = $this->pdo->prepare("CALL spu_editar_kardexhuevo(?, ?, ?, ?)");
+            $status = $query->execute(
+                array(
+                    $params['idAlmacenHuevos'],
+                    $params['motivomovimiento'],
+                    $params['cantidad'],
+                    $params['descripcion']
+                )
+            );
+            return $status; // Retorna verdadero si la actualización fue exitosa
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
 
   }
