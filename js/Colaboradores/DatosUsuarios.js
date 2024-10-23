@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    $('#tabla-productos').DataTable({
-        "language": {
-            "url": "../views/js/Spanish.json"
-        }
-    });
-
 
     async function desplegarDatos() {
         try {

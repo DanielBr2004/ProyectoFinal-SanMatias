@@ -100,8 +100,9 @@
                 </div>
                     </form>
             </div>
-
-
+        </div>
+        
+            <div class="container mb-3">
             <div class="card mb-4">
                 <div class="card-header">
                     Lista de Usuarios Registrados
@@ -118,11 +119,10 @@
                                 <th>Razon Social</th>
                                 <th>Direcion</th>
                                 <th>Email</th>
-                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-usuarios">
+                        <tbody id="tbody-clientes">
                             <!--datos de la DB-->
                         </tbody>
                     </table>
@@ -140,6 +140,8 @@
          <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
         <!-- Preceso Registrar Usuario-->
          <script src="<?= $host ?>/js/Ventas/registrarCliente.js"></script>
+
+        <script src="../../js/clientes/tablaClientes.js"></script>
 
          <!-- Sweet Alert -->
          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
