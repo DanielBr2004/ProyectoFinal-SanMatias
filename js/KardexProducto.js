@@ -148,6 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
   
+ //listado
+  /*
   async function cargarProductos() {
     try {
         const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
@@ -178,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
  cargarProductos();
-  
+  */
 });
 
   

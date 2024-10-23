@@ -299,7 +299,7 @@ const cargarProductos = async () => {
                     <td class="text-center">${item.Creado}</td>
                 </tr>`;
     });
-    tbody_productos.innerHTML = content;
+    document.getElementById('tbody_productos').innerHTML = content;
   } catch (error) {
     alert(error);
   }

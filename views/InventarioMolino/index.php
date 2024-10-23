@@ -99,14 +99,13 @@
                 <table class="table table-striped table-bordered" id="tabla-productos">
                     <thead>
                         <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Colaborador</th>
-                            <th class="text-center">Producto</th>
-                            <th class="text-center">Stock Actual</th>
-                            <th class="text-center">Motivo de Movimiento</th>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-center">Creado</th>
-                            <th class="text-center">Operaciones</th>
+                        <th>ID</th>
+                            <th>Colaborador</th>
+                            <th>Producto</th>
+                            <th>Stock Actual</th>
+                            <th>Motivo de Movimiento</th>
+                            <th>Cantidad</th>
+                            <th>Creado</th>
                         </tr>
                     </thead>
                     <tbody id="tbody_productos">
@@ -186,6 +185,7 @@
     <!-- Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?= $host ?>/js/script1.js"></script>
+
 
         <!-- JS del Proyecto-->
         <script src="<?= $host ?>/js/scripts.js"></script>
