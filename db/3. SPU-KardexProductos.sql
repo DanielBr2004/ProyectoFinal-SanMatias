@@ -51,3 +51,40 @@ BEGIN
     ORDER BY 
         k.creado DESC;
 END $$
+Call spu_listar_KardexAlmProducto();
+-- ------------------------------- EDITAR ----------------------------------
+DROP PROCEDURE IF EXISTS `spu_editar_KardexAlmProducto`;
+DELIMITER $$
+CREATE PROCEDURE spu_editar_KardexAlmProducto
+(
+    IN _idAlmacenProducto INT,           
+    IN _nuevoMotivoMovimiento VARCHAR(100), 
+    IN _nuevaCantidad SMALLINT            
+)
+BEGIN
+    DECLARE _idProducto INT;
+    DECLARE _stockProductoActual INT DEFAULT 0;
+    DECLARE _stockNuevo INT DEFAULT 0;
+    
+    SELECT idproducto, stockProducto INTO _idProducto, _stockProductoActual 
+    FROM KardexAlmProducto
+    WHERE idAlmacenProducto = _idAlmacenProducto;
+
+    IF _nuevoMotivoMovimiento = 'Entrada por compra' THEN
+        SET _stockNuevo = _stockProductoActual + _nuevaCantidad; 
+    ELSEIF _nuevoMotivoMovimiento = 'Salida por uso' THEN
+        SET _stockNuevo = _stockProductoActual - _nuevaCantidad;  
+    ELSEIF _nuevoMotivoMovimiento = 'Salida por merma' THEN
+        SET _stockNuevo = _stockProductoActual - _nuevaCantidad;  
+    END IF;
+    
+    UPDATE KardexAlmProducto 
+    SET 
+        motivomovimiento = NULLIF(_nuevoMotivoMovimiento, ''),  
+        cantidad = _nuevaCantidad,                             
+        stockProducto = _stockNuevo,                           
+        creado = NOW()                                         
+    WHERE 
+        idAlmacenProducto = _idAlmacenProducto;                
+END $$
+CALL spu_editar_KardexAlmProducto(2, 'Entrada por compra', 20);

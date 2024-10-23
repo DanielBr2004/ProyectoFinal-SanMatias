@@ -97,6 +97,34 @@
                 </div>
             </div>
         </div>
+
+        <!-- Tabla de registros -->
+<div class="card mt-4">
+    <div class="card-header">
+        Listado
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped table-hover"id="tabla-productos">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Colaborador</th>
+                    <th>Tipo Huevo</th>
+                    <th>Motivo Movimiento</th>
+                    <th>Stock Producto</th>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Creación</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-productos">
+                <!-- Aquí se llenarán los datos dinámicamente con JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

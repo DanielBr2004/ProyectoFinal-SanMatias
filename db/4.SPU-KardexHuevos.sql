@@ -30,3 +30,24 @@ BEGIN
     INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
     VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
 END $$
+-- ----------------------- LISTAR -----------------------
+DROP PROCEDURE IF EXISTS `spu_listar_kardexhuevo`;
+DELIMITER $$
+
+CREATE PROCEDURE spu_listar_kardexhuevo()
+BEGIN
+    SELECT 
+        kh.idAlmacenHuevos,
+        c.nomusuario AS nombre_colaborador,
+        th.tiposHuevos AS tipo_huevo,
+        kh.motivomovimiento,
+        kh.stockProducto,
+        kh.cantidad,
+        kh.descripcion,
+        kh.creado
+    FROM KardexAlmHuevo kh
+    JOIN colaboradores c ON kh.idcolaborador = c.idcolaborador
+    JOIN tipoHuevo th ON kh.idhuevo = th.idhuevo
+    ORDER BY kh.creado DESC;
+END $$
+CALL spu_listar_kardexhuevo();
