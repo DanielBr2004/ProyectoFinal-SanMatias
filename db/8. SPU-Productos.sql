@@ -18,7 +18,7 @@ CREATE PROCEDURE spu_listar_productos()
 BEGIN
     SELECT * FROM productos;
 END $$
-CALL spu_listar_productos();
+
  -- ------------------------------------------- Editar productos -----------------------------------------------------
  drop procedure if exists `spu_editar_productos`;
  DELIMITER $$
@@ -33,7 +33,6 @@ BEGIN
         descripcion = _descripcion
     WHERE idproducto = _idproducto;
 END $$
-CALL spu_editar_productos(1, 'Soyas', '	Granos de soya ricos en proteínas para la alimentacion de los animales');
  -- ------------------------------------------- Eliminar productos -----------------------------------------------------
  drop procedure if exists `spu_eliminar_productos`;
  DELIMITER $$
@@ -44,4 +43,10 @@ BEGIN
     DELETE FROM productos
     WHERE idproducto = _idproducto;
 END $$
-CALL spu_eliminar_productos(5);
+ -- ------------------------------------------- Validar productos -----------------------------------------------------
+ drop procedure if exists `spu_existe_producto`;
+  DELIMITER $$
+CREATE PROCEDURE spu_existe_producto(IN _producto VARCHAR(90))
+BEGIN
+    SELECT * FROM Productos WHERE Producto = _producto;
+END $$

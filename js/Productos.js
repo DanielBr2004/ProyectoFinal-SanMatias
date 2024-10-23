@@ -1,3 +1,9 @@
+//Función de referencia GLOBAL
+function $(object = null) {
+    return document.querySelector(object);
+  }
+
+
 async function eliminarProducto(idproducto) {
     if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
         const params = new FormData();
@@ -13,10 +19,10 @@ async function eliminarProducto(idproducto) {
         const result = await response.json();
 
         if (result.status === "success") {
-            Swal.fire("Producto eliminado correctamente");
+            showToast("Producto eliminado correctamente", "SUCCESS", 1000);
             listarProductos(); 
         } else {
-            Swal.fire("Error al eliminar el producto: " + result.message);
+            showToast("Error al eliminar el producto", "ERROR", 1000);
         }
     }
 }
@@ -57,13 +63,13 @@ document.querySelector("#form-editar-producto").addEventListener("submit", async
     const result = await response.json();
 
     if (result.status === "success") {
-        Swal.fire("Producto actualizado correctamente");
+        showToast("Producto actualizado correctamente","SUCCESS", 1000);
         listarProductos(); // Refrescamos la lista
         // Cerramos el modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditarProducto'));
         modal.hide();
     } else {
-        Swal.fire("Error al actualizar el producto: " + result.message);
+        showToast("Error al actualizar el producto: ", "ERROR", 1000);
     }
 });
 
@@ -74,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let datosNuevos = true; 
 
   let Producto = -1;
+
+  
 
 
   //Función para registrar el Producto
@@ -91,31 +99,46 @@ document.addEventListener("DOMContentLoaded", () => {
       const idproducto = await fetch(`../../controllers/producto.controller.php`, options);
       return idproducto.json();
   }
+  async function  validarExistencia() {
+    const producto = document.querySelector("#Producto");
+
+    const params = new URLSearchParams();
+      params.append("operacion", "searchProducto");
+      params.append("producto", producto.value);
+
+      const response = await fetch(`../../controllers/producto.controller.php?${params}`);
+      return response.json();
+    
+  }
   
   document.querySelector("#form-registro-productos").addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if(confirm("¿Estás seguro de Proceder?")){
+            let response = await validarExistencia();
+           
 
-          let response2;
+        if(response.length > 0){
+            showToast("El producto ya existe", "ERROR");
+        }else{
 
+            if(await ask("¿Estás seguro de que deseas registrar este producto?")){
 
-          //Tenemos el idtipoproducto
-          response2 =  registrarProducto(Producto);
-          if(response2.idproducto == -1){
-              Swal.fire("No se pudo Registrar el producto");
-          }else{
-              Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Producto creado Correctamente",
-                  showConfirmButton: false,
-                  timer: 1500
-              });
-              //producto creado se limpia el formulario
-              document.querySelector("#form-registro-productos").reset();
-          }
-      }
+                let response2;
+                //Tenemos el idtipoproducto
+                response2 =  registrarProducto(Producto);
+                if(response2.idproducto == -1){
+                  showToast("Error al registrar el producto", "ERROR");
+      
+                }else{
+                    showToast("Producto registrado correctamente", "SUCCESS");
+                    //producto creado se limpia el formulario
+                    document.querySelector("#form-registro-productos").reset();
+                    $("#Producto").focus();
+
+                    
+                }
+            }
+        }
   })
 
 

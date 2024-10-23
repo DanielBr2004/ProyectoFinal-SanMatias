@@ -61,7 +61,6 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes">Clientes</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"><i class="fa-solid fa-users-viewfinder"></i> Usuarios</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/ActualizarDatos">Actualizar Datos</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Productos">Productos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy">Cerrar sesion</a></li>

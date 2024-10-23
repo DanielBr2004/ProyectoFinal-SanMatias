@@ -50,7 +50,7 @@ if(isset($_GET['operacion'])){
         case 'destroy':
             session_unset();
             session_destroy();
-            header('Location:http://localhost/proyectosanmatias/');
+            header('Location:http://localhost/ProyectoFinal-SanMatias/');
             break;
     }
 }

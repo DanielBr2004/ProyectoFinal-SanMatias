@@ -89,13 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then(data => {
               //Limpiar el formulario
               document.querySelector("#form-kardex-Productos").reset();
-              Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Kardex Actualizado Correctamente",
-                  showConfirmButton: false,
-                  timer: 1500
-              });
+              showToast("Kardex registrado correctamente", "SUCCESS")
           })
           .catch( e => { console.error(e) })
     }
@@ -107,16 +101,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
       if(ValorIngresado < 0){
           event.preventDefault();
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "La cantidad ingresada debe ser Mayor a 0",
-          })
+          showToast("La cantidad no puede ser negativa", "ERROR");
       }else{
                 //Si la cantidad es mayor que el stock actual
           if(!ValidarCantidadSalida()){
             return;
-        }
+          }
   
         if(Swal.fire({
           title: "Deseas Guardar los cambios",
@@ -125,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
           confirmButtonText: "Guardar",
           denyButtonText: `No guardar`
         }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             Swal.fire(GuardarKardex());
           } else if (result.isDenied) {
