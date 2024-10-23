@@ -7,21 +7,35 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
   }
 
-  buttonAgregar.addEventListener("click", () => {
-      const nuevaFila = document.createElement("tr");
+    buttonAgregar.addEventListener("click", () => {
+        const nuevaFila = document.createElement("tr");
 
-      const columnas = ["Producto", "Cantidad", "Precio Unitario", "Total"];
-      columnas.forEach(columna => {
-          const nuevaCelda = document.createElement("td");
-          const input = document.createElement("input");
-          input.setAttribute("type", "text");
-          input.setAttribute("placeholder", columna);
-          input.classList.add("p-inputtext", "p-component", "p-element", "ng-pristine", "ng-valid", "p-filled", "ng-touched");
-          input.style.width = "100%";
-          nuevaCelda.appendChild(input);
-          nuevaFila.appendChild(nuevaCelda);
-      });
+        // Definir las columnas y sus propiedades
+        const columnas = [
+            { placeholder: "Producto", type: "text", value: "" },
+            { placeholder: "Cantidad", type: "number", value: "1" },
+            { placeholder: "Precio Unitario", type: "number", value: "0.00" },
+            { placeholder: "Total", type: "number", value: "0.00", readOnly: true }
+        ];
 
-      tablaDetalles.appendChild(nuevaFila);
-  });
+        columnas.forEach(columna => {
+            const nuevaCelda = document.createElement("td");
+            const input = document.createElement("input");
+            input.setAttribute("type", columna.type);
+            input.setAttribute("placeholder", columna.placeholder);
+            input.setAttribute("value", columna.value);
+            input.classList.add("cajaTexto", "p-inputtext", "p-component", "p-element", "ng-pristine", "ng-valid", "p-filled", "ng-touched");
+            input.style.width = "100%";
+
+            // Si el input es de solo lectura, añadir el atributo correspondiente
+            if (columna.readOnly) {
+                input.setAttribute("readonly", true);
+            }
+
+            nuevaCelda.appendChild(input);
+            nuevaFila.appendChild(nuevaCelda);
+        });
+
+        tablaDetalles.appendChild(nuevaFila);
+    });
 });

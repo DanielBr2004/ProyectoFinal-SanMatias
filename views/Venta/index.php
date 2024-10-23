@@ -85,10 +85,11 @@
                             <table class="tabla-detalle table table-bordered table-striped table-hover mt-3">
                                 <thead>
                                     <tr>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Total</th>
+                                        <th class="text-center">Producto</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-center">Precio Unitario</th>
+                                        <th class="text-center">Total</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
