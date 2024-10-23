@@ -1,3 +1,9 @@
+//Función de referencia GLOBAL
+function $(object = null) {
+    return document.querySelector(object);
+  }
+
+
 async function eliminarProducto(idproducto) {
     if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
         const params = new FormData();
@@ -75,6 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let Producto = -1;
 
+  
+
 
   //Función para registrar el Producto
   async function registrarProducto(producto){
@@ -91,25 +99,46 @@ document.addEventListener("DOMContentLoaded", () => {
       const idproducto = await fetch(`../../controllers/producto.controller.php`, options);
       return idproducto.json();
   }
+  async function  validarExistencia() {
+    const producto = document.querySelector("#Producto");
+
+    const params = new URLSearchParams();
+      params.append("operacion", "searchProducto");
+      params.append("producto", producto.value);
+
+      const response = await fetch(`../../controllers/producto.controller.php?${params}`);
+      return response.json();
+    
+  }
   
   document.querySelector("#form-registro-productos").addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if(await ask("¿Estás seguro de que deseas registrar este producto?")){
+            let response = await validarExistencia();
+           
 
-          let response2;
+        if(response.length > 0){
+            showToast("El producto ya existe", "ERROR");
+        }else{
 
+            if(await ask("¿Estás seguro de que deseas registrar este producto?")){
 
-          //Tenemos el idtipoproducto
-          response2 =  registrarProducto(Producto);
-          if(response2.idproducto == -1){
-              showToast("Error al registrar el Producto", "ERROR", 1000);
-          }else{
-              showToast("Producto registrado correctamente", "SUCCESS", 1000);
-              //producto creado se limpia el formulario
-              document.querySelector("#form-registro-productos").reset();
-          }
-      }
+                let response2;
+                //Tenemos el idtipoproducto
+                response2 =  registrarProducto(Producto);
+                if(response2.idproducto == -1){
+                  showToast("Error al registrar el producto", "ERROR");
+      
+                }else{
+                    showToast("Producto registrado correctamente", "SUCCESS");
+                    //producto creado se limpia el formulario
+                    document.querySelector("#form-registro-productos").reset();
+                    $("#Producto").focus();
+
+                    
+                }
+            }
+        }
   })
 
 

@@ -16,7 +16,7 @@
                             <div class="col-md">
                                 <div class="form-floating">
                                     <input type="text"  class="form-control" id="Producto" required>
-                                    <label for="Producto">Producto</label>
+                                    <label for="producto">Producto</label>
                                 </div>
                             </div>
 
@@ -38,39 +38,33 @@
                     </form>
                 </div>
             </div>
-        </div>
-<!-- LISTADO -->
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Listado</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active"></li>
-    </ol>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Productos
-        </div>
-        <div class="card-body">
-            <div id="tabla-productos">
-                <!-- Tabla de productos será insertada aquí -->
-                <table class="table table-bordered table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Producto</th>
-                            <th>Descripción</th>
-                            <th>Operaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productos-body">
-                        <!-- Los productos serán insertados dinámicamente desde JavaScript -->
-                    </tbody>
-                </table>
+            <!-- Tabla de productos -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Productos
+                </div>
+                <div class="card-body">
+                    <div id="tabla-productos">
+                        <!-- Tabla de productos será insertada aquí -->
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Descripción</th>
+                                    <th class="text-center">Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos-body">
+                                <!-- Los productos serán insertados dinámicamente desde JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 <!-- FIN LISTADO -->
  <!--MODAL-->
  <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">

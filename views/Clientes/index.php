@@ -19,7 +19,7 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" id="nrodocumento" autofocus required>
+                                    <input type="number" class="form-control" minlength="8" maxlength="11" id="nrodocumento" autofocus required>
                                     <label for="nrodoumento">Numero de Documento</label>
                                 </div>
                             </div>

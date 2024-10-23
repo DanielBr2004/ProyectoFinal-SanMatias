@@ -91,8 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("#telefono").setAttribute("disabled", true);
           document.querySelector("#email").setAttribute("disabled", true);
       }else{
-
-
           document.querySelector("#telefono").removeAttribute("disabled");
           document.querySelector("#email").removeAttribute("disabled");
 
