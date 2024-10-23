@@ -8,12 +8,12 @@ CREATE PROCEDURE spu_insertar_KardexAlmProducto
     IN _idproducto INT,
     IN _tipomovimiento CHAR(1),
     IN _motivomoviento VARCHAR(100),
-    IN _cantidad DECIMAL(5,2),
+    IN _cantidad DECIMAL(6,2),
     IN _descripcion 	VARCHAR(100)
 )
 BEGIN
 	-- Stock Actual declarada por defecto en 0
-    DECLARE _stockProducto INT DEFAULT 0;
+    DECLARE _stockProducto DECIMAL(6,2) DEFAULT 0;
 
     -- Se obtendrá el stock actual dependiendo que producto se seleccione 
     SELECT stockProducto INTO _stockProducto FROM KardexAlmProducto WHERE idproducto = _idproducto ORDER BY creado DESC LIMIT 1;

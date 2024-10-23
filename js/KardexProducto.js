@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     function ValidarCantidadSalida(){
       if (Motivomovimiento.value === 'S') {
-        if (parseInt(cantidad.value) > parseInt(StockActual.value)) {
+        if (parseFloat(cantidad.value) > parseFloat(StockActual.value)) {
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#form-kardex-Productos").addEventListener("submit", (event) => {
       event.preventDefault();
   
-      const ValorIngresado = parseInt(CantidadEntrada.value);
+      const ValorIngresado = parseFloat(CantidadEntrada.value);
   
       if(ValorIngresado < 0){
           event.preventDefault();

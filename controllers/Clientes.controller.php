@@ -35,5 +35,8 @@ $cliente = new Cliente();
           case 'searchByDoc':
               echo json_encode($cliente->searchByDoc(['nrodocumento' => $_GET['nrodocumento']]));
               break;
+          case 'getAllClient':
+              echo json_encode($cliente->getAllClient());
+              break;
       }
     }

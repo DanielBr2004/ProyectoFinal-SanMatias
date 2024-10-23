@@ -99,11 +99,39 @@
                     </div>
                 </div>
                     </form>
-
-                
             </div>
-
         </div>
+        
+            <div class="container mb-3">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Lista de Usuarios Registrados
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
+                                <th>Telefono</th>
+                                <th>Razon Social</th>
+                                <th>Direcion</th>
+                                <th>Email</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-clientes">
+                            <!--datos de la DB-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
@@ -112,6 +140,8 @@
          <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
         <!-- Preceso Registrar Usuario-->
          <script src="<?= $host ?>/js/Ventas/registrarCliente.js"></script>
+
+        <script src="../../js/clientes/tablaClientes.js"></script>
 
          <!-- Sweet Alert -->
          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

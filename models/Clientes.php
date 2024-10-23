@@ -35,6 +35,10 @@ class Cliente extends Conexion{
           return $idcliente;
         }
 
+        public function getAllClient():array{
+          return parent::getData('spu_listar_cliente');
+      }
+
         //Función para buscar a la persona por el numero de documento 
       public function searchByDoc($params = []):array{
         try{
