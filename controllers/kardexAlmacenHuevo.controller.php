@@ -37,3 +37,12 @@ if(isset($_GET['operacion'])){
         break;
   }
 }
+
+if (isset($_GET['operacion'])) {
+  switch ($_GET['operacion']) {
+      case 'getAlls':
+          echo json_encode($kardexhuevo->getAlls());
+          break;
+      // Otros casos...
+  }
+}

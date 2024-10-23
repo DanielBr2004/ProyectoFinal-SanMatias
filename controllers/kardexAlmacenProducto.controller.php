@@ -22,6 +22,16 @@ if(isset($_POST['operacion'])){
           $status = $kardexproducto->add($datosEnviar);
           echo json_encode(["estado" => $status]);
           break;
+
+                case 'edit':
+          $datosEditar = [
+              "idAlmacenProducto"   => $kardexproducto->limpiarCadena($_POST['idAlmacenProducto']),
+              "motivomovimiento"    => $kardexproducto->limpiarCadena($_POST['motivomovimiento']),
+              "cantidad"            => $kardexproducto->limpiarCadena($_POST['cantidad'])
+          ];
+          $status = $kardexproducto->edit($datosEditar);
+          echo json_encode(["estado" => $status]);
+          break;
   }
 }
 

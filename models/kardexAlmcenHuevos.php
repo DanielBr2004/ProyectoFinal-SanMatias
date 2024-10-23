@@ -49,5 +49,16 @@ class KardexHuevo extends Conexion{
         return parent::getData('spu_vista_kardexhuevo');
     }
 
+    public function getAlls(){
+        try {
+            $query = $this->pdo->prepare("CALL spu_listar_kardexhuevo();");
+            $query->execute();
+            $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
 
   }
