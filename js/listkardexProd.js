@@ -304,6 +304,9 @@ const cargarProductos = async () => {
     alert(error);
   }
 };
+$(document).ready(function() {
+  $('#tabla-productos').DataTable();
+});
 
 window.addEventListener('load', async () => {
   await initDataTable();
