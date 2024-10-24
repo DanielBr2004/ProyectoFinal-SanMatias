@@ -19,8 +19,8 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" minlength="8" maxlength="11" id="nrodocumento" autofocus required>
-                                    <label for="nrodoumento">Numero de Documento</label>
+                                <input type="text" class="form-control" minlength="8" maxlength="11" id="nrodocumento" pattern="\d{8,11}" autofocus required>                                    
+                                <label for="nrodoumento">Numero de Documento</label>
                                 </div>
                             </div>
 
@@ -83,8 +83,8 @@
 
                             <div class="col-md-3 mb-3">
                                 <div class="form-floating">
-                                    <input type="number" id="telefono" maxlength="9" minlength="9" class="form-control">
-                                    <label for="telefono">Telefono</label>
+                                <input type="text" id="telefono" minlength="9" maxlength="9" pattern="\d{9}" class="form-control">                               
+                                 <label for="telefono">Telefono</label>
                                 </div>
                             </div>
                         </div>
@@ -106,13 +106,17 @@
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-responsive table-hover">
+                        <colgroup>
+                            
+                        </colgroup>
+                        
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
                                 <th class="text-center">N° Documento</th>
-                                <th class="text-center">Apellidos</th>
-                                <th class="text-center">Nombres</th>
-                                <th class="text-center">Razon Social</th>
+                                <th class="text-center">Tipo Documento</th>
+                                <th class="text-center">Cliente</th>
+                                <th class="text-center">Estado</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -133,9 +137,9 @@
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <!-- Proceso En JS-->
-         <script src="<?= $host ?>/js/ventas/BuscarCliente.js"></script>
+         <script src="<?= $host ?>/js/clientes/BuscarCliente.js"></script>
         <!-- Preceso Registrar Usuario-->
-         <script src="<?= $host ?>/js/Ventas/registrarCliente.js"></script>
+         <script src="<?= $host ?>/js/clientes/registrarCliente.js"></script>
 
         <script src="../../js/clientes/tablaClientes.js"></script>
 

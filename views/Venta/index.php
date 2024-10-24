@@ -120,6 +120,6 @@
          <script src="<?= $host ?>js/swalcustom.js"></script>
 
          <script src="<?= $host ?>js/ventas/agregarDetalle.js"></script>
-         <script src="<?= $host ?>js/ventas/buscarClienteRegistrado.js"></script>
+         <script src="<?= $host ?>js/clientes/buscarClienteRegistrado.js"></script>
     </body>
 </html>

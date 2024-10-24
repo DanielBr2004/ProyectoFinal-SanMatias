@@ -63,26 +63,31 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
   }
 
+nrodocumento.addEventListener("input", async (event) => {
+    event.preventDefault();
+    const response = await buscarDocumento();
 
-  nrodocumento.addEventListener("input", async (event) => {
-        event.preventDefault();
-        const response = await buscarDocumento();
-        if ( response && response.length > 0) {
-            console.log("El usuario ya existe.");
-            adUsuario();
-        } else {
-            console.log("Usuario no encontrado. Permitir registro.");
-            if($("#nombres").value == "" && $("#apepaterno").value == "" && $("#apematerno").value == ""){
-                if(nrodocumento.value.length == 8){
-                    document.querySelector("#registrar-cliente").removeAttribute("disabled");
-                    document.querySelector("#direccion").removeAttribute("disabled");
-                }else if(nrodocumento.value.length == 11){
-                    document.querySelector("#registrar-cliente").removeAttribute("disabled");
-                }
-                adUsuario(true);
-            }
+
+    if ( response.length != 0) {
+       // console.log(response);
+
+        showToast("Usuario ya registrado", "ERROR", 1500);
+        document.querySelector("#nrodocumento").focus();
+        adUsuario(false);
+        
+    } else if(response == 0){
+        adUsuario(true);
+        if(nrodocumento.value.length == 8){
+            document.querySelector("#registrar-cliente").removeAttribute("disabled");
+            document.querySelector("#direccion").removeAttribute("disabled");
+        }else if(nrodocumento.value.length == 11){
+            document.querySelector("#registrar-cliente").removeAttribute("disabled");
         }
+        
+    }
 });
+
+
 
 
 
@@ -101,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#form-registro-clientes").addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if(confirm("¿Estás seguro de proceder?")){
+      if(await ask("¿Estás seguro de registrar al Cliente?")){
 
           //Control de Personas
           let response1;
@@ -111,8 +116,11 @@ document.addEventListener("DOMContentLoaded", () => {
           //¿Y si la persona ya fue creada?
           if(datosNuevos){
               response1 = await registrarPersona(); //Registramos nueva persona
+              console.log(response1);
               idpersona = response1.idpersona;      //Obtenemos el ID de la nueva persona
           }
+
+          
           
 
           //¿El idpersona es correcto?
