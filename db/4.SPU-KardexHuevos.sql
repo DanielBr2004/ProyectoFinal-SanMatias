@@ -30,3 +30,59 @@ BEGIN
     INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
     VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
 END $$
+-- ----------------------- LISTAR -----------------------
+DROP PROCEDURE IF EXISTS `spu_listar_kardexhuevo`;
+DELIMITER $$
+
+CREATE PROCEDURE spu_listar_kardexhuevo()
+BEGIN
+    SELECT 
+        kh.idAlmacenHuevos,
+        c.nomusuario AS nombre_colaborador,
+        th.tiposHuevos AS tipo_huevo,
+        kh.motivomovimiento,
+        kh.stockProducto,
+        kh.cantidad,
+        kh.descripcion,
+        kh.creado
+    FROM KardexAlmHuevo kh
+    JOIN colaboradores c ON kh.idcolaborador = c.idcolaborador
+    JOIN tipoHuevo th ON kh.idhuevo = th.idhuevo
+    ORDER BY kh.creado DESC;
+END $$
+CALL spu_listar_kardexhuevo();
+
+-- ------------------------------------------ Procedimiento para editar un registro en el Kardex --------------------------------------------------
+DROP PROCEDURE IF EXISTS `spu_editar_kardexhuevo`;
+DELIMITER $$
+CREATE PROCEDURE spu_editar_kardexhuevo(
+    IN _idAlmacenHuevos INT,
+    IN _motivomovimiento VARCHAR(500),
+    IN _cantidad SMALLINT,
+    IN _descripcion VARCHAR(100)
+)
+BEGIN
+    DECLARE _stockProducto INT;
+    -- Obtener el stock actual antes de la actualización
+    SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idAlmacenHuevos = _idAlmacenHuevos;
+    -- Actualizar la cantidad y el motivo de movimiento
+    UPDATE KardexAlmHuevo
+    SET 
+        motivomovimiento = _motivomovimiento,
+        cantidad = _cantidad,
+        descripcion = NULLIF(_descripcion, ''),
+        creado = NOW()
+    WHERE idAlmacenHuevos = _idAlmacenHuevos;
+
+    -- Actualizar el stock de productos basado en el nuevo movimiento
+    IF _motivomovimiento LIKE 'Salida%' THEN
+        SET _stockProducto = _stockProducto - _cantidad;  -- Salida
+    ELSEIF _motivomovimiento LIKE 'Entrada%' THEN
+        SET _stockProducto = _stockProducto + _cantidad;  -- Entrada
+    END IF;
+    -- Actualizar el stock en el registro
+    UPDATE KardexAlmHuevo
+    SET stockProducto = _stockProducto
+    WHERE idAlmacenHuevos = _idAlmacenHuevos;
+END $$
+CALL spu_editar_kardexhuevo(3, 'Salida por venta', 15, 'Se Vendio');

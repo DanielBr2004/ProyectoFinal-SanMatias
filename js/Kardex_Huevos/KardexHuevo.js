@@ -1,4 +1,5 @@
 
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const idhuevo = document.querySelector("#idhuevo");
@@ -6,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const CantidadEntrada = document.querySelector("#cantidad");
 
   const Motivomovimiento = document.querySelector("#Motivomovimiento");
+
+  const tablaKardexHuevos = document.querySelector("#tbody-productos");
+
 
   idhuevo.addEventListener("change", () =>{
     const huevo = idhuevo.value;
@@ -152,5 +156,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+//LISTADO
+async function obtenerKardexHuevos() {
+  try {
+    const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=getAlls`);
+    const kardexHuevos = await response.json();
+    console.log("Datos recibidos:", kardexHuevos); // Verifica aquí
+    tablaKardexHuevos.innerHTML = "";
+    kardexHuevos.forEach(huevo => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${huevo.idAlmacenHuevos}</td>
+        <td>${huevo.nombre_colaborador}</td>
+        <td>${huevo.tipo_huevo}</td>
+        <td>${huevo.motivomovimiento}</td>
+        <td>${huevo.stockProducto}</td>
+        <td>${huevo.cantidad}</td>
+        <td>${huevo.descripcion}</td>
+        <td>${huevo.creado}</td>
+        <td>
+          <button class="btn btn-warning btn-sm">Editar</button>
+          <button class="btn btn-danger btn-sm">Eliminar</button>
+        </td>
+      `;
+      tablaKardexHuevos.appendChild(fila);
+    });
+  } catch (error) {
+    console.error("Error al obtener el kardex de huevos:", error);
+  }
+}
+obtenerKardexHuevos();
 
 })

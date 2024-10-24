@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   
   $('#tabla-productos').DataTable({
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     function ValidarCantidadSalida(){
       if (Motivomovimiento.value === 'S') {
-        if (parseInt(cantidad.value) > parseInt(StockActual.value)) {
+        if (parseFloat(cantidad.value) > parseFloat(StockActual.value)) {
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -90,13 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then(data => {
               //Limpiar el formulario
               document.querySelector("#form-kardex-Productos").reset();
-              Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Kardex Actualizado Correctamente",
-                  showConfirmButton: false,
-                  timer: 1500
-              });
+              showToast("Kardex registrado correctamente", "SUCCESS")
           })
           .catch( e => { console.error(e) })
     }
@@ -104,20 +97,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#form-kardex-Productos").addEventListener("submit", (event) => {
       event.preventDefault();
   
-      const ValorIngresado = parseInt(CantidadEntrada.value);
+      const ValorIngresado = parseFloat(CantidadEntrada.value);
   
       if(ValorIngresado < 0){
           event.preventDefault();
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "La cantidad ingresada debe ser Mayor a 0",
-          })
+          showToast("La cantidad no puede ser negativa", "ERROR");
       }else{
                 //Si la cantidad es mayor que el stock actual
           if(!ValidarCantidadSalida()){
             return;
-        }
+          }
   
         if(Swal.fire({
           title: "Deseas Guardar los cambios",
@@ -126,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
           confirmButtonText: "Guardar",
           denyButtonText: `No guardar`
         }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             Swal.fire(GuardarKardex());
           } else if (result.isDenied) {
@@ -153,6 +141,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   });
 
+
+  const dataTableOptions = {
+    "language": {
+      "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+    }
+  };
+  
+ //listado
+  /*
   async function cargarProductos() {
     try {
         const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
@@ -162,17 +159,20 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.innerHTML = ""; // Limpiamos el contenido previo
 
         data.forEach(item => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td class="text-center">${item.ID}</td>
-                <td class="text-center">${item.Colaborador}</td>
-                <td class="text-center">${item.Producto}</td>
-                <td class="text-center">${item['Stock Actual']}</td>
-                <td class="text-center">${item['Motivo de Movimiento']}</td>
-                <td class="text-center">${item.Cantidad}</td>
-                <td class="text-center">${item.Creado}</td>
-            `;
-            tbody.appendChild(tr);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+              <td class="text-center">${item.ID}</td>
+              <td class="text-center">${item.Colaborador}</td>
+              <td class="text-center">${item.Producto}</td>
+              <td class="text-center">${item['Stock Actual']}</td>
+              <td class="text-center">${item['Motivo de Movimiento']}</td>
+              <td class="text-center">${item.Cantidad}</td>
+              <td class="text-center">${item.Creado}</td>
+              <td class="text-center">
+              <button class="btn btn-warning btn-sm btn-editar" data-id="<?= $row['id'] ?>">Editar</button>
+              </td>
+          `;
+          tbody.appendChild(tr);
         });
     } catch (error) {
         console.error("Error al cargar productos:", error);
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
  cargarProductos();
-
-  })
+  */
+});
 
   

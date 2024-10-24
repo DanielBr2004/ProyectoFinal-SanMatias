@@ -14,7 +14,7 @@
                     Complete los datos
                 </div>
                 <div class="card-body">
-                    <form action="" id="form-registro-usuarios" autocomplete="off">
+                    <form action="" id="form-registro-usuarios" >
                 <!-- Primera Fila -->
             <div class="row g-2 mb-2">
                 <div class="col-md">
@@ -59,13 +59,13 @@
             <div class="row g-2">
                 <div class="col-md mb-3">
                     <div class="form-floating">
-                        <input type="text" id="nomusuario" maxlength="150" class="form-control">
+                        <input type="text" id="nomusuario" maxlength="150" class="form-control" required autocomplete="given-name">
                         <label for="nomusuario">Nombre de Usuario</label>
                     </div>
                 </div>
                 <div class="col-md mb-3">
                     <div class="form-floating">
-                        <input type="password" id="passusuario" class="form-control" required>
+                        <input type="password" id="passusuario" class="form-control" required disabled="true" autocomplete="current-password" required>
                         <label for="passusuario">Contraseña</label>
                     </div>
                 </div>
@@ -107,6 +107,7 @@
         
         </div>
         <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>

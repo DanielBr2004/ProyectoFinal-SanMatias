@@ -54,4 +54,20 @@ class KardexProducto extends Conexion{
         }
     }
 
+    public function edit($params = []):bool {
+        $status = false;
+        try {
+            $query = $this->pdo->prepare("CALL spu_editar_KardexAlmProducto(?, ?, ?)");
+            $status = $query->execute(
+                array(
+                    $params['idAlmacenProducto'],          
+                    $params['motivomovimiento'],           
+                    $params['cantidad']                   
+                )
+            );
+            return $status;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
   }

@@ -52,6 +52,9 @@ if (isset($_POST['operacion'])) {
             $consulta = $producto->getAll(); // Asumiendo que has implementado el método para llamar al procedimiento
             echo json_encode($consulta);
             break;
+        case 'searchProducto':
+            echo json_encode($producto->searchProducto(['producto' => $_GET['producto']]));
+            break;
     }
 }
 

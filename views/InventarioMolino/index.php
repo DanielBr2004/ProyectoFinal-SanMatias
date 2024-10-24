@@ -64,7 +64,7 @@
                 <div class="row g-2 mt-2">
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="number" minlength="1" class="form-control" pattern="[0-9]+"  id="cantidad" required>
+                            <input type="number"  class="form-control" minlength="1" pattern="[0-9]" step="0.01" id="cantidad" required>
                             <label for="cantidad">Cantidad</label>
                         </div>
                     </div>
@@ -90,6 +90,7 @@
             </div>
         </div>
 
+        <!--LISTADO-->
         <div class="container mt-5">
     <div class="card">
         <h2 class="text-center" style="color: #007bff;">Inventario</h2>
@@ -98,24 +99,24 @@
                 <table class="table table-striped table-bordered" id="tabla-productos">
                     <thead>
                         <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Colaborador</th>
-                            <th class="text-center">Producto</th>
-                            <th class="text-center">Stock Actual</th>
-                            <th class="text-center">Motivo de Movimiento</th>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-center">Creado</th>
-                            <th class="text-center">Operaciones</th>
+                        <th>ID</th>
+                            <th>Colaborador</th>
+                            <th>Producto</th>
+                            <th>Stock Actual</th>
+                            <th>Motivo de Movimiento</th>
+                            <th>Cantidad</th>
+                            <th>Creado</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody-productos">
-                        <!-- Los datos se llenarán aquí -->
+                    <tbody id="tbody_productos">
+                        <!-- Los productos se cargarán aquí -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap -->
@@ -136,8 +137,69 @@
         <!-- Datatable estilo BS5 -->
         <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script> <!-- DataTables Bootstrap 5 integration -->
 
+
+    <!-- JQuery NUEVO -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- DataTable -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/buttons/2.3.3/js/dataTables.buttons.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.bootstrap5.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.html5.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"
+    ></script>
+    <!-- Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Initialize DataTables -->
+<script>
+    $(document).ready(function() {
+        $('#tabla-productos').DataTable();
+    });
+</script>
+
+
+
+    <script src="<?= $host ?>/js/listkardexProd.js"></script>
+
+
         <!-- JS del Proyecto-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="../../js/KardexProducto.js"></script>
+        <script src="<?= $host ?>/js/swalcustom.js"></script>
     </body>
 </html>

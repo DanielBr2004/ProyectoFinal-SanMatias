@@ -24,6 +24,17 @@ if(isset($_POST['operacion'])){
           //Se envía el valor del status como un booleano
           echo json_encode(["estado" => $status]);
           break;
+
+          case 'editarKardex':
+            $datosEditar = [
+                "idAlmacenHuevos"   => $kardexhuevo->limpiarCadena($_POST['idAlmacenHuevos']),
+                "motivomovimiento"  => $kardexhuevo->limpiarCadena($_POST['motivomovimiento']),
+                "cantidad"          => $kardexhuevo->limpiarCadena($_POST['cantidad']),
+                "descripcion"       => $kardexhuevo->limpiarCadena($_POST['descripcion'])
+            ];
+            $status = $kardexhuevo->editarKardexHuevo($datosEditar);
+            echo json_encode(["estado" => $status]);
+            break;
   }
 }
 
@@ -35,5 +46,14 @@ if(isset($_GET['operacion'])){
       case 'getAll':
           echo json_encode($kardexhuevo->getAll());
         break;
+  }
+}
+
+if (isset($_GET['operacion'])) {
+  switch ($_GET['operacion']) {
+      case 'getAlls':
+          echo json_encode($kardexhuevo->getAlls());
+          break;
+      // Otros casos...
   }
 }

@@ -18,7 +18,35 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
         <link rel="icon" href="<?= $host ?>/img/icon.png">
         <link rel="stylesheet" href="<?= $host ?>js/Spanish.json">
 
-        
+
+        <!--DATATABLE-->
+        <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css"
+        />
+        <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.bootstrap5.min.css"
+         />
+      
+        <!--/DATATABLE -->
+        <!-- Bootstrap-->
+        <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        />
+        <!--/Bootstrap-->
+        <!-- Font Awesome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        />
+        <!-- /Font Awesome -->
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -61,7 +89,6 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Clientes">Clientes</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"><i class="fa-solid fa-users-viewfinder"></i> Usuarios</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/ActualizarDatos">Actualizar Datos</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Productos">Productos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy">Cerrar sesion</a></li>

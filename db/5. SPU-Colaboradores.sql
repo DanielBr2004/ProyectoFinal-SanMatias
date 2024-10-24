@@ -61,4 +61,24 @@ BEGIN
         ON PER.idpersona = COL.idpersona 
         ORDER BY idcolaborador DESC ;
 END $$
+call spu_listar_Colaboradores();
+ -- ------------------------------------------- Editar colaboradores ----------------------------------------------------- 
+ DELIMITER $$
+CREATE PROCEDURE spu_editar_colaborador
+(
+    IN _idcolaborador INT,
+    IN _apepaterno VARCHAR(100),
+    IN _apematerno VARCHAR(100),
+    IN _nombres VARCHAR(100)
+)
+BEGIN
+    UPDATE personas PER
+    INNER JOIN colaboradores COL ON COL.idpersona = PER.idpersona
+    SET 
+        PER.apepaterno = _apepaterno,
+        PER.apematerno = _apematerno,
+        PER.nombres = _nombres
+    WHERE COL.idcolaborador = _idcolaborador;
+END $$
+CALL spu_editar_colaborador(3, 'PACHAS', 'ROJAS', 'STIVEN');
 

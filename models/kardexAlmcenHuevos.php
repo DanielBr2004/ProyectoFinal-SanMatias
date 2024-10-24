@@ -49,5 +49,35 @@ class KardexHuevo extends Conexion{
         return parent::getData('spu_vista_kardexhuevo');
     }
 
+    public function getAlls(){
+        try {
+            $query = $this->pdo->prepare("CALL spu_listar_kardexhuevo();");
+            $query->execute();
+            $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function editarKardexHuevo($params = []): bool {
+        $status = false;
+        try {
+            $query = $this->pdo->prepare("CALL spu_editar_kardexhuevo(?, ?, ?, ?)");
+            $status = $query->execute(
+                array(
+                    $params['idAlmacenHuevos'],
+                    $params['motivomovimiento'],
+                    $params['cantidad'],
+                    $params['descripcion']
+                )
+            );
+            return $status; // Retorna verdadero si la actualización fue exitosa
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
 
   }

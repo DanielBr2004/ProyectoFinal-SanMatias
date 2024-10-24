@@ -72,11 +72,12 @@ document.addEventListener("DOMContentLoaded", () => {
             adUsuario();
         } else {
             console.log("Usuario no encontrado. Permitir registro.");
-            showToast("este Nro de Documento No Existe", "ERROR", 1500);
-            if($("nombres").value == "" && $("apepaterno").value == "" && $("apematerno").value == ""){
+            if($("#nombres").value == "" && $("#apepaterno").value == "" && $("#apematerno").value == ""){
                 if(nrodocumento.value.length == 8){
                     document.querySelector("#registrar-cliente").removeAttribute("disabled");
                     document.querySelector("#direccion").removeAttribute("disabled");
+                }else if(nrodocumento.value.length == 11){
+                    document.querySelector("#registrar-cliente").removeAttribute("disabled");
                 }
                 adUsuario(true);
             }
@@ -91,8 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("#telefono").setAttribute("disabled", true);
           document.querySelector("#email").setAttribute("disabled", true);
       }else{
-
-
           document.querySelector("#telefono").removeAttribute("disabled");
           document.querySelector("#email").removeAttribute("disabled");
 
