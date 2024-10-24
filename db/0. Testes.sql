@@ -30,6 +30,8 @@ select * from personas;
 
 select * from cliente;
 
+call spu_listar_cliente;
+
 select  * from productos;
 
 SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC LIMIT 1;

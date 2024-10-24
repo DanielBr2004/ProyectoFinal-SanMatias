@@ -47,10 +47,11 @@ CREATE PROCEDURE spu_listar_cliente()
 BEGIN
 	SELECT 
 		PER.nrodocumento,
-		PER.nombres,
-        PER.apematerno,
-        PER.apepaterno,
-        CLI.razonsocial
+        CLI.tipodocumento,
+        CASE
+        WHEN CLI.tipodocumento ="RUC" THEN CLI.razonsocial
+        WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PER.nombres,' ',PER.apematerno, ' ',PER.apepaterno)
+		END AS clientes
 		FROM cliente CLI
         INNER JOIN personas PER
         ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;

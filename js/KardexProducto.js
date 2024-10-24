@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .catch( e => { console.error(e) })
     }
   
-    document.querySelector("#form-kardex-Productos").addEventListener("submit", (event) => {
+    document.querySelector("#form-kardex-Productos").addEventListener("submit", async (event) => {
       event.preventDefault();
   
       const ValorIngresado = parseFloat(CantidadEntrada.value);
@@ -108,20 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
           }
   
-        if(Swal.fire({
-          title: "Deseas Guardar los cambios",
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: "Guardar",
-          denyButtonText: `No guardar`
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(GuardarKardex());
-          } else if (result.isDenied) {
-            Swal.fire("Cancelado", "", "error", document.querySelector("#form-kardex-Productos").reset());
+          if(await ask("¿Está seguro de registrar el Kardex?")){
+            GuardarKardex();
           }
-        })){
-        }
       }
   
   

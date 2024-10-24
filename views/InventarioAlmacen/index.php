@@ -154,7 +154,6 @@
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="../../js/Kardex_Huevos/KardexHuevo.js"></script>
-        <script src="../../js/Kardex_Huevos/Tabla_Registros.js"></script>
     </body>
     
 </html>
