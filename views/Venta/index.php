@@ -78,7 +78,7 @@
                         <div class="card-body">
                         <div class="container mt-5">
                             <div>
-                            <button id="agregar-item" _ngcontent-ng-c943880071="" tooltipposition="top" ptooltip="Agregar item" pbutton="" type="button" icon="fa fa-plus" class="btn btn-success p-element p-button-success p-button p-component p-button-icon-only ng-star-inserted" style="">
+                            <button id="agregar-item" _ngcontent-ng-c943880071="" tooltipposition="top" ptooltip="Agregar item" pbutton="" type="button" icon="fa fa-plus" class="btn btn-success p-element p-button-success p-button p-component p-button-icon-only ng-star-inserted">
                                 <span class="p-button-icon fa fa-plus" aria-hidden="true"> Agregar Producto a la Lista</span>
                             </button>
                             </div>
