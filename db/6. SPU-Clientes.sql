@@ -46,14 +46,12 @@ END $$
 CREATE PROCEDURE spu_listar_cliente()
 BEGIN
 	SELECT 
+		PER.nrodocumento,
 		PER.nombres,
         PER.apematerno,
         PER.apepaterno,
-		CLI.telefono,
-        CLI.razonsocial,
-        CLI.direccion,
-        cli.email
+        CLI.razonsocial
 		FROM cliente CLI
         INNER JOIN personas PER
-        ON PER.idpersona = CLI.idpersona;
+        ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
 END $$

@@ -55,6 +55,9 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
             </div>
         </div>
 
+        <script src="http://localhost/ProyectoFinal-SanMatias/js/swalcustom.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
             document.addEventListener("DOMContentLoaded", () => {
                 document.querySelector("#form-login").addEventListener("submit", (event) => {
@@ -71,9 +74,9 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                         .then(acceso => {
                             console.log(acceso);
                             if(!acceso.permitido){
-                                alert(acceso.status);
+                                showToast(acceso.status, "ERROR", 1000);
                             }else{
-                                window.location.href = './home.php'; 
+                                window.location.href = './views/InventarioMolino/'; 
                             }
                         })
                 });
