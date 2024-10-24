@@ -14,17 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
             data.forEach(item =>{
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td>${numFila}</td>
-                    <td>${item.nombres}</td>
-                    <td>${item.apepaterno}</td>
-                    <td>${item.apematerno}</td>
-                    <td>${item.telefono}</td>
-                    <td>${item.razonsocial}</td>
-                    <td>${item.direccion}</td>
-                    <td>${item.email}</td>
-                    <td>
-                        <a href="EditarUsuario.php?id=${item.idcolaborador}" class="btn btn-primary">Editar</a>
-                        <button class="btn btn-danger" onclick="eliminarUsuario(${item.idcolaborador})">Eliminar</button>
+                    <td class="text-center">${numFila}</td>
+                    <td class="text-center">${item.nrodocumento}</td>
+                    <td class="text-center">${item.apepaterno +" "+ item.apematerno}</td>
+                    <td class="text-center">${item.nombres}</td>
+                    <td class="text-center">${item.razonsocial}</td>
+                    <td class="text-center">
+                        <a href="EditarUsuario.php?id=${item.idcolaborador}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
+                        <button class="btn btn-danger" onclick="eliminarUsuario(${item.idcolaborador})"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                     
                 `;

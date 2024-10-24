@@ -100,26 +100,20 @@
                 </div>
                     </form>
             </div>
-        </div>
-        
-            <div class="container mb-3">
             <div class="card mb-4">
                 <div class="card-header">
-                    Lista de Usuarios Registrados
+                    Lista de Clientes Registrados
                 </div>
                 <div class="card-body">
-                    <table class="table table-responsive table-hover">
+                    <table class="table table-bordered table-responsive table-hover">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th></th>
-                                <th>Telefono</th>
-                                <th>Razon Social</th>
-                                <th>Direcion</th>
-                                <th>Email</th>
-                                <th>Acciones</th>
+                                <th class="text-center">#</th>
+                                <th class="text-center">N° Documento</th>
+                                <th class="text-center">Apellidos</th>
+                                <th class="text-center">Nombres</th>
+                                <th class="text-center">Razon Social</th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-clientes">
@@ -129,6 +123,8 @@
                 </div>
             </div>
         </div>
+
+        
 
         
         
