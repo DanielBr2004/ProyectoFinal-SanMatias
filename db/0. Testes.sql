@@ -20,6 +20,8 @@ SELECT * FROM VENTAS;
 
 select * from  KardexAlmHuevo;
 
+CALL spu_listar_tipohuevo();
+
 select * from tipoHuevo;
 
 select * from colaboradores;
@@ -29,6 +31,8 @@ select * from KardexAlmProducto;
 select * from personas;
 
 select * from cliente;
+
+select * from ventas;
 
 call spu_listar_cliente;
 

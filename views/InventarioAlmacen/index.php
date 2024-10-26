@@ -154,6 +154,7 @@
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
         <script src="../../js/Kardex_Huevos/KardexHuevo.js"></script>
+        <script src="<?= $host ?>/js/swalcustom.js"></script>
     </body>
     
 </html>

@@ -107,28 +107,6 @@ CONSTRAINT fk_idhuevo  FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
 CONSTRAINT fk_idcolaborador_huevo FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
 )ENGINE = INNODB;
 
--- DEPARTAMENTO --
-create table departamentos(
-iddepartamento 		int auto_increment primary key,
-departamento		varchar(100)
-)engine = InnoDB;
-
--- PORVINCIA -- 
-create table provincias (
-idprovincia	 int auto_increment primary key,
-iddepartamento	int null,
-provincia		varchar(100),
-CONSTRAINT fk_departamento FOREIGN KEY (iddepartamento) REFERENCES departamentos (iddepartamento)
-) engine = InnoDB;
-
--- DISTRITO -- 
-create table distritos(
-iddistrito	int auto_increment primary key,
-idprovincia		int null,
-distrito		varchar(100),
-CONSTRAINT fk_provincia FOREIGN KEY (idprovincia) REFERENCES provincias (idprovincia)
-)engine = InnoDB;
-
 -- CLIENTE --
 CREATE TABLE cliente
 (
@@ -148,16 +126,25 @@ idventa				INT AUTO_INCREMENT primary key ,
 idcliente			INT NOT NULL,
 idcolaborador		INT NOT NULL,
 fecha 				DATETIME DEFAULT NOW() NOT NULL,
-iddistrito			INT NOT NULL ,
-precioUnitario		DECIMAL(10, 2),
-precioTotal			DECIMAL(10, 2),
-cantidad_solicitada INT NOT NULL,
-idAlmacenHuevos		INT NOT NULL,
-CONSTRAINT fk_idAlmacenHuevos_venta FOREIGN KEY (idAlmacenHuevos) REFERENCES KardexAlmHuevo(idAlmacenHuevos),
-CONSTRAINT fk_iddistrito_venta FOREIGN KEY (iddistrito) REFERENCES distritos(iddistrito),
+direccion			VARCHAR(50) NULL,
+entregado			CHAR(1) NOT NULL,
+estado				VARCHAR(10) NOT NULL,
 CONSTRAINT fk_idcliente_venta FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
 CONSTRAINT fk_idcolaborador_venta FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
 )engine = InnoDB;
+
+CREATE TABLE detalleventas
+(
+iddetalleventa		INT AUTO_INCREMENT PRIMARY KEY,
+idventa				INT NOT NULL,
+idhuevo				INT NOT NULL,
+idAlmacenHuevos		INT NULL,
+precioUnitario		DECIMAL(10, 2) NOT NULL,
+precioTotal			DECIMAL(10, 2) NOT NULL,
+CONSTRAINT fk_idhuevo_detalleventa FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
+CONSTRAINT fk_idAlmacenHuevos_detalleventa FOREIGN KEY (idAlmacenHuevos) REFERENCES KardexAlmHuevo(idAlmacenHuevos),
+CONSTRAINT fk_idventa_detalleventa FOREIGN KEY (idventa) REFERENCES ventas(idventa)
+)engine = innodb;
 
 
 

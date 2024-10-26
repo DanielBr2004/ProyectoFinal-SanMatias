@@ -51,11 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function ValidarCantidadSalida(){
       if (Motivomovimiento.value === 'S') {
         if (parseFloat(cantidad.value) > parseFloat(StockActual.value)) {
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "La Cantidad de Salida no puede ser mayor al stock Actual",
-            });
+            showToast("La Cantidad de Salida no puede ser mayor al stock Actual", "ERROR", 3000);
             return false;
         }
     }
@@ -89,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then(data => {
               //Limpiar el formulario
               document.querySelector("#form-kardex-Productos").reset();
-              showToast("Kardex registrado correctamente", "SUCCESS")
+              showToast("Kardex registrado correctamente", "SUCCESS", 3000)
           })
           .catch( e => { console.error(e) })
     }

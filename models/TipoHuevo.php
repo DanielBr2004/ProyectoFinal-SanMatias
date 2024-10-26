@@ -2,7 +2,7 @@
 
 require_once 'Conexion.php';
 
-class Producto extends Conexion{
+class TipoHuevo extends Conexion{
 
   private $pdo; 
 
@@ -11,5 +11,8 @@ class Producto extends Conexion{
       $this->pdo = parent::getConexion(); 
   }
 
+  public function getAllHuevos():array{
+    return parent::getData('spu_listar_tipohuevo');
+}
 
 }

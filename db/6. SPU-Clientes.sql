@@ -34,9 +34,9 @@ BEGIN
         CLI.telefono,
         CLI.razonsocial,
         CLI.direccion
-		FROM personas PER 
-        LEFT JOIN cliente CLI
-        ON CLI.idpersona = PER.idpersona 
+		FROM cliente CLI 
+        LEFT JOIN personas PER
+        ON PER.idpersona = CLI.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$
 
