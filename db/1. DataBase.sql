@@ -127,7 +127,6 @@ idcliente			INT NOT NULL,
 idcolaborador		INT NOT NULL,
 fecha 				DATETIME DEFAULT NOW() NOT NULL,
 direccion			VARCHAR(50) NULL,
-entregado			CHAR(1) DEFAULT 'N' NOT NULL ,
 estado				VARCHAR(30) DEFAULT 'Por entregar' NOT NULL,
 CONSTRAINT fk_idcliente_venta FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
 CONSTRAINT fk_idcolaborador_venta FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)

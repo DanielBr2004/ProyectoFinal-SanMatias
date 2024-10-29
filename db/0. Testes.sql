@@ -52,3 +52,6 @@ CALL spu_insertar_kardexhuevo(1,1,'E','por produccion',150,'dwdwdw');
 SELECT stockProducto  FROM KardexAlmProducto WHERE idproducto = 1 ORDER BY creado DESC LIMIT 1;
 CALL spu_listar_Colaboradores();
 CALL spu_vista_kardexhuevo();
+
+CALL spu_registrar_Detalleventas(1,1,1,220,1500.10,4.8,3000.45);
+select * from detalleventas;

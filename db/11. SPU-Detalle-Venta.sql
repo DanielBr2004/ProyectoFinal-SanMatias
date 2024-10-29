@@ -33,5 +33,3 @@ BEGIN
     VALUES(_idventa, _idhuevo, _cantidad, _pesoTotal, _preciounitario, _preciototal);
 END $$
 DELIMITER ;
-CALL spu_registrar_Detalleventas(1,1,1,220,1500.10,4.8,3000.45);
-select * from detalleventas;

@@ -1,0 +1,23 @@
+<?php
+session_start();
+
+require_once '../models/venta.php';
+
+header("Content-type: application/json; charset=utf-8");
+
+$venta = new Venta();
+
+if(isset($_POST['operacion'])){
+
+  switch($_POST['operacion']){
+      case 'add':
+          $datosEnviar = [
+              "idcliente"         => $venta->limpiarCadena($_POST['idcliente']),
+              "idcolaborador"     => $venta->limpiarCadena($_POST['idcolaborador']),
+              "direccion"         => $venta->limpiarCadena($_POST['direccion'])
+          ];
+          $status = $venta->add($datosEnviar);
+          echo json_encode(["estado" => $status]);
+          break;
+  }
+}
