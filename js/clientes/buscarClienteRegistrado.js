@@ -25,19 +25,32 @@ document.addEventListener("DOMContentLoaded", () => {
       $("#telefono").value = '';
     }else{
       $("#tipodocumento").value = response[0].tipodocumento;
-      $("#nombres").value = response[0].apepaterno + " " + response[0].apematerno + " " + response[0].nombres;
-      $("#razonsocial").value = response[0].razonsocial;
+      $("#nombres").value = response[0].clientes;
       $("#direccion").value = response[0].direccion;
       $("#email").value = response[0].email;
       $("#telefono").value = response[0].telefono;
     }
   }
 
-    nrodocumento.addEventListener("input", async (e) => {
-      const response = await buscarDocumento();
-      llenarDatos(response);
 
+  nrodocumento.addEventListener("input", async (e) => {
+    const response = await buscarDocumento();
+    llenarDatos(response);   
   });
+
+  async function evaluarResponse() {
+    const response = await buscarDocumento();
+    llenarDatos(response);
+    if (response.length != 0) {
+      $("#agregar-item").removeAttribute("disabled");
+    } else {
+      $("#agregar-item").setAttribute("disabled", "disabled");
+    }
+  }
+
+    nrodocumento.addEventListener("input", evaluarResponse);
+
+  evaluarResponse();
 
 
 });

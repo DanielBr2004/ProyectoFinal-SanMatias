@@ -25,15 +25,17 @@ DELIMITER $$
 CREATE PROCEDURE spu_cliente_documento_dni(IN _nrodocumento CHAR(12))
 BEGIN
 	SELECT 
+		PER.nrodocumento,
 		PER.idpersona,
         CLI.idcliente,
-        PER.apepaterno, 
-        PER.apematerno,
-        PER.nombres,
+        CASE
+        WHEN CLI.tipodocumento ="RUC" THEN CLI.razonsocial
+        WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PER.nombres,' ',PER.apematerno, ' ',PER.apepaterno)
+		END AS clientes,
         CLI.tipodocumento,
         CLI.telefono,
-        CLI.razonsocial,
-        CLI.direccion
+        CLI.direccion,
+        CLI.email
 		FROM cliente CLI 
         LEFT JOIN personas PER
         ON PER.idpersona = CLI.idpersona 
@@ -46,6 +48,7 @@ END $$
 CREATE PROCEDURE spu_listar_cliente()
 BEGIN
 	SELECT 
+		CLI.idcliente,
 		PER.nrodocumento,
         CLI.tipodocumento,
         CASE

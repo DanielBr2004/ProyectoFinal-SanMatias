@@ -32,7 +32,11 @@ select * from personas;
 
 select * from cliente;
 
+CALL spu_registrar_Ventas(2,1,'nose donde');
+CALL spu_listar_ventas();
+
 select * from ventas;
+select * from detalleventas;
 
 call spu_listar_cliente;
 

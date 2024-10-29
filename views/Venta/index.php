@@ -13,36 +13,29 @@
                 <div class="card-body">
                     <form action="" id="form-kardex-huevos" autocomplete="off">
                         <div class="row g-2">
-                            <div class="col-md">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" minlength="8" maxlength="11"  id="nrodocumento" autofocus required>
                                     <label for="nrodocumento">Numero de Documento</label>
                                 </div>
                             </div>
 
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="tipodocumento" disabled>
                                     <label for="tipodocumento">Tipo de Documento</label>
                                 </div>
                             </div>
 
+                        </div>
+
+
+                    <!-- Datos del Cliente -->
+                        <div class="row g-2">
                             <div class="col-md-6 mb-3">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="nombres"  disabled>
-                                    <label for="nombres">Nombre </label>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <div class="row g-2">
-
-                            <div class="col-md-6 mb-3">
-                                <div class="form-floating">
-                                    <input type="text" id="razonsocial" maxlength="150" class="form-control" disabled>
-                                    <label for="razonsocial">Razon Social</label>
+                                    <label for="nombres">Cliente </label>
                                 </div>
                             </div>
 
@@ -56,21 +49,28 @@
                         </div>
 
                         <div class="row g-2">
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-floating">
                                     <input type="text" id="email" maxlength="150" class="form-control" disabled>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
 
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-floating">
                                     <input type="number" id="telefono" maxlength="150" class="form-control" disabled>
                                     <label for="telefono">Telefono</label>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="col-md invisible">
+                                <div class="form-floating">
+                                    <input type="text" name="idcolaborador" id="idcolaborador" class="form-control" value="<?= $_SESSION['login']['idcolaborador'] ?>" disabled>
+                                    <label for="idcolaborador">Colaborador</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 
                         <div class="card-header">
                             Detalle de Venta
@@ -78,9 +78,11 @@
                         <div class="card-body">
                         <div class="container mt-5">
                             <div>
-                            <button id="agregar-item" _ngcontent-ng-c943880071="" tooltipposition="top" ptooltip="Agregar item" pbutton="" type="button" icon="fa fa-plus" class="btn btn-success p-element p-button-success p-button p-component p-button-icon-only ng-star-inserted">
-                                <span class="p-button-icon fa fa-plus" aria-hidden="true"> Agregar Producto a la Lista</span>
+                            <button id="agregar-item" _ngcontent-ng-c943880071="" tooltipposition="top" ptooltip="Agregar item" pbutton="" type="button" icon="fa fa-plus" class="btn btn-success p-element p-button-success p-button p-component p-button-icon-only ng-star-inserted" disabled>
+                                    <span aria-hidden="true"> Agregar Producto a la Lista</span>
                             </button>
+                            <br>
+                            <hr>
                             </div>
                             <table class="tabla-detalle table table-bordered table-striped table-hover mt-3">
                                 <thead>
@@ -118,6 +120,7 @@
 
         <!-- Sweet Alert Simplificado-->
          <script src="<?= $host ?>js/swalcustom.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 
          <script src="<?= $host ?>js/ventas/agregarDetalle.js"></script>
          <script src="<?= $host ?>js/clientes/buscarClienteRegistrado.js"></script>

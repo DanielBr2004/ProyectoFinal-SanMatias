@@ -127,8 +127,8 @@ idcliente			INT NOT NULL,
 idcolaborador		INT NOT NULL,
 fecha 				DATETIME DEFAULT NOW() NOT NULL,
 direccion			VARCHAR(50) NULL,
-entregado			CHAR(1) NOT NULL,
-estado				VARCHAR(10) NOT NULL,
+entregado			CHAR(1) DEFAULT 'N' NOT NULL ,
+estado				VARCHAR(30) DEFAULT 'Por entregar' NOT NULL,
 CONSTRAINT fk_idcliente_venta FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
 CONSTRAINT fk_idcolaborador_venta FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
 )engine = InnoDB;
@@ -138,11 +138,11 @@ CREATE TABLE detalleventas
 iddetalleventa		INT AUTO_INCREMENT PRIMARY KEY,
 idventa				INT NOT NULL,
 idhuevo				INT NOT NULL,
-idAlmacenHuevos		INT NULL,
+cantidad			INT NOT NULL,
+PesoTotal			DECIMAL(6,2) NOT NULL,
 precioUnitario		DECIMAL(10, 2) NOT NULL,
 precioTotal			DECIMAL(10, 2) NOT NULL,
 CONSTRAINT fk_idhuevo_detalleventa FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
-CONSTRAINT fk_idAlmacenHuevos_detalleventa FOREIGN KEY (idAlmacenHuevos) REFERENCES KardexAlmHuevo(idAlmacenHuevos),
 CONSTRAINT fk_idventa_detalleventa FOREIGN KEY (idventa) REFERENCES ventas(idventa)
 )engine = innodb;
 
