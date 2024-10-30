@@ -120,6 +120,7 @@
         </table>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Incluye SweetAlert2 desde CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JQuery NUEVO -->

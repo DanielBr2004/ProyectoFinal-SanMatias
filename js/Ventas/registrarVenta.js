@@ -1,9 +1,16 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   /**
    * Función para seleccionar cualquier elemento por su id
    */
+
   function $(object = null) {
     return document.querySelector(object);
+  }
+
+  function eliminarOpcionesGeneradas() {
+    const filas = document.querySelectorAll("#detalles");
+    filas.forEach(fila => fila.remove());
   }
 
   let idcliente = -1;
@@ -96,12 +103,15 @@ document.addEventListener("DOMContentLoaded", () => {
           if (idventas != -1) {
             const data = await registrarDetalleVenta(idventas);
             console.log("IDdetalleVenta 1", data);
-            if (data.error) {
-              showToast("Error al registrar el detalle de la venta", "ERROR", 2000);
-            } else if (data.iddetalleventa && data.iddetalleventa.length > 0) {
+            if(data.length > 0){
               showToast("Venta registrada", "SUCCESS", 2000);
-            } else {
-              showToast("Error al registrar el detalle de la venta", "ERROR", 2000);
+              $("#form-Venta").reset();
+              eliminarOpcionesGeneradas();
+              $("#agregar-item").setAttribute("disabled", "disabled");
+              $("#registrar-venta").setAttribute("disabled", "disabled");
+            }else{
+              showToast("Venta no registrada", "ERROR", 2000);
+              
             }
           } else {
             showToast("Venta no registrada", "ERROR", 2000);
@@ -113,4 +123,5 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+
 });

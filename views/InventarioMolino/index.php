@@ -68,6 +68,12 @@
                             <label for="cantidad">Cantidad</label>
                         </div>
                     </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type=""  class="form-control" minlength="1" value="Kg" id="" disabled>
+                            <label for="cantidad">Unidad De Medida</label>
+                        </div>
+                    </div>
 
                 </div> <!-- ./segunda fila -->
                 <div class="row g-2 mt-2">
@@ -93,7 +99,8 @@
         <!--LISTADO-->
         <div class="container mt-5">
     <div class="card">
-        <h2 class="text-center" style="color: #007bff;">Inventario</h2>
+        <br>
+        <h2 class="text-center" style="color: #007bff;">Registros Del Inventario</h2>
         <div class="card-body">
             <div class="table-responsive">
             <table id="tabla-listarproductos" class="table table-bordered table-striped table-hover">
@@ -119,6 +126,7 @@
 
 
        
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Incluye SweetAlert2 desde CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
