@@ -113,35 +113,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /*
-  async function obtenerKardexHuevos() {
-    try {
-      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=getAlls`);
-      const kardexHuevos = await response.json();
-      console.log("Datos recibidos:", kardexHuevos);
-      tablaKardexHuevos.innerHTML = "";
-      kardexHuevos.forEach(huevo => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-          <td>${huevo.idAlmacenHuevos}</td>
-          <td>${huevo.nombre_colaborador}</td>
-          <td>${huevo.tipo_huevo}</td>
-          <td>${huevo.motivomovimiento}</td>
-          <td>${huevo.stockProducto}</td>
-          <td>${huevo.cantidad}</td>
-          <td>${huevo.descripcion}</td>
-          <td>${huevo.creado}</td>
-          <td>
-            <button class="btn btn-warning btn-sm">Editar</button>
-            <button class="btn btn-danger btn-sm">Eliminar</button>
-          </td>
-        `;
-        tablaKardexHuevos.appendChild(fila);
-      });
-    } catch (error) {
-      console.error("Error al obtener el kardex de huevos:", error);
-    }
-  }
-  obtenerKardexHuevos();
-  */
+
 });

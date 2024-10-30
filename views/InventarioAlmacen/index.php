@@ -120,7 +120,8 @@
         </table>
     </div>
 </div>
-
+<!-- Incluye SweetAlert2 desde CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JQuery NUEVO -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
