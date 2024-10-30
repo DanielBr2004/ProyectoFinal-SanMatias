@@ -40,6 +40,9 @@ select * from detalleventas;
 
 call spu_listar_cliente;
 
+CALL spu_listar_ventas();
+
+SELECT * FROM ventas;
 select  * from productos;
 
 SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC LIMIT 1;
@@ -52,6 +55,6 @@ CALL spu_insertar_kardexhuevo(1,1,'E','por produccion',150,'dwdwdw');
 SELECT stockProducto  FROM KardexAlmProducto WHERE idproducto = 1 ORDER BY creado DESC LIMIT 1;
 CALL spu_listar_Colaboradores();
 CALL spu_vista_kardexhuevo();
-
-CALL spu_registrar_Detalleventas(1,1,1,220,1500.10,4.8,3000.45);
+CALL spu_registrar_Ventas(2,1,'nose donde');
+CALL spu_registrar_Detalleventas(79,1,220,1500.10,4.8,3000.45);
 select * from detalleventas;
