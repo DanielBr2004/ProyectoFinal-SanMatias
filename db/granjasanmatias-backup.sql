@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2024 a las 18:59:27
+-- Tiempo de generación: 30-10-2024 a las 20:46:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -34,19 +34,20 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_documento_dni` (IN `_nrodocumento` CHAR(12))   BEGIN
 	SELECT 
+		PER.nrodocumento,
 		PER.idpersona,
         CLI.idcliente,
-        PER.apepaterno, 
-        PER.apematerno,
-        PER.nombres,
+        CASE
+        WHEN CLI.tipodocumento ="RUC" THEN CLI.razonsocial
+        WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PER.nombres,' ',PER.apematerno, ' ',PER.apepaterno)
+		END AS clientes,
+        CLI.tipodocumento,
         CLI.telefono,
-        CLI.razonsocial,
         CLI.direccion,
-        CLI.email,
-        CLI.tipodocumento
-		FROM personas PER 
-        LEFT JOIN cliente CLI
-        ON CLI.idpersona = PER.idpersona 
+        CLI.email
+		FROM cliente CLI 
+        LEFT JOIN personas PER
+        ON PER.idpersona = CLI.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END$$
 
@@ -82,6 +83,68 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_colaborador_buscar_dni` (IN `_n
         WHERE nrodocumento = _nrodocumento;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_editar_colaborador` (IN `_idcolaborador` INT, IN `_apepaterno` VARCHAR(100), IN `_apematerno` VARCHAR(100), IN `_nombres` VARCHAR(100))   BEGIN
+    UPDATE personas PER
+    INNER JOIN colaboradores COL ON COL.idpersona = PER.idpersona
+    SET 
+        PER.apepaterno = _apepaterno,
+        PER.apematerno = _apematerno,
+        PER.nombres = _nombres
+    WHERE COL.idcolaborador = _idcolaborador;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_editar_KardexAlmProducto` (IN `_idAlmacenProducto` INT, IN `_nuevoMotivoMovimiento` VARCHAR(100), IN `_nuevaCantidad` SMALLINT)   BEGIN
+    DECLARE _idProducto INT;
+    DECLARE _stockProductoActual INT DEFAULT 0;
+    DECLARE _stockNuevo INT DEFAULT 0;
+    
+    SELECT idproducto, stockProducto INTO _idProducto, _stockProductoActual 
+    FROM KardexAlmProducto
+    WHERE idAlmacenProducto = _idAlmacenProducto;
+
+    IF _nuevoMotivoMovimiento = 'Entrada por compra' THEN
+        SET _stockNuevo = _stockProductoActual + _nuevaCantidad; 
+    ELSEIF _nuevoMotivoMovimiento = 'Salida por uso' THEN
+        SET _stockNuevo = _stockProductoActual - _nuevaCantidad;  
+    ELSEIF _nuevoMotivoMovimiento = 'Salida por merma' THEN
+        SET _stockNuevo = _stockProductoActual - _nuevaCantidad;  
+    END IF;
+    
+    UPDATE KardexAlmProducto 
+    SET 
+        motivomovimiento = NULLIF(_nuevoMotivoMovimiento, ''),  
+        cantidad = _nuevaCantidad,                             
+        stockProducto = _stockNuevo,                           
+        creado = NOW()                                         
+    WHERE 
+        idAlmacenProducto = _idAlmacenProducto;                
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_editar_kardexhuevo` (IN `_idAlmacenHuevos` INT, IN `_motivomovimiento` VARCHAR(500), IN `_cantidad` SMALLINT, IN `_descripcion` VARCHAR(100))   BEGIN
+    DECLARE _stockProducto INT;
+    -- Obtener el stock actual antes de la actualización
+    SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idAlmacenHuevos = _idAlmacenHuevos;
+    -- Actualizar la cantidad y el motivo de movimiento
+    UPDATE KardexAlmHuevo
+    SET 
+        motivomovimiento = _motivomovimiento,
+        cantidad = _cantidad,
+        descripcion = NULLIF(_descripcion, ''),
+        creado = NOW()
+    WHERE idAlmacenHuevos = _idAlmacenHuevos;
+
+    -- Actualizar el stock de productos basado en el nuevo movimiento
+    IF _motivomovimiento LIKE 'Salida%' THEN
+        SET _stockProducto = _stockProducto - _cantidad;  -- Salida
+    ELSEIF _motivomovimiento LIKE 'Entrada%' THEN
+        SET _stockProducto = _stockProducto + _cantidad;  -- Entrada
+    END IF;
+    -- Actualizar el stock en el registro
+    UPDATE KardexAlmHuevo
+    SET stockProducto = _stockProducto
+    WHERE idAlmacenHuevos = _idAlmacenHuevos;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_editar_productos` (IN `_idproducto` INT, IN `_producto` VARCHAR(100), IN `_descripcion` VARCHAR(100))   BEGIN
     UPDATE productos
     SET producto = _producto,
@@ -94,9 +157,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_eliminar_productos` (IN `_idpro
     WHERE idproducto = _idproducto;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_insertar_KardexAlmProducto` (IN `_idcolaborador` INT, IN `_idproducto` INT, IN `_tipomovimiento` CHAR(1), IN `_motivomoviento` VARCHAR(100), IN `_cantidad` SMALLINT, IN `_descripcion` VARCHAR(100))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_existe_producto` (IN `_producto` VARCHAR(90))   BEGIN
+    SELECT * FROM Productos WHERE Producto = _producto;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_insertar_KardexAlmProducto` (IN `_idcolaborador` INT, IN `_idproducto` INT, IN `_tipomovimiento` CHAR(1), IN `_motivomoviento` VARCHAR(100), IN `_cantidad` DECIMAL(6,2), IN `_descripcion` VARCHAR(100))   BEGIN
 	-- Stock Actual declarada por defecto en 0
-    DECLARE _stockProducto INT DEFAULT 0;
+    DECLARE _stockProducto DECIMAL(6,2) DEFAULT 0;
 
     -- Se obtendrá el stock actual dependiendo que producto se seleccione 
     SELECT stockProducto INTO _stockProducto FROM KardexAlmProducto WHERE idproducto = _idproducto ORDER BY creado DESC LIMIT 1;
@@ -132,6 +199,33 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_insertar_kardexhuevo` (IN `_idc
     VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_cliente` ()   BEGIN
+	SELECT 
+		CLI.idcliente,
+		PER.nrodocumento,
+        CLI.tipodocumento,
+        CASE
+        WHEN CLI.tipodocumento ="RUC" THEN CLI.razonsocial
+        WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PER.nombres,' ',PER.apematerno, ' ',PER.apepaterno)
+		END AS clientes
+		FROM cliente CLI
+        INNER JOIN personas PER
+        ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_Colaboradores` ()   BEGIN
+	SELECT 
+		PER.nrodocumento,
+        PER.apepaterno,
+        PER.apematerno,
+        PER.nombres,
+		COL.nomusuario
+		FROM colaboradores COL 
+        LEFT JOIN personas PER
+        ON PER.idpersona = COL.idpersona 
+        ORDER BY idcolaborador DESC ;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_KardexAlmProducto` ()   BEGIN
     SELECT 
         k.idAlmacenProducto AS ID, -- Este es el ID que te falta
@@ -151,8 +245,47 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_KardexAlmProducto` ()   
         k.creado DESC;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_kardexhuevo` ()   BEGIN
+    SELECT 
+        kh.idAlmacenHuevos,
+        c.nomusuario AS nombre_colaborador,
+        th.tiposHuevos AS tipo_huevo,
+        kh.motivomovimiento,
+        kh.stockProducto,
+        kh.cantidad,
+        kh.descripcion,
+        kh.creado
+    FROM KardexAlmHuevo kh
+    JOIN colaboradores c ON kh.idcolaborador = c.idcolaborador
+    JOIN tipoHuevo th ON kh.idhuevo = th.idhuevo
+    ORDER BY kh.creado DESC;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_productos` ()   BEGIN
     SELECT * FROM productos;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_tipohuevo` ()   BEGIN
+    SELECT * FROM tipohuevo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_ventas` ()   BEGIN
+	SELECT 
+		VEN.idventa,
+        CASE
+			WHEN CLI.tipodocumento ="RUC" THEN CLI.razonsocial
+			WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PERCLI.nombres,' ',PERCLI.apematerno, ' ',PERCLI.apepaterno)
+		END AS clientes,
+        CONCAT(PERCOL.nombres, ' ',PERCOL.apepaterno, ' ',PERCOL.apematerno) AS Colaborador,
+		VEN.fecha,
+        VEN.direccion,
+        VEN.estado
+	FROM ventas VEN
+	JOIN cliente CLI ON VEN.idcliente = CLI.idcliente
+	JOIN personas PERCLI ON CLI.idpersona = PERCLI.idpersona
+	JOIN colaboradores COL ON VEN.idcolaborador = COL.idcolaborador
+	JOIN personas PERCOL ON COL.idpersona = PERCOL.idpersona
+    ORDER BY VEN.idventa DESC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_personas_registrar` (IN `_apepaterno` VARCHAR(60), IN `_apematerno` VARCHAR(60), IN `_nombres` VARCHAR(40), IN `_nrodocumento` CHAR(12))   BEGIN
@@ -162,10 +295,41 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_personas_registrar` (IN `_apepa
 	SELECT @@last_insert_id 'idpersona';
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_registrar_Detalleventas` (IN `_idventa` INT, IN `_idhuevo` INT, IN `_cantidad` INT, IN `_pesoTotal` DECIMAL(7,2), IN `_preciounitario` DECIMAL(6,2), IN `_preciototal` DECIMAL(10,2))   BEGIN 
+ -- declara variable de stock
+	DECLARE _stockProducto DECIMAL(6,2) DEFAULT 0;
+    DECLARE _iduser INT;
+    -- obtiene el stock del producto elegido
+    SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idhuevo = _idhuevo ORDER BY creado DESC LIMIT 1;
+    
+    -- realiza descuento al kardex por venta
+    SET _stockProducto = _stockProducto - _cantidad;
+    
+    SELECT idcolaborador INTO _iduser
+    FROM ventas
+	WHERE idventa = _idventa
+    LIMIT 1;
+    
+     -- Registramos el kardex 
+    INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
+    VALUES (_iduser, _idhuevo, 'S', 'Salida por Venta', _stockProducto, _cantidad, NULL, NOW());
+    
+    -- registramos en detalle venta
+    INSERT INTO detalleventas(idventa, idhuevo, cantidad, PesoTotal, precioUnitario, precioTotal)
+    VALUES(_idventa, _idhuevo, _cantidad, _pesoTotal, _preciounitario, _preciototal);
+    SELECT @@last_insert_id AS iddetalleventa;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_registrar_productos` (IN `_producto` VARCHAR(60), IN `_descripcion` VARCHAR(60))   BEGIN
 	INSERT INTO productos 
 		(producto, descripcion) VALUES 
         (_producto, _descripcion);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_registrar_ventas` (IN `_idcliente` INT, IN `_idcolaborador` INT, IN `_direccion` VARCHAR(90))   BEGIN 
+    INSERT INTO ventas(idcliente, idcolaborador, direccion) 
+    VALUES(_idcliente, _idcolaborador, _direccion);
+    SELECT @@last_insert_id AS idventa;
 END$$
 
 DELIMITER ;
@@ -180,7 +344,7 @@ CREATE TABLE `cliente` (
   `idcliente` int(11) NOT NULL,
   `idpersona` int(11) NOT NULL,
   `telefono` char(9) DEFAULT NULL,
-  `tipodocumento` char(3) DEFAULT NULL,
+  `tipodocumento` char(3) NOT NULL,
   `razonsocial` varchar(90) DEFAULT NULL,
   `direccion` varchar(90) DEFAULT NULL,
   `email` varchar(90) DEFAULT NULL
@@ -191,13 +355,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idcliente`, `idpersona`, `telefono`, `tipodocumento`, `razonsocial`, `direccion`, `email`) VALUES
-(1, 1, '', 'DNI', '', 'sunampe', 'daniel@gmail.com'),
-(2, 2, '789456123', 'DNI', '', 'sunampe', 'dwedwqde@gmail.com'),
-(3, 3, '123456789', '', 'AVICOLA SAN MATIAS S.A.C.', 'AV. LA MAR NRO S/N', 'dwedwewef'),
-(4, 4, '123456789', '', 'SERVIC NAC DE ADIESTRAM EN TRABAJ INDUST', 'AV. ALFREDO MENDIOLA NRO 3520', 'SENATI@GMAIL.COM'),
-(5, 5, '123456789', '', '', '', 'loyola@gmail.com'),
-(6, 6, '123456789', 'DNI', '', '', 'nose@gmail.com'),
-(7, 7, '123456789', 'DNI', '', 'Av Sunampe # 812', 'javier123@gmail.com');
+(1, 2, '123456789', 'DNI', '', 'Grocio Prado S/N', 'loyola@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -219,30 +377,30 @@ CREATE TABLE `colaboradores` (
 --
 
 INSERT INTO `colaboradores` (`idcolaborador`, `nomusuario`, `passusuario`, `idpersona`, `create_at`, `inactive_at`) VALUES
-(1, 'DanielBr', '$2y$10$86IWpKbDSQDGRJjoIt2EYuSZtesF2ShaFnKNzeZWABJnib5wCADKK', 1, '2024-10-10 22:51:24', NULL);
+(1, 'BBuleje', '$2y$10$qUlMNWuW6wdkZ0ZHIpNkl.hYm6Rc7GpxYDEp/NWmTPQS/wZw7FZvS', 1, '2024-10-30 14:36:50', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `departamentos`
+-- Estructura de tabla para la tabla `detalleventas`
 --
 
-CREATE TABLE `departamentos` (
-  `iddepartamento` int(11) NOT NULL,
-  `departamento` varchar(100) DEFAULT NULL
+CREATE TABLE `detalleventas` (
+  `iddetalleventa` int(11) NOT NULL,
+  `idventa` int(11) NOT NULL,
+  `idhuevo` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `PesoTotal` decimal(6,2) NOT NULL,
+  `precioUnitario` decimal(10,2) NOT NULL,
+  `precioTotal` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `distritos`
+-- Volcado de datos para la tabla `detalleventas`
 --
 
-CREATE TABLE `distritos` (
-  `iddistrito` int(11) NOT NULL,
-  `idprovincia` int(11) DEFAULT NULL,
-  `distrito` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `detalleventas` (`iddetalleventa`, `idventa`, `idhuevo`, `cantidad`, `PesoTotal`, `precioUnitario`, `precioTotal`) VALUES
+(1, 1, 1, 500, 1500.00, 4.00, 6000.00);
 
 -- --------------------------------------------------------
 
@@ -262,6 +420,14 @@ CREATE TABLE `kardexalmhuevo` (
   `creado` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `kardexalmhuevo`
+--
+
+INSERT INTO `kardexalmhuevo` (`idAlmacenHuevos`, `idcolaborador`, `idhuevo`, `tipomovimiento`, `motivomovimiento`, `stockProducto`, `cantidad`, `descripcion`, `creado`) VALUES
+(1, 1, 1, 'E', 'Entrada por Producción', '1000', '1000', NULL, '2024-10-30 14:38:32'),
+(2, 1, 1, 'S', 'Salida por Venta', '500.00', '500', NULL, '2024-10-30 14:40:57');
+
 -- --------------------------------------------------------
 
 --
@@ -271,22 +437,14 @@ CREATE TABLE `kardexalmhuevo` (
 CREATE TABLE `kardexalmproducto` (
   `idAlmacenProducto` int(11) NOT NULL,
   `tipomovimiento` char(1) NOT NULL,
-  `stockProducto` varchar(100) NOT NULL,
-  `cantidad` varchar(50) NOT NULL,
+  `stockProducto` decimal(6,2) NOT NULL,
+  `cantidad` decimal(6,2) NOT NULL,
   `motivomovimiento` varchar(100) NOT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
   `creado` datetime DEFAULT NULL,
   `idproducto` int(11) DEFAULT NULL,
   `idcolaborador` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `kardexalmproducto`
---
-
-INSERT INTO `kardexalmproducto` (`idAlmacenProducto`, `tipomovimiento`, `stockProducto`, `cantidad`, `motivomovimiento`, `descripcion`, `creado`, `idproducto`, `idcolaborador`) VALUES
-(1, 'E', '150', '150', 'Entrada por compra', NULL, '2024-10-13 18:08:26', 2, 1),
-(2, 'E', '300', '150', 'Entrada por compra', NULL, '2024-10-13 18:29:17', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -332,13 +490,8 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`idpersona`, `apematerno`, `apepaterno`, `nombres`, `nrodocumento`, `create_at`, `inactive_at`) VALUES
-(1, 'Rojas', 'Buleje', 'Daniel', '76363997', '2024-10-10 22:51:19', NULL),
-(2, 'Rojas', 'Buleje', 'Javier', '78451296', '2024-10-10 23:05:47', NULL),
-(3, '', '', '', '20602439217', '2024-10-11 22:21:03', NULL),
-(4, '', '', '', '20131376503', '2024-10-11 22:24:17', NULL),
-(5, 'TORRES', 'LOYOLA', 'MIGUEL ALEXANDER', '73217990', '2024-10-11 22:27:40', NULL),
-(6, 'CRUZ', 'LLALLICO', 'LUCERO ROSSMARY', '76853214', '2024-10-13 19:27:13', NULL),
-(7, 'ROJAS', 'BULEJE', 'JAVIER FELICIANO', '76363996', '2024-10-13 22:03:59', NULL);
+(1, 'ROJAS', 'BULEJE', 'BRAULIO DANIEL', '76363997', '2024-10-30 14:36:45', NULL),
+(2, 'TORRES', 'LOYOLA', 'MIGUEL ALEXANDER', '73217990', '2024-10-30 14:39:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -357,19 +510,8 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`idproducto`, `producto`, `descripcion`) VALUES
-(2, 'soya', 'producto marca rico');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `provincias`
---
-
-CREATE TABLE `provincias` (
-  `idprovincia` int(11) NOT NULL,
-  `iddepartamento` int(11) DEFAULT NULL,
-  `provincia` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 'soya', ''),
+(2, 'afrecho', '');
 
 -- --------------------------------------------------------
 
@@ -428,12 +570,16 @@ CREATE TABLE `ventas` (
   `idcliente` int(11) NOT NULL,
   `idcolaborador` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
-  `iddistrito` int(11) NOT NULL,
-  `precioUnitario` decimal(10,2) DEFAULT NULL,
-  `precioTotal` decimal(10,2) DEFAULT NULL,
-  `cantidad_solicitada` int(11) NOT NULL,
-  `idAlmacenHuevos` int(11) NOT NULL
+  `direccion` varchar(50) DEFAULT NULL,
+  `estado` varchar(30) NOT NULL DEFAULT 'Por entregar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`idventa`, `idcliente`, `idcolaborador`, `fecha`, `direccion`, `estado`) VALUES
+(1, 1, 1, '2024-10-30 14:40:57', 'Grocio Prado S/N', 'Por entregar');
 
 --
 -- Índices para tablas volcadas
@@ -454,17 +600,12 @@ ALTER TABLE `colaboradores`
   ADD UNIQUE KEY `uk_idpersona_usu` (`idpersona`);
 
 --
--- Indices de la tabla `departamentos`
+-- Indices de la tabla `detalleventas`
 --
-ALTER TABLE `departamentos`
-  ADD PRIMARY KEY (`iddepartamento`);
-
---
--- Indices de la tabla `distritos`
---
-ALTER TABLE `distritos`
-  ADD PRIMARY KEY (`iddistrito`),
-  ADD KEY `fk_provincia` (`idprovincia`);
+ALTER TABLE `detalleventas`
+  ADD PRIMARY KEY (`iddetalleventa`),
+  ADD KEY `fk_idhuevo_detalleventa` (`idhuevo`),
+  ADD KEY `fk_idventa_detalleventa` (`idventa`);
 
 --
 -- Indices de la tabla `kardexalmhuevo`
@@ -507,14 +648,8 @@ ALTER TABLE `personas`
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD PRIMARY KEY (`idproducto`);
-
---
--- Indices de la tabla `provincias`
---
-ALTER TABLE `provincias`
-  ADD PRIMARY KEY (`idprovincia`),
-  ADD KEY `fk_departamento` (`iddepartamento`);
+  ADD PRIMARY KEY (`idproducto`),
+  ADD UNIQUE KEY `producto` (`producto`);
 
 --
 -- Indices de la tabla `roles`
@@ -542,8 +677,6 @@ ALTER TABLE `tipohuevo`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`idventa`),
-  ADD KEY `fk_idAlmacenHuevos_venta` (`idAlmacenHuevos`),
-  ADD KEY `fk_iddistrito_venta` (`iddistrito`),
   ADD KEY `fk_idcliente_venta` (`idcliente`),
   ADD KEY `fk_idcolaborador_venta` (`idcolaborador`);
 
@@ -555,7 +688,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `colaboradores`
@@ -564,28 +697,22 @@ ALTER TABLE `colaboradores`
   MODIFY `idcolaborador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `departamentos`
+-- AUTO_INCREMENT de la tabla `detalleventas`
 --
-ALTER TABLE `departamentos`
-  MODIFY `iddepartamento` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `distritos`
---
-ALTER TABLE `distritos`
-  MODIFY `iddistrito` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `detalleventas`
+  MODIFY `iddetalleventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `kardexalmhuevo`
 --
 ALTER TABLE `kardexalmhuevo`
-  MODIFY `idAlmacenHuevos` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAlmacenHuevos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `kardexalmproducto`
 --
 ALTER TABLE `kardexalmproducto`
-  MODIFY `idAlmacenProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idAlmacenProducto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -603,19 +730,13 @@ ALTER TABLE `permisosasignados`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `provincias`
---
-ALTER TABLE `provincias`
-  MODIFY `idprovincia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -639,7 +760,7 @@ ALTER TABLE `tipohuevo`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -658,10 +779,11 @@ ALTER TABLE `colaboradores`
   ADD CONSTRAINT `fk_idpersona_usu` FOREIGN KEY (`idpersona`) REFERENCES `personas` (`idpersona`);
 
 --
--- Filtros para la tabla `distritos`
+-- Filtros para la tabla `detalleventas`
 --
-ALTER TABLE `distritos`
-  ADD CONSTRAINT `fk_provincia` FOREIGN KEY (`idprovincia`) REFERENCES `provincias` (`idprovincia`);
+ALTER TABLE `detalleventas`
+  ADD CONSTRAINT `fk_idhuevo_detalleventa` FOREIGN KEY (`idhuevo`) REFERENCES `tipohuevo` (`idhuevo`),
+  ADD CONSTRAINT `fk_idventa_detalleventa` FOREIGN KEY (`idventa`) REFERENCES `ventas` (`idventa`);
 
 --
 -- Filtros para la tabla `kardexalmhuevo`
@@ -685,12 +807,6 @@ ALTER TABLE `permisosasignados`
   ADD CONSTRAINT `fk_idroles` FOREIGN KEY (`idroles`) REFERENCES `roles` (`idroles`);
 
 --
--- Filtros para la tabla `provincias`
---
-ALTER TABLE `provincias`
-  ADD CONSTRAINT `fk_departamento` FOREIGN KEY (`iddepartamento`) REFERENCES `departamentos` (`iddepartamento`);
-
---
 -- Filtros para la tabla `roles_users`
 --
 ALTER TABLE `roles_users`
@@ -701,10 +817,8 @@ ALTER TABLE `roles_users`
 -- Filtros para la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  ADD CONSTRAINT `fk_idAlmacenHuevos_venta` FOREIGN KEY (`idAlmacenHuevos`) REFERENCES `kardexalmhuevo` (`idAlmacenHuevos`),
   ADD CONSTRAINT `fk_idcliente_venta` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  ADD CONSTRAINT `fk_idcolaborador_venta` FOREIGN KEY (`idcolaborador`) REFERENCES `colaboradores` (`idcolaborador`),
-  ADD CONSTRAINT `fk_iddistrito_venta` FOREIGN KEY (`iddistrito`) REFERENCES `distritos` (`iddistrito`);
+  ADD CONSTRAINT `fk_idcolaborador_venta` FOREIGN KEY (`idcolaborador`) REFERENCES `colaboradores` (`idcolaborador`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
