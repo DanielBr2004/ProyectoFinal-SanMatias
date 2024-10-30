@@ -44,6 +44,8 @@ CALL spu_listar_ventas();
 
 SELECT * FROM ventas;
 select  * from productos;
+UPDATE employees SET first_name = 'John' WHERE employee_id = 3;
+DELETE FROM empleados WHERE idEmpleado = 123;
 
 SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC LIMIT 1;
 

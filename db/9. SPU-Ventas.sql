@@ -38,3 +38,32 @@ BEGIN
     ORDER BY VEN.idventa DESC;
 END $$
 DELIMITER ;
+ -- ------------------------------------------- listar ventas ----------------------------------------------------- 
+  drop procedure if exists `sp_editar_venta`;
+DELIMITER //
+CREATE PROCEDURE sp_editar_venta(
+    IN p_idventa INT,
+    IN p_estado VARCHAR(30),
+    IN p_direccion VARCHAR(50)
+)
+BEGIN
+    UPDATE ventas
+    SET 
+        estado = IFNULL(p_estado, estado),
+        direccion = IFNULL(p_direccion, direccion)
+    WHERE idventa = p_idventa;
+END //
+DELIMITER ;
+ -- ------------------------------------------- listar ventas ----------------------------------------------------- 
+   drop procedure if exists `sp_eliminar_venta`;
+DELIMITER //
+
+CREATE PROCEDURE sp_eliminar_venta(
+    IN p_idventa INT
+)
+BEGIN
+    DELETE FROM ventas
+    WHERE idventa = p_idventa;
+END //
+
+DELIMITER ;

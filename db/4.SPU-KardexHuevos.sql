@@ -85,4 +85,3 @@ BEGIN
     SET stockProducto = _stockProducto
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
 END $$
-CALL spu_editar_kardexhuevo(3, 'Salida por venta', 15, 'Se Vendio');
