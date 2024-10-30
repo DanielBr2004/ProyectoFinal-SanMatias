@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  /*
   async function obtenerKardexHuevos() {
     try {
       const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=getAlls`);
@@ -142,4 +143,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   obtenerKardexHuevos();
+  */
 });
