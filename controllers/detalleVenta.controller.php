@@ -1,27 +1,38 @@
 <?php
-session_start();
 
-require_once '../models/detalleVenta.php';
-
-header("Content-type: application/json; charset=utf-8");
+require_once '../models/DetalleVenta.php';
 
 $detalleVenta = new DetalleVenta();
 
-if(isset($_POST['operacion'])){
+if (isset($_POST['operacion'])) {
+  switch ($_POST['operacion']) {
+    case 'add':
+      if (isset($_POST['idventa'])) {
+        $idventa = $_POST['idventa'];
 
-  switch($_POST['operacion']){
-      case 'add':
-          $datosEnviar = [
-              "idcolaborador"     => $detalleVenta->limpiarCadena($_POST['idcolaborador']),
-              "idventa"           => $detalleVenta->limpiarCadena($_POST['idventa']),
-              "idhuevo"           => $detalleVenta->limpiarCadena($_POST['idhuevo']),
-              "cantidad"          => $detalleVenta->limpiarCadena($_POST['cantidad']),
-              "PesoTotal"         => $detalleVenta->limpiarCadena($_POST['PesoTotal']),
-              "precioUnitario"    => $detalleVenta->limpiarCadena($_POST['precioUnitario']),
-              "precioTotal"       => $detalleVenta->limpiarCadena($_POST['precioTotal'])
-          ];
-          $status = $detalleVenta->add($datosEnviar);
-          echo json_encode(["estado" => $status]);
-          break;
+        // Verifica si los datos de los huevos están presentes
+        if (isset($_POST['huevos']) && is_array($_POST['huevos'])) {
+          $huevos = $_POST['huevos'];
+          $datos = [];
+          foreach ($huevos as $huevo) {
+            $datosEnviar = [
+              "idventa"        => $idventa,
+              "idhuevo"        => $huevo['idhuevo'],
+              "cantidad"       => $huevo['cantidad'],
+              "PesoTotal"      => $huevo['PesoTotal'],
+              "precioUnitario" => $huevo['precioUnitario'],
+              "precioTotal"    => $huevo['precioTotal']
+            ];
+            $dato = $detalleVenta->add($datosEnviar);
+            $datos[] = $dato;
+          }
+          echo json_encode(["iddetalleventa" => $datos]);
+        } else {
+          echo json_encode(["error" => "Datos de huevos no proporcionados o incorrectos"]);
+        }
+      } else {
+        echo json_encode(["error" => "ID de venta no proporcionado"]);
+      }
+      break;
   }
 }

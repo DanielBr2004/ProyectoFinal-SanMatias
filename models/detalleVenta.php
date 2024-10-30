@@ -9,13 +9,13 @@ class DetalleVenta extends Conexion{
     $this->pdo = parent::getConexion();
   }
 
-  public function add($params = []):bool{
-    $status = false; 
+  public function add($params = []):int{
+    $idgenerado = null; 
     try{
-        $query = $this->pdo->prepare("call spu_registrar_Detalleventas(?,?,?,?,?,?,?)"); 
-        $status = $query->execute(
+        $query = $this->pdo->prepare("call spu_registrar_Detalleventas(?,?,?,?,?,?)"); 
+        $query->execute(
             array(
-                $params['idcolaborador'],
+                // $params['idcolaborador'],
                 $params['idventa'],
                 $params['idhuevo'],
                 $params['cantidad'],
@@ -24,10 +24,12 @@ class DetalleVenta extends Conexion{
                 $params['precioTotal']
             )
         );
-        return $status; 
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $idgenerado = $row['iddetalleventa'];
     }
     catch(Exception $e){
-        die($e->getMessage());
+        $idgenerado = -1;
     }
+    return $idgenerado;
   }
 }

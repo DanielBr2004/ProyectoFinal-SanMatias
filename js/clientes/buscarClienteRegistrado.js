@@ -18,14 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
   async function llenarDatos(response){
     if(response.length == 0){
       $("#tipodocumento").value = '';
-      $("#nombres").value = '';
-      $("#razonsocial").value = '';
+      $("#cliente").value = '';
       $("#direccion").value = '';
       $("#email").value = '';
       $("#telefono").value = '';
     }else{
       $("#tipodocumento").value = response[0].tipodocumento;
-      $("#nombres").value = response[0].clientes;
+      $("#cliente").value = response[0].clientes;
       $("#direccion").value = response[0].direccion;
       $("#email").value = response[0].email;
       $("#telefono").value = response[0].telefono;
@@ -43,8 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
     llenarDatos(response);
     if (response.length != 0) {
       $("#agregar-item").removeAttribute("disabled");
+      $("#registrar-venta").removeAttribute("disabled");
     } else {
       $("#agregar-item").setAttribute("disabled", "disabled");
+      $("#registrar-venta").setAttribute("disabled", "disabled");
     }
   }
 

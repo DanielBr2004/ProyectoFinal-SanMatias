@@ -11,7 +11,7 @@ CREATE PROCEDURE spu_registrar_ventas
 BEGIN 
     INSERT INTO ventas(idcliente, idcolaborador, direccion) 
     VALUES(_idcliente, _idcolaborador, _direccion);
-    SELECT LAST_INSERT_ID() AS idventa;
+    SELECT @@last_insert_id AS idventa;
 END $$
 DELIMITER ;
 
@@ -34,6 +34,7 @@ BEGIN
 	JOIN cliente CLI ON VEN.idcliente = CLI.idcliente
 	JOIN personas PERCLI ON CLI.idpersona = PERCLI.idpersona
 	JOIN colaboradores COL ON VEN.idcolaborador = COL.idcolaborador
-	JOIN personas PERCOL ON COL.idpersona = PERCOL.idpersona;
+	JOIN personas PERCOL ON COL.idpersona = PERCOL.idpersona
+    ORDER BY VEN.idventa DESC;
 END $$
 DELIMITER ;

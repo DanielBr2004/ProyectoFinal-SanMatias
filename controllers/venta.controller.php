@@ -16,8 +16,8 @@ if(isset($_POST['operacion'])){
               "idcolaborador"     => $venta->limpiarCadena($_POST['idcolaborador']),
               "direccion"         => $venta->limpiarCadena($_POST['direccion'])
           ];
-          $status = $venta->add($datosEnviar);
-          echo json_encode(["estado" => $status]);
+          $idobtenido = $venta->add($datosEnviar);
+          echo json_encode(["idventa" => $idobtenido]);
           break;
   }
 }

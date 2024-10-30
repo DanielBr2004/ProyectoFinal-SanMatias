@@ -27,22 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
-            <td class="text-center">
+            <td class="text-center huevo-detalle">
                 <div>
-                    <select name="idhuevo" class="form-select huevo-venta" required>
+                    <select name="idhuevo" id="idhuevo" class="form-select huevo-venta" required>
                         <option value="">Seleccione...</option>
                         ${opciones.map(opcion => `<option value="${opcion.value}">${opcion.text}</option>`).join('')}
                     </select>
                 </div>
             </td>
             <td class="text-center">
-                <input type="number" minlength="0" class="form-control cantidad-venta" required>
+                <input type="number"  minlength="0" class="form-control cantidad-venta" required>
             </td>
             <td class="text-center">
-                <input type="number" minlength="0" class="form-control precioUnitario-venta" required>        
+                <input type="number"  minlength="0" class="form-control pesoTotal-venta" required>
             </td>
             <td class="text-center">
-                <input type="number" minlength="0" class="form-control total-venta" disabled>
+                <input type="number"  minlength="0" class="form-control precioUnitario-venta" required>        
+            </td>
+            <td class="text-center">
+                <input type="number"  minlength="0" class="form-control totalventa-venta" >
             </td>
             <td class="text-center">
                 <button class="btn btn-danger btn-eliminar"><i class="fa-solid fa-trash-can"></i></button>
