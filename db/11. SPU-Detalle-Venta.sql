@@ -16,8 +16,11 @@ BEGIN
  -- declara variable de stock
 	DECLARE _stockProducto DECIMAL(6,2) DEFAULT 0;
     DECLARE _iduser INT;
+    DECLARE _canthuevos INT;
     -- obtiene el stock del producto elegido
     SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idhuevo = _idhuevo ORDER BY creado DESC LIMIT 1;
+    
+    
     
     -- realiza descuento al kardex por venta
     SET _stockProducto = _stockProducto - _cantidad;

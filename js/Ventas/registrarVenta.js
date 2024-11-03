@@ -1,16 +1,9 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   /**
    * Función para seleccionar cualquier elemento por su id
    */
-
   function $(object = null) {
     return document.querySelector(object);
-  }
-
-  function eliminarOpcionesGeneradas() {
-    const filas = document.querySelectorAll("#detalles");
-    filas.forEach(fila => fila.remove());
   }
 
   let idcliente = -1;
@@ -49,14 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     rows.forEach((row, index) => {
       const idhuevo = row.querySelector(".huevo-venta")?.value || '';
-      const cantidad = row.querySelector(".cantidad-venta")?.value || '';
+      let cantidad = row.querySelector(".cantidad-venta")?.value || '';
       const pesoTotal = row.querySelector(".pesoTotal-venta")?.value || '';
       const precioUnitario = row.querySelector(".precioUnitario-venta")?.value || '';
       const precioTotal = row.querySelector(".totalventa-venta")?.value || '';
 
       if (idhuevo && cantidad && pesoTotal && precioUnitario && precioTotal) {
+
+        cantidadHuevos = parseInt(cantidad) * 180; 
+
+
         params.append(`huevos[${index}][idhuevo]`, idhuevo);
-        params.append(`huevos[${index}][cantidad]`, cantidad);
+        params.append(`huevos[${index}][cantidad]`, cantidadHuevos);
         params.append(`huevos[${index}][PesoTotal]`, pesoTotal);
         params.append(`huevos[${index}][precioUnitario]`, precioUnitario);
         params.append(`huevos[${index}][precioTotal]`, precioTotal);
@@ -103,15 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
           if (idventas != -1) {
             const data = await registrarDetalleVenta(idventas);
             console.log("IDdetalleVenta 1", data);
-            if(data.length > 0){
-              showToast("Venta registrada", "SUCCESS", 2000);
-              $("#form-Venta").reset();
-              eliminarOpcionesGeneradas();
-              $("#agregar-item").setAttribute("disabled", "disabled");
-              $("#registrar-venta").setAttribute("disabled", "disabled");
+            if (data.error) {
+              showToast("Error al registrar el detalle de la venta 2 ", "ERROR", 2000);
             }else{
-              showToast("Venta no registrada", "ERROR", 2000);
-              
+              showToast("Venta registrada", "SUCCESS", 2000);
             }
           } else {
             showToast("Venta no registrada", "ERROR", 2000);
@@ -123,5 +115,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-
 });

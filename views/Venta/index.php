@@ -83,9 +83,11 @@
                                 <br>
                                 <hr>
                                 </div>
+                                <div class="table-responsive">
                                 <table class="tabla-detalle table table-bordered table-striped table-hover mt-3">
                                     <thead>
                                         <tr>
+                                            <th class="text-center">Stock</th>
                                             <th class="text-center">Producto</th>
                                             <th class="text-center">Cantidad</th>
                                             <th class="text-center">Peso Total</th>
@@ -98,6 +100,7 @@
                                         <!-- Las filas se agregarán aquí -->
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                             </div>
                         <div class="card-footer">
