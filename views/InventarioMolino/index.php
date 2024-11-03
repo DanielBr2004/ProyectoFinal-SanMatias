@@ -104,21 +104,22 @@
         <div class="card-body">
             <div class="table-responsive">
             <table id="tabla-listarproductos" class="table table-bordered table-striped table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Colaborador</th>
-            <th>Producto</th>
-            <th>Stock Actual</th>
-            <th>Motivo de Movimiento</th>
-            <th>Cantidad</th>
-            <th>Creado</th>
-        </tr>
-    </thead>
-    <tbody id="tbody-listarproductos">
-        <!-- Los productos se cargarán aquí -->
-    </tbody>
-</table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Colaborador</th>
+                    <th>Producto</th>
+                    <th>Stock Actual</th>
+                    <th>Motivo de Movimiento</th>
+                    <th>Cantidad</th>
+                    <th>Creado</th>
+                    <th>Operaciones</th> <!-- Nueva columna -->
+                </tr>
+            </thead>
+        <tbody id="tbody-listarproductos">
+            <!-- Contenido generado dinámicamente -->
+        </tbody>
+        </table>
             </div>
         </div>
     </div>

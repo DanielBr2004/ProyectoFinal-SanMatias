@@ -96,13 +96,14 @@
 
 
         <!-- Tabla de Listado -->
-<div class="card mt-4">
-    <div class="card-header">
-        Listado
-    </div>
+<div class="container mt-5">
+    <div class="card">
+    <br>
+        <h2 class="text-center" style="color: #007bff;">Almacen Huevos</h2>
     <div class="card-body">
-        <table class="table table-bordered table-striped table-hover"id="tabla-listproductos">
-            <thead class="table-dark">
+    <div class="table-responsive"> 
+    <table class="table table-bordered table-striped table-hover" id="tabla-listproductos">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Colaborador</th>
@@ -112,6 +113,7 @@
                     <th>Cantidad</th>
                     <th>Descripción</th>
                     <th>Fecha de Creación</th>
+                    <th>Operaciones</th>
                 </tr>
             </thead>
             <tbody id="tbody-listproductos">
@@ -120,6 +122,9 @@
         </table>
     </div>
 </div>
+</div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Incluye SweetAlert2 desde CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

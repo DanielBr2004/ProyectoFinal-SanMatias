@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     lengthMenu: [5, 10, 15, 20, 100, 200, 500],
     columnDefs: [
       { className: 'text-center', targets: '_all' },
-      { orderable: false, targets: [2] },
-      { searchable: false, targets: [1] },
+      { orderable: false, targets: [2, 7] }, // Deshabilitar orden en la columna de operaciones
+      { searchable: false, targets: [1, 7] }, // Deshabilitar búsqueda en la columna de operaciones
       { width: '20%', targets: [1] },
     ],
     pageLength: 5,
@@ -72,6 +72,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             <td class="text-center">${item['Motivo de Movimiento']}</td>
             <td class="text-center">${item.Cantidad}</td>
             <td class="text-center">${item.Creado}</td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm editar-btn" data-id="${item.ID}">Editar</button>
+              <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.ID}">Eliminar</button>
+            </td>
           </tr>`;
       });
   
@@ -90,12 +94,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (dataTableIsInitialized) {
       dataTable.destroy();
     }
-
+  
     await cargarProductos();
-
+  
     dataTable = $('#tabla-listarproductos').DataTable(dataTableOptions);
     dataTableIsInitialized = true;
   };
-
+  
   await initDataTable();
 });
