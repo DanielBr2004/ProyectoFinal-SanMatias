@@ -40,5 +40,21 @@ class Venta extends Conexion{
     }
 }
 
+public function update($params = []): bool {
+    try {
+        $query = $this->pdo->prepare("CALL sp_editar_venta(?, ?, ?)");
+        $query->execute([
+            $params['idventa'],
+            $params['estado'],
+            $params['direccion']
+        ]);
+        return true;
+    } catch (Exception $e) {
+        error_log("Error en update: " . $e->getMessage());
+        return false;
+    }
+}
+
+
 
 }

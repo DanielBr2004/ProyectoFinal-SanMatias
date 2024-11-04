@@ -19,6 +19,17 @@ if(isset($_POST['operacion'])){
           $idobtenido = $venta->add($datosEnviar);
           echo json_encode(["idventa" => $idobtenido]);
           break;
+
+          case 'update':
+            $datosActualizar = [
+                "idventa"   => $venta->limpiarCadena($_POST['idventa']),
+                "estado"    => $venta->limpiarCadena($_POST['estado']),
+                "direccion" => $venta->limpiarCadena($_POST['direccion'])
+            ];
+            $resultado = $venta->update($datosActualizar);
+            echo json_encode(["success" => $resultado]);
+            break;
+
   }
 }
 
