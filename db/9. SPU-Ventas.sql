@@ -65,5 +65,4 @@ BEGIN
     DELETE FROM ventas
     WHERE idventa = p_idventa;
 END //
-
 DELIMITER ;
