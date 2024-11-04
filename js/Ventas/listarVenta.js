@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
         columnDefs: [
             { className: 'text-center', targets: '_all' },
-            { orderable: false, targets: [4, 5] },
-            { searchable: false, targets: [4, 5] },
+            { orderable: false, targets: [2, 6] }, // Ajuste en los índices de columna
+            { searchable: false, targets: [1, 6] }, // Ajuste en los índices de columna
             { width: '20%', targets: [1] },
         ],
         pageLength: 5,
@@ -56,39 +56,37 @@ document.addEventListener('DOMContentLoaded', async function() {
         },
     };
 
-    const desplegarDatos = async () => {
+    const cargarVentas = async () => {
         try {
-            const response = await fetch('../../controllers/Clientes.controller.php?operacion=getAllClient');
+            const response = await fetch('../../controllers/venta.controller.php?operacion=getAll');
             const data = await response.json();
 
             let content = '';
-            data.forEach((item, index) => {
+            data.forEach(item => {
                 content += `
                     <tr>
-                        <td class="text-center">${index + 1}</td>
-                        <td class="text-center">${item.nrodocumento}</td>
-                        <td class="text-center">${item.tipodocumento}</td>
-                        <td class="text-center">${item.clientes}</td>
-                        <td class="text-center"></td>
+                        <td class="text-center">${item.idventa}</td>
+                        <td class="text-center">${item.clientes ?? 'No data'}</td>
+                        <td class="text-center">${item.Colaborador}</td>
+                        <td class="text-center">${item.fecha}</td>
+                        <td class="text-center">${item.direccion}</td>
+                        <td class="text-center">${item.estado}</td>
                         <td class="text-center">
-                            <a href="EditarUsuario.php?id=${item.idcolaborador}" class="btn btn-primary">
-                                <i class="fa-solid fa-pencil"></i>
-                            </a>
-                            <button class="btn btn-danger" onclick="eliminarUsuario(${item.idcolaborador})">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                        <div style="display: inline-flex; gap: 5px;">
+                            <button class="btn btn-warning btn-sm editar-btn" data-id="${item.ID}">Editar</button>
+                            <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.ID}">Eliminar</button>
                         </td>
                     </tr>`;
             });
 
-            const tbodyElement = document.getElementById('tbody-clientes');
+            const tbodyElement = document.getElementById('tbody-ReporVenta');
             if (tbodyElement) {
                 tbodyElement.innerHTML = content;
             } else {
-                console.error("El elemento con ID 'tbody-clientes' no se encontró en el DOM.");
+                console.error("El elemento con ID 'tbody-ReporVenta' no se encontró en el DOM.");
             }
         } catch (error) {
-            console.error('Error al cargar los datos de los clientes:', error);
+            console.error('Error al cargar las ventas:', error);
         }
     };
 
@@ -97,12 +95,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             dataTable.destroy();
         }
 
-        await desplegarDatos();
+        await cargarVentas();
 
-        setTimeout(() => {
-            dataTable = $('#tabla-client').DataTable(dataTableOptions);
-            dataTableIsInitialized = true;
-        }, 200); // Delay initialization
+        dataTable = $('#tabla-ReporVenta').DataTable(dataTableOptions);
+        dataTableIsInitialized = true;
     };
 
     await initDataTable();

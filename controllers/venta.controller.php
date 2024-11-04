@@ -21,3 +21,12 @@ if(isset($_POST['operacion'])){
           break;
   }
 }
+
+if (isset($_GET['operacion'])) {
+  switch ($_GET['operacion']) {
+      case 'getAll':
+          echo json_encode($venta->getAll());
+          break;
+      // Otros casos...
+  }
+}

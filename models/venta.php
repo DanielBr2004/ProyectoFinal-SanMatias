@@ -29,4 +29,16 @@ class Venta extends Conexion{
     return $idgenerado;
   }
 
+  public function getAll() {
+    try {
+        $consulta = $this->pdo->prepare("CALL spu_listar_ventas();");
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log("Error en getAll: " . $e->getMessage());
+        throw new Exception("Error al obtener las ventas. Por favor, inténtelo nuevamente.");
+    }
+}
+
+
 }

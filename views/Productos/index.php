@@ -43,7 +43,7 @@
             <div id="tabla-productos">
                 <!-- Tabla de productos será insertada aquí -->
                 <table class="table table-bordered table-striped" id="tabla-produc">
-                    <thead class="table-dark">
+                    <thead>
                         <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">Producto</th>
