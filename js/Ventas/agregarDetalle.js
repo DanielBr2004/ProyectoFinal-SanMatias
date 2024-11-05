@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
         { value: "2", text: "Pardo" },
         { value: "3", text: "Sucio" },
         { value: "4", text: "Doble Yema" },
-        { value: "5", text: "Merma" }
+        { value: "5", text: "Margarito" },
+        { value: "6", text: "Merma" }
     ];
     let seleccionados = [];
 

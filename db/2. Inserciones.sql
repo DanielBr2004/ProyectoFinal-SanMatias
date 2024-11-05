@@ -5,6 +5,7 @@ INSERT INTO tipoHuevo (tiposHuevos, descripcion) VALUES
 ('Pardo', 'Huevos de cáscara marrón'),
 ('Sucio', 'Huevos con cáscara sucia o manchada'),
 ('Doble Yema', 'Huevos con doble yema en su interior'),
+('Margarito', 'Huevos con mucho tamaño'),
 ('Merma', 'Huevos que no cumplen con los estándares de calidad');
 select * from tipoHuevo;
 

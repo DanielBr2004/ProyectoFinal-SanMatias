@@ -27,7 +27,8 @@
                                     <option value="2">Pardo</option>
                                     <option value="3">Sucio</option>
                                     <option value="4">Doble Yema</option>
-                                    <option value="5">Merma</option>
+                                    <option value="5">Margarito</option>
+                                    <option value="6">Merma</option>
                                 </select>
                                 <label for="idhuevo">Producto</label>
                             </div>
@@ -43,6 +44,17 @@
                 </div> <!-- ./primera fila -->
 
                 <div class="row g-2 mt-2">
+
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <select name="Lote" id="" class="form-select" >
+                                <option value="">Selecione</option>
+                                <option value="">Lote 9</option>
+                            </select>
+                            <label for="Lote">N° Lote</label>
+                        </div>
+                    </div>
+
                     <div class="col-md">
                         <div class="form-floating">
                             <select name="Motivomovimiento" id="Motivomovimiento" class="form-select" required>
@@ -93,7 +105,81 @@
             </form>        
         </div>
     </div>
+    <div class="card mb-4">
+                    <div class="card-header">
+                        Vista de Stock Productos
+                    </div>
+                    <div class="card-body ">
+                        <div class="row align-self-center">
 
+                            <div class="col mb-1">
+                                <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">Paquetes de Huevos Comerciales</h5>
+                                    <br>
+                                    <div class="form-floating">
+                                        <input type="text" name="" id="hcomercial" class="form-control" disabled>
+                                        <label for="idcolaborador">Cantidad</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="col mb-1">
+                                <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">Paquetes de Huevos pardos</h5>
+                                        <br>
+                                        <div class="form-floating">
+                                            <input type="text" name="" id="hpardo" class="form-control" disabled>
+                                            <label for="idcolaborador">Cantidad</label>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="col mb-1">
+                                <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title text-center">Paquetes de Huevos Sucios</h5>
+                                    <br>
+                                    <div class="form-floating">
+                                        <input type="text" name="" id="hsucio" class="form-control" disabled>
+                                        <label for="idcolaborador">Cantidad</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="col mb-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h5 class="card-title text-center">Paquetes de Huevos Doble Yema</h5>
+                                    <br>
+                                    <div class="form-floating">
+                                        <input type="text" name="" id="hdobleyema" class="form-control" disabled>
+                                        <label for="idcolaborador">Cantidad</label>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col mb-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h5 class="card-title text-center">Paquetes de Huevos Margarito</h5>
+                                    <br>
+                                    <div class="form-floating">
+                                        <input type="text" name="" id="hmargarito" class="form-control" disabled>
+                                        <label for="idcolaborador">Cantidad</label>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+    </div>
 
         <!-- Tabla de Listado -->
 <div class="container mt-5">

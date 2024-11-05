@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function registrarVenta(idcliente) {
     const params = new FormData();
-    params.append("operacion", "add");
+    params.append(
+    "operacion", "add");
     params.append("idcliente", idcliente);
     params.append("idcolaborador", $("#idcolaborador").value);
     params.append("direccion", $("#direccion").value);
@@ -81,13 +82,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function limpiarFormulario() {
+    $("#form-Venta").reset();
+    const tablaDetalles = document.querySelector(".tabla-detalle tbody");
+    while (tablaDetalles.firstChild) {
+      tablaDetalles.removeChild(tablaDetalles.firstChild);
+    }
+    $("#agregar-item").setAttribute("disabled", true);
+    $("#registrar-venta").setAttribute("disabled", true);
+    $("#nrodocumento").focus();
+  }
+
   $("#form-Venta").addEventListener("submit", async (e) => {
     e.preventDefault();
     if (await ask("¿Seguro que quieres registrar la venta?")) {
       let responseDatos;
       let responseVenta;
 
-      try {
+      try { 
         responseDatos = await buscarDocumento();
         console.log("responseDatos", responseDatos);
         idcliente = responseDatos[0].idcliente;
@@ -104,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
               showToast("Error al registrar el detalle de la venta 2 ", "ERROR", 2000);
             }else{
               showToast("Venta registrada", "SUCCESS", 2000);
+              limpiarFormulario();
             }
           } else {
             showToast("Venta no registrada", "ERROR", 2000);

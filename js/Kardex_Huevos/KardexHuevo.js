@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ShowStockActual(huevo);
     }
   });
+  
 
   async function ShowStockActual(idhuevo) {
     try {
@@ -65,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         document.querySelector("#form-kardex-huevos").reset();
         showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
+        obtenerStocksProductos();
+        actualizarTablaKardex();
       })
       .catch(e => { console.error(e) });
   }
@@ -113,5 +116,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  async function obtenerStocksProductos() {
+    const productos = [
+      { id: "1", inputId: "hcomercial" },
+      { id: "2", inputId: "hpardo" },
+      { id: "3", inputId: "hsucio" },
+      { id: "4", inputId: "hdobleyema" },
+      { id: "5", inputId: "hmargarito" }
+    ];
 
+    for (const producto of productos) {
+      try {
+        const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${producto.id}`);
+        const stock = await response.json();
+        const stockDividido = Math.floor(stock / 180);
+        document.getElementById(producto.inputId).value = `${stockDividido} Paquetes`;
+      } catch (error) {
+        console.error(`Error al obtener el stock del producto ${producto.id}:`, error);
+      }
+    }
+  }
+
+  async function actualizarTablaKardex() {
+    try {
+      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=listar`);
+      const data = await response.json();
+      const tbody = document.querySelector("#tbody-productos");
+      tbody.innerHTML = ""; // Limpiar la tabla
+  
+      data.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${item.idhuevo}</td>
+          <td>${item.descripcion}</td>
+          <td>${item.cantidad}</td>
+          <td>${item.fecha}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } catch (error) {
+      console.error("Error al actualizar la tabla de Kardex:", error);
+    }
+  }
+
+  obtenerStocksProductos();
 });
