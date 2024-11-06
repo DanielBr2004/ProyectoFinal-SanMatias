@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">${item.estado}</td>
                       <td class="text-center">
                           <button class="btn btn-primary btn-sm" onclick="abrirModalEditar(${item.idcolaborador}, '${item.apepaterno}', '${item.apematerno}', '${item.nombres}')">Editar</button>
-                          <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${item.idcolaborador})">Eliminar</button>
+                           <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${item.idcolaborador})">Eliminar</button>
                       </td>
                   </tr>`;
           });
@@ -150,6 +150,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('Error al actualizar el colaborador:', error);
     }
   });
+
+  window.eliminarUsuario = async function(idcolaborador) {
+    const confirmacion = confirm("¿Estás seguro de que deseas eliminar este colaborador?");
+    if (!confirmacion) return;
+
+    try {
+        const response = await fetch('../../controllers/colaborador.controller.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                operacion: 'delete',
+                idcolaborador
+            })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Colaborador eliminado correctamente');
+            await cargarUsuarios(); // Recargar la lista de colaboradores después de la eliminación
+        } else {
+            alert('Error al eliminar el colaborador');
+        }
+    } catch (error) {
+        console.error('Error al eliminar el colaborador:', error);
+    }
+};
+
 
   const initDataTable = async () => {
       if (dataTableIsInitialized) {

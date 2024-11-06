@@ -63,7 +63,7 @@ class Colaborador extends Conexion{
       }
 
       
-// Function to edit a collaborator
+// Funcion de editar de claborador
 public function edit($params = []): bool {
   try {
       error_log("Datos en edit: " . print_r($params, true)); 
@@ -80,5 +80,16 @@ public function edit($params = []): bool {
       return false;
   }
 }
+    // Funcion de eliminar de colaborador
+    public function delete($idcolaborador): bool {
+      try {
+          $query = $this->pdo->prepare("CALL spu_eliminar_colaborador(?)");
+          $query->execute([$idcolaborador]);
+          return true;
+      } catch (Exception $e) {
+          error_log("Error al eliminar colaborador: " . $e->getMessage());
+          return false;
+      }
+  }
     
   }

@@ -22,6 +22,12 @@ $colaborador = new Colaborador();
             echo json_encode(["idcolaborador" => $idobtenido]);
             break;
 
+            case 'delete':
+              $idcolaborador = $colaborador->limpiarCadena($_POST['idcolaborador']);
+              $success = $colaborador->delete($idcolaborador);
+              echo json_encode(["success" => $success]);
+              break;
+
     }
   }
 
