@@ -70,4 +70,17 @@ class KardexProducto extends Conexion{
             die($e->getMessage());
         }
     }
+
+    public function delete($idAlmacenProducto):bool {
+        $status = false;
+        try {
+            $query = $this->pdo->prepare("CALL spu_eliminar_KardexAlmProducto(?)");
+            $status = $query->execute(array($idAlmacenProducto));
+            return $status;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
   }
