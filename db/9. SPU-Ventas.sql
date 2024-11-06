@@ -55,6 +55,7 @@ BEGIN
 END //
 DELIMITER ;
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
+ 
    drop procedure if exists `sp_eliminar_venta`;
 DELIMITER //
 
@@ -66,3 +67,4 @@ BEGIN
     WHERE idventa = p_idventa;
 END //
 DELIMITER ;
+

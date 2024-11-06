@@ -89,3 +89,14 @@ BEGIN
 END $$
 CALL spu_editar_KardexAlmProducto(2, 'Entrada por compra', 20);
 -- ------------------------------- ELIMINAR ----------------------------------
+DROP PROCEDURE IF EXISTS `spu_eliminar_KardexAlmProducto`;
+DELIMITER $$
+
+CREATE PROCEDURE spu_eliminar_KardexAlmProducto(
+    IN _idAlmacenProducto INT
+)
+BEGIN
+    -- Elimina el registro de la tabla KardexAlmProducto basado en el ID proporcionado
+    DELETE FROM KardexAlmProducto WHERE idAlmacenProducto = _idAlmacenProducto;
+END $$
+CALL spu_eliminar_KardexAlmProducto(5);

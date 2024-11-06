@@ -87,3 +87,14 @@ BEGIN
 END $$
 
 -- ------------------------------- ELIMINAR ----------------------------------
+DROP PROCEDURE IF EXISTS `spu_eliminar_kardexhuevo`;
+DELIMITER $$
+
+CREATE PROCEDURE spu_eliminar_kardexhuevo(
+    IN _idAlmacenHuevos INT
+)
+BEGIN
+    -- Elimina el registro de la tabla KardexAlmHuevo basado en el ID proporcionado
+    DELETE FROM KardexAlmHuevo WHERE idAlmacenHuevos = _idAlmacenHuevos;
+END $$
+CALL spu_eliminar_kardexhuevo(5);

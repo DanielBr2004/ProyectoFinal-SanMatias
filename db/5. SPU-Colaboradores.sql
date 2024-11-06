@@ -99,4 +99,15 @@ END $$
 CALL spu_editar_colaborador(3, 'OLO', 'ROJAS', 'STIVEN');
 
 -- ------------------------------- ELIMINAR ----------------------------------
+DROP PROCEDURE IF EXISTS `spu_eliminar_colaborador`;
+DELIMITER $$
+
+CREATE PROCEDURE spu_eliminar_colaborador(
+    IN _idcolaborador INT
+)
+BEGIN
+    -- Elimina al colaborador de la tabla colaboradores basado en el ID proporcionado
+    DELETE FROM colaboradores WHERE idcolaborador = _idcolaborador;
+END $$
+CALL spu_eliminar_colaborador(3);
 
