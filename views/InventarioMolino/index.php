@@ -113,7 +113,7 @@
                     <th>Motivo de Movimiento</th>
                     <th>Cantidad</th>
                     <th>Creado</th>
-                    <th>Operaciones</th> <!-- Nueva columna -->
+                    <th>Operaciones</th>
                 </tr>
             </thead>
         <tbody id="tbody-listarproductos">
@@ -125,6 +125,42 @@
     </div>
 </div>
 
+<!-- Modal para Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Movimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarProducto">
+                    <input type="hidden" id="editIdAlmacenProducto">
+                    
+                    <!-- Select para Motivo de Movimiento -->
+                    <div class="mb-3">
+                        <label for="editMotivomovimiento" class="form-label">Motivo de Movimiento</label>
+                        <select id="editMotivomovimiento" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Entrada por compra">Entrada por compra</option>
+                            <option value="Salida por uso">Salida por uso</option>
+                            <option value="Salida por merma">Salida por merma</option>
+                        </select>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="mb-3">
+                            <label for="editCantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="editCantidad" required oninput="validarCantidad(this)">
+                        <div id="errorCantidad" style="color: red; font-size: 0.9em; display: none;">Por favor, ingrese solo números enteros.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
        
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
