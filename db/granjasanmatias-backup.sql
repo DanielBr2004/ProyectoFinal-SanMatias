@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2024 a las 20:46:04
+-- Tiempo de generación: 06-11-2024 a las 22:08:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -49,6 +49,50 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_documento_dni` (IN `_nr
         LEFT JOIN personas PER
         ON PER.idpersona = CLI.idpersona 
         WHERE nrodocumento = _nrodocumento;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_editar` (IN `_idcliente` INT, IN `_nrodocumento` CHAR(12), IN `_tipodocumento` CHAR(3), IN `_cliente_nombre` VARCHAR(90))   BEGIN
+    DECLARE _idpersona INT;
+
+    -- Obtener el idpersona asociado con el idcliente proporcionado
+    SELECT idpersona INTO _idpersona
+    FROM cliente
+    WHERE idcliente = _idcliente;
+
+    -- Actualizar el campo `tipodocumento` en la tabla `cliente`
+    UPDATE cliente
+    SET 
+        tipodocumento = _tipodocumento
+    WHERE idcliente = _idcliente;
+
+    -- Actualizar el campo `nrodocumento` en la tabla `personas`
+    UPDATE personas
+    SET 
+        nrodocumento = _nrodocumento
+    WHERE idpersona = _idpersona;
+
+    -- Actualizar el nombre o razón social en función del `tipodocumento`
+    IF _tipodocumento = 'DNI' THEN
+        -- Si es DNI, actualizar el nombre completo en la tabla `personas`
+        UPDATE personas
+        SET 
+            nombres = _cliente_nombre,
+            apepaterno = '',   -- Aquí puedes agregar lógica si tienes el apellido paterno
+            apematerno = ''    -- Aquí puedes agregar lógica si tienes el apellido materno
+        WHERE idpersona = _idpersona;
+    ELSEIF _tipodocumento = 'RUC' THEN
+        -- Si es RUC, actualizar la razón social en la tabla `cliente`
+        UPDATE cliente
+        SET 
+            razonsocial = _cliente_nombre
+        WHERE idcliente = _idcliente;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_eliminar` (IN `_idcliente` INT)   BEGIN
+    -- Eliminar el cliente de la tabla `cliente`
+    DELETE FROM cliente
+    WHERE idcliente = _idcliente;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_colaboradores_login` (IN `_nomusuario` VARCHAR(150))   BEGIN 
@@ -152,6 +196,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_editar_productos` (IN `_idprodu
     WHERE idproducto = _idproducto;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_eliminar_colaborador` (IN `_idcolaborador` INT)   BEGIN
+    -- Elimina al colaborador de la tabla colaboradores basado en el ID proporcionado
+    DELETE FROM colaboradores WHERE idcolaborador = _idcolaborador;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_eliminar_KardexAlmProducto` (IN `_idAlmacenProducto` INT)   BEGIN
+    -- Elimina el registro de la tabla KardexAlmProducto basado en el ID proporcionado
+    DELETE FROM KardexAlmProducto WHERE idAlmacenProducto = _idAlmacenProducto;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_eliminar_kardexhuevo` (IN `_idAlmacenHuevos` INT)   BEGIN
+    -- Elimina el registro de la tabla KardexAlmHuevo basado en el ID proporcionado
+    DELETE FROM KardexAlmHuevo WHERE idAlmacenHuevos = _idAlmacenHuevos;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_eliminar_productos` (IN `_idproducto` INT)   BEGIN
     DELETE FROM productos
     WHERE idproducto = _idproducto;
@@ -215,15 +274,15 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_Colaboradores` ()   BEGIN
 	SELECT 
+		COL.idcolaborador,
 		PER.nrodocumento,
         PER.apepaterno,
         PER.apematerno,
         PER.nombres,
 		COL.nomusuario
-		FROM colaboradores COL 
-        LEFT JOIN personas PER
-        ON PER.idpersona = COL.idpersona 
-        ORDER BY idcolaborador DESC ;
+	FROM colaboradores COL 
+    LEFT JOIN personas PER ON PER.idpersona = COL.idpersona 
+    ORDER BY COL.idcolaborador DESC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_listar_KardexAlmProducto` ()   BEGIN
@@ -299,8 +358,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_registrar_Detalleventas` (IN `_
  -- declara variable de stock
 	DECLARE _stockProducto DECIMAL(6,2) DEFAULT 0;
     DECLARE _iduser INT;
+    DECLARE _canthuevos INT;
     -- obtiene el stock del producto elegido
     SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idhuevo = _idhuevo ORDER BY creado DESC LIMIT 1;
+    
+    
     
     -- realiza descuento al kardex por venta
     SET _stockProducto = _stockProducto - _cantidad;
@@ -332,6 +394,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_registrar_ventas` (IN `_idclien
     SELECT @@last_insert_id AS idventa;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_editar_venta` (IN `p_idventa` INT, IN `p_estado` VARCHAR(30), IN `p_direccion` VARCHAR(50))   BEGIN
+    UPDATE ventas
+    SET 
+        estado = IFNULL(p_estado, estado),
+        direccion = IFNULL(p_direccion, direccion)
+    WHERE idventa = p_idventa;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_venta` (IN `p_idventa` INT)   BEGIN
+    DELETE FROM ventas
+    WHERE idventa = p_idventa;
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -355,7 +430,8 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idcliente`, `idpersona`, `telefono`, `tipodocumento`, `razonsocial`, `direccion`, `email`) VALUES
-(1, 2, '123456789', 'DNI', '', 'Grocio Prado S/N', 'loyola@gmail.com');
+(1, 3, '', 'DNI', '', 'Grocio Prado Street', ''),
+(2, 4, '', 'RUC', 'GRAN PASTELERIA MULTIPRODUCTOS E.I.R.L.', 'JR. JUAN CASTILLA NRO 920 URB. SAN JUAN', '');
 
 -- --------------------------------------------------------
 
@@ -377,7 +453,7 @@ CREATE TABLE `colaboradores` (
 --
 
 INSERT INTO `colaboradores` (`idcolaborador`, `nomusuario`, `passusuario`, `idpersona`, `create_at`, `inactive_at`) VALUES
-(1, 'BBuleje', '$2y$10$qUlMNWuW6wdkZ0ZHIpNkl.hYm6Rc7GpxYDEp/NWmTPQS/wZw7FZvS', 1, '2024-10-30 14:36:50', NULL);
+(1, 'BBuleje', '$2y$10$qUlMNWuW6wdkZ0ZHIpNkl.hYm6Rc7GpxYDEp/NWmTPQS/wZw7FZvS', 1, '2024-11-06 15:27:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -396,11 +472,22 @@ CREATE TABLE `detalleventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `detalleventas`
+-- Disparadores `detalleventas`
 --
+DELIMITER $$
+CREATE TRIGGER `trg_actualizar_precioVenta` AFTER INSERT ON `detalleventas` FOR EACH ROW BEGIN
+    DECLARE _PrecioVenta DECIMAL(10, 2);
 
-INSERT INTO `detalleventas` (`iddetalleventa`, `idventa`, `idhuevo`, `cantidad`, `PesoTotal`, `precioUnitario`, `precioTotal`) VALUES
-(1, 1, 1, 500, 1500.00, 4.00, 6000.00);
+    -- Calcular la suma de precioTotal para el idventa correspondiente
+    SELECT SUM(precioTotal) INTO _PrecioVenta
+    FROM detalleventas
+    WHERE idventa = NEW.idventa;
+
+    -- Actualizar la columna PrecioVenta en la tabla ventas
+    UPDATE ventas SET PrecioVenta = _PrecioVenta WHERE idventa = NEW.idventa;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -414,8 +501,8 @@ CREATE TABLE `kardexalmhuevo` (
   `idhuevo` int(11) NOT NULL,
   `tipomovimiento` char(1) NOT NULL,
   `motivomovimiento` varchar(100) NOT NULL,
-  `stockProducto` varchar(100) NOT NULL,
-  `cantidad` varchar(50) NOT NULL,
+  `stockProducto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
   `creado` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -425,8 +512,13 @@ CREATE TABLE `kardexalmhuevo` (
 --
 
 INSERT INTO `kardexalmhuevo` (`idAlmacenHuevos`, `idcolaborador`, `idhuevo`, `tipomovimiento`, `motivomovimiento`, `stockProducto`, `cantidad`, `descripcion`, `creado`) VALUES
-(1, 1, 1, 'E', 'Entrada por Producción', '1000', '1000', NULL, '2024-10-30 14:38:32'),
-(2, 1, 1, 'S', 'Salida por Venta', '500.00', '500', NULL, '2024-10-30 14:40:57');
+(1, 1, 1, 'E', 'Entrada por Producción', 6700, 6700, NULL, '2024-11-06 15:32:49'),
+(2, 1, 1, 'E', 'Entrada por Producción', 15600, 8900, NULL, '2024-11-06 15:35:02'),
+(3, 1, 1, 'E', 'Entrada por Producción', 16600, 1000, NULL, '2024-11-06 15:39:07'),
+(4, 1, 1, 'E', 'Entrada por Producción', 17600, 1000, NULL, '2024-11-06 15:44:52'),
+(5, 1, 4, 'E', 'Entrada por Producción', 180, 180, NULL, '2024-11-06 15:50:00'),
+(6, 1, 1, 'E', 'Entrada por Producción', 17969, 369, NULL, '2024-11-06 16:01:47'),
+(7, 1, 1, 'E', 'Entrada por Producción', 19069, 100, 'null', '2024-11-06 16:06:36');
 
 -- --------------------------------------------------------
 
@@ -490,8 +582,9 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`idpersona`, `apematerno`, `apepaterno`, `nombres`, `nrodocumento`, `create_at`, `inactive_at`) VALUES
-(1, 'ROJAS', 'BULEJE', 'BRAULIO DANIEL', '76363997', '2024-10-30 14:36:45', NULL),
-(2, 'TORRES', 'LOYOLA', 'MIGUEL ALEXANDER', '73217990', '2024-10-30 14:39:19', NULL);
+(1, 'ROJAS', 'BULEJE', 'BRAULIO DANIEL', '76363997', '2024-11-06 15:26:58', NULL),
+(3, 'TORRES', 'LOYOLA', 'MIGUEL ALEXANDER', '73217990', '2024-11-06 15:58:07', NULL),
+(4, '', '', '', '20414924060', '2024-11-06 15:58:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -504,14 +597,6 @@ CREATE TABLE `productos` (
   `producto` varchar(100) NOT NULL,
   `descripcion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `productos`
---
-
-INSERT INTO `productos` (`idproducto`, `producto`, `descripcion`) VALUES
-(1, 'soya', ''),
-(2, 'afrecho', '');
 
 -- --------------------------------------------------------
 
@@ -557,7 +642,8 @@ INSERT INTO `tipohuevo` (`idhuevo`, `tiposHuevos`, `descripcion`) VALUES
 (2, 'Pardo', 'Huevos de cáscara marrón'),
 (3, 'Sucio', 'Huevos con cáscara sucia o manchada'),
 (4, 'Doble Yema', 'Huevos con doble yema en su interior'),
-(5, 'Merma', 'Huevos que no cumplen con los estándares de calidad');
+(5, 'Margarito', 'Huevos con mucho tamaño'),
+(6, 'Merma', 'Huevos que no cumplen con los estándares de calidad');
 
 -- --------------------------------------------------------
 
@@ -571,15 +657,9 @@ CREATE TABLE `ventas` (
   `idcolaborador` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   `direccion` varchar(50) DEFAULT NULL,
+  `PrecioVenta` decimal(7,2) DEFAULT NULL,
   `estado` varchar(30) NOT NULL DEFAULT 'Por entregar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `ventas`
---
-
-INSERT INTO `ventas` (`idventa`, `idcliente`, `idcolaborador`, `fecha`, `direccion`, `estado`) VALUES
-(1, 1, 1, '2024-10-30 14:40:57', 'Grocio Prado S/N', 'Por entregar');
 
 --
 -- Índices para tablas volcadas
@@ -688,7 +768,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `colaboradores`
@@ -700,13 +780,13 @@ ALTER TABLE `colaboradores`
 -- AUTO_INCREMENT de la tabla `detalleventas`
 --
 ALTER TABLE `detalleventas`
-  MODIFY `iddetalleventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `iddetalleventa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `kardexalmhuevo`
 --
 ALTER TABLE `kardexalmhuevo`
-  MODIFY `idAlmacenHuevos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idAlmacenHuevos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `kardexalmproducto`
@@ -730,13 +810,13 @@ ALTER TABLE `permisosasignados`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -754,13 +834,13 @@ ALTER TABLE `roles_users`
 -- AUTO_INCREMENT de la tabla `tipohuevo`
 --
 ALTER TABLE `tipohuevo`
-  MODIFY `idhuevo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idhuevo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
