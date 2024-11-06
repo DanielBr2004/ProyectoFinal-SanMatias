@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       const valor = input.value;
 
       if (!/^\d+$/.test(valor)) {
-          // Mostrar mensaje de error
+          // se Mostrara el mensaje de error
           errorDiv.style.display = 'block';
           input.value = valor.replace(/\D/g, '');
       } else {
