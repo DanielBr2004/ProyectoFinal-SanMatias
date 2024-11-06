@@ -125,13 +125,13 @@ nrodocumento.addEventListener("input", async (event) => {
 
           //¿El idpersona es correcto?
           if(idpersona == -1){
-              showToast("Error en Registrar al Usuario", "ERROR", 1500);
+              showToast("Error en Registrar al Cliente", "ERROR", 1500);
           }else{
               //Tenemos idpersona
               response2 = await registrarCliente(idpersona);
               console.log(response2);
               if(response2.idcliente == -1){
-                  showToast("Error en Registrar al Usuario", "ERROR", 1500);
+                  showToast("Error en Registrar al Cliente", "ERROR", 1500);
               }else{
                  showToast("Cliente Registrado", "SUCCESS", 1500);
                   //Ambos procesos han finalizado correctamente

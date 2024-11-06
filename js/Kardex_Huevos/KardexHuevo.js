@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
         obtenerStocksProductos();
         actualizarTablaKardex();
+        
       })
       .catch(e => { console.error(e) });
   }
@@ -83,21 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ValidarCantidadSalida()) {
         return;
       }
-
-      const result = await Swal.fire({
-        title: "Deseas Guardar los cambios",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Guardar",
-        denyButtonText: `No guardar`
-      });
-
-      if (result.isConfirmed) {
+      
+      if(await ask("Estas Registrando aprox " + (Math.floor(CantidadEntrada.value / 180)) + " Paquetes, ¿Deseas Confirmar?" )) {
         GuardarKardex();
-        Swal.fire("Guardado", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Cancelado", "", "error");
-        document.querySelector("#form-kardex-huevos").reset();
+        actualizarTablaKardex();
       }
     }
   });
@@ -124,12 +114,17 @@ document.addEventListener("DOMContentLoaded", () => {
       { id: "4", inputId: "hdobleyema" },
       { id: "5", inputId: "hmargarito" }
     ];
-
+  
     for (const producto of productos) {
       try {
         const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${producto.id}`);
         const stock = await response.json();
-        const stockDividido = Math.floor(stock / 180);
+        let stockDividido;
+        if (producto.inputId === "hdobleyema") {
+          stockDividido = Math.floor(stock / 90);
+        } else {
+          stockDividido = Math.floor(stock / 180);
+        }
         document.getElementById(producto.inputId).value = `${stockDividido} Paquetes`;
       } catch (error) {
         console.error(`Error al obtener el stock del producto ${producto.id}:`, error);

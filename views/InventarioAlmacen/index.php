@@ -119,7 +119,8 @@
                                     <br>
                                     <div class="form-floating">
                                         <input type="text" name="" id="hcomercial" class="form-control" disabled>
-                                        <label for="idcolaborador">Cantidad</label>
+                                        <label for="idcolaborador">Cantidad</label><br>
+                                        <img src="<?= $host ?>/img/HComercial.jpg" class="img-fluid rounded-3" alt="...">
                                     </div>
                                 </div>
                                 </div>
@@ -132,7 +133,8 @@
                                         <br>
                                         <div class="form-floating">
                                             <input type="text" name="" id="hpardo" class="form-control" disabled>
-                                            <label for="idcolaborador">Cantidad</label>
+                                            <label for="idcolaborador">Cantidad</label><br>
+                                            <img src="<?= $host ?>/img/HPardo.jpg" class="img-fluid rounded-3" alt="...">
                                         </div>
                                 </div>
                                 </div>
@@ -145,7 +147,8 @@
                                     <br>
                                     <div class="form-floating">
                                         <input type="text" name="" id="hsucio" class="form-control" disabled>
-                                        <label for="idcolaborador">Cantidad</label>
+                                        <label for="idcolaborador">Cantidad</label><br>
+                                        <img src="<?= $host ?>/img/HSucio.jpg" class="img-fluid rounded-3" alt="...">
                                     </div>
                                 </div>
                                 </div>
@@ -158,7 +161,8 @@
                                     <br>
                                     <div class="form-floating">
                                         <input type="text" name="" id="hdobleyema" class="form-control" disabled>
-                                        <label for="idcolaborador">Cantidad</label>
+                                        <label for="idcolaborador">Cantidad</label><br>
+                                        <img src="<?= $host ?>/img/HDobleYema.jpg" class="img-fluid rounded-3" alt="...">
                                     </div>
                                     </div>
                                 </div>
@@ -171,7 +175,8 @@
                                     <br>
                                     <div class="form-floating">
                                         <input type="text" name="" id="hmargarito" class="form-control" disabled>
-                                        <label for="idcolaborador">Cantidad</label>
+                                        <label for="idcolaborador">Cantidad</label><br>
+                                        <img src="<?= $host ?>/img/HMargarito.jpg" class="img-fluid rounded-3" alt="...">
                                     </div>
                                     </div>
                                 </div>
