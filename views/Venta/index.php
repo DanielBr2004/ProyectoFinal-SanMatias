@@ -16,14 +16,14 @@
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" minlength="8" maxlength="11"  id="nrodocumento" autofocus required>
-                                            <label for="nrodocumento">Numero de Documento</label>
+                                            <label for="nrodocumento"><i class="fa-regular fa-id-card"></i> Numero de Documento</label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="tipodocumento" disabled>
-                                            <label for="tipodocumento">Tipo de Documento</label>
+                                            <label for="tipodocumento"><i class="fa-solid fa-id-card-clip"></i> Tipo de Documento</label>
                                         </div>
                                     </div>
 
@@ -35,7 +35,7 @@
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="cliente"  disabled>
-                                            <label for="cliente">Cliente </label>
+                                            <label for="cliente"><i class="fa-solid fa-circle-user"></i> Cliente </label>
                                         </div>
                                     </div>
 

@@ -30,7 +30,7 @@
                                     <option value="5">Margarito</option>
                                     <option value="6">Merma</option>
                                 </select>
-                                <label for="idhuevo">Producto</label>
+                                <label for="idhuevo"><i class="fa-solid fa-box-open"></i> Producto</label>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="stockProducto" disabled>
-                            <label for="stockProducto">Stock Actual</label>
+                            <label for="stockProducto"><i class="fa-solid fa-cubes-stacked"></i> Stock Actual</label>
                         </div>
                     </div>
                 </div> <!-- ./primera fila -->
@@ -65,7 +65,7 @@
                                 <option value="S">Salida por Merma</option>
                                 <option value="S">Salida por Contingencia</option>
                             </select>
-                            <label for="Motivomovimiento">Motivo de movimiento</label>
+                            <label for="Motivomovimiento"><i class="fa-solid fa-cash-register"></i> Motivo de movimiento</label>
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <input type="number" minlength="0" class="form-control" id="cantidad" required>
-                            <label for="cantidad">Cantidad</label>
+                            <label for="cantidad"><i class="fa-solid fa-list-ol"></i> Cantidad</label>
                         </div>
                     </div>
                 </div> <!-- ./segunda fila -->
@@ -91,15 +91,15 @@
                     <div class="col-md" id="mermaInputContainer" style="display: none;">
                         <div class="form-floating">
                             <input type="text" id="mermaInput" class="form-control">
-                            <label for="mermaInput">Detalles de la merma</label>
+                            <label for="mermaInput"><i class="fa-solid fa-pencil"></i> Detalles de la merma</label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Botones -->
                 <div class="text-end mt-2">
-                    <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm">Actualizar Kardex</button>
-                    <button type="reset" id="" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
+                    <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm"><i class="fa-regular fa-bookmark"></i> Actualizar Kardex</button>
+                    <button type="reset" id="" class="btn btn-secondary btn-sm"><i class="fa-regular fa-rectangle-xmark"></i> Cancelar Proceso</button>
                     <button type="button" id="filtrarBtn" class="btn btn-secondary btn-sm">Filtrar</button>
                 </div>
             </form>        

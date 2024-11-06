@@ -25,7 +25,7 @@
                                 <select name="idproducto" id="idproducto" class="form-select" required>
                                     <option value="">Seleccione</option>
                                 </select>
-                                <label for="idproducto">Producto</label>
+                                <label for="idproducto"><i class="fa-solid fa-box-open"></i> Producto</label>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="stockProducto" disabled>
-                            <label for="stockactual">Stock Actual</label>
+                            <label for="stockactual"><i class="fa-solid fa-cubes-stacked"></i> Stock Actual</label>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
                                     <option value="S">Salida por uso</option>
                                     <option value="S">Salida por merma</option>
                                 </select>
-                                <label for="Motivomovimiento">Motivo de movimiento</label>
+                                <label for="Motivomovimiento"><i class="fa-solid fa-cash-register"></i> Motivo de movimiento</label>
                             </div>
                     </div>
 
@@ -65,13 +65,13 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <input type="number"  class="form-control" minlength="1" pattern="[0-9]" step="0.01" id="cantidad" required>
-                            <label for="cantidad">Cantidad</label>
+                            <label for="cantidad"><i class="fa-solid fa-list-ol"></i> Cantidad</label>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="form-floating">
                             <input type=""  class="form-control" minlength="1" value="Kg" id="" disabled>
-                            <label for="cantidad">Unidad De Medida</label>
+                            <label for="cantidad"><i class="fa-solid fa-scale-balanced"></i> Unidad De Medida</label>
                         </div>
                     </div>
 
@@ -80,15 +80,15 @@
                     <div class="col-md" id="mermaInputContainer" style="display: none;">
                         <div class="form-floating">
                             <input type="text" id="mermaInput" class="form-control">
-                            <label for="mermaInput">Detalles de la merma</label>
+                            <label for="mermaInput"><i class="fa-solid fa-pencil"></i> Detalles de la merma</label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Botones -->
                 <div class="text-end mt-2">
-                    <button type="submit" id="" class="btn btn-primary btn-sm">Actualizar Kardex</button>
-                    <button type="reset" id="" class="btn btn-secondary btn-sm">Cancelar Proceso</button>
+                    <button type="submit" id="" class="btn btn-primary btn-sm"><i class="fa-regular fa-bookmark"></i> Actualizar Kardex</button>
+                    <button type="reset" id="" class="btn btn-secondary btn-sm"><i class="fa-regular fa-rectangle-xmark"></i> Cancelar Proceso</button>
                 </div>
                 
             </form>        
