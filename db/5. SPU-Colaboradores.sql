@@ -46,7 +46,7 @@ BEGIN
 END $$
 
  -- ------------------------------------------- Listar colaboradores ----------------------------------------------------- 
- 
+ /*
  DELIMITER $$
 CREATE PROCEDURE spu_listar_Colaboradores()
 BEGIN
@@ -60,6 +60,22 @@ BEGIN
         LEFT JOIN personas PER
         ON PER.idpersona = COL.idpersona 
         ORDER BY idcolaborador DESC ;
+END $$
+call spu_listar_Colaboradores();
+*/
+DELIMITER $$
+CREATE PROCEDURE spu_listar_Colaboradores()
+BEGIN
+	SELECT 
+		COL.idcolaborador,
+		PER.nrodocumento,
+        PER.apepaterno,
+        PER.apematerno,
+        PER.nombres,
+		COL.nomusuario
+	FROM colaboradores COL 
+    LEFT JOIN personas PER ON PER.idpersona = COL.idpersona 
+    ORDER BY COL.idcolaborador DESC;
 END $$
 call spu_listar_Colaboradores();
  -- ------------------------------------------- Editar colaboradores ----------------------------------------------------- 
