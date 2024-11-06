@@ -198,5 +198,13 @@
          
         <!-- Sweet Alert Simplificado-->
          <script src="../../js/swalcustom.js"></script>
+         <footer>
+            <div class="container">
+                <div class="text-center mt-5">
+                    <p>&copy; 2024 Granja Avícola "San Matias" S.A.C.</p>
+                    <p>VERSION 1.0.0</p>
+                </div>
+            </div>
+         </footer>
     </body>
 </html>

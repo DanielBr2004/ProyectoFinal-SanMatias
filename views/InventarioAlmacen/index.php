@@ -327,7 +327,14 @@
         <script src="../../js/Kardex_Huevos/KardexHuevo.js"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
         <script src="<?= $host ?>/js/listkardexhuevo.js"></script>
-
+        <footer>
+            <div class="container">
+                <div class="text-center mt-5">
+                    <p>&copy; 2024 Granja Avícola "San Matias" S.A.C.</p>
+                    <p>VERSION 1.0.0</p>
+                </div>
+            </div>
+         </footer>
     </body>
     
 </html>

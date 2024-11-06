@@ -42,7 +42,7 @@
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
                                             <input type="text" id="direccion" maxlength="150" class="form-control" disabled>
-                                            <label for="direccion">Direccion del Cliente</label>
+                                            <label for="direccion"><i class="fa-regular fa-compass"></i> Direccion del Cliente</label>
                                         </div>
                                     </div>
 
@@ -52,14 +52,14 @@
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
                                             <input type="text" id="email" maxlength="150" class="form-control" disabled>
-                                            <label for="email">Email</label>
+                                            <label for="email"><i class="fa-solid fa-at"></i> Email</label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
                                             <input type="number" id="telefono" maxlength="150" class="form-control" disabled>
-                                            <label for="telefono">Telefono</label>
+                                            <label for="telefono"><i class="fa-solid fa-mobile-screen"></i> Telefono</label>
                                         </div>
                                     </div>
 
@@ -78,7 +78,7 @@
                             <div class="container mt-5">
                                 <div>
                                 <button id="agregar-item" _ngcontent-ng-c943880071="" tooltipposition="top" ptooltip="Agregar item" pbutton="" type="button" icon="fa fa-plus" class="btn btn-success p-element p-button-success p-button p-component p-button-icon-only ng-star-inserted" disabled>
-                                        <span aria-hidden="true"> Agregar Producto a la Lista</span>
+                                        <span aria-hidden="true"><i class="fa-solid fa-plus"></i> Agregar Producto a la Lista</span>
                                 </button>
                                 <br>
                                 <hr>
@@ -125,8 +125,8 @@
                             </div>
                         <div class="card-footer">
                             <div class="text-end">
-                                <button type="submit" id="registrar-venta" class="btn btn-primary btn-sm" disabled>Registrar Venta</button>
-                                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm">Cancelar Venta</button>
+                                <button type="submit" id="registrar-venta" class="btn btn-primary btn-sm" disabled><i class="fa-regular fa-bookmark"></i> Registrar Venta</button>
+                                <button type="reset" id="cancelar" class="btn btn-secondary btn-sm"><i class="fa-solid fa-xmark"></i> Cancelar Venta</button>
                             </div>
                         </div>
                     </form>
@@ -148,5 +148,13 @@
          <script src="<?= $host ?>js/ventas/agregarDetalle.js"></script>
          <script src="<?= $host ?>js/clientes/buscarClienteRegistrado.js"></script>
          <script src="<?= $host ?>js/Ventas/registrarVenta.js"></script>
+         <footer>
+            <div class="container">
+                <div class="text-center mt-5">
+                    <p>&copy; 2024 Granja Avícola "San Matias" S.A.C.</p>
+                    <p>VERSION 1.0.0</p>
+                </div>
+            </div>
+         </footer>
     </body>
 </html>
