@@ -5,32 +5,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     const dataTableOptions = {
         dom: 'Bfrtilp',
         buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel"></i> ',
-                titleAttr: 'Exportar a Excel',
-                className: 'btn btn-success',
-            },
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf"></i> ',
-                titleAttr: 'Exportar a PDF',
-                className: 'btn btn-danger',
-            },
-            {
-                extend: 'print',
-                text: '<i class="fa fa-print"></i> ',
-                titleAttr: 'Imprimir',
-                className: 'btn btn-info',
-            },
+            { extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> ', titleAttr: 'Exportar a Excel', className: 'btn btn-success' },
+            { extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> ', titleAttr: 'Exportar a PDF', className: 'btn btn-danger' },
+            { extend: 'print', text: '<i class="fa fa-print"></i> ', titleAttr: 'Imprimir', className: 'btn btn-info' },
         ],
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
-        columnDefs: [
-            { className: 'text-center', targets: '_all' },
-            { orderable: false, targets: [2, 6] }, // Ajuste en los índices de columna
-            { searchable: false, targets: [1, 6] }, // Ajuste en los índices de columna
-            { width: '20%', targets: [1] },
-        ],
+        columnDefs: [{ className: 'text-center', targets: '_all' }, { orderable: false, targets: [2, 6] }, { searchable: false, targets: [1, 6] }],
         pageLength: 5,
         destroy: true,
         language: {
@@ -42,17 +22,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
             infoFiltered: '(filtrado de un total de _MAX_ registros)',
             search: 'Buscar:',
-            paginate: {
-                first: 'Primero',
-                last: 'Último',
-                next: 'Siguiente',
-                previous: 'Anterior',
-            },
-            buttons: {
-                excel: 'Excel',
-                pdf: 'PDF',
-                print: 'Imprimir',
-            },
+            paginate: { first: 'Primero', last: 'Último', next: 'Siguiente', previous: 'Anterior' },
+            buttons: { excel: 'Excel', pdf: 'PDF', print: 'Imprimir' },
         },
     };
 
@@ -73,8 +44,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.estado}</td>
                         <td class="text-center">
                         <div style="display: inline-flex; gap: 5px;">
-                            <button class="btn btn-warning btn-sm editar-btn" data-id="${item.ID}">Editar</button>
-                            <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.ID}">Eliminar</button>
+                            <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idventa}, '${item.estado}', '${item.direccion}')">Editar</button>
+                            <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.idventa}">Eliminar</button>
                         </td>
                     </tr>`;
             });
@@ -89,6 +60,51 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.error('Error al cargar las ventas:', error);
         }
     };
+
+    window.abrirModalEditar = function(idventa, estado, direccion) {
+        document.getElementById('editIdVenta').value = idventa;
+        document.getElementById('editEstado').value = estado;
+        document.getElementById('editDireccion').value = direccion;
+
+        // Limitar entrada a solo letras para el campo "estado"
+        document.getElementById('editEstado').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ''); // Permitir solo letras y espacios
+        });
+
+        $('#editarVentaModal').modal('show');
+    };
+
+    document.getElementById('formEditarVenta').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const idventa = document.getElementById('editIdVenta').value;
+        const estado = document.getElementById('editEstado').value;
+        const direccion = document.getElementById('editDireccion').value;
+
+        try {
+            const response = await fetch('../../controllers/venta.controller.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    operacion: 'update',
+                    idventa,
+                    estado,
+                    direccion
+                })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('Venta actualizada correctamente');
+                $('#editarVentaModal').modal('hide');
+                await cargarVentas();
+            } else {
+                alert('Error al actualizar la venta');
+            }
+        } catch (error) {
+            console.error('Error al actualizar la venta:', error);
+        }
+    });
 
     const initDataTable = async () => {
         if (dataTableIsInitialized) {

@@ -59,3 +59,4 @@ BEGIN
         INNER JOIN personas PER
         ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
 END $$
+call  spu_listar_cliente();

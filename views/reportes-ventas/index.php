@@ -27,6 +27,38 @@
     </div>
 </div>
 
+<!-- Modal para Editar Venta -->
+<div class="modal fade" id="editarVentaModal" tabindex="-1" aria-labelledby="editarVentaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarVentaLabel">Editar Venta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarVenta">
+                    <!-- Campo oculto para el ID de la venta -->
+                    <input type="hidden" id="editIdVenta">
+
+                    <!-- Estado -->
+                    <div class="mb-3">
+                        <label for="editEstado" class="form-label">Estado</label>
+                        <input type="text" class="form-control" id="editEstado" required>
+                    </div>
+
+                    <!-- Dirección -->
+                    <div class="mb-3">
+                        <label for="editDireccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="editDireccion" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Incluye SweetAlert2 desde CDN -->

@@ -85,3 +85,5 @@ BEGIN
     SET stockProducto = _stockProducto
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
 END $$
+
+-- ------------------------------- ELIMINAR ----------------------------------

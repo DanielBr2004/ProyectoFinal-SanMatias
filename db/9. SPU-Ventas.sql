@@ -38,7 +38,7 @@ BEGIN
     ORDER BY VEN.idventa DESC;
 END $$
 DELIMITER ;
- -- ------------------------------------------- listar ventas ----------------------------------------------------- 
+ -- ------------------------------------------- editar ventas ----------------------------------------------------- 
   drop procedure if exists `sp_editar_venta`;
 DELIMITER //
 CREATE PROCEDURE sp_editar_venta(

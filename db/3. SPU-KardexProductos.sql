@@ -88,3 +88,4 @@ BEGIN
         idAlmacenProducto = _idAlmacenProducto;                
 END $$
 CALL spu_editar_KardexAlmProducto(2, 'Entrada por compra', 20);
+-- ------------------------------- ELIMINAR ----------------------------------

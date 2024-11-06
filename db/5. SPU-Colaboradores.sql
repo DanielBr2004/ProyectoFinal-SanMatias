@@ -98,3 +98,5 @@ BEGIN
 END $$
 CALL spu_editar_colaborador(3, 'OLO', 'ROJAS', 'STIVEN');
 
+-- ------------------------------- ELIMINAR ----------------------------------
+
