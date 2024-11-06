@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const result = await response.json();
         if (result.success) {
             alert('Colaborador eliminado correctamente');
-            await cargarUsuarios(); // Recargar la lista de colaboradores después de la eliminación
+            await cargarUsuarios(); 
         } else {
             alert('Error al eliminar el colaborador');
         }
