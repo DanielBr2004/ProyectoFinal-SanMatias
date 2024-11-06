@@ -21,6 +21,7 @@ $colaborador = new Colaborador();
             //Lo retonará en la vista como un JSON
             echo json_encode(["idcolaborador" => $idobtenido]);
             break;
+
     }
   }
 
@@ -39,4 +40,20 @@ $colaborador = new Colaborador();
           break;
     }
   }
+
+  if(isset($_POST['operacion'])) {
+    switch($_POST['operacion']) {
+        case 'edit':
+            error_log("Entrando en el caso 'edit'"); // Registro temporal
+            $datos = [
+                "idcolaborador" => $colaborador->limpiarCadena($_POST['idcolaborador']),
+                "apepaterno"    => $colaborador->limpiarCadena($_POST['apepaterno']),
+                "apematerno"    => $colaborador->limpiarCadena($_POST['apematerno']),
+                "nombres"       => $colaborador->limpiarCadena($_POST['nombres'])
+            ];
+            $success = $colaborador->edit($datos);
+            echo json_encode(["success" => $success]);
+            break;
+    }
+ }
 

@@ -63,5 +63,22 @@ class Colaborador extends Conexion{
       }
 
       
+// Function to edit a collaborator
+public function edit($params = []): bool {
+  try {
+      error_log("Datos en edit: " . print_r($params, true)); 
+      $query = $this->pdo->prepare("CALL spu_editar_colaborador(?, ?, ?, ?)");
+      $query->execute([
+          $params['idcolaborador'],
+          $params['apepaterno'],
+          $params['apematerno'],
+          $params['nombres']
+      ]);
+      return true;
+  } catch (Exception $e) {
+      error_log("Error al editar colaborador: " . $e->getMessage());
+      return false;
+  }
+}
     
   }

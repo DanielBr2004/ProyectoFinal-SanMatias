@@ -80,5 +80,5 @@ BEGIN
         PER.nombres = _nombres
     WHERE COL.idcolaborador = _idcolaborador;
 END $$
-CALL spu_editar_colaborador(3, 'PACHAS', 'ROJAS', 'STIVEN');
+CALL spu_editar_colaborador(3, 'OLO', 'ROJAS', 'STIVEN');
 

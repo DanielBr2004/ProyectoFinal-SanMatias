@@ -106,6 +106,45 @@
             </div>
         
         </div>
+
+<!-- Modal para Editar Colaborador -->
+<div class="modal fade" id="editarColaboradorModal" tabindex="-1" aria-labelledby="editarColaboradorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarColaboradorLabel">Editar Colaborador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarColaborador">
+                    <!-- Campo oculto para el ID del colaborador -->
+                    <input type="hidden" id="editIdColaborador">
+                    
+                    <!-- Apellido Paterno -->
+                    <div class="mb-3">
+                        <label for="editApePaterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="editApePaterno" required>
+                    </div>
+
+                    <!-- Apellido Materno -->
+                    <div class="mb-3">
+                        <label for="editApeMaterno" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="editApeMaterno" required>
+                    </div>
+
+                    <!-- Nombres -->
+                    <div class="mb-3">
+                        <label for="editNombres" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="editNombres" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
