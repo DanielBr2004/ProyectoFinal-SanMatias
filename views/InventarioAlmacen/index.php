@@ -222,18 +222,32 @@
             <div class="modal-body">
                 <form id="formEditarKardex">
                     <input type="hidden" id="editIdAlmacenHuevos">
+                    
+                    <!-- Select para Motivo de Movimiento -->
                     <div class="mb-3">
                         <label for="editMotivomovimiento" class="form-label">Motivo de Movimiento</label>
-                        <input type="text" class="form-control" id="editMotivomovimiento" required>
+                        <select id="editMotivomovimiento" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Entrada por Producción">Entrada por Producción</option>
+                            <option value="Entrada por Compra">Entrada por Compra</option>
+                            <option value="Salida por Venta">Salida por Venta</option>
+                            <option value="Salida por Merma">Salida por Merma</option>
+                            <option value="Salida por Contingencia">Salida por Contingencia</option>
+                        </select>
                     </div>
+
+                    <!-- Cantidad -->
                     <div class="mb-3">
                         <label for="editCantidad" class="form-label">Cantidad</label>
                         <input type="number" class="form-control" id="editCantidad" required>
                     </div>
+
+                    <!-- Descripción -->
                     <div class="mb-3">
                         <label for="editDescripcion" class="form-label">Descripción</label>
                         <textarea class="form-control" id="editDescripcion" rows="3"></textarea>
                     </div>
+
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>
             </div>

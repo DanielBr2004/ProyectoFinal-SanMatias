@@ -95,8 +95,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion) {
       console.log("Abriendo modal con:", idAlmacenHuevos, motivomovimiento, cantidad, descripcion);
+      
+      // Asignar valores a los campos del modal
       document.getElementById('editIdAlmacenHuevos').value = idAlmacenHuevos;
-      document.getElementById('editMotivomovimiento').value = motivomovimiento;
+      document.getElementById('editMotivomovimiento').value = motivomovimiento; // Seleccionar en el select
       document.getElementById('editCantidad').value = cantidad;
       document.getElementById('editDescripcion').value = descripcion;
 
