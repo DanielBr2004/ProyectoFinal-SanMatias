@@ -45,7 +45,7 @@
 
                 <div class="row g-2 mt-2">
 
-                    <div class="col-md">
+                    <div class="col-md invisible">
                         <div class="form-floating">
                             <select name="Lote" id="" class="form-select" >
                                 <option value="">Selecione</option>
