@@ -78,6 +78,15 @@ class KardexHuevo extends Conexion{
         }
     }
 
-
+    public function eliminarKardexHuevo($idAlmacenHuevos): bool {
+        $status = false;
+        try {
+            $query = $this->pdo->prepare("CALL spu_eliminar_kardexhuevo(?)");
+            $status = $query->execute(array($idAlmacenHuevos));
+            return $status; // Retorna verdadero si la eliminación fue exitosa
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
   }

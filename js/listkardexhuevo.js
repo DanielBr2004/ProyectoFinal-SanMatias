@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">
                           <div style="display: inline-flex; gap: 5px;">
                               <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}')">Editar</button>
-                              <button class="btn btn-danger btn-sm">Eliminar</button>
+                              <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">Eliminar</button>
                           </div>
                       </td>
                   </tr>`;
@@ -138,6 +138,32 @@ document.addEventListener('DOMContentLoaded', async function() {
           console.error('Error al actualizar el registro:', error);
       }
   });
+
+  window.eliminarKardex = async function(idAlmacenHuevos) {
+    const confirmacion = confirm("¿Estás seguro de que deseas eliminar este registro?");
+    if (!confirmacion) return;
+
+    try {
+        const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                operacion: 'eliminarKardex',
+                idAlmacenHuevos
+            })
+        });
+
+        const result = await response.json();
+        if (result.estado) {
+            alert('Registro eliminado correctamente');
+            await cargarlist(); // Recargar la lista
+        } else {
+            alert('Error al eliminar el registro');
+        }
+    } catch (error) {
+        console.error('Error al eliminar el registro:', error);
+    }
+};
 
   const initDataTable = async () => {
       if (dataTableIsInitialized) {
