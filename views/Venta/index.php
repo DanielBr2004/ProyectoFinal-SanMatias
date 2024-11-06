@@ -101,6 +101,26 @@
                                     </tbody>
                                 </table>
                                 </div>
+                                <br>
+                                <br>
+                                    <div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col mb-1">
+                                                    <strong>IGV 18.00%</strong> <br>
+                                                    <label for="" id="igv_venta">S/0.00</label>
+                                                </div>
+                                                <div class="col mb-1">
+                                                    <strong>SUBTOTAL</strong> <br>
+                                                    <label for="" id="subtotal_venta">S/0.00</label>
+                                                </div>
+                                                <div class="col mb-1">
+                                                    <strong>TOTAL</strong> <br>
+                                                    <label for="" id="total_venta">S/0.00</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             </div>
                         <div class="card-footer">

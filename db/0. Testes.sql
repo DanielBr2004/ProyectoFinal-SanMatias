@@ -51,6 +51,8 @@ SELECT stockProducto FROM KardexAlmHuevo WHERE idhuevo = 1 ORDER BY creado DESC 
 
 CALL spu_clientes_registrar(1,'','DNI','','sunampe','daniel@gmail.com');
 
+CALL spu_totalprecioventa_update(2);
+
 CALL spu_insertar_KardexAlmProducto(1,1,'E','Stock Repuesto',200,'');
 
 CALL spu_insertar_kardexhuevo(1,1,'E','por produccion',150,'dwdwdw');

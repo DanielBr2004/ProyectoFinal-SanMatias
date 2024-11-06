@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const buttonAgregar = document.querySelector("#agregar-item");
     const tablaDetalles = document.querySelector(".tabla-detalle tbody");
+    const labelTotalVenta = document.querySelector("#total_venta");
+    const labelIGV = document.querySelector("#igv_venta");
+    const labelSubTotal = document.querySelector("#subtotal_venta");
     const opciones = [
         { value: "1", text: "Comercial" },
         { value: "2", text: "Pardo" },
@@ -93,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         pesoTotal.addEventListener("input", async () => {
         await calcularTotalVenta(tr); 
+        actualizarTotalVenta();
         });
 
         cantidadVenta.addEventListener("input", () => {
@@ -101,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         precioUnitario.addEventListener("input", async () => {
         await calcularTotalVenta(tr);
+        actualizarTotalVenta();
         });
 
 
@@ -110,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const value = tr.querySelector(".huevo-venta").value;
             seleccionados = seleccionados.filter(item => item !== value);
             actualizarOpciones();
+            actualizarTotalVenta();
         });
 
         // Añadir evento de cambio al select
@@ -123,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tablaDetalles.appendChild(tr);
         actualizarOpciones();
+        actualizarTotalVenta();
     }
 
     function actualizarOpciones() {
@@ -192,5 +199,26 @@ document.addEventListener("DOMContentLoaded", () => {
             $("#registrar-venta").removeAttribute("disabled", "disabled");
         }
       }
+
+      function actualizarTotalVenta() {
+        const totalVentas = document.querySelectorAll(".totalventa-venta");
+        let total = 0;
+        let subtotal = 0;
+        let igv = 0;
+    
+        totalVentas.forEach((input) => {
+          total += parseFloat(input.value) || 0;
+        });
+
+        igv = total * 0.18;
+        subtotal = total - igv;
+
+        labelIGV.textContent = `S/${(total * 0.18).toFixed(2)}`;
+        labelSubTotal.textContent = `S/${(subtotal).toFixed(2)}`;
+        labelTotalVenta.textContent = `S/${total.toFixed(2)}`;
+      }
+    
+      // Llamar a la función para actualizar el total de ventas al cargar la página
+      actualizarTotalVenta();
 
 });

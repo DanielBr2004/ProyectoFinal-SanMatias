@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let idventas = -1;
   let datosNuevos = true;
 
+  const labelTotalVenta = document.querySelector("#total_venta");
+  const labelIGV = document.querySelector("#igv_venta");
+  const labelSubTotal = document.querySelector("#subtotal_venta");
+
   async function buscarDocumento() {
     const params = new URLSearchParams();
     params.append("operacion", "searchByDoc");
@@ -91,6 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#agregar-item").setAttribute("disabled", true);
     $("#registrar-venta").setAttribute("disabled", true);
     $("#nrodocumento").focus();
+    labelIGV.textContent = "S/0.00";
+    labelSubTotal.textContent = "S/0.00";
+    labelTotalVenta.textContent = "S/0.00";
   }
 
   $("#form-Venta").addEventListener("submit", async (e) => {
