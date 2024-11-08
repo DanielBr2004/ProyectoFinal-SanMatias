@@ -45,13 +45,13 @@
 
                 <div class="row g-2 mt-2">
 
-                    <div class="col-md invisible">
+                    <div class="col-md">
                         <div class="form-floating">
-                            <select name="Lote" id="" class="form-select" >
+                            <select name="Lote" id="numLote" class="form-select" >
                                 <option value="">Selecione</option>
-                                <option value="">Lote 9</option>
+                    
                             </select>
-                            <label for="Lote">N° Lote</label>
+                            <label for="numLote"><i class="fa-solid fa-egg"></i> N° Lote</label>
                         </div>
                     </div>
 

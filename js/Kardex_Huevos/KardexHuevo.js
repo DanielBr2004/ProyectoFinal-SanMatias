@@ -28,6 +28,21 @@ document.addEventListener("DOMContentLoaded", () => {
     ShowStockActual(idhuevo.value);
   }
 
+  (() => {
+    fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
+        .then(response => response.json())
+        .then(data => {
+            const numlote = document.querySelector("#numLote")
+            data.forEach(row => {
+                const tagOption = document.createElement("option")
+                tagOption.value = row.idlote
+                tagOption.innerHTML = `Lote N° ${row.numLote}`
+                numlote.appendChild(tagOption)
+            });
+        })
+        .catch(e => { console.error(e) })
+})();
+
   function ValidarCantidadSalida() {
     if (Motivomovimiento.value === 'S') {
       if (parseInt(CantidadEntrada.value) > parseInt(StockActual.value)) {
@@ -53,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     params.append("idhuevo", document.querySelector("#idhuevo").value);
     params.append("tipomovimiento", document.querySelector("#Motivomovimiento").value);
     params.append("motivomovimiento", motivoselecionado);
+    params.append("idlote", document.querySelector("#numLote").value);
     params.append("cantidad", document.querySelector("#cantidad").value);
     params.append("descripcion", document.querySelector("#mermaInput").value);
 

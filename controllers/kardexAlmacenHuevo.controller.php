@@ -16,6 +16,7 @@ if(isset($_POST['operacion'])){
               "idhuevo"           => $kardexhuevo->limpiarCadena($_POST['idhuevo']),
               "tipomovimiento"    => $kardexhuevo->limpiarCadena($_POST['tipomovimiento']),
               "motivomovimiento"  => $kardexhuevo->limpiarCadena($_POST['motivomovimiento']),
+              "idlote"            => $kardexhuevo->limpiarCadena($_POST['idlote']),
               "cantidad"          => $kardexhuevo->limpiarCadena($_POST['cantidad']),
               "descripcion"       => $kardexhuevo->limpiarCadena($_POST['descripcion'])
           ];

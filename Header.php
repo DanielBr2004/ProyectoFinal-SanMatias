@@ -68,6 +68,7 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= $host ?>/home.php"><i class="fa-solid fa-house"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen"><i class="fa-regular fa-clipboard"></i> Inventario Almacen</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioMolino"><i class="fa-solid fa-clipboard"></i> Inventario Molino</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/produccion"><i class="fa-solid fa-arrow-up-wide-short"></i> Produccion</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/Venta"><i class="fa-solid fa-cart-shopping"></i> Venta</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bars"></i></a>
