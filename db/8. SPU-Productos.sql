@@ -19,18 +19,22 @@ CREATE PROCEDURE spu_listar_productos()
 BEGIN
     SELECT * FROM productos;
 END $$
+call spu_listar_productos();
 
  -- ------------------------------------------- Editar productos -----------------------------------------------------
  drop procedure if exists `spu_editar_productos`;
- DELIMITER $$
+DELIMITER $$
 CREATE PROCEDURE spu_editar_productos(
     IN _idproducto INT,
-    IN _producto VARCHAR(100),
-    IN _descripcion VARCHAR(100)
+    IN _producto VARCHAR(60),
+    IN _stockminimo INT,
+    IN _descripcion VARCHAR(60)
 )
 BEGIN
-    UPDATE productos
-    SET producto = _producto,
+    UPDATE Productos
+    SET 
+        producto = _producto,
+        stockminimo = _stockminimo,
         descripcion = _descripcion
     WHERE idproducto = _idproducto;
 END $$

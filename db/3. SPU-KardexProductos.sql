@@ -99,4 +99,4 @@ BEGIN
     -- Elimina el registro de la tabla KardexAlmProducto basado en el ID proporcionado
     DELETE FROM KardexAlmProducto WHERE idAlmacenProducto = _idAlmacenProducto;
 END $$
-CALL spu_eliminar_KardexAlmProducto(5);
+CALL spu_eliminar_KardexAlmProducto();

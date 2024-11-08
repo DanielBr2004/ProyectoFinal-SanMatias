@@ -53,6 +53,7 @@
                         <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">Producto</th>
+                            <th class="text-center">Stock Minimo</th>
                             <th class="text-center">Descripción</th>
                             <th class="text-center">Operaciones</th>
                         </tr>
@@ -84,6 +85,10 @@
                     <div class="mb-3">
                         <label for="descripcion-editar" class="form-label">Descripción</label>
                         <input type="text" class="form-control" id="descripcion-editar" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stockminimo-editar" class="form-label">Stock Mínimo</label>
+                        <input type="number" class="form-control" id="stockminimo-editar" required>
                     </div>
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

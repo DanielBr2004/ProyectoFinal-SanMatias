@@ -70,12 +70,14 @@ public function eliminarProducto($idproducto = 0){
    }
     
 
-  public function editarProducto($params = []): bool {
+   public function editarProducto($params = []): bool {
     try {
-        $consulta = $this->pdo->prepare("CALL spu_editar_productos(?,?,?)");
+        // Preparar la consulta con cuatro parámetros
+        $consulta = $this->pdo->prepare("CALL spu_editar_productos(?, ?, ?, ?)");
         $consulta->execute(array(
             $params['idproducto'],  
             $params['Producto'],      
+            $params['stockminimo'], 
             $params['descripcion']    
         ));
         return true; 
