@@ -21,19 +21,20 @@ if (isset($_POST['operacion'])) {
           }
           break;
 
-      case 'editar':
-          if (isset($_POST['idproducto']) && isset($_POST['Producto']) && trim($_POST['Producto']) != '') {
-              $datos = [
-                  "idproducto" => $_POST['idproducto'],
-                  "Producto" => $producto->limpiarCadena($_POST['Producto']),
-                  "descripcion" => $producto->limpiarCadena($_POST['descripcion'])
-              ];
-              $producto->editarProducto($datos);
-              echo json_encode(["status" => "success", "message" => "Producto actualizado exitosamente."]);
-          } else {
-              echo json_encode(["status" => "error", "message" => "Datos incompletos para editar el producto."]);
-          }
-          break;
+          case 'editar':
+            if (isset($_POST['idproducto']) && isset($_POST['Producto']) && trim($_POST['Producto']) != '' && isset($_POST['stockminimo'])) {
+                $datos = [
+                    "idproducto" => $_POST['idproducto'],
+                    "Producto" => $producto->limpiarCadena($_POST['Producto']),
+                    "stockminimo" => (int)$_POST['stockminimo'],  
+                    "descripcion" => $producto->limpiarCadena($_POST['descripcion'])
+                ];
+                $producto->editarProducto($datos);
+                echo json_encode(["status" => "success", "message" => "Producto actualizado exitosamente."]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Datos incompletos para editar el producto."]);
+            }
+            break;
 
       case 'eliminar':
           if (isset($_POST['idproducto'])) {
