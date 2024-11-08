@@ -22,4 +22,22 @@
       }
   }
 
+    public function add($params = []):int{
+      $idlote = null;
+      try{
+          $query = $this->pdo->prepare("CALL spu_registrar_numLote(?,?)");
+          $query->execute(
+              array(
+                  $params['numLote'],
+                  $params['descripcion']
+              )
+          );
+          $row = $query->fetch(PDO::FETCH_ASSOC);
+          $idlote = $row['idlote'];
+      }
+      catch(Exception $e){
+          $idlote = -1;
+      }
+      return $idlote; 
   }
+}

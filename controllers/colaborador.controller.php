@@ -9,7 +9,6 @@ $colaborador = new Colaborador();
 
   //Función de Registrar Colaborador, guardando el id
   if(isset($_POST['operacion'])){
-
     switch($_POST['operacion']){
         case 'add':
             $datos = [

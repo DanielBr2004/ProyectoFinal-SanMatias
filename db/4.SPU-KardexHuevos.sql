@@ -8,6 +8,7 @@ CREATE PROCEDURE spu_insertar_kardexhuevo
     IN _idhuevo INT,
     IN _tipomovimiento CHAR(1),
     IN _motivomoviento VARCHAR(500),
+    IN _idlote INT,
     IN _cantidad SMALLINT,
     IN _descripcion VARCHAR(100)
     
@@ -27,8 +28,8 @@ BEGIN
     END IF;
 
     -- Registramos el kardex 
-    INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
-    VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
+    INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento,idlote, stockProducto, cantidad, descripcion, creado)
+    VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento,_idlote, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
 END $$
 -- ----------------------- LISTAR -----------------------
 DROP PROCEDURE IF EXISTS `spu_listar_kardexhuevo`;

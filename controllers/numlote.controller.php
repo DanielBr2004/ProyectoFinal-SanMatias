@@ -15,3 +15,16 @@ if(isset($_GET['operacion'])){
           break;
   }
 }
+
+if(isset($_POST['operacion'])){
+  switch($_POST['operacion']){
+      case 'add':
+          $datos = [
+              "numLote"     => $numlote->limpiarCadena($_POST['numLote']),
+              "descripcion"   => $numlote->limpiarCadena($_POST['descripcion'])
+          ];
+          $idobtenido = $numlote->add($datos);
+          echo json_encode(["idlote" => $idobtenido]);
+          break;
+  }
+}

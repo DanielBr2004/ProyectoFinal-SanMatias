@@ -22,9 +22,13 @@ select * from  KardexAlmHuevo;
 
 CALL spu_listar_tipohuevo();
 
-select * from productos;
-select * from tipoHuevo;
+SELECT * FROM numLote WHERE estado = 'A';
 
+insert into numLote(numLote) VALUES(4);
+select * from numLote;
+
+call spu_registrar_numLote(6,null);
+select * from tipoHuevo;
 select * from colaboradores;
 
 select * from KardexAlmProducto;
