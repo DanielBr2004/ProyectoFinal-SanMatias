@@ -65,20 +65,19 @@ class KardexHuevo extends Conexion{
         $status = false;
         try {
             $query = $this->pdo->prepare("CALL spu_editar_kardexhuevo(?, ?, ?, ?, ?)");
-            
-            $status = $query->execute(
-                array(
-                    $params['idAlmacenHuevos'],    // Primer parámetro: id del registro a editar
-                    $params['motivomovimiento'],   // Segundo parámetro: motivo del movimiento
-                    $params['cantidad'],           // Tercer parámetro: cantidad
-                    $params['idlote'],             // Cuarto parámetro: id del lote (idlote)
-                    $params['descripcion']         // Quinto parámetro: descripción
-                )
-            );
-            
+    
+            // Ejecutar el procedimiento con los parámetros dados
+            $status = $query->execute([
+                $params['idAlmacenHuevos'],
+                $params['motivomovimiento'],
+                $params['cantidad'],
+                $params['descripcion'],
+                $params['idlote']
+            ]);
+    
             return $status; // Retorna verdadero si la actualización fue exitosa
         } catch (Exception $e) {
-            die($e->getMessage());
+            die($e->getMessage()); // Manejo de errores
         }
     }
 

@@ -253,6 +253,12 @@
                         <textarea class="form-control" id="editDescripcion" rows="3"></textarea>
                     </div>
 
+                    <!-- Nº Lote -->
+                    <div class="mb-3">
+                        <label for="editNumLote" class="form-label">Nº Lote</label>
+                        <input type="text" class="form-control" id="editNumLote" required>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>
             </div>

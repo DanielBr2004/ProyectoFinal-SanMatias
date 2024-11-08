@@ -26,23 +26,24 @@ if(isset($_POST['operacion'])){
           echo json_encode(["estado" => $status]);
           break;
 
-          case 'editarKardex':
-            $datosEditar = [
-                "idAlmacenHuevos"   => $kardexhuevo->limpiarCadena($_POST['idAlmacenHuevos']),
-                "motivomovimiento"  => $kardexhuevo->limpiarCadena($_POST['motivomovimiento']),
-                "cantidad"          => $kardexhuevo->limpiarCadena($_POST['cantidad']),
-                "idlote"            => $kardexhuevo->limpiarCadena($_POST['idlote']),  // Asegúrate de que idlote está presente
-                "descripcion"       => $kardexhuevo->limpiarCadena($_POST['descripcion'])
-            ];
-            $status = $kardexhuevo->editarKardexHuevo($datosEditar);
-            echo json_encode(["estado" => $status]);
-            break;
 
             case 'eliminarKardex':
               $idAlmacenHuevos = $kardexhuevo->limpiarCadena($_POST['idAlmacenHuevos']);
               $status = $kardexhuevo->eliminarKardexHuevo($idAlmacenHuevos);
               echo json_encode(["estado" => $status]);
               break;
+
+              case 'editarKardex':
+                $datosEditar = [
+                    "idAlmacenHuevos"   => $kardexhuevo->limpiarCadena($_POST['idAlmacenHuevos']),
+                    "motivomovimiento"  => $kardexhuevo->limpiarCadena($_POST['motivomovimiento']),
+                    "cantidad"          => $kardexhuevo->limpiarCadena($_POST['cantidad']),
+                    "descripcion"       => $kardexhuevo->limpiarCadena($_POST['descripcion']),
+                    "idlote"            => $kardexhuevo->limpiarCadena($_POST['idlote'])
+                ];
+                $status = $kardexhuevo->editarKardexHuevo($datosEditar);
+                echo json_encode(["estado" => $status]);
+                break;
   }
 }
 

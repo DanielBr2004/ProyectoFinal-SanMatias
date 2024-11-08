@@ -63,23 +63,23 @@ document.addEventListener('DOMContentLoaded', async function() {
 
           let content = '';
           data.forEach(item => {
-              content += `
-                  <tr>
-                      <td class="text-center">${item.idAlmacenHuevos}</td>
-                      <td class="text-center">${item.nombre_colaborador}</td>
-                      <td class="text-center">${item.tipo_huevo}</td>
-                      <td class="text-center">${item.motivomovimiento}</td>
-                      <td class="text-center">${item.stockProducto}</td>
-                      <td class="text-center">${item.cantidad}</td>
-                      <td class="text-center">${item.descripcion}</td>
-                      <td class="text-center">${item.num_lote}</td>
-                      <td class="text-center">
-                          <div style="display: inline-flex; gap: 5px;">
-                              <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">Eliminar</button>
-                          </div>
-                      </td>
-                  </tr>`;
+            content += `
+            <tr>
+                <td class="text-center">${item.idAlmacenHuevos}</td>
+                <td class="text-center">${item.nombre_colaborador}</td>
+                <td class="text-center">${item.tipo_huevo}</td>
+                <td class="text-center">${item.motivomovimiento}</td>
+                <td class="text-center">${item.stockProducto}</td>
+                <td class="text-center">${item.cantidad}</td>
+                <td class="text-center">${item.descripcion}</td>
+                <td class="text-center">${item.num_lote}</td>
+                <td class="text-center">
+                    <div style="display: inline-flex; gap: 5px;">
+                        <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">Eliminar</button>
+                    </div>
+                </td>
+            </tr>`;
           });
 
           const tbodyElement = document.getElementById('tbody-listproductos');
@@ -93,51 +93,54 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
   };
 
-  window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion) {
-      console.log("Abriendo modal con:", idAlmacenHuevos, motivomovimiento, cantidad, descripcion);
-      
-      // Asignar valores a los campos del modal
-      document.getElementById('editIdAlmacenHuevos').value = idAlmacenHuevos;
-      document.getElementById('editMotivomovimiento').value = motivomovimiento; // Seleccionar en el select
-      document.getElementById('editCantidad').value = cantidad;
-      document.getElementById('editDescripcion').value = descripcion;
+  window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote) {
+    console.log("Abriendo modal con:", idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote);
+    
+    // Asignar valores a los campos del modal
+    document.getElementById('editIdAlmacenHuevos').value = idAlmacenHuevos;
+    document.getElementById('editMotivomovimiento').value = motivomovimiento;
+    document.getElementById('editCantidad').value = cantidad;
+    document.getElementById('editDescripcion').value = descripcion;
+    document.getElementById('editNumLote').value = num_lote;
 
-      $('#editarModal').modal('show');
-  };
+    $('#editarModal').modal('show');
+};
 
-  document.getElementById('formEditarKardex').addEventListener('submit', async function(event) {
-      event.preventDefault();
+document.getElementById('formEditarKardex').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-      const idAlmacenHuevos = document.getElementById('editIdAlmacenHuevos').value;
-      const motivomovimiento = document.getElementById('editMotivomovimiento').value;
-      const cantidad = document.getElementById('editCantidad').value;
-      const descripcion = document.getElementById('editDescripcion').value;
+    const idAlmacenHuevos = document.getElementById('editIdAlmacenHuevos').value;
+    const motivomovimiento = document.getElementById('editMotivomovimiento').value;
+    const cantidad = document.getElementById('editCantidad').value;
+    const descripcion = document.getElementById('editDescripcion').value;
+    const num_lote = document.getElementById('editNumLote').value; // Obtener el Nº Lote
 
-      try {
-          const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams({
-                  operacion: 'editarKardex',
-                  idAlmacenHuevos,
-                  motivomovimiento,
-                  cantidad,
-                  descripcion
-              })
-          });
+    try {
+        const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                operacion: 'editarKardex',
+                idAlmacenHuevos,
+                motivomovimiento,
+                cantidad,
+                descripcion,
+                idlote: num_lote // Enviar el Nº Lote al backend
+            })
+        });
 
-          const result = await response.json();
-          if (result.estado) {
-              alert('Registro actualizado correctamente');
-              $('#editarModal').modal('hide');
-              await cargarlist();
-          } else {
-              alert('Error al actualizar el registro');
-          }
-      } catch (error) {
-          console.error('Error al actualizar el registro:', error);
-      }
-  });
+        const result = await response.json();
+        if (result.estado) {
+            alert('Registro actualizado correctamente');
+            $('#editarModal').modal('hide');
+            await cargarlist();
+        } else {
+            alert('Error al actualizar el registro');
+        }
+    } catch (error) {
+        console.error('Error al actualizar el registro:', error);
+    }
+});
 
   window.eliminarKardex = async function(idAlmacenHuevos) {
     const confirmacion = confirm("¿Estás seguro de que deseas eliminar este registro?");
