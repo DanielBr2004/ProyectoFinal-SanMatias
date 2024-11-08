@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">${item.stockProducto}</td>
                       <td class="text-center">${item.cantidad}</td>
                       <td class="text-center">${item.descripcion}</td>
-                      <td class="text-center">${item.creado}</td>
+                      <td class="text-center">${item.num_lote}</td>
                       <td class="text-center">
                           <div style="display: inline-flex; gap: 5px;">
                               <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}')">Editar</button>

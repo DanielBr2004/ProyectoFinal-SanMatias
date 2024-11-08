@@ -31,8 +31,10 @@ if(isset($_POST['operacion'])){
                 "idAlmacenHuevos"   => $kardexhuevo->limpiarCadena($_POST['idAlmacenHuevos']),
                 "motivomovimiento"  => $kardexhuevo->limpiarCadena($_POST['motivomovimiento']),
                 "cantidad"          => $kardexhuevo->limpiarCadena($_POST['cantidad']),
+                "idlote"            => $kardexhuevo->limpiarCadena($_POST['idlote']),  // Agregar idlote
                 "descripcion"       => $kardexhuevo->limpiarCadena($_POST['descripcion'])
             ];
+            
             $status = $kardexhuevo->editarKardexHuevo($datosEditar);
             echo json_encode(["estado" => $status]);
             break;

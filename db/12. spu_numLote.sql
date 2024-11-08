@@ -19,3 +19,11 @@ CREATE PROCEDURE spu_existe_lote(IN _numlote VARCHAR(90))
 BEGIN
     SELECT * FROM numLote WHERE numLote = _numlote;
 END $$
+-- --------------------------------- LISTAR ------------------------------
+DROP PROCEDURE IF EXISTS `spu_listar_numLote`;
+DELIMITER $$
+CREATE PROCEDURE spu_listar_numLote()
+BEGIN
+    SELECT * FROM numLote;
+END $$
+CALL spu_listar_numLote();

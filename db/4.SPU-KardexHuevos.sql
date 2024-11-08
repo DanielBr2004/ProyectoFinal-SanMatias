@@ -45,10 +45,11 @@ BEGIN
         kh.stockProducto,
         kh.cantidad,
         kh.descripcion,
-        kh.creado
+        nl.numLote AS num_lote  -- Traemos el campo numLote de la tabla numLote
     FROM KardexAlmHuevo kh
     JOIN colaboradores c ON kh.idcolaborador = c.idcolaborador
     JOIN tipoHuevo th ON kh.idhuevo = th.idhuevo
+    LEFT JOIN numLote nl ON kh.idlote = nl.idlote  -- Join con numLote para obtener el número de lote
     ORDER BY kh.creado DESC;
 END $$
 CALL spu_listar_kardexhuevo();
@@ -56,37 +57,40 @@ CALL spu_listar_kardexhuevo();
 -- ------------------------------------------ Procedimiento para editar un registro en el Kardex --------------------------------------------------
 DROP PROCEDURE IF EXISTS `spu_editar_kardexhuevo`;
 DELIMITER $$
+
 CREATE PROCEDURE spu_editar_kardexhuevo(
     IN _idAlmacenHuevos INT,
     IN _motivomovimiento VARCHAR(500),
     IN _cantidad SMALLINT,
-    IN _descripcion VARCHAR(100)
+    IN _descripcion VARCHAR(100),
+    IN _idlote INT  -- Agregar idlote como parámetro de entrada
 )
 BEGIN
     DECLARE _stockProducto INT;
+
     -- Obtener el stock actual antes de la actualización
-    SELECT stockProducto INTO _stockProducto FROM KardexAlmHuevo WHERE idAlmacenHuevos = _idAlmacenHuevos;
-    -- Actualizar la cantidad y el motivo de movimiento
-    UPDATE KardexAlmHuevo
-    SET 
-        motivomovimiento = _motivomovimiento,
-        cantidad = _cantidad,
-        descripcion = NULLIF(_descripcion, ''),
-        creado = NOW()
+    SELECT stockProducto INTO _stockProducto 
+    FROM KardexAlmHuevo 
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
 
-    -- Actualizar el stock de productos basado en el nuevo movimiento
+    -- Ajustar el stock según el tipo de movimiento
     IF _motivomovimiento LIKE 'Salida%' THEN
         SET _stockProducto = _stockProducto - _cantidad;  -- Salida
     ELSEIF _motivomovimiento LIKE 'Entrada%' THEN
         SET _stockProducto = _stockProducto + _cantidad;  -- Entrada
     END IF;
-    -- Actualizar el stock en el registro
+
+    -- Actualizar el registro sin modificar el campo `creado`
     UPDATE KardexAlmHuevo
-    SET stockProducto = _stockProducto
+    SET 
+        motivomovimiento = _motivomovimiento,
+        cantidad = _cantidad,
+        descripcion = NULLIF(_descripcion, ''),
+        idlote = _idlote,  -- Actualizar el idlote en el registro
+        stockProducto = _stockProducto
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
 END $$
-
+CALL spu_editar_kardexhuevo(1,'Salida por venta', 10, 'Venta al cliente', 11);
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_kardexhuevo`;
 DELIMITER $$
