@@ -100,11 +100,13 @@ idcolaborador			INT NOT NULL,
 idhuevo					INT NOT NULL,
 tipomovimiento			CHAR(1) NOT NULL,
 motivomovimiento		VARCHAR(100) NOT NULL,
+idlote					INT,
 stockProducto			INT NOT NULL,
 cantidad				   INT NOT NULL,
 descripcion          VARCHAR(100) NULL,
 creado					DATETIME NULL,
 CONSTRAINT fk_idhuevo  FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
+CONSTRAINT FK_idlote  FOREIGN KEY (idlote) REFERENCES numLote(idlote),
 CONSTRAINT fk_idcolaborador_huevo FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
 )ENGINE = INNODB;
 
@@ -147,6 +149,14 @@ CONSTRAINT fk_idhuevo_detalleventa FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(id
 CONSTRAINT fk_idventa_detalleventa FOREIGN KEY (idventa) REFERENCES ventas(idventa)
 )engine = innodb;
 
+CREATE TABLE numLote
+(
+idlote INT AUTO_INCREMENT PRIMARY KEY,
+numLote		INT NOT NULL UNIQUE,
+estado 		CHAR(1) NOT NULL DEFAULT 'A',
+descripcion VARCHAR(60) NULL,
+create_at	DATETIME			NOT NULL DEFAULT NOW()
+)ENGINE = INNODB;
 
 
 
