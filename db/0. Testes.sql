@@ -31,6 +31,11 @@ call spu_registrar_numLote(6,null);
 select * from tipoHuevo;
 select * from colaboradores;
 
+call spu_registrar_controlLote(1,2,925);
+
+select * from controlLote;
+
+
 select * from KardexAlmProducto;
 
 select * from personas;

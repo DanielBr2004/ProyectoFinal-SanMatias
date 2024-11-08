@@ -1,5 +1,7 @@
 USE granjasanmatias;
 
+
+ drop trigger if exists `spu_registrar_controlLote`;
 DELIMITER //
 
 CREATE TRIGGER trg_actualizar_precioVenta
