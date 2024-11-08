@@ -16,6 +16,10 @@ if(isset($_GET['operacion'])){
       case 'searchLote':
           echo json_encode($numlote->searchLote(['numLote' => $_GET['numLote']]));
           break;
+          case 'getAllLote': // Llamada corregida para getAllLote
+            $consulta = $numlote->getAllLote();
+            echo json_encode($consulta);
+            break;
   }
 }
 
@@ -31,3 +35,4 @@ if(isset($_POST['operacion'])){
           break;
   }
 }
+

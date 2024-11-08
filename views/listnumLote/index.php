@@ -3,23 +3,18 @@
     <div class="container mt-5">
     <div class="card">
         <br>
-        <h2 class="text-center" style="color: #007bff;">Reportes de Ventas</h2>
+        <h2 class="text-center" style="color: #007bff;">Nº Lotes</h2>
         <div class="card-body">
             <div class="table-responsive">
-            <table id="tabla-ReporVenta" class="table table-bordered table-striped table-hover">
+            <table id="tabla-NumLote" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Colaborador</th>
-                    <th>Fecha</th>
-                    <th>Direccion</th>
-                    <th>Estado</th>
-                    <th>Operaciones</th> <!-- Nueva columna -->
+                    <th>Num Lote</th>
+                    <th>Descripcion</th>
                 </tr>
             </thead>
-        <tbody id="tbody-ReporVenta">
-            <!-- Contenido generado dinámicamente -->
+        <tbody id="tbody-numLote">
         </tbody>
         </table>
             </div>
@@ -27,37 +22,7 @@
     </div>
 </div>
 
-<!-- Modal para Editar Venta -->
-<div class="modal fade" id="editarVentaModal" tabindex="-1" aria-labelledby="editarVentaLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editarVentaLabel">Editar Venta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formEditarVenta">
-                    <!-- Campo oculto para el ID de la venta -->
-                    <input type="hidden" id="editIdVenta">
 
-                    <!-- Estado -->
-                    <div class="mb-3">
-                        <label for="editEstado" class="form-label">Estado</label>
-                        <input type="text" class="form-control" id="editEstado" required>
-                    </div>
-
-                    <!-- Dirección -->
-                    <div class="mb-3">
-                        <label for="editDireccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="editDireccion" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -115,7 +80,7 @@
 
         <!-- JS del Proyecto-->
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>js/Ventas/listarVenta.js"></script>
+        <script src="<?= $host ?>js/numlote/listnumLote.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">
@@ -126,4 +91,3 @@
          </footer>
     </body>
 </html>
-

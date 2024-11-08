@@ -63,10 +63,14 @@ CREATE PROCEDURE spu_editar_kardexhuevo(
     IN _motivomovimiento VARCHAR(500),
     IN _cantidad SMALLINT,
     IN _descripcion VARCHAR(100),
-    IN _idlote INT  -- Agregar idlote como parámetro de entrada
+    IN _idlote INT
 )
 BEGIN
+    -- Declaración de variables
     DECLARE _stockProducto INT;
+
+    -- Mostrar los valores de entrada para depuración
+    SELECT _idAlmacenHuevos, _motivomovimiento, _cantidad, _descripcion, _idlote;
 
     -- Obtener el stock actual antes de la actualización
     SELECT stockProducto INTO _stockProducto 
@@ -75,22 +79,23 @@ BEGIN
 
     -- Ajustar el stock según el tipo de movimiento
     IF _motivomovimiento LIKE 'Salida%' THEN
-        SET _stockProducto = _stockProducto - _cantidad;  -- Salida
+        SET _stockProducto = _stockProducto - _cantidad;
     ELSEIF _motivomovimiento LIKE 'Entrada%' THEN
-        SET _stockProducto = _stockProducto + _cantidad;  -- Entrada
+        SET _stockProducto = _stockProducto + _cantidad;
     END IF;
 
-    -- Actualizar el registro sin modificar el campo `creado`
+    -- Actualizar el registro
     UPDATE KardexAlmHuevo
     SET 
         motivomovimiento = _motivomovimiento,
         cantidad = _cantidad,
         descripcion = NULLIF(_descripcion, ''),
-        idlote = _idlote,  -- Actualizar el idlote en el registro
+        idlote = _idlote,
         stockProducto = _stockProducto
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
 END $$
-CALL spu_editar_kardexhuevo(1,'Salida por venta', 10, 'Venta al cliente', 11);
+
+CALL spu_editar_kardexhuevo(1,'Salida por venta', 10, 'Venta al cliente', 1);
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_kardexhuevo`;
 DELIMITER $$

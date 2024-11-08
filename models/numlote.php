@@ -54,4 +54,17 @@
     die($e->getMessage());
     }
   }
+
+
+  public function getAllLote() {
+    try {
+        $consulta = $this->pdo->prepare("CALL spu_listar_numLote()");
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    } 
+    catch(Exception $e) {
+        die($e->getMessage());
+    }
+}
+
 }
