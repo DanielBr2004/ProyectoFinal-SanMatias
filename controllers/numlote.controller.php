@@ -13,6 +13,9 @@ if(isset($_GET['operacion'])){
           $consulta = $numlote->getAll();
           echo json_encode($consulta);
           break;
+      case 'searchLote':
+          echo json_encode($numlote->searchLote(['numLote' => $_GET['numLote']]));
+          break;
   }
 }
 

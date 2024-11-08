@@ -40,4 +40,18 @@
       }
       return $idlote; 
   }
+
+  public function searchLote($params = []):array{
+    try{
+    $query = $this->pdo->prepare("call spu_existe_lote(?)");
+    $query->execute(
+        array($params['numLote'])
+    );
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(Exception $e){
+    die($e->getMessage());
+    }
+  }
 }
