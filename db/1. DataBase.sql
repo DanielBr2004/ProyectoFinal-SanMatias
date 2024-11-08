@@ -92,6 +92,16 @@ tiposHuevos			VARCHAR(50),
 descripcion			VARCHAR(100)
 )ENGINE = INNODB;
 
+-- NUMLOTE -- 
+CREATE TABLE numLote
+(
+idlote INT AUTO_INCREMENT PRIMARY KEY,
+numLote		INT NOT NULL UNIQUE,
+estado 		CHAR(1) NOT NULL DEFAULT 'A',
+descripcion VARCHAR(60) NULL,
+create_at	DATETIME			NOT NULL DEFAULT NOW()
+)ENGINE = INNODB;
+
 -- KARDEX ALMACEN DE HUEVOS --
 CREATE TABLE KardexAlmHuevo
 (
@@ -149,13 +159,20 @@ CONSTRAINT fk_idhuevo_detalleventa FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(id
 CONSTRAINT fk_idventa_detalleventa FOREIGN KEY (idventa) REFERENCES ventas(idventa)
 )engine = innodb;
 
-CREATE TABLE numLote
+
+
+CREATE TABLE controlLote
 (
-idlote INT AUTO_INCREMENT PRIMARY KEY,
-numLote		INT NOT NULL UNIQUE,
-estado 		CHAR(1) NOT NULL DEFAULT 'A',
-descripcion VARCHAR(60) NULL,
-create_at	DATETIME			NOT NULL DEFAULT NOW()
+idcontrollote 			INT AUTO_INCREMENT PRIMARY KEY,
+idlote					INT NOT NULL,
+numaves					INT NOT NULL,
+mortalidad				int NOT NULL,
+alimento				DECIMAL(6,2) NOT NULL,
+alimentoAve				DECIMAL(6,2) NOT NULL,
+produccion				DECIMAL(6,2)  NULL,
+cantHuevos				INT NULL,
+create_at				DATETIME			NOT NULL DEFAULT NOW(),
+CONSTRAINT FK_numLote_controllote FOREIGN KEY (idlote) REFERENCES numLote(idlote)
 )ENGINE = INNODB;
 
 
