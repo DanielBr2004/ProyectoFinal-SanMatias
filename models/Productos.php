@@ -15,10 +15,11 @@ class Producto extends Conexion{
     public function add($params = []):int{
       $idproducto = null;
       try{
-          $query = $this->pdo->prepare("CALL spu_registrar_productos(?,?)");
+          $query = $this->pdo->prepare("CALL spu_registrar_productos(?,?,?)");
           $query->execute(
               array(
                   $params['Producto'],
+                  $params['stockminimo'],
                   $params['descripcion']
               )
           );
@@ -69,7 +70,7 @@ public function eliminarProducto($idproducto = 0){
    }
     
 
-   public function editarProducto($params = []): bool {
+  public function editarProducto($params = []): bool {
     try {
         $consulta = $this->pdo->prepare("CALL spu_editar_productos(?,?,?)");
         $consulta->execute(array(

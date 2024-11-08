@@ -13,6 +13,7 @@ if (isset($_POST['operacion'])) {
           if (isset($_POST['Producto']) && trim($_POST['Producto']) != '') {
               $datos = [
                   "Producto" => $producto->limpiarCadena($_POST['Producto']),
+                  "stockminimo" => $producto->limpiarCadena($_POST['stockminimo']),
                   "descripcion" => $producto->limpiarCadena($_POST['descripcion'])
               ];
               $idobtenido = $producto->add($datos);

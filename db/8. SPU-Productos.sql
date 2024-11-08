@@ -5,11 +5,12 @@ USE granjasanmatias;
 DELIMITER $$
 CREATE PROCEDURE spu_registrar_productos(
 IN _producto VARCHAR(60),
+IN _stockminimo INT,
 IN _descripcion VARCHAR(60))
 BEGIN
 	INSERT INTO productos 
-		(producto, descripcion) VALUES 
-        (_producto, _descripcion);
+		(producto,stockminimo , descripcion) VALUES 
+        (_producto,_stockminimo, _descripcion);
 END $$
  -- ------------------------------------------- Listado productos ----------------------------------------------------- 
  drop procedure if exists `spu_listar_productos`;

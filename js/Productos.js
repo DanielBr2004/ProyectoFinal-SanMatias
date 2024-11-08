@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const params = new FormData();
       params.append("operacion", "add");
       params.append("Producto", document.querySelector("#Producto").value);
+      params.append("stockminimo", document.querySelector("#stockminimo").value);
       params.append("descripcion", document.querySelector("#descripcion").value);
 
       const options = {

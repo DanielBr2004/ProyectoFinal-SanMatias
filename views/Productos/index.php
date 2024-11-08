@@ -24,6 +24,12 @@
                             <label for="descripcion">Descripcion del producto</label>
                         </div>
                     </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" id="stockminimo">
+                            <label for="stockminimo">Stock Minimo del Producto</label>
+                        </div>
+                    </div>
                 </div> <!-- ./segunda fila -->
                 <!-- Botones -->
                 <div class="text-end mt-2">

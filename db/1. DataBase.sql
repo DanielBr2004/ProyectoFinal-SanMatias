@@ -65,6 +65,7 @@ CREATE TABLE Productos
 (
 idproducto 		INT AUTO_INCREMENT PRIMARY KEY,
 producto		VARCHAR(100) NOT NULL UNIQUE,
+stockminimo		INT NULL,
 descripcion		VARCHAR(100) NULL
 )ENGINE = INNODB;
 
