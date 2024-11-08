@@ -51,7 +51,6 @@ BEGIN
     ORDER BY 
         k.creado DESC;
 END $$
-Call spu_listar_KardexAlmProducto();
 -- ------------------------------- EDITAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_editar_KardexAlmProducto`;
 DELIMITER $$
@@ -87,7 +86,6 @@ BEGIN
     WHERE 
         idAlmacenProducto = _idAlmacenProducto;                
 END $$
-CALL spu_editar_KardexAlmProducto(2, 'Entrada por compra', 20);
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_KardexAlmProducto`;
 DELIMITER $$
@@ -99,4 +97,3 @@ BEGIN
     -- Elimina el registro de la tabla KardexAlmProducto basado en el ID proporcionado
     DELETE FROM KardexAlmProducto WHERE idAlmacenProducto = _idAlmacenProducto;
 END $$
-CALL spu_eliminar_KardexAlmProducto();

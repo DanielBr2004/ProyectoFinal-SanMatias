@@ -24,5 +24,3 @@ BEGIN
 							(_idlote, _avesActuales, _mortalidad, _Alimento, _alimentoAve, NULL, NULL );
     
 END $$
-
-select * from controlLote;

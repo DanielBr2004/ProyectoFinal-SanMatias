@@ -13,7 +13,6 @@ BEGIN
         INNER JOIN personas PER ON PER.idpersona = COL.idpersona
         WHERE COL.nomusuario = _nomusuario AND COL.inactive_at IS NULL; 
 END $$
-
 -- ----------------------------------------- Procedimiento Registrar Colaborador -------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE spu_colaboradores_registrar
@@ -28,7 +27,6 @@ BEGIN
         (_idpersona, _nomusuario, _passusuario);
 	SELECT @@last_insert_id 'idcolaborador';
 END $$
-
  -- ------------------------------------------- Buscar Colaborador por su DNI ----------------------------------------------------- 
 DELIMITER $$
 CREATE PROCEDURE spu_colaborador_buscar_dni(IN _nrodocumento CHAR(8))
@@ -44,7 +42,6 @@ BEGIN
         ON COL.idpersona = PER.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$
-
  -- ------------------------------------------- Listar colaboradores ----------------------------------------------------- 
  /*
  DELIMITER $$
@@ -77,7 +74,6 @@ BEGIN
     LEFT JOIN personas PER ON PER.idpersona = COL.idpersona 
     ORDER BY COL.idcolaborador DESC;
 END $$
-call spu_listar_Colaboradores();
  -- ------------------------------------------- Editar colaboradores ----------------------------------------------------- 
  DELIMITER $$
 CREATE PROCEDURE spu_editar_colaborador
@@ -96,8 +92,6 @@ BEGIN
         PER.nombres = _nombres
     WHERE COL.idcolaborador = _idcolaborador;
 END $$
-CALL spu_editar_colaborador(3, 'OLO', 'ROJAS', 'STIVEN');
-
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_colaborador`;
 DELIMITER $$
@@ -109,5 +103,4 @@ BEGIN
     -- Elimina al colaborador de la tabla colaboradores basado en el ID proporcionado
     DELETE FROM colaboradores WHERE idcolaborador = _idcolaborador;
 END $$
-CALL spu_eliminar_colaborador(3);
 

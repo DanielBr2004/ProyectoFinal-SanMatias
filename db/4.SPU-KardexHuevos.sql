@@ -52,8 +52,6 @@ BEGIN
     LEFT JOIN numLote nl ON kh.idlote = nl.idlote  -- Join con numLote para obtener el número de lote
     ORDER BY kh.creado DESC;
 END $$
-CALL spu_listar_kardexhuevo();
-
 -- ------------------------------------------ Procedimiento para editar un registro en el Kardex --------------------------------------------------
 DROP PROCEDURE IF EXISTS `spu_editar_kardexhuevo`;
 DELIMITER $$
@@ -94,8 +92,6 @@ BEGIN
         stockProducto = _stockProducto
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
 END $$
-
-CALL spu_editar_kardexhuevo(1,'Salida por venta', 10, 'Venta al cliente', 1);
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_kardexhuevo`;
 DELIMITER $$

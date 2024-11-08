@@ -14,7 +14,6 @@ BEGIN
     SELECT @@last_insert_id AS idventa;
 END $$
 DELIMITER ;
-
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  drop procedure if exists `spu_listar_ventas`;
  DELIMITER $$

@@ -41,7 +41,6 @@ BEGIN
         ON PER.idpersona = CLI.idpersona 
         WHERE nrodocumento = _nrodocumento;
 END $$
-
  -- ------------------------------------------- Listar Clientes ----------------------------------------------------- 
  drop procedure if exists `spu_listar_cliente`;
  DELIMITER $$
@@ -59,7 +58,6 @@ BEGIN
         INNER JOIN personas PER
         ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
 END $$
-call  spu_listar_cliente();
 -- -------------------------------- editar ----------------------------------
 DROP PROCEDURE IF EXISTS spu_cliente_editar;
 DELIMITER $$
@@ -108,7 +106,6 @@ BEGIN
         WHERE idcliente = _idcliente;
     END IF;
 END $$
-CALL spu_cliente_editar(3, '12345678', 'DNI', 'Juan Perez');
 -- ------------------------ ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS spu_cliente_eliminar;
 DELIMITER $$
@@ -122,4 +119,3 @@ BEGIN
     DELETE FROM cliente
     WHERE idcliente = _idcliente;
 END $$
-CALL spu_cliente_eliminar(3);

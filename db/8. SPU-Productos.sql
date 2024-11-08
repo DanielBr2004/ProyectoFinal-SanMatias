@@ -19,8 +19,6 @@ CREATE PROCEDURE spu_listar_productos()
 BEGIN
     SELECT * FROM productos;
 END $$
-call spu_listar_productos();
-
  -- ------------------------------------------- Editar productos -----------------------------------------------------
  drop procedure if exists `spu_editar_productos`;
 DELIMITER $$

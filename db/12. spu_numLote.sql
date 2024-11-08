@@ -11,7 +11,6 @@ BEGIN
 		(numLote, descripcion) VALUES 
         (_numlote,_descripcion);
 END $$
-
  -- ------------------------------------------- Validar lote -----------------------------------------------------
  drop procedure if exists `spu_existe_lote`;
   DELIMITER $$
@@ -26,4 +25,3 @@ CREATE PROCEDURE spu_listar_numLote()
 BEGIN
     SELECT * FROM numLote;
 END $$
-CALL spu_listar_numLote();
