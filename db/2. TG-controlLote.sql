@@ -2,7 +2,6 @@ USE granjasanmatias;
 
 
  drop trigger if exists `trg_sumar_cantidad_kardex`;
-DELIMITER $$
 
 CREATE TRIGGER trg_sumar_cantidad_kardex
 AFTER INSERT ON KardexAlmHuevo
@@ -44,12 +43,10 @@ BEGIN
     WHERE idlote = NEW.idlote
     ORDER BY idcontrollote DESC
     LIMIT 1;
-END $$
+END;
 
-DELIMITER ;
 
--- -----------------------aumentar edad ----------------------------------------
-DELIMITER $$
+-- -----------------------aumentar edad ---------------------------------------
 
 CREATE EVENT evt_aumentar_edadAve
 ON SCHEDULE EVERY 1 MINUTE
@@ -80,10 +77,8 @@ BEGIN
     WHERE idlote = _idlote
     ORDER BY create_at DESC
     LIMIT 1;
-END $$
+END;
 
-DELIMITER ;
 
-SET GLOBAL event_scheduler = ON;
 
 

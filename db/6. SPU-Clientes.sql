@@ -2,7 +2,7 @@ USE granjasanmatias;
 
 -- ----------------------------------------- Procedimiento Registrar cliente -------------------------------------------
 drop procedure if exists `spu_clientes_registrar`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_clientes_registrar
 (
 	IN _idpersona 		INT,
@@ -17,11 +17,11 @@ BEGIN
 		(idpersona, telefono , tipodocumento, razonsocial, direccion, email) VALUES
         (_idpersona, _telefono,_tipodocumento, _razonsocial, _direccion, _email);
 	SELECT @@last_insert_id 'idcliente';
-END $$
+END;
 
  -- ------------------------------------------- Buscar Colaborador por su DNI ----------------------------------------------------- 
  drop procedure if exists `spu_cliente_documento_dni`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_cliente_documento_dni(IN _nrodocumento CHAR(12))
 BEGIN
 	SELECT 
@@ -40,10 +40,9 @@ BEGIN
         LEFT JOIN personas PER
         ON PER.idpersona = CLI.idpersona 
         WHERE nrodocumento = _nrodocumento;
-END $$
+END;
  -- ------------------------------------------- Listar Clientes ----------------------------------------------------- 
  drop procedure if exists `spu_listar_cliente`;
- DELIMITER $$
 CREATE PROCEDURE spu_listar_cliente()
 BEGIN
 	SELECT 
@@ -57,11 +56,11 @@ BEGIN
 		FROM cliente CLI
         INNER JOIN personas PER
         ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
-END $$
- DELIMITER $$
+END;
+
 -- -------------------------------- editar ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_cliente_editar`;
-DELIMITER $$
+
 
 CREATE PROCEDURE spu_cliente_editar
 (
@@ -106,11 +105,10 @@ BEGIN
             razonsocial = _cliente_nombre
         WHERE idcliente = _idcliente;
     END IF;
-END $$
- DELIMITER $$
+END;
+
 -- ------------------------ ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_cliente_eliminar`;
-DELIMITER $$
 
 CREATE PROCEDURE spu_cliente_eliminar
 (
@@ -120,5 +118,4 @@ BEGIN
     -- Eliminar el cliente de la tabla `cliente`
     DELETE FROM cliente
     WHERE idcliente = _idcliente;
-END $$
- DELIMITER $$
+END;

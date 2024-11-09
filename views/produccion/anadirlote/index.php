@@ -8,6 +8,9 @@
             <hr>
             <br>
             <div class="card mb-4">
+              <div class="card-header">
+                Registrar Nuevo Lote
+              </div>
               <div class="card-body">
                 <form action="" id="form-registro-lotes" autocomplete="off">
                     <div class="row g-2 mb-4">

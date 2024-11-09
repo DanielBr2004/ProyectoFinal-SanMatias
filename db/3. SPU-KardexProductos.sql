@@ -1,7 +1,7 @@
 USE granjasanmatias;
 -- ------------------------------------------ Procedimiento de Validaciones para el Kardex --------------------------------------------------
 drop procedure if exists `spu_insertar_KardexAlmProducto`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_insertar_KardexAlmProducto
 (
     IN _idcolaborador INT,
@@ -28,10 +28,10 @@ BEGIN
     -- Registramos el kardex 
     INSERT INTO KardexAlmProducto (idcolaborador, idproducto, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
     VALUES (_idcolaborador, _idproducto, _tipomovimiento, _motivomoviento, _stockProducto, _cantidad, NULLIF(_descripcion, ''), NOW());
-END $$
+END;
 -- ------------------------------- LISTADO ----------------------------------
 drop procedure if exists `spu_listar_KardexAlmProducto`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_listar_KardexAlmProducto()
 BEGIN
     SELECT 
@@ -50,10 +50,10 @@ BEGIN
         colaboradores c ON k.idcolaborador = c.idcolaborador
     ORDER BY 
         k.creado DESC;
-END $$
+END;
 -- ------------------------------- EDITAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_editar_KardexAlmProducto`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_editar_KardexAlmProducto
 (
     IN _idAlmacenProducto INT,           
@@ -85,10 +85,9 @@ BEGIN
         creado = NOW()                                         
     WHERE 
         idAlmacenProducto = _idAlmacenProducto;                
-END $$
+END;
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_KardexAlmProducto`;
-DELIMITER $$
 
 CREATE PROCEDURE spu_eliminar_KardexAlmProducto(
     IN _idAlmacenProducto INT
@@ -96,4 +95,4 @@ CREATE PROCEDURE spu_eliminar_KardexAlmProducto(
 BEGIN
     -- Elimina el registro de la tabla KardexAlmProducto basado en el ID proporcionado
     DELETE FROM KardexAlmProducto WHERE idAlmacenProducto = _idAlmacenProducto;
-END $$
+END;

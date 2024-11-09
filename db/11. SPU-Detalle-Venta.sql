@@ -2,7 +2,7 @@ USE granjasanmatias;
 
  -- ------------------------------------------- Registrar Detalleventas ----------------------------------------------------- 
  drop procedure if exists `spu_registrar_Detalleventas`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_registrar_Detalleventas
 (
     IN _idventa       		INT,
@@ -38,5 +38,5 @@ BEGIN
     INSERT INTO detalleventas(idventa, idhuevo, cantidad, PesoTotal, precioUnitario, precioTotal)
     VALUES(_idventa, _idhuevo, _cantidad, _pesoTotal, _preciounitario, _preciototal);
     SELECT @@last_insert_id AS iddetalleventa;
-END $$
-DELIMITER ;
+END;
+

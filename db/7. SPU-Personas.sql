@@ -1,7 +1,7 @@
-USE granjasanmatias
+USE granjasanmatias;
 
 -- ------------------------------------------------------- Procedimiento Registrar Persona -------------------------------------------
-DELIMITER $$
+
 CREATE PROCEDURE spu_personas_registrar
 (
 	IN _apepaterno		VARCHAR(60),
@@ -14,6 +14,6 @@ BEGIN
 		(apepaterno, apematerno, nombres, nrodocumento) VALUES 
         (_apepaterno, _apematerno, _nombres, _nrodocumento);
 	SELECT @@last_insert_id 'idpersona';
-END $$
+END;
 
 

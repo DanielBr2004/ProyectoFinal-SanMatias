@@ -1,7 +1,7 @@
 USE granjasanmatias;
  -- ------------------------------------------- Registrar ventas ----------------------------------------------------- 
  drop procedure if exists `spu_registrar_ventas`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_registrar_ventas
 (
     IN _idcliente       INT,
@@ -12,11 +12,10 @@ BEGIN
     INSERT INTO ventas(idcliente, idcolaborador, direccion) 
     VALUES(_idcliente, _idcolaborador, _direccion);
     SELECT @@last_insert_id AS idventa;
-END $$
-DELIMITER ;
+END;
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  drop procedure if exists `spu_listar_ventas`;
- DELIMITER $$
+
 CREATE PROCEDURE spu_listar_ventas()
 BEGIN
 	SELECT 
@@ -35,11 +34,10 @@ BEGIN
 	JOIN colaboradores COL ON VEN.idcolaborador = COL.idcolaborador
 	JOIN personas PERCOL ON COL.idpersona = PERCOL.idpersona
     ORDER BY VEN.idventa DESC;
-END $$
-DELIMITER ;
+END;
  -- ------------------------------------------- editar ventas ----------------------------------------------------- 
   drop procedure if exists `sp_editar_venta`;
-DELIMITER //
+
 CREATE PROCEDURE sp_editar_venta(
     IN p_idventa INT,
     IN p_estado VARCHAR(30),
@@ -51,12 +49,12 @@ BEGIN
         estado = IFNULL(p_estado, estado),
         direccion = IFNULL(p_direccion, direccion)
     WHERE idventa = p_idventa;
-END //
-DELIMITER ;
+END;
+
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  
    drop procedure if exists `sp_eliminar_venta`;
-DELIMITER //
+
 
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
@@ -64,6 +62,5 @@ CREATE PROCEDURE sp_eliminar_venta(
 BEGIN
     DELETE FROM ventas
     WHERE idventa = p_idventa;
-END //
-DELIMITER ;
+END;
 

@@ -1,7 +1,7 @@
 USE granjasanmatias;
 -- ------------------------------------------ Procedimiento de Validaciones para el Kardex --------------------------------------------------
 drop procedure if exists `spu_insertar_kardexhuevo`;
-DELIMITER $$
+
 CREATE PROCEDURE spu_insertar_kardexhuevo
 (
     IN _idcolaborador INT,
@@ -30,10 +30,10 @@ BEGIN
     -- Registramos el kardex 
     INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento,idlote, stockProducto, cantidad, descripcion, creado)
     VALUES (_idcolaborador, _idhuevo, _tipomovimiento, _motivomoviento,_idlote, _stockProducto, _cantidad, NULLIF(_descripcion,''), NOW());
-END $$
+END;
 -- ----------------------- LISTAR -----------------------
 DROP PROCEDURE IF EXISTS `spu_listar_kardexhuevo`;
-DELIMITER $$
+
 
 CREATE PROCEDURE spu_listar_kardexhuevo()
 BEGIN
@@ -51,10 +51,9 @@ BEGIN
     JOIN tipoHuevo th ON kh.idhuevo = th.idhuevo
     LEFT JOIN numLote nl ON kh.idlote = nl.idlote  -- Join con numLote para obtener el número de lote
     ORDER BY kh.creado DESC;
-END $$
+END;
 -- ------------------------------------------ Procedimiento para editar un registro en el Kardex --------------------------------------------------
 DROP PROCEDURE IF EXISTS `spu_editar_kardexhuevo`;
-DELIMITER $$
 
 CREATE PROCEDURE spu_editar_kardexhuevo(
     IN _idAlmacenHuevos INT,
@@ -91,10 +90,9 @@ BEGIN
         idlote = _idlote,
         stockProducto = _stockProducto
     WHERE idAlmacenHuevos = _idAlmacenHuevos;
-END $$
+END;
 -- ------------------------------- ELIMINAR ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_eliminar_kardexhuevo`;
-DELIMITER $$
 
 CREATE PROCEDURE spu_eliminar_kardexhuevo(
     IN _idAlmacenHuevos INT
@@ -102,4 +100,4 @@ CREATE PROCEDURE spu_eliminar_kardexhuevo(
 BEGIN
     -- Elimina el registro de la tabla KardexAlmHuevo basado en el ID proporcionado
     DELETE FROM KardexAlmHuevo WHERE idAlmacenHuevos = _idAlmacenHuevos;
-END $$
+END;

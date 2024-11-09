@@ -2,7 +2,7 @@ USE granjasanmatias;
 
  -- ------------------------------------------- Registrar Control Lote ----------------------------------------------------- 
  drop procedure if exists `spu_registrar_controlLote`;
-DELIMITER $$
+
 
 CREATE PROCEDURE spu_registrar_controlLote(
     IN _idlote INT,
@@ -32,6 +32,5 @@ BEGIN
     INSERT INTO controlLote(idlote, numaves, edadAve, mortalidad, alimento, alimentoAve, produccion, cantHuevos)
     VALUES (_idlote, _avesActuales, 0, _mortalidad, _Alimento, _alimentoAve, NULL, NULL);
 
-END $$
+END;
 
-DELIMITER ;

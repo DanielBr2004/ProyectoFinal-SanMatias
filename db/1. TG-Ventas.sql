@@ -2,7 +2,6 @@ USE granjasanmatias;
 
 
  drop trigger if exists `spu_registrar_controlLote`;
-DELIMITER //
 
 CREATE TRIGGER trg_actualizar_precioVenta
 AFTER INSERT ON detalleventas
@@ -17,6 +16,4 @@ BEGIN
 
     -- Actualizar la columna PrecioVenta en la tabla ventas
     UPDATE ventas SET PrecioVenta = _PrecioVenta WHERE idventa = NEW.idventa;
-END //
-
-DELIMITER ;
+END;

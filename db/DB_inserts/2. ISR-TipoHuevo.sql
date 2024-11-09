@@ -1,5 +1,5 @@
-use GranjaSanMatias;
--- INSERTAR DATOS EN LA TABLA TIPOHUEVO
+USE granjasanmatias;
+
 INSERT INTO tipoHuevo (tiposHuevos, descripcion) VALUES 
 ('Comerciales', 'Huevos aptos para comercialización estándar'),
 ('Pardo', 'Huevos de cáscara marrón'),
@@ -7,5 +7,3 @@ INSERT INTO tipoHuevo (tiposHuevos, descripcion) VALUES
 ('Doble Yema', 'Huevos con doble yema en su interior'),
 ('Margarito', 'Huevos con mucho tamaño'),
 ('Merma', 'Huevos que no cumplen con los estándares de calidad');
-select * from tipoHuevo;
-
