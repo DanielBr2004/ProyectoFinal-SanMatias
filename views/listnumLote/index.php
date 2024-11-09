@@ -1,26 +1,5 @@
+
 <?php require_once '../../Header.php'; ?>
-                <!--LISTADO-->
-    <div class="container mt-5">
-    <div class="card">
-        <br>
-        <h2 class="text-center" style="color: #007bff;">Nº Lotes</h2>
-        <div class="card-body">
-            <div class="table-responsive">
-            <table id="tabla-NumLote" class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Num Lote</th>
-                    <th>Descripcion</th>
-                </tr>
-            </thead>
-        <tbody id="tbody-numLote">
-        </tbody>
-        </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -80,7 +59,7 @@
 
         <!-- JS del Proyecto-->
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>js/numlote/listnumLote.js"></script>
+
         <footer>
             <div class="container">
                 <div class="text-center mt-5">

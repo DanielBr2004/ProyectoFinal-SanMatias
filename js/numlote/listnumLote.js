@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         },
     };
 
-    const cargarLotes = async () => {
+    const cargarLot = async () => {
         try {
-            const response = await fetch('../../controllers/numlote.controller.php?operacion=getAllLote');
+            const response = await fetch('../../../controllers/numlote.controller.php?operacion=getAllLote');
             const data = await response.json();
 
             let content = '';
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             dataTable.destroy();
         }
 
-        await cargarLotes();
+        await cargarLot();
 
         dataTable = $('#tabla-NumLote').DataTable(dataTableOptions);
         dataTableIsInitialized = true;

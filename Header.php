@@ -79,7 +79,7 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Colaboradores"><i class="fa-solid fa-user-gear"></i> Usuarios</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/Productos"><i class="fa-solid fa-file-powerpoint"></i> Productos</a></li>
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/reportes-ventas"><i class="fa-brands fa-shopify"></i> Registro Ventas</a></li>
-                                <li><a class="dropdown-item" href="<?= $host ?>/views/listnumLote"><i class="fa-brands fa-shopify"></i> Lista Num</a></li>
+                                
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item text-center" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy"> Cerrar sesion <br> <i class="fa-solid fa-power-off"></i></a></li>
                             </ul>
