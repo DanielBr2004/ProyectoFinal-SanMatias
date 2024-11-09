@@ -47,3 +47,43 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+-- -----------------------aumentar edad ----------------------------------------
+DELIMITER $$
+
+CREATE EVENT evt_aumentar_edadAve
+ON SCHEDULE EVERY 1 MINUTE
+DO
+BEGIN
+    DECLARE _idlote INT;
+    DECLARE _edadAve INT;
+
+    -- Obtener el idlote del último registro en controlLote
+    SELECT idlote INTO _idlote
+    FROM controlLote
+    ORDER BY create_at DESC
+    LIMIT 1;
+
+    -- Obtener la edadAve del último registro para el idlote obtenido
+    SELECT edadAve INTO _edadAve
+    FROM controlLote
+    WHERE idlote = _idlote
+    ORDER BY create_at DESC
+    LIMIT 1;
+
+    -- Incrementar la edadAve
+    SET _edadAve = _edadAve + 1;
+
+    -- Actualizar la edadAve del último registro para el idlote obtenido
+    UPDATE controlLote
+    SET edadAve = _edadAve
+    WHERE idlote = _idlote
+    ORDER BY create_at DESC
+    LIMIT 1;
+END $$
+
+DELIMITER ;
+
+SET GLOBAL event_scheduler = ON;
+
+

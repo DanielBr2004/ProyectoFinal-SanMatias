@@ -11,25 +11,25 @@ class ControlLote extends Conexion{
   }
 
   
-  public function add($params = []):int{
-    $idgenerado = null; 
+  public function add($params = []):bool{
+    $status = false; 
     try{
         $query = $this->pdo->prepare("call spu_registrar_controlLote(?,?,?)"); 
-        $query->execute(
+        $status = $query->execute(
             array(
-                // $params['idcolaborador'],
                 $params['idlote'],
                 $params['mortalidad'],
                 $params['alimento']
             )
             
         );
-        $row = $query->fetch(PDO::FETCH_ASSOC);
-        $idgenerado = $row['iddetalleventa'];
+        return $status;
     }
     catch(Exception $e){
-        $idgenerado = -1;
+        die($e->getMessage());
     }
-    return $idgenerado;
   }
+
+
+
 }

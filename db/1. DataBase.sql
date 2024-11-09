@@ -169,6 +169,7 @@ CREATE TABLE controlLote
 idcontrollote 			INT AUTO_INCREMENT PRIMARY KEY,
 idlote					INT NOT NULL,
 numaves					INT NOT NULL,
+edadAve					INT  NULL,
 mortalidad				int NOT NULL,
 alimento				DECIMAL(6,2) NOT NULL,
 alimentoAve				DECIMAL(6,2) NOT NULL,
