@@ -1,5 +1,6 @@
 DROP DATABASE IF EXISTS GranjaSanMatias;
 CREATE DATABASE GranjaSanMatias;
+
 use GranjaSanMatias;
 -- TABLA ROLES  --
  CREATE TABLE roles
@@ -97,6 +98,8 @@ CREATE TABLE numLote
 (
 idlote INT AUTO_INCREMENT PRIMARY KEY,
 numLote		INT NOT NULL UNIQUE,
+CantInicio	INT NOT NULL,
+FechaIngreso	DATE NOT NULL DEFAULT NOW(),
 estado 		CHAR(1) NOT NULL DEFAULT 'A',
 descripcion VARCHAR(60) NULL,
 create_at	DATETIME			NOT NULL DEFAULT NOW()

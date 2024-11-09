@@ -27,14 +27,14 @@ SELECT * FROM numLote WHERE estado = 'A';
 insert into numLote(numLote) VALUES(4);
 select * from numLote;
 
-call spu_registrar_numLote(6,null);
+call spu_registrar_numLote(6,7200,null);
 select * from tipoHuevo;
 select * from colaboradores;
 
-call spu_registrar_controlLote(1,2,925);
+call spu_registrar_controlLote(1,4,925);
 
-select * from controlLote;
 
+SELECT *  FROM controlLote;
 
 select * from KardexAlmProducto;
 

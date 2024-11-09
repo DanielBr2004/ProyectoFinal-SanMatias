@@ -58,8 +58,9 @@ BEGIN
         INNER JOIN personas PER
         ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
 END $$
+ DELIMITER $$
 -- -------------------------------- editar ----------------------------------
-DROP PROCEDURE IF EXISTS spu_cliente_editar;
+DROP PROCEDURE IF EXISTS `spu_cliente_editar`;
 DELIMITER $$
 
 CREATE PROCEDURE spu_cliente_editar
@@ -106,8 +107,9 @@ BEGIN
         WHERE idcliente = _idcliente;
     END IF;
 END $$
+ DELIMITER $$
 -- ------------------------ ELIMINAR ----------------------------------
-DROP PROCEDURE IF EXISTS spu_cliente_eliminar;
+DROP PROCEDURE IF EXISTS `spu_cliente_eliminar`;
 DELIMITER $$
 
 CREATE PROCEDURE spu_cliente_eliminar
@@ -119,3 +121,4 @@ BEGIN
     DELETE FROM cliente
     WHERE idcliente = _idcliente;
 END $$
+ DELIMITER $$

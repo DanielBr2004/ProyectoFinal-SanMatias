@@ -1,0 +1,35 @@
+<?php
+
+require_once 'Conexion.php';
+
+class ControlLote extends Conexion{
+
+  private $pdo;
+
+  public function __construct(){
+    $this->pdo = parent::getConexion();
+  }
+
+  
+  public function add($params = []):int{
+    $idgenerado = null; 
+    try{
+        $query = $this->pdo->prepare("call spu_registrar_controlLote(?,?,?)"); 
+        $query->execute(
+            array(
+                // $params['idcolaborador'],
+                $params['idlote'],
+                $params['mortalidad'],
+                $params['alimento']
+            )
+            
+        );
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $idgenerado = $row['iddetalleventa'];
+    }
+    catch(Exception $e){
+        $idgenerado = -1;
+    }
+    return $idgenerado;
+  }
+}

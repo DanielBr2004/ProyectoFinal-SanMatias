@@ -25,10 +25,11 @@
     public function add($params = []):int{
       $idlote = null;
       try{
-          $query = $this->pdo->prepare("CALL spu_registrar_numLote(?,?)");
+          $query = $this->pdo->prepare("CALL spu_registrar_numLote(?,?,?)");
           $query->execute(
               array(
                   $params['numLote'],
+                  $params['CantInicio'],
                   $params['descripcion']
               )
           );

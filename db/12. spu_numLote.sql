@@ -5,11 +5,12 @@ USE granjasanmatias;
 DELIMITER $$
 CREATE PROCEDURE spu_registrar_numLote(
 IN _numlote VARCHAR(60),
+IN _CantInicio INT,
 IN _descripcion VARCHAR(60))
 BEGIN
 	INSERT INTO numLote 
-		(numLote, descripcion) VALUES 
-        (_numlote,_descripcion);
+		(numLote, CantInicio,  descripcion) VALUES 
+        (_numlote,_CantInicio, _descripcion);
 END $$
  -- ------------------------------------------- Validar lote -----------------------------------------------------
  drop procedure if exists `spu_existe_lote`;

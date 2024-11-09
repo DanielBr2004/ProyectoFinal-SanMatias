@@ -28,6 +28,7 @@ if(isset($_POST['operacion'])){
       case 'add':
           $datos = [
               "numLote"     => $numlote->limpiarCadena($_POST['numLote']),
+              "CantInicio" =>$numlote->limpiarCadena($_POST['CantInicio']),
               "descripcion"   => $numlote->limpiarCadena($_POST['descripcion'])
           ];
           $idobtenido = $numlote->add($datos);
