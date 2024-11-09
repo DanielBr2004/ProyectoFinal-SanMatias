@@ -1,0 +1,62 @@
+USE granjasanmatias;
+
+INSERT INTO KardexAlmProducto 
+(tipomovimiento, stockProducto, cantidad, motivomovimiento, descripcion, creado, idproducto, idcolaborador)
+VALUES 
+-- Entradas iniciales de stock
+('E', 300.00, 300.00, 'Ingreso inicial de stock', 'Stock de Maíz', '2024-11-01 08:00:00', 1, 1),
+('E', 200.00, 200.00, 'Ingreso inicial de stock', 'Stock de Soya', '2024-11-01 08:10:00', 2, 1),
+('E', 150.00, 150.00, 'Ingreso inicial de stock', 'Stock de Afrecho', '2024-11-01 08:20:00', 3, 1),
+('E', 250.00, 250.00, 'Ingreso inicial de stock', 'Stock de Carbonato en Polvo', '2024-11-01 08:30:00', 4, 1),
+('E', 250.00, 250.00, 'Ingreso inicial de stock', 'Stock de Carbonato en Grano', '2024-11-01 08:40:00', 5, 1),
+('E', 80.00, 80.00, 'Ingreso inicial de stock', 'Stock de Aceite', '2024-11-01 08:50:00', 6, 1),
+('E', 100.00, 100.00, 'Ingreso inicial de stock', 'Stock de Núcleo Postura', '2024-11-01 09:00:00', 7, 1),
+('E', 100.00, 100.00, 'Ingreso inicial de stock', 'Stock de Núcleo Levante', '2024-11-01 09:10:00', 8, 1),
+('E', 200.00, 200.00, 'Ingreso inicial de stock', 'Stock de Sal', '2024-11-01 09:20:00', 9, 1),
+('E', 50.00, 50.00, 'Ingreso inicial de stock', 'Stock de Larvamix', '2024-11-01 09:30:00', 10, 1),
+('E', 50.00, 50.00, 'Ingreso inicial de stock', 'Stock de Mycofung', '2024-11-01 09:40:00', 11, 1),
+('E', 150.00, 150.00, 'Ingreso inicial de stock', 'Stock de Bicarbonato de Sodio', '2024-11-01 09:50:00', 12, 1),
+('E', 20.00, 20.00, 'Ingreso inicial de stock', 'Stock de Casilleros', '2024-11-01 10:00:00', 13, 1),
+
+-- Salidas y movimientos adicionales
+('S', 290.00, 10.00, 'Salida por consumo diario', 'Consumo de Maíz', '2024-11-01 12:00:00', 1, 1),
+('S', 180.00, 20.00, 'Salida por consumo diario', 'Consumo de Soya', '2024-11-01 12:10:00', 2, 1),
+('S', 130.00, 20.00, 'Salida para mezcla de alimentos', 'Consumo de Afrecho', '2024-11-01 12:20:00', 3, 1),
+('S', 245.00, 5.00, 'Salida para suplemento', 'Consumo de Carbonato en Polvo', '2024-11-01 12:30:00', 4, 1),
+('S', 245.00, 5.00, 'Salida para suplemento', 'Consumo de Carbonato en Grano', '2024-11-01 12:40:00', 5, 1),
+('E', 90.00, 10.00, 'Compra de emergencia', 'Reabastecimiento de Aceite', '2024-11-01 13:00:00', 6, 1),
+('S', 95.00, 5.00, 'Salida para suplemento', 'Uso de Núcleo Postura', '2024-11-01 13:10:00', 7, 1),
+('E', 105.00, 5.00, 'Compra adicional', 'Reabastecimiento de Núcleo Levante', '2024-11-01 13:20:00', 8, 1),
+('S', 190.00, 10.00, 'Salida para preparación de alimento', 'Uso de Sal', '2024-11-01 13:30:00', 9, 1),
+('S', 45.00, 5.00, 'Salida para control de plagas', 'Uso de Larvamix', '2024-11-01 14:00:00', 10, 1),
+('S', 45.00, 5.00, 'Salida para control de hongos', 'Uso de Mycofung', '2024-11-01 14:10:00', 11, 1),
+('S', 140.00, 10.00, 'Salida para control de acidez', 'Uso de Bicarbonato de Sodio', '2024-11-01 14:20:00', 12, 1),
+('S', 15.00, 5.00, 'Salida para mantenimiento', 'Uso de Casilleros', '2024-11-01 14:30:00', 13, 1),
+
+-- Movimientos adicionales
+('E', 310.00, 20.00, 'Compra adicional de stock', 'Reabastecimiento de Maíz', '2024-11-02 08:00:00', 1, 1),
+('S', 300.00, 10.00, 'Salida por consumo diario', 'Consumo de Maíz', '2024-11-02 08:10:00', 1, 1),
+('E', 220.00, 20.00, 'Compra adicional de stock', 'Reabastecimiento de Soya', '2024-11-02 08:20:00', 2, 1),
+('S', 200.00, 20.00, 'Salida por consumo diario', 'Consumo de Soya', '2024-11-02 08:30:00', 2, 1),
+('E', 160.00, 30.00, 'Reabastecimiento de stock', 'Compra de Afrecho', '2024-11-02 08:40:00', 3, 1),
+('S', 150.00, 10.00, 'Salida para mezcla de alimentos', 'Consumo de Afrecho', '2024-11-02 08:50:00', 3, 1),
+('E', 255.00, 10.00, 'Reabastecimiento de stock', 'Compra de Carbonato en Polvo', '2024-11-02 09:00:00', 4, 1),
+('S', 250.00, 5.00, 'Salida para suplemento', 'Consumo de Carbonato en Polvo', '2024-11-02 09:10:00', 4, 1),
+('E', 255.00, 10.00, 'Reabastecimiento de stock', 'Compra de Carbonato en Grano', '2024-11-02 09:20:00', 5, 1),
+('S', 250.00, 5.00, 'Salida para suplemento', 'Consumo de Carbonato en Grano', '2024-11-02 09:30:00', 5, 1),
+('E', 85.00, 5.00, 'Reabastecimiento de stock', 'Compra de Aceite', '2024-11-02 09:40:00', 6, 1),
+('S', 80.00, 5.00, 'Salida para consumo', 'Consumo de Aceite', '2024-11-02 09:50:00', 6, 1),
+('E', 110.00, 10.00, 'Compra adicional', 'Reabastecimiento de Núcleo Postura', '2024-11-02 10:00:00', 7, 1),
+('S', 100.00, 10.00, 'Salida para suplemento', 'Uso de Núcleo Postura', '2024-11-02 10:10:00', 7, 1),
+('E', 115.00, 10.00, 'Compra adicional', 'Reabastecimiento de Núcleo Levante', '2024-11-02 10:20:00', 8, 1),
+('S', 105.00, 10.00, 'Salida para suplemento', 'Uso de Núcleo Levante', '2024-11-02 10:30:00', 8, 1),
+('E', 220.00, 20.00, 'Compra adicional', 'Reabastecimiento de Sal', '2024-11-02 10:40:00', 9, 1),
+('S', 200.00, 20.00, 'Salida para preparación de alimento', 'Uso de Sal', '2024-11-02 10:50:00', 9, 1),
+('E', 55.00, 10.00, 'Compra adicional', 'Reabastecimiento de Larvamix', '2024-11-02 11:00:00', 10, 1),
+('S', 50.00, 5.00, 'Salida para control de plagas', 'Uso de Larvamix', '2024-11-02 11:10:00', 10, 1),
+('E', 55.00, 10.00, 'Compra adicional', 'Reabastecimiento de Mycofung', '2024-11-02 11:20:00', 11, 1),
+('S', 50.00, 5.00, 'Salida para control de hongos', 'Uso de Mycofung', '2024-11-02 11:30:00', 11, 1),
+('E', 160.00, 10.00, 'Compra adicional', 'Reabastecimiento de Bicarbonato de Sodio', '2024-11-02 11:40:00', 12, 1),
+('S', 150.00, 10.00, 'Salida para control de acidez', 'Uso de Bicarbonato de Sodio', '2024-11-02 11:50:00', 12, 1),
+('E', 25.00, 5.00, 'Compra adicional', 'Reabastecimiento de Casilleros', '2024-11-02 12:00:00', 13, 1),
+('S', 20.00, 5.00, 'Salida para mantenimiento', 'Uso de Casilleros', '2024-11-02 12:10:00', 13, 1);
