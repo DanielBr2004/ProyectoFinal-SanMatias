@@ -63,7 +63,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Num Lote</th>
+                    <th>Estado</th>
                     <th>Descripcion</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
         <tbody id="tbody-numLote">

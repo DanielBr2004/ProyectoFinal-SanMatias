@@ -34,6 +34,30 @@ if(isset($_POST['operacion'])){
           $idobtenido = $numlote->add($datos);
           echo json_encode(["idlote" => $idobtenido]);
           break;
+
+
+          case 'deactivateLote':
+            $idlote = $_POST['idlote'] ?? null; // Asegurarse de que idlote se está capturando correctamente
+            if ($idlote) {
+                $result = $numlote->deactivateLote($idlote); // Llama al modelo para desactivar el lote
+                echo json_encode(['success' => $result]); // Devuelve true o false según el resultado
+            } else {
+                echo json_encode(['success' => false, 'error' => 'IDLote no proporcionado']);
+            }
+            break;
+
+            case 'activateLote':
+              $idlote = $_POST['idlote'] ?? null;
+              if ($idlote) {
+                  $result = $numlote->activateLote($idlote); // Llama al método del modelo
+                  echo json_encode(['success' => $result]);
+              } else {
+                  echo json_encode(['success' => false, 'error' => 'IDLote no proporcionado']);
+              }
+              break;
+
+
   }
+  
 }
 

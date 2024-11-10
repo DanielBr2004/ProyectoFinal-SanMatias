@@ -68,4 +68,39 @@
     }
 }
 
+/*
+public function deactivateLote($idlote): bool {
+    try {
+        $consulta = $this->pdo->prepare("UPDATE numLote SET estado = 'I' WHERE idlote = ?");
+        $consulta->execute([$idlote]);
+        return true;
+    } 
+    catch(Exception $e) {
+        return false;
+    }
+}*/
+public function deactivateLote($idlote): bool {
+    try {
+        $consulta = $this->pdo->prepare("CALL spu_desactivar_numLote(?)");
+        $consulta->execute([$idlote]);
+        return true;
+    } 
+    catch(Exception $e) {
+        // Imprimir el mensaje de error para depuración
+        error_log("Error en deactivateLote: " . $e->getMessage());
+        return false;
+    }
+}
+public function activateLote($idlote): bool {
+    try {
+        $consulta = $this->pdo->prepare("CALL spu_activar_numLote(?)");
+        $consulta->execute([$idlote]);
+        return true;
+    } 
+    catch(Exception $e) {
+        error_log("Error en activateLote: " . $e->getMessage());
+        return false;
+    }
+}
+
 }
