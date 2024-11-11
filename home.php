@@ -10,10 +10,10 @@
             <div class="row">
                 <div class="col-md-6 ">
                     <div class="card" >
-                        <div class="card-header">
-                            Productos que necesita compra urgente
+                        <div class="card-header text">
+                            <h4 class="text-center">Productos que necesita compra urgente</h4>
                         </div>
-                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                        <div class="card-body" style="height: 382px; overflow-y: auto;">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -31,10 +31,12 @@
                 <div class="col-md-6 ">
                 <div class="card">
                         <div class="card-header">
-                            <p></p>
+                            <h4 class="text-center">grafico del mes de produccion</h4>
                         </div>
                         <div class="card-body">
-
+                            <div class="card-body" style="height: 350px;">
+                                <canvas id="myLineChart" width="400" height="200"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>

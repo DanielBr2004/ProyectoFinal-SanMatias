@@ -17,6 +17,10 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
         <link rel="stylesheet" href="<?= $host ?>css/StyleHome.css">
         <link rel="icon" href="<?= $host ?>/img/icon.png">
 
+        
+        <!-- chart-js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 
         <!--DATATABLE-->
