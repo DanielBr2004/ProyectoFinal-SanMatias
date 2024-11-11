@@ -1,9 +1,6 @@
 USE granjasanmatias;
 
  -- ------------------------------------------- Registrar Control Lote ----------------------------------------------------- 
- drop procedure if exists `spu_registrar_controlLote`;
-
-
 CREATE PROCEDURE spu_registrar_controlLote(
     IN _idlote INT,
     IN _mortalidad INT,
@@ -29,8 +26,7 @@ BEGIN
     SET _alimentoAve = (_Alimento * 1000) / _numaves;
 
     -- Insertar el nuevo registro en la tabla controlLote
-    INSERT INTO controlLote(idlote, numaves, edadAve, mortalidad, alimento, alimentoAve, produccion, cantHuevos)
-    VALUES (_idlote, _avesActuales, 0, _mortalidad, _Alimento, _alimentoAve, NULL, NULL);
+    INSERT INTO controlLote(idlote, numaves, mortalidad, alimento, alimentoAve, produccion, cantHuevos)
+    VALUES (_idlote, _avesActuales, _mortalidad, _Alimento, _alimentoAve, NULL, NULL);
 
 END;
-

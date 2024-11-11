@@ -2,7 +2,6 @@ USE granjasanmatias;
 
 
 DROP PROCEDURE IF EXISTS `spu_listar_numLote`;
-DELIMITER //
 CREATE PROCEDURE spu_listar_numLote()
 BEGIN
     SELECT 
@@ -24,7 +23,7 @@ BEGIN
 END;
 
 DROP PROCEDURE IF EXISTS spu_desactivar_numLote;
-delimiter //
+
 CREATE PROCEDURE spu_desactivar_numLote(IN _idlote INT)
 BEGIN
     UPDATE numLote 
@@ -33,7 +32,7 @@ BEGIN
 END;
 
 DROP PROCEDURE IF EXISTS spu_activar_numLote;
-Delimiter //
+
 CREATE PROCEDURE spu_activar_numLote(IN _idlote INT)
 BEGIN
     UPDATE numLote 
