@@ -30,3 +30,18 @@ BEGIN
     VALUES (_idlote, _avesActuales, _mortalidad, _Alimento, _alimentoAve, NULL, NULL);
 
 END;
+
+CREATE PROCEDURE SPU_LISTAR_CONTROLLOTE(IN _idlote INT)
+BEGIN
+    SELECT
+        create_at,
+        idlote,
+        numaves,
+        mortalidad,
+        alimento,
+        alimentoAve,
+        produccion,
+        cantHuevos
+    FROM controlLote
+    WHERE idlote = _idlote;
+END;
