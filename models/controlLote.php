@@ -39,6 +39,15 @@ public function list($idlote): array {
       die($e->getMessage());
   }
 }
+public function getAllLotes(): array {
+  try {
+      $query = $this->pdo->prepare("SELECT id, nombre FROM lotes"); // Ajusta según la estructura de tu tabla
+      $query->execute();
+      return $query->fetchAll(PDO::FETCH_ASSOC);
+  } catch (Exception $e) {
+      die($e->getMessage());
+  }
+}
 
 
 }

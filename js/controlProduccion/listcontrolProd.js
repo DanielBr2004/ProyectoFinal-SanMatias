@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
         columnDefs: [
             { className: 'text-center', targets: '_all' },
-            { orderable: false, targets: [4] }, 
+            { orderable: false, targets: [4] },
         ],
         pageLength: 5,
         destroy: true,
@@ -55,22 +55,31 @@ document.addEventListener('DOMContentLoaded', async function() {
         columns: [
             { title: "Creado" },
             { title: "Lote" },
-            { title: "Numeros de Aves" },
-            { title: "Mortalidad del Dia" },
+            { title: "Número de Aves" },
+            { title: "Mortalidad del Día" },
             { title: "Alimento" },
-            { title: "Alimento de Ave" },
-            { title: "Produccion" },
+            { title: "Alimentación del Ave" },
+            { title: "Producción" },
             { title: "Cantidad de Huevos" }
         ]
     };
-  
-    async function listarControl() {
+
+    async function listarControl(idlote) {
         try {
-            const response = await fetch('../../controllers/controlProduccion.controller.php?operacion=list');
+            const response = await fetch(`../../controllers/controlProduccion.controller.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'operacion': 'list',
+                    'idlote': idlote
+                })
+            });
             const data = await response.json();
   
             let content = '';
-            data.forEach((item, index) => {
+            data.forEach((item) => {
                 content += `
                     <tr>
                         <td class="text-center">${item.create_at}</td>
@@ -94,18 +103,47 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.error('Error al cargar los productos:', error);
         }
     }
-  
-    const initDataTable = async () => {
+
+    const initDataTable = async (idlote) => {
         if (dataTableIsInitialized) {
             dataTable.destroy();
         }
+
+        await listarControl(idlote);
   
-        await listarControl();
-  
-        // Inicializar DataTables
         dataTable = $('#tabla-controllote').DataTable(dataTableOptions);
         dataTableIsInitialized = true;
     };
+
+    // Cargar lista de lotes al inicio
+    async function loadLotes() {
+        const response = await fetch('../../controllers/controlProduccion.controller.php?operacion=listLotes');
+        const lotes = await response.json();
+        const selectLote = document.getElementById('numLote');
+        
+        lotes.forEach(lote => {
+            const option = document.createElement('option');
+            option.value = lote.id;
+            option.text = `Lote Nº ${lote.id}`;
+            selectLote.appendChild(option);
+        });
+    }
+
+    document.getElementById('numLote').addEventListener('change', function() {
+        const selectedLote = this.value;
+        console.log("Lote seleccionado:", selectedLote); // Verifica que el ID del lote seleccionado aparece en la consola
+        if (selectedLote) {
+            initDataTable(selectedLote);
+        }
+    });
   
-    await initDataTable();
-  });
+    await loadLotes();
+
+    // Evento para cargar el lote seleccionado
+    document.getElementById('numLote').addEventListener('change', function() {
+        const selectedLote = this.value;
+        if (selectedLote) {
+            initDataTable(selectedLote);
+        }
+    });
+});
