@@ -67,3 +67,13 @@ BEGIN
     SET estado = 'A'
     WHERE idlote = _idlote;
 END;
+
+-- --------------------------------- conseguir ultimo lote------------------------------
+CREATE PROCEDURE spu_listar_ultimo_numLote()
+BEGIN
+    SELECT 
+        numLote
+    FROM numLote
+    ORDER BY create_at DESC
+    LIMIT 1;
+END;

@@ -21,6 +21,16 @@
           die($e->getMessage());
       }
   }
+    public function getLastDate() {
+        try {
+            $consulta = $this->pdo->prepare("SELECT numlote  FROM numLote ORDER BY idlote DESC LIMIT 1");
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        catch(Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
     public function add($params = []):int{
       $idlote = null;
