@@ -2,13 +2,13 @@
         <!-- Page content-->
         <div class="container">
             <div class="text-center mt-5">
-                <h1 style="font-size: 50px;">BIENBENIDO </h1>
+                <h1 style="font-size: 50px;">BIENVENIDO </h1>
             </div>
             <br>
             <hr>
             <br>
             <div class="row">
-                <div class="col-md-6 ">
+                <div class="col-md-6 mb-3">
                     <div class="card" >
                         <div class="card-header text">
                             <h4 class="text-center">Productos que necesita compra urgente</h4>

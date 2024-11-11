@@ -14,3 +14,5 @@ VALUES
 (10, 6120, 21, 'A', 'Lote en Proceso', '2024-06-30');
 
 ALTER TABLE numLote MODIFY COLUMN create_at DATETIME NOT NULL DEFAULT NOW();
+
+
