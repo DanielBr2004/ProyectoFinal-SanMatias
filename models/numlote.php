@@ -78,17 +78,7 @@
     }
 }
 
-/*
-public function deactivateLote($idlote): bool {
-    try {
-        $consulta = $this->pdo->prepare("UPDATE numLote SET estado = 'I' WHERE idlote = ?");
-        $consulta->execute([$idlote]);
-        return true;
-    } 
-    catch(Exception $e) {
-        return false;
-    }
-}*/
+
 public function deactivateLote($idlote): bool {
     try {
         $consulta = $this->pdo->prepare("CALL spu_desactivar_numLote(?)");

@@ -29,7 +29,16 @@ class ControlLote extends Conexion{
         die($e->getMessage());
     }
   }
-
+// Listar por idlote
+public function list($idlote): array {
+  try {
+      $query = $this->pdo->prepare("CALL SPU_LISTAR_CONTROLLOTE(?)");
+      $query->execute([$idlote]);
+      return $query->fetchAll(PDO::FETCH_ASSOC);
+  } catch (Exception $e) {
+      die($e->getMessage());
+  }
+}
 
 
 }

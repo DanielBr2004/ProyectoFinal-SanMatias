@@ -18,5 +18,12 @@ if(isset($_POST['operacion'])){
             $status = $controlLote->add($datosEnviar);
             echo json_encode(["estado" => $status]);
             break;
+
+            case 'list':
+                $idlote = intval($_POST['idlote']);
+                $result = $controlLote->list($idlote);
+                echo json_encode($result);
+                break;
     }
 }
+
