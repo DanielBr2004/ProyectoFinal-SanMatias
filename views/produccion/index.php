@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <div class="accordion accordion" id="">
+            <div class="accordion accordion" id="" autocomplete="off">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -35,13 +35,13 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="mortalidad">
+                                        <input type="text" class="form-control" id="mortalidad" required>
                                         <label for="mortalidad">Mortalidad del dia</label>
                                     </div>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="alimento">
+                                        <input type="number" class="form-control" id="alimento" required>
                                         <label for="alimento">Cantidad de Alimento</label>
                                     </div>
                                 </div>
