@@ -9,12 +9,22 @@
             <br>
             <div class="row">
                 <div class="col-md-6 ">
-                    <div class="card">
+                    <div class="card" >
                         <div class="card-header">
                             Productos que necesita compra urgente
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Stock En Almacen</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productos-tbody">
 
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -32,6 +42,9 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="<?= $host ?>js/homeJS.js"></script>
+
         <footer>
             <div class="container">
                 <div class="text-center mt-5">

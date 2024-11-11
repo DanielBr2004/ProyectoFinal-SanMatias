@@ -102,7 +102,7 @@ CantInicio	INT NOT NULL,
 edadAve		   INT  NULL,
 estado 		CHAR(1) NOT NULL DEFAULT 'A',
 descripcion VARCHAR(60) NULL,
-create_at	DATETIME			NOT NULL DEFAULT NOW()
+create_at	DATE		NOT NULL
 )ENGINE = INNODB;
 
 -- KARDEX ALMACEN DE HUEVOS --

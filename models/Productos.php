@@ -43,6 +43,16 @@ class Producto extends Conexion{
         die($e->getMessage());
     }
 }
+    public function getProductosPendientes() {
+        try {
+            $consulta = $this->pdo->prepare("SELECT * FROM vista_productos_stock_minimo");
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        catch(Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
 
     public function searchProducto($params = []):array{

@@ -57,6 +57,9 @@ if (isset($_POST['operacion'])) {
         case 'searchProducto':
             echo json_encode($producto->searchProducto(['producto' => $_GET['producto']]));
             break;
+        case 'getProductosPendientes':
+            echo json_encode($producto->getProductosPendientes());
+            break;
     }
 }
 

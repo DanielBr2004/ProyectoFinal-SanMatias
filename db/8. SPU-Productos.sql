@@ -52,3 +52,19 @@ CREATE PROCEDURE spu_existe_producto(IN _producto VARCHAR(90))
 BEGIN
     SELECT * FROM Productos WHERE Producto = _producto;
 END;
+
+CREATE VIEW vista_productos_stock_minimo AS
+SELECT 
+    p.producto,
+    k.stockProducto
+FROM 
+    Productos p
+JOIN 
+    KardexAlmProducto k ON p.idproducto = k.idproducto
+WHERE 
+    k.creado = (
+        SELECT MAX(k2.creado)
+        FROM KardexAlmProducto k2
+        WHERE k2.idproducto = p.idproducto
+    )
+    AND k.stockProducto <= p.stockminimo;
