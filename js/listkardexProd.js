@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">${item.Cantidad}</td>
                       <td class="text-center">${item.Creado}</td>
                       <td class="text-center">
+                      <div style="display: inline-flex; gap: 5px;">
                           <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})">Editar</button>
                            <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})">Eliminar</button>
                       </td>
