@@ -174,7 +174,7 @@ alimento				DECIMAL(6,2) NOT NULL,
 alimentoAve				DECIMAL(6,2) NOT NULL,
 produccion				DECIMAL(6,2)  NULL,
 cantHuevos				INT NULL,
-create_at				DATETIME NOT NULL DEFAULT NOW(),
+create_at				DATE NOT NULL,
 CONSTRAINT FK_numLote_controllote FOREIGN KEY (idlote) REFERENCES numLote(idlote)
 )ENGINE = INNODB;
 

@@ -24,6 +24,10 @@ if(isset($_GET['operacion'])){
             $consulta = $numlote->getLastDate();
             echo json_encode($consulta);
             break;
+        case 'getProdLotes':
+            $consulta = $numlote->getProdLotes();
+            echo json_encode($consulta);
+            break;
   }
 }
 

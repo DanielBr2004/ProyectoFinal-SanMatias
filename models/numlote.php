@@ -66,6 +66,16 @@
     }
   }
 
+  public function getProdLotes(): array {
+    try {
+        $query = $this->pdo->prepare("CALL spu_listar_produccionLote()"); // Ajusta según la estructura de tu tabla
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        die($e->getMessage());
+    }
+  }
+
 
   public function getAllLote() {
     try {

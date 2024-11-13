@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   
-  fetch('../controllers/producto.controller.php?operacion=getProductosPendientes')
+    fetch('../controllers/producto.controller.php?operacion=getProductosPendientes')
       .then(response => response.json())
       .then(data => {
           const tbody = document.querySelector("#productos-tbody");

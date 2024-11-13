@@ -40,8 +40,28 @@ BEGIN
         mortalidad,
         alimento,
         alimentoAve,
-        produccion,
+        CONCAT(ROUND((cantHuevos / numaves) * 100, 2), '%') AS produccion,
         cantHuevos
     FROM controlLote
     WHERE idlote = _idlote;
+END;    
+
+CREATE PROCEDURE spu_listar_produccionLote(
+    IN _numLote INT
+)
+BEGIN
+    SELECT 
+        cl.idlote,
+        DATE(cl.create_at) AS fecha,
+        CONCAT(ROUND((cl.cantHuevos / cl.numaves) * 100, 2), '%') AS produccion
+    FROM 
+        controlLote cl
+    JOIN 
+        numLote nl ON cl.idlote = nl.idlote
+    WHERE 
+        nl.numLote = _numLote
+        AND nl.estado = 'A' -- Filtrar solo los lotes activos
+    ORDER BY 
+        cl.create_at DESC
+    LIMIT 30;
 END;
