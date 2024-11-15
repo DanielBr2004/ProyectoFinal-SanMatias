@@ -156,9 +156,10 @@
 <!-- Core theme JS-->
 <script src="<?= $host ?>/js/scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="<?= $host ?>/js/Productos.js"></script>
 <script src="<?= $host ?>/js/swalcustom.js"></script>
 <script src="<?= $host ?>/js/listarProductos.js"></script>
+<script src="<?= $host ?>/js/Productos.js"></script>
+
 <footer>
             <div class="container">
                 <div class="text-center mt-5">

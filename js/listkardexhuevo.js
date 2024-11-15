@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td class="text-center">${item.num_lote}</td>
                 <td class="text-center">
                     <div style="display: inline-flex; gap: 5px;">
-                        <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">Eliminar</button>
+                        <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </td>
             </tr>`;

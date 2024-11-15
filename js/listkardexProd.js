@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">${item.Creado}</td>
                       <td class="text-center">
                       <div style="display: inline-flex; gap: 5px;">
-                          <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})">Editar</button>
-                           <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})">Eliminar</button>
+                          <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})"><i class="fa-solid fa-pen-to-square"></i></button>
+                           <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})"><i class="fa-solid fa-trash-can"></i></button>
                       </td>
                   </tr>`;
           });
