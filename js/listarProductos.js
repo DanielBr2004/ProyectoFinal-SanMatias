@@ -185,6 +185,7 @@ function $$(object = null) {
         ]
     };
   
+    
     const initDataTable = async () => {
         if (dataTableIsInitialized) {
             dataTable.destroy();
