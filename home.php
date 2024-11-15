@@ -35,8 +35,18 @@
                         </div>
                         <div class="card-body">
                             <div class="card-body" style="height: 350px;">
-                                <canvas id="myLineChart" width="400" height="200"></canvas>
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <select name="idloteSelect" id="idloteSelect" class="form-select" required>
+                                            <option value="">Seleccion</option>
+                                            <!--Datos traidos de la Base-->
+                                        </select>
+                                        <label for="idlote"><i class="fa-solid fa-chart-line"></i> Lote a Filtrar</label>
+                                    </div>
+                                </div>
+                                <canvas id="myLineChart"></canvas>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

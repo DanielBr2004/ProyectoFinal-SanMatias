@@ -25,7 +25,7 @@
                             <div class="row g-2">
                                 <div class="col-md">
                                     <div class="input-group">
-                                    <div class="form-floating">
+                                        <div class="form-floating">
                                             <select name="idlote" id="idlote" class="form-select" required>
                                                 <option value="">Seleccion</option>
                                             </select>
@@ -119,7 +119,7 @@
 
     
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Incluye SweetAlert2 desde CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -167,8 +167,6 @@
       type="text/javascript"
       src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"
     ></script>
-    <!-- Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
