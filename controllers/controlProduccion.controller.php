@@ -32,3 +32,11 @@ if(isset($_POST['operacion'])){
     }
 }
 
+if(isset($_GET['operacion'])){
+    switch($_GET['operacion']){
+        case 'ChartLotes':
+            echo json_encode($controlLote->ChartLotes(['idlote' => $_GET['idlote']]));
+          break;
+
+    }
+}
