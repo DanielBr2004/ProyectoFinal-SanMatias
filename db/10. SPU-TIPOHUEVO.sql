@@ -7,3 +7,4 @@ CREATE PROCEDURE spu_listar_tipohuevo()
 BEGIN
     SELECT * FROM tipohuevo;
 END;
+

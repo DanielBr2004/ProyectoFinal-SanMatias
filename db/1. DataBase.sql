@@ -90,6 +90,7 @@ CREATE TABLE tipoHuevo
 (
 idhuevo			INT AUTO_INCREMENT PRIMARY KEY,
 tiposHuevos			VARCHAR(50),
+PrecioKg          DECIMAL(6,2) NOT NULL,
 descripcion			VARCHAR(100)
 )ENGINE = INNODB;
 

@@ -8,7 +8,8 @@
             <div class="card mb-3"> 
                 <div class="card-body text-end">
                 <a href="<?= $host ?>/views/produccion/anadirlote/" class="btn btn-primary btn-sm"><i class="fa-solid fa-circle-plus"></i> Registrar Nuevo Lote</a>
-                </div>
+                <a href="<?= $host ?>/views/produccion/TiposHuevos/" class="btn btn-primary btn-sm"><i class="fa-solid fa-square-plus"></i> Agregar Tipos Huevos</a>
+            </div>
             </div>
 
             <div class="accordion accordion" id="" autocomplete="off">

@@ -34,6 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 }
 
+  document.getElementById('back-button').addEventListener('click', function() {
+    window.history.back();
+  });
+
 
   document.querySelector("#form-registro-lotes").addEventListener("submit", async (event) => {
     event.preventDefault();
