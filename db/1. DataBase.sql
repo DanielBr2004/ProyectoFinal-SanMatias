@@ -91,7 +91,7 @@ CREATE TABLE tipoHuevo
 idhuevo			INT AUTO_INCREMENT PRIMARY KEY,
 tiposHuevos			VARCHAR(50),
 PrecioKg          DECIMAL(6,2) NOT NULL,
-descripcion			VARCHAR(100)
+descripcion			VARCHAR(250)
 )ENGINE = INNODB;
 
 -- NUMLOTE -- 
@@ -155,7 +155,7 @@ CREATE TABLE detalleventas
 iddetalleventa		INT AUTO_INCREMENT PRIMARY KEY,
 idventa				INT NOT NULL,
 idhuevo				INT NOT NULL,
-cantidad			INT NOT NULL,
+cantidad			   INT NOT NULL,
 PesoTotal			DECIMAL(6,2) NOT NULL,
 precioUnitario		DECIMAL(10, 2) NOT NULL,
 precioTotal			DECIMAL(10, 2) NOT NULL,
