@@ -8,3 +8,7 @@ VALUES
 ('doble yema', 2.00, 'Huevo con doble yema'),
 ('margarito', 1.80, 'Huevo tipo margarito'),
 ('merma', 0.90, 'Huevo de merma');
+
+CALL spu_insertar_tipoHuevo('Huevo Bueno', 5.79, 'Huevo producido de manera orgánica');
+call spu_listado_tipohuevo();
+
