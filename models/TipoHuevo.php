@@ -45,4 +45,16 @@ public function eliminarProducto($idproducto = 0){
   }
  }
 
+ public function getTiposHuevos() {
+  try {
+      $consulta = $this->pdo->prepare("SELECT idhuevo,tiposhuevos, PrecioKg FROM tipohuevo");
+      $consulta->execute();
+      return $consulta->fetchAll(PDO::FETCH_ASSOC);
+  } 
+  catch(Exception $e) {
+      die($e->getMessage());
+  }
 }
+
+}
+

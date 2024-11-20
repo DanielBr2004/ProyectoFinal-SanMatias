@@ -17,6 +17,9 @@ header("Content-type: application/json; charset=utf-8");
           case 'getAllTiposHuevos':
               echo json_encode($tipohuevo->getAllTiposHuevos());
               break;
+        case 'getTiposHuevos':
+            echo json_encode($tipohuevo->getTiposHuevos());
+            break;
       }
     }
 

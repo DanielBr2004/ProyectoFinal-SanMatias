@@ -19,7 +19,6 @@ BEGIN
     VALUES (_tiposHuevos, _PrecioKg, _descripcion);
 END;
  -- ------------------------------------------- listar productos ----------------------------------------------------- 
-DELIMITER $$
 CREATE PROCEDURE spu_listado_tipoHuevo()
 BEGIN
     SELECT * FROM tipoHuevo;
