@@ -13,8 +13,7 @@ if(isset($_POST['operacion'])){
       case 'add':
           $datosEnviar = [
               "idcliente"         => $venta->limpiarCadena($_POST['idcliente']),
-              "idcolaborador"     => $venta->limpiarCadena($_POST['idcolaborador']),
-              "direccion"         => $venta->limpiarCadena($_POST['direccion'])
+              "idcolaborador"     => $venta->limpiarCadena($_POST['idcolaborador'])
           ];
           $idobtenido = $venta->add($datosEnviar);
           echo json_encode(["idventa" => $idobtenido]);

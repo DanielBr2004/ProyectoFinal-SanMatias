@@ -87,6 +87,7 @@
                                 <table class="tabla-detalle table table-bordered table-striped table-hover mt-3">
                                     <thead>
                                         <tr>
+                                            <th class="text-center">Unidad Medida</th>
                                             <th class="text-center">Stock</th>
                                             <th class="text-center">Producto</th>
                                             <th class="text-center">Cantidad</th>

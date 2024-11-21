@@ -5,12 +5,11 @@ USE granjasanmatias;
 CREATE PROCEDURE spu_registrar_ventas
 (
     IN _idcliente       INT,
-    IN _idcolaborador   INT,
-    IN _direccion       VARCHAR(90)
+    IN _idcolaborador   INT
 )
 BEGIN 
-    INSERT INTO ventas(idcliente, idcolaborador, direccion) 
-    VALUES(_idcliente, _idcolaborador, _direccion);
+    INSERT INTO ventas(idcliente, idcolaborador) 
+    VALUES(_idcliente, _idcolaborador);
     SELECT @@last_insert_id AS idventa;
 END;
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
@@ -26,7 +25,6 @@ BEGIN
 		END AS clientes,
         CONCAT(PERCOL.nombres, ' ',PERCOL.apepaterno, ' ',PERCOL.apematerno) AS Colaborador,
 		VEN.fecha,
-        VEN.direccion,
         VEN.estado
 	FROM ventas VEN
 	JOIN cliente CLI ON VEN.idcliente = CLI.idcliente

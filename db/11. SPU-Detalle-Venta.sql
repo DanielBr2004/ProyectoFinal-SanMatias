@@ -8,9 +8,8 @@ CREATE PROCEDURE spu_registrar_Detalleventas
     IN _idventa       		INT,
     IN _idhuevo   			INT,
     IN _cantidad			INT,
-    IN _pesoTotal			DECIMAL(7,2),
-    IN _preciounitario      DECIMAL(6, 2),
-    IN _preciototal			DECIMAL(10, 2)
+    IN _unidadMedida		VARCHAR(50),
+    IN _precioVenta      DECIMAL(6, 2)
 )
 BEGIN 
  -- declara variable de stock
@@ -35,8 +34,8 @@ BEGIN
     VALUES (_iduser, _idhuevo, 'S', 'Salida por Venta', _stockProducto, _cantidad, NULL, NOW());
     
     -- registramos en detalle venta
-    INSERT INTO detalleventas(idventa, idhuevo, cantidad, PesoTotal, precioUnitario, precioTotal)
-    VALUES(_idventa, _idhuevo, _cantidad, _pesoTotal, _preciounitario, _preciototal);
+    INSERT INTO detalleventas(idventa, idhuevo, cantidad, precioVenta, UnidadMedida)
+    VALUES(_idventa, _idhuevo, _cantidad, _precioVenta, _unidadMedida);
     SELECT @@last_insert_id AS iddetalleventa;
 END;
 

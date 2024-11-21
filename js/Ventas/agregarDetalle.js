@@ -65,6 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tr.innerHTML = `
             <td class="text-center">
+                <div>
+                    <select name="unidadMedida" id="unidadMedida" class="form-select unidadMedida-venta" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Kg">Kilogramos</option>
+                        <option value="Pq">Paquetes</option>
+                    </select>
+                </div>
+            </td>
+            <td class="text-center">
                 <label id="stock-label" class="stock-label">0</label>
             </td>
             <td class="text-center huevo-detalle">
@@ -81,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="number" id="pesoTotal" minlength="0" step="0.01" class="form-control pesoTotal-venta" required>
             </td>
             <td class="text-center">
-                <input type="number" id="precioUnitario" minlength="0" step="0.01" class="form-control precioUnitario-venta" required>        
+                <input type="number" id="precioKg" minlength="0" step="0.01" class="form-control precioKg-venta" required>        
             </td>
             <td class="text-center">
                 <input type="number" id="totalVenta" minlength="0" step="0.01" class="form-control totalventa-venta" disabled>
@@ -95,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Añadir eventos a los nuevos inputs
         const stockLabel = tr.querySelector(".stock-label");
-        const precioUnitario = tr.querySelector(".precioUnitario-venta");
+        const precioUnitario = tr.querySelector(".precioKg-venta");
         const pesoTotal = tr.querySelector(".pesoTotal-venta");
         const cantidadVenta = tr.querySelector(".cantidad-venta");
         const totalVenta = tr.querySelector(".totalventa-venta");
@@ -199,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Define la función calcularTotalVenta como asíncrona
     async function calcularTotalVenta(row) {
         const pesoTotalElement = row.querySelector(".pesoTotal-venta");
-        const precioUnitarioElement = row.querySelector(".precioUnitario-venta");
+        const precioUnitarioElement = row.querySelector(".precioKg-venta");
         const totalVentaElement = row.querySelector(".totalventa-venta");
 
         if (!pesoTotalElement || !precioUnitarioElement || !totalVentaElement) {

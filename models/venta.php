@@ -12,12 +12,11 @@ class Venta extends Conexion{
   public function add($params = []):int{
     $idgenerado = null; 
     try{
-        $query = $this->pdo->prepare("call spu_registrar_ventas(?,?,?)"); 
+        $query = $this->pdo->prepare("call spu_registrar_ventas(?,?)"); 
         $query->execute(
             array(
                 $params['idcliente'],
-                $params['idcolaborador'],
-                $params['direccion']
+                $params['idcolaborador']
             )
         );
         $row = $query->fetch(PDO::FETCH_ASSOC);
