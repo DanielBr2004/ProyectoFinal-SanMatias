@@ -27,7 +27,7 @@
                     <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
 
-                    <form action="" id="form-registro-lotes" autocomplete="off">
+                    <form action="" id="form-registro-huevos" autocomplete="off">
                       <div class="row g-2 mb-4">
                       <div class="col-md">
                             <div class="form-floating">
@@ -178,5 +178,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?= $host ?>/js/numlote/tiposHuevo.js"></script>
 <script src="<?= $host ?>/js/produccionHuevos/produc.js"></script>
+<script src="<?= $host ?>/js/produccionHuevos/addtipohuevo.js"></script>
+<script src="<?= $host ?>/js/swalcustom.js"></script>
 </body>
 </html>

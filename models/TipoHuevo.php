@@ -45,6 +45,26 @@ public function eliminarProducto($idproducto = 0){
   }
  }
 
+ public function add($params = []):int{
+  $idtipohuevo = null;
+  try{
+      $query = $this->pdo->prepare("CALL spu_insertar_tipoHuevo(?,?,?)");
+      $query->execute(
+          array(
+              $params['tiposHuevos'],
+              $params['PrecioKg'],
+              $params['descripcion']
+          )
+      );
+      $row = $query->fetch(PDO::FETCH_ASSOC);
+      $idtipohuevo = $row['idtipohuevo'];
+  }
+  catch(Exception $e){
+      $idtipohuevo = -1;
+  }
+  return $idtipohuevo; 
+}
+
  public function getTiposHuevos() {
   try {
       $consulta = $this->pdo->prepare("SELECT idhuevo,tiposhuevos, PrecioKg FROM tipohuevo");

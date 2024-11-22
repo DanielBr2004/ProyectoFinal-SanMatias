@@ -26,6 +26,16 @@ header("Content-type: application/json; charset=utf-8");
     // Manejo de operaciones POST EDITAR Y ELIMINAR
     if(isset($_POST['operacion'])) {
       switch ($_POST['operacion']) {
+        case 'add':
+            $datos = [
+                "tiposHuevos"     => $tipohuevo->limpiarCadena($_POST['tiposHuevos']),
+                "PrecioKg" =>$tipohuevo->limpiarCadena($_POST['PrecioKg']),
+                "descripcion"   => $tipohuevo->limpiarCadena($_POST['descripcion'])
+            ];
+            $idobtenido = $tipohuevo->add($datos);
+            echo json_encode(["idtipohuevo" => $idobtenido]);
+            break;
+
           case 'editar':
               if (isset($_POST['idhuevo']) && isset($_POST['tiposHuevos']) && trim($_POST['tiposHuevos']) != '' && isset($_POST['PrecioKg'])) {
                   $datos = [
