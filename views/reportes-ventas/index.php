@@ -13,9 +13,9 @@
                     <th>Cliente</th>
                     <th>Colaborador</th>
                     <th>Fecha</th>
-                    <th>Direccion</th>
                     <th>Estado</th>
-                    <th>Operaciones</th> <!-- Nueva columna -->
+                    <th>Operaciones</th>
+                    <th>Reporte PDF</th>
                 </tr>
             </thead>
         <tbody id="tbody-ReporVenta">

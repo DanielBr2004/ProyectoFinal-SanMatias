@@ -1,6 +1,6 @@
 USE granjasanmatias;
  -- ------------------------------------------- Registrar ventas ----------------------------------------------------- 
- drop procedure if exists `spu_registrar_ventas`;
+ DROP PROCEDURE IF EXISTS `spu_registrar_ventas`;
 
 CREATE PROCEDURE spu_registrar_ventas
 (
@@ -13,7 +13,7 @@ BEGIN
     SELECT @@last_insert_id AS idventa;
 END;
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
- drop procedure if exists `spu_listar_ventas`;
+ DROP PROCEDURE IF EXISTS `spu_listar_ventas`;
 
 CREATE PROCEDURE spu_listar_ventas()
 BEGIN
@@ -34,24 +34,21 @@ BEGIN
     ORDER BY VEN.idventa DESC;
 END;
  -- ------------------------------------------- editar ventas ----------------------------------------------------- 
-  drop procedure if exists `sp_editar_venta`;
-
+  DROP PROCEDURE IF EXISTS `sp_editar_venta`;
 CREATE PROCEDURE sp_editar_venta(
     IN p_idventa INT,
-    IN p_estado VARCHAR(30),
-    IN p_direccion VARCHAR(50)
+    IN p_estado VARCHAR(30)
 )
 BEGIN
     UPDATE ventas
     SET 
-        estado = IFNULL(p_estado, estado),
-        direccion = IFNULL(p_direccion, direccion)
+        estado = IFNULL(p_estado, estado)
     WHERE idventa = p_idventa;
 END;
 
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  
-   drop procedure if exists `sp_eliminar_venta`;
+   DROP PROCEDURE IF EXISTS `sp_eliminar_venta`;
 
 
 CREATE PROCEDURE sp_eliminar_venta(

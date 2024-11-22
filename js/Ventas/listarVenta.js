@@ -40,12 +40,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.clientes ?? 'No data'}</td>
                         <td class="text-center">${item.Colaborador}</td>
                         <td class="text-center">${item.fecha}</td>
-                        <td class="text-center">${item.direccion}</td>
                         <td class="text-center">${item.estado}</td>
                         <td class="text-center">
                         <div style="display: inline-flex; gap: 5px;">
                             <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idventa}, '${item.estado}', '${item.direccion}')"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.idventa}"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idventa})"><i class="fa-solid fa-file-pdf"></i></button>
                         </td>
                     </tr>`;
             });

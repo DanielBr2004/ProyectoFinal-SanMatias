@@ -23,7 +23,6 @@ if(isset($_POST['operacion'])){
             $datosActualizar = [
                 "idventa"   => $venta->limpiarCadena($_POST['idventa']),
                 "estado"    => $venta->limpiarCadena($_POST['estado']),
-                "direccion" => $venta->limpiarCadena($_POST['direccion'])
             ];
             $resultado = $venta->update($datosActualizar);
             echo json_encode(["success" => $resultado]);
