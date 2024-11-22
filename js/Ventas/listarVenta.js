@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     window.abrirModalEditar = function(idventa, estado) {
         document.getElementById('editIdVenta').value = idventa;
         document.getElementById('editEstado').value = estado;
-        document.getElementById('editDireccion').value = direccion;
 
         // Limitar entrada a solo letras para el campo "estado"
         document.getElementById('editEstado').addEventListener('input', function(e) {
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const idventa = document.getElementById('editIdVenta').value;
         const estado = document.getElementById('editEstado').value;
-
         try {
             const response = await fetch('../../controllers/venta.controller.php', {
                 method: 'POST',
@@ -89,8 +87,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 body: new URLSearchParams({
                     operacion: 'update',
                     idventa,
-                    estado,
-                    direccion
+                    estado
                 })
             });
 
