@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     };
 
-    window.abrirModalEditar = function(idventa, estado, direccion) {
+    window.abrirModalEditar = function(idventa, estado) {
         document.getElementById('editIdVenta').value = idventa;
         document.getElementById('editEstado').value = estado;
         document.getElementById('editDireccion').value = direccion;
@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const idventa = document.getElementById('editIdVenta').value;
         const estado = document.getElementById('editEstado').value;
-        const direccion = document.getElementById('editDireccion').value;
 
         try {
             const response = await fetch('../../controllers/venta.controller.php', {

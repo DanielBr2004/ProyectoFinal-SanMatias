@@ -46,12 +46,6 @@
                         <input type="text" class="form-control" id="editEstado" required>
                     </div>
 
-                    <!-- Dirección -->
-                    <div class="mb-3">
-                        <label for="editDireccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="editDireccion" required>
-                    </div>
-
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>
             </div>
