@@ -204,7 +204,7 @@ document.querySelector('#form-editar-huevo').addEventListener('submit', async (e
                 const result = await response.json();
 
                 if (result.status === 'success') {
-                    showToast('Se ha Guardado Correctamente.', 'success');
+                    showToast('Se ha Guardado Correctamente.', 'SUCCESS',1000);
                     await initDataTable(); // Refresca la tabla con DataTable
                     const modal = bootstrap.Modal.getInstance($$('#modalEditarHuevo'));
                     if (modal) modal.hide();

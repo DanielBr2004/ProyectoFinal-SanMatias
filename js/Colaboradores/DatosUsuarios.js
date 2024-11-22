@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">${item.nomusuario}</td>
                       <td class="text-center">${item.estado}</td>
                       <td class="text-center">
-                          <button class="btn btn-primary btn-sm" onclick="abrirModalEditar(${item.idcolaborador}, '${item.apepaterno}', '${item.apematerno}', '${item.nombres}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                          <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idcolaborador}, '${item.apepaterno}', '${item.apematerno}', '${item.nombres}')"><i class="fa-solid fa-pen-to-square"></i></button>
                            <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${item.idcolaborador})"><i class="fa-solid fa-trash-can"></i></button>
                       </td>
                   </tr>`;
