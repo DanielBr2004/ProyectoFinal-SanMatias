@@ -76,9 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error('Cantidad y precio deben ser números válidos');
         }
 
+        // Calculate final quantity based on unit
+        const finalCantidad = unidadMedida === 'Kg' ? cantidadNum : cantidadNum * 180;
+
         huevos.push({
             idhuevo: idhuevo,
-            cantidad: cantidadNum * 180,
+            cantidad: finalCantidad,
             unidadMedida: unidadMedida,
             precioVenta: precioKgNum
         });
