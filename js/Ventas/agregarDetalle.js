@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const pesoTotal = tr.querySelector(".pesoTotal-venta");
         const cantidadVenta = tr.querySelector(".cantidad-venta");
         const totalVenta = tr.querySelector(".totalventa-venta");
+        const unidadMedida = tr.querySelector("#unidadMedida");
         const producto = tr.querySelector(".huevo-venta");
         console.log('producto:', producto);
 
@@ -121,6 +122,14 @@ document.addEventListener("DOMContentLoaded", () => {
             optionElement.text = opcion?.tiposhuevos || 'Sin nombre';
             producto.appendChild(optionElement);
             console.log('opcion:', optionElement);
+        });
+
+        unidadMedida.addEventListener("change", async () => {
+             precioUnitario.value = "";
+             cantidadVenta.value = "";
+             producto.value = "";
+             stockLabel.textContent = "0";
+
         });
         
         producto.addEventListener("change", async () => {
@@ -235,8 +244,13 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${idhuevo}`);
             const stock = await response.json();
-            const stockDividido = Math.floor(stock / 180); // División entera de 180
-            stockLabel.textContent = stockDividido;
+            const unidadMedida = document.querySelector("#unidadMedida");
+            if (unidadMedida.value === 'Pq') {
+                const stockDividido = Math.floor(stock / 180);
+                stockLabel.textContent = stockDividido;
+            }else{
+                stockLabel.textContent = stock;
+            }
         } catch (error) {
             console.error(error);
         }
