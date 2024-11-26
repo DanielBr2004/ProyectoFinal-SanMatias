@@ -27,11 +27,17 @@ class ReportVentas extends Conexion{
         try {
             $query = $this->pdo->prepare("CALL spu_ventas_pdf()");
             $query->execute();
-            return $query->fetchAll(PDO::FETCH_ASSOC); 
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    
+            if (!$result) {
+                throw new Exception('No se encontraron datos de ventas.');
+            }
+            return $result;
         } catch (Exception $e) {
-            die($e->getMessage()); 
+            die('Error en getVentas: ' . $e->getMessage());
         }
     }
+    
 
     // Método para obtener el reporte de Clientes
     public function getClientes() {

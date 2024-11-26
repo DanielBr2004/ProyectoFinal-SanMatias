@@ -1,3 +1,8 @@
+window.generarPDF = function (idVenta) {
+    const url = `../../views/reportes-ventas/reporte.php?idventa=${idVenta}`;
+    window.open(url, '_blank');
+};
+
 document.addEventListener('DOMContentLoaded', async function() {
     let dataTable;
     let dataTableIsInitialized = false;
@@ -116,4 +121,5 @@ document.addEventListener('DOMContentLoaded', async function() {
     };
 
     await initDataTable();
+
 });
