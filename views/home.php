@@ -1,4 +1,4 @@
-<?php require_once 'Header.php'; ?>
+<?php require_once '../Header.php'; ?>
         <!-- Page content-->
         <div class="container">
             <div class="text-center mt-5">
@@ -38,7 +38,7 @@
                                 <div class="input-group">
                                     <div class="form-floating">
                                         <select name="idloteSelect" id="idloteSelect" class="form-select" required>
-                                            <option value="">Seleccion</option>
+                                            <!-- <option value="">Seleccion</option> -->
                                             <!--Datos traidos de la Base-->
                                         </select>
                                         <label for="idlote"><i class="fa-solid fa-chart-line"></i> Lote a Filtrar</label>

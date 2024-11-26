@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         (() => {
-            fetch(`controllers/numlote.controller.php?operacion=getAll`)
+            fetch(`../controllers/numlote.controller.php?operacion=getAll`)
                 .then(response => response.json())
                 .then(data => {
                     const numlote = document.querySelector("#idloteSelect")
@@ -78,5 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(e => { console.error(e) })
         })();
-      
+
+        actualizarGrafico(9);
 });

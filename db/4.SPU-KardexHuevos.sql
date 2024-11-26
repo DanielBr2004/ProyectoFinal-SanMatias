@@ -71,8 +71,20 @@ BEGIN
 
     -- Obtener el stock actual antes de la actualización
     SELECT stockProducto INTO _stockProducto 
-    FROM KardexAlmHuevo 
-    WHERE idAlmacenHuevos = _idAlmacenHuevos;
+    FROM (
+        SELECT stockProducto,
+               ROW_NUMBER() OVER (ORDER BY idAlmacenHuevos DESC) as rn
+        FROM KardexAlmHuevo 
+        WHERE idAlmacenHuevos < _idAlmacenHuevos
+    ) ranked
+    WHERE rn = 1;
+
+    -- If no penultimate value exists, use the current stock
+    IF _stockProducto IS NULL THEN
+        SELECT stockProducto INTO _stockProducto 
+        FROM KardexAlmHuevo 
+        WHERE idAlmacenHuevos = _idAlmacenHuevos;
+    END IF;
 
     -- Ajustar el stock según el tipo de movimiento
     IF _motivomovimiento LIKE 'Salida%' THEN

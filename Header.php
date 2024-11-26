@@ -69,7 +69,7 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= $host ?>/home.php"><i class="fa-solid fa-house"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= $host ?>views/home.php"><i class="fa-solid fa-house"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen"><i class="fa-regular fa-clipboard"></i> Inventario Almacen</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioMolino"><i class="fa-solid fa-clipboard"></i> Inventario Molino</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/produccion"><i class="fa-solid fa-arrow-up-wide-short"></i> Produccion</a></li>

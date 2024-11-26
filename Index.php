@@ -76,7 +76,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                             if(!acceso.permitido){
                                 showToast(acceso.status, "ERROR", 1000);
                             }else{
-                                window.location.href = './home.php/'; 
+                                window.location.href = 'views/home.php'; 
                             }
                         })
                 });
