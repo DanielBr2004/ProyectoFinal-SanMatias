@@ -42,6 +42,11 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                             <input class="form-control" id="inputPassword" type="password" placeholder="Password" required/>
                             <label for="inputPassword">Contraseña</label>
                         </div>
+                        <div>
+                            <a href="views/registro.php" style="color: white; font-weight: bold; display: block; text-align: right;">
+                                Olvide mi contraseña
+                            </a>
+                        </div>
                         <div class="check">
                             <label> </label>
                         </div>
@@ -60,6 +65,14 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
 
     <script>
             document.addEventListener("DOMContentLoaded", () => {
+
+                const forgotPasswordLink = document.querySelector('a[href="views/registro.php"]');
+    
+                forgotPasswordLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Por Implementar' );
+                });
+                
                 document.querySelector("#form-login").addEventListener("submit", (event) => {
                     event.preventDefault();
 
