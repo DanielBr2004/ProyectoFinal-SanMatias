@@ -1,0 +1,46 @@
+<?php
+
+require_once 'Conexion.php';
+
+class ReportVentas extends Conexion{
+
+  private $pdo; 
+
+  //Constructor
+  public function __CONSTRUCT(){
+      $this->pdo = parent::getConexion();
+  }
+
+    // Método para obtener el reporte de Detalle de Ventas
+    public function getDetalleVentas() {
+        try {
+            $query = $this->pdo->prepare("CALL spu_detalleventas_pdf()");
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC); 
+        } catch (Exception $e) {
+            die($e->getMessage()); 
+        }
+    }
+
+    // Método para obtener el reporte de Ventas
+    public function getVentas() {
+        try {
+            $query = $this->pdo->prepare("CALL spu_ventas_pdf()");
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC); 
+        } catch (Exception $e) {
+            die($e->getMessage()); 
+        }
+    }
+
+    // Método para obtener el reporte de Clientes
+    public function getClientes() {
+        try {
+            $query = $this->pdo->prepare("CALL spu_clientes_pdf()");
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC); 
+        } catch (Exception $e) {
+            die($e->getMessage()); 
+        }
+    }
+}

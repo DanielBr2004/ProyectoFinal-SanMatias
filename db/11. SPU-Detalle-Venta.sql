@@ -39,3 +39,20 @@ BEGIN
     SELECT @@last_insert_id AS iddetalleventa;
 END;
 
+-- ------------------------------------------- Listar Detalleventas ----------------------------------------------------- 
+DROP PROCEDURE IF EXISTS `spu_listar_Detalleventas`;
+CREATE PROCEDURE spu_listar_Detalleventas()
+BEGIN
+    -- Consulta para obtener todos los detalles de ventas registrados junto con el nombre del tipo de huevo
+    SELECT 
+        d.iddetalleventa,
+        d.idventa,
+        t.tiposHuevos AS nombreHuevo,  -- Traemos el nombre del tipo de huevo
+        d.cantidad,
+        d.precioVenta,
+        d.UnidadMedida
+    FROM 
+        detalleventas d
+    INNER JOIN 
+        tipoHuevo t ON d.idhuevo = t.idhuevo;  -- Realizamos el JOIN para obtener el tipo de huevo
+END;
