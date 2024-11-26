@@ -125,28 +125,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         unidadMedida.addEventListener("change", async () => {
-             precioUnitario.value = "";
-             cantidadVenta.value = "";
-             producto.value = "";
-             stockLabel.textContent = "0";
-
+            precioUnitario.value = "";
+            cantidadVenta.value = "";
+            
+            // Don't clear product if selected, just update stock display
+            if (producto.value) {
+                await ShowStockActual(producto.value, stockLabel, unidadMedida);
+            } else {
+                stockLabel.textContent = "0";
+            }
         });
         
         producto.addEventListener("change", async () => {
             const huevo = producto.value;
             if (huevo) {
-                await ShowStockActual(huevo, stockLabel);
+                await ShowStockActual(huevo, stockLabel, unidadMedida);
                 
-                // Encontrar la opción seleccionada
                 const opcionSeleccionada = opciones.find(op => op.idhuevo == huevo);
                 
-                // Establecer el precio unitario si existe
                 if (opcionSeleccionada && opcionSeleccionada.PrecioKg) {
                     precioUnitario.value = opcionSeleccionada.PrecioKg;
                 }
             }
             
-            // Limpiar campos
             cantidadVenta.value = "";
             pesoTotal.value = "";
             totalVenta.value = "";
@@ -240,19 +241,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function ShowStockActual(idhuevo, stockLabel) {
+    async function ShowStockActual(idhuevo, stockLabel, unitSelect) {
         try {
             const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${idhuevo}`);
             const stock = await response.json();
-            const unidadMedida = document.querySelector("#unidadMedida");
-            if (unidadMedida.value === 'Pq') {
+            
+            if (unitSelect.value === 'Pq') {
                 const stockDividido = Math.floor(stock / 180);
                 stockLabel.textContent = stockDividido;
-            }else{
+            } else {
                 stockLabel.textContent = stock;
             }
         } catch (error) {
             console.error(error);
+            stockLabel.textContent = "0";
         }
     }
 
