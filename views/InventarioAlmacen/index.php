@@ -61,7 +61,6 @@
                                 <option value="">Seleccione...</option>
                                 <option value="E">Entrada por Producción</option>
                                 <option value="E">Entrada por Compra</option>
-                                <option value="S">Salida por Venta</option>
                                 <option value="S">Salida por Merma</option>
                                 <option value="S">Salida por Contingencia</option>
                             </select>

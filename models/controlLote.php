@@ -54,6 +54,20 @@ public function list($idlote): array {
     }
   }
 
+  public function ChartLotes2($params = []):array{
+    try{
+    $query = $this->pdo->prepare("CALL spu_mortalidad_acumulada(?)");
+    $query->execute(
+        array($params['idlote2'])
+    );
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(Exception $e){
+    die($e->getMessage());
+    }
+  }
+
 
 
 public function getAllLotes(): array {

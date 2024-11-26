@@ -31,6 +31,8 @@ BEGIN
 
 END;
 
+-- ------------------------------------------- Listar Control Lote -----------------------------------------------------
+
 CREATE PROCEDURE SPU_LISTAR_CONTROLLOTE(IN _idlote INT)
 BEGIN
     SELECT
@@ -68,4 +70,40 @@ BEGIN
     ) AS subquery
     ORDER BY 
         fecha ASC;
+END;
+
+-- ------------------------------------------- Mortalidad Acumulada -----------------------------------------------------
+
+CREATE PROCEDURE spu_mortalidad_acumulada
+(
+    IN _idlote INT
+)
+BEGIN
+    -- Variables to store results
+    DECLARE _cantInicio INT;
+    DECLARE _mortalidadTotal INT;
+    DECLARE _cantActual INT;
+
+    -- Get initial quantity only for active lots
+    SELECT CantInicio INTO _cantInicio
+    FROM numLote 
+    WHERE idlote = _idlote 
+    AND estado = 'A';
+    -- Calculate total mortality
+    SELECT IFNULL(SUM(mortalidad), 0) INTO _mortalidadTotal
+    FROM controlLote
+    WHERE idlote = _idlote;
+
+    -- Calculate current quantity
+    SET _cantActual = _cantInicio - _mortalidadTotal;
+
+    -- Return results
+    SELECT 
+        nl.numLote,
+        _cantInicio AS cantidad_inicial,
+        _mortalidadTotal AS mortalidad_acumulada
+    FROM numLote nl
+    WHERE nl.idlote = _idlote 
+    AND nl.estado = 'A';
+
 END;

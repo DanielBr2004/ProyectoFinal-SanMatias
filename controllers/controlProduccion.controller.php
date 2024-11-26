@@ -37,6 +37,8 @@ if(isset($_GET['operacion'])){
         case 'ChartLotes':
             echo json_encode($controlLote->ChartLotes(['idlote' => $_GET['idlote']]));
           break;
-
+        case 'ChartLotes2':
+            echo json_encode($controlLote->ChartLotes2(['idlote2' => $_GET['idlote2']]));
+          break;
     }
 }

@@ -14,7 +14,7 @@
                             <h4 class="text-center">Productos que necesita compra urgente</h4>
                         </div>
                         <div class="card-body" style="height: 382px; overflow-y: auto;">
-                            <table class="table">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                     <th scope="col">Producto</th>
@@ -28,29 +28,53 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 ">
-                <div class="card">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
                         <div class="card-header">
-                            <h4 class="text-center">grafico del mes de produccion</h4>
+                            <h4 class="text-center">Impacto de Mortalidad</h4>
                         </div>
                         <div class="card-body">
-                            <div class="card-body" style="height: 350px;">
-                                <div class="input-group">
-                                    <div class="form-floating">
-                                        <select name="idloteSelect" id="idloteSelect" class="form-select" required>
-                                            <!-- <option value="">Seleccion</option> -->
-                                            <!--Datos traidos de la Base-->
-                                        </select>
-                                        <label for="idlote"><i class="fa-solid fa-chart-line"></i> Lote a Filtrar</label>
-                                    </div>
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <select name="idloteSelectM" id="idloteSelectM" class="form-select" required>
+                                        <!-- <option value="">Seleccion</option> -->
+                                        <!--Datos traidos de la Base-->
+                                    </select>
+                                    <label for="idlote"><i class="fa-solid fa-chart-line"></i> Lote a Filtrar</label>
                                 </div>
-                                <canvas id="myLineChart"></canvas>
                             </div>
-                            
+                                <div style="width: 300px; height: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+                                    <canvas id="myPieChart"></canvas>
+                                </div>
                         </div>
                     </div>
                 </div>
+                    
             </div>
+            <div class="row">
+                <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="text-center">grafico del mes de produccion</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-body">
+                                    <div class="input-group">
+                                        <div class="form-floating">
+                                            <select name="idloteSelect" id="idloteSelect" class="form-select" required>
+                                                <!-- <option value="">Seleccion</option> -->
+                                                <!--Datos traidos de la Base-->
+                                            </select>
+                                            <label for="idlote"><i class="fa-solid fa-chart-line"></i> Lote a Filtrar</label>
+                                        </div>
+                                    </div>
+                                    <canvas id="myLineChart"></canvas>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
