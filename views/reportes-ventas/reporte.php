@@ -37,7 +37,7 @@ try {
     ob_start(); // Inicia el buffer de salida
 
     // Incluir los estilos desde el archivo
-    echo file_get_contents('../../views/estilos.html');
+    echo file_get_contents('../../views/reportes-ventas/estilos.html');
 
     // Generar el contenido del reporte
     ?>

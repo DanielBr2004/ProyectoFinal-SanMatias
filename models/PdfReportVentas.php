@@ -11,7 +11,7 @@ class ReportVentas extends Conexion{
       $this->pdo = parent::getConexion();
   }
 
-    // Método para obtener el reporte de Detalle de Ventas
+    //reporte de Detalle de Ventas
     public function getDetalleVentas() {
         try {
             $query = $this->pdo->prepare("CALL spu_detalleventas_pdf()");
@@ -22,7 +22,7 @@ class ReportVentas extends Conexion{
         }
     }
 
-    // Método para obtener el reporte de Ventas
+    //reporte de Ventas
     public function getVentas() {
         try {
             $query = $this->pdo->prepare("CALL spu_ventas_pdf()");
@@ -39,7 +39,7 @@ class ReportVentas extends Conexion{
     }
     
 
-    // Método para obtener el reporte de Clientes
+    //reporte de Clientes
     public function getClientes() {
         try {
             $query = $this->pdo->prepare("CALL spu_clientes_pdf()");
