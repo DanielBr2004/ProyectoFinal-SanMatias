@@ -62,7 +62,7 @@ try {
         .sub-title {
             font-size: 25px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 30px;
             margin-bottom: 20px;
             text-align: center;
         }
