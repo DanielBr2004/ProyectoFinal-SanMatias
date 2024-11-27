@@ -36,46 +36,153 @@ $detalles = $detalleFiltrado;
 try {
     ob_start(); // Inicia el buffer de salida
 
-    // Incluir los estilos desde el archivo
-    echo file_get_contents('../../views/reportes-ventas/estilos.html');
-
-    // Generar el contenido del reporte
+    // Incluir los estilos CSS directamente en el archivo PHP
     ?>
-    <page>
-        <h1>Reporte de Venta</h1>
-        <h3>Información de la Venta</h3>
-        <table class="info-table">
-            <tr><th>ID Venta:</th><td><?= $venta['ID Venta'] ?></td></tr>
-            <tr><th>Cliente:</th><td><?= $venta['Cliente'] ?></td></tr>
-            <tr><th>Colaborador:</th><td><?= $venta['Colaborador'] ?></td></tr>
-            <tr><th>Fecha de Venta:</th><td><?= $venta['Fecha de Venta'] ?></td></tr>
-            <tr><th>Estado:</th><td><?= $venta['Estado'] ?></td></tr>
-        </table>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
 
-        <h3>Detalles de los Productos</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID Detalle</th>
-                    <th>Nombre del Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Unidad de Medida</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($detalles as $detalle): ?>
-                <tr>
-                    <td><?= $detalle['ID Detalle'] ?></td>
-                    <td><?= $detalle['Nombre Huevo'] ?></td>
-                    <td><?= $detalle['Cantidad'] ?></td>
-                    <td><?= $detalle['Precio Venta'] ?></td>
-                    <td><?= $detalle['Unidad de Medida'] ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        .header {
+            background-color: #f5f5f5;
+            padding: 20px 0;
+        }
+
+        .header img {
+            width: 100px;
+            margin-left: 20px;
+            vertical-align: middle;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        /* Subtítulo centrado */
+        h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info-table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 30px;
+            margin-left: 50px;
+        }
+
+        .info-table th, .info-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .info-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .info-table td {
+            background-color: #fff;
+            color: #555;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+
+        /* Estilos para la tabla de detalles */
+        .details-table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: 130px;
+        }
+
+        .details-table th, .details-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .details-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Ajustes generales para centrar el contenido */
+        .content-wrapper {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+
+    <page>
+        <!-- Header con logo -->
+        <div class="header">
+            <img src="../../img/logoSanMatias.jpg" alt="Logo" />
+            <div class="title">Reporte de Venta</div>
+        </div>
+
+        <!-- Información de la venta -->
+        <div class="content-wrapper">
+            <h3>Información de la Venta</h3>
+            <table class="info-table">
+                <tr><th>ID Venta:</th><td><?= $venta['ID Venta'] ?></td></tr>
+                <tr><th>Cliente:</th><td><?= $venta['Cliente'] ?></td></tr>
+                <tr><th>Colaborador:</th><td><?= $venta['Colaborador'] ?></td></tr>
+                <tr><th>Fecha de Venta:</th><td><?= $venta['Fecha de Venta'] ?></td></tr>
+                <tr><th>Estado:</th><td><?= $venta['Estado'] ?></td></tr>
+            </table>
+
+            <!-- Detalles de la venta en tabla horizontal centrada -->
+            <h3>Detalles de los Productos</h3>
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>ID Detalle</th>
+                        <th>Nombre del Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Unidad de Medida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($detalles as $detalle): ?>
+                    <tr>
+                        <td><?= $detalle['ID Detalle'] ?></td>
+                        <td><?= $detalle['Nombre Huevo'] ?></td>
+                        <td><?= $detalle['Cantidad'] ?></td>
+                        <td><?= $detalle['Precio Venta'] ?></td>
+                        <td><?= $detalle['Unidad de Medida'] ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Reporte generado automáticamente El Sistema 2024 Granja Avícola "San Matias" S.A.C. - VERSION 1.0.0</p>
+        </div>
     </page>
+
     <?php
     $content = ob_get_clean();
 

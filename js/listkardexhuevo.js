@@ -1,3 +1,7 @@
+window.generarPDF = async function(idAlmacenHuevos) {
+    window.open('../../views/InventarioAlmacen/reporte.php?idAlmacenHuevos=' + idAlmacenHuevos, '_blank');
+};
+
 document.addEventListener('DOMContentLoaded', async function() {
   let dataTable;
   let dataTableIsInitialized = false;
