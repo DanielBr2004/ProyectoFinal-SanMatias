@@ -66,10 +66,10 @@ try {
 
         /* Subtítulo centrado */
         h3 {
-            font-size: 18px;
+            font-size: 25px;
             font-weight: bold;
             color: #333;
-            margin-top: 10px;
+            margin-top: 20px;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -133,7 +133,7 @@ try {
         }
     </style>
 
-    <page>
+    <page backtop="10mm" backbottom="10mm" backleft="10mm" backright="10mm">
         <!-- Header con logo -->
         <div class="header">
             <img src="../../img/logoSanMatias.jpg" alt="Logo" />

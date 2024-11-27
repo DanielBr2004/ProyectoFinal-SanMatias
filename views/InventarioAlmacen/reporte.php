@@ -95,6 +95,7 @@ try {
             margin-top: 30px;
             font-size: 12px;
             color: #777;
+            text-align: center;
         }
     </style>
 
