@@ -204,6 +204,7 @@
                     <th>Descripción</th>
                     <th>Nº de Lote</th>
                     <th>Operaciones</th>
+                    <th>Reporte</th>
                 </tr>
             </thead>
             <tbody id="tbody-listproductos">
