@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', async function() {
               text: '<i class="fas fa-file-excel"></i>',
               titleAttr: 'Exportar a Excel',
               className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6] // Only include first 8 columns
+            }
           },
           {
               extend: 'pdfHtml5',
@@ -26,6 +29,9 @@ document.addEventListener('DOMContentLoaded', async function() {
               text: '<i class="fa fa-print"></i>',
               titleAttr: 'Imprimir',
               className: 'btn btn-info',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6] // Only include first 8 columns
+            }
           },
       ],
       lengthMenu: [5, 10, 15, 20, 100, 200, 500],

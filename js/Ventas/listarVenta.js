@@ -10,10 +10,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     const dataTableOptions = {
         dom: 'Bfrtilp',
         buttons: [
-            { extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> ', titleAttr: 'Exportar a Excel', className: 'btn btn-success' },
-            { extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> ', titleAttr: 'Exportar a PDF', className: 'btn btn-danger' },
-            { extend: 'print', text: '<i class="fa fa-print"></i> ', titleAttr: 'Imprimir', className: 'btn btn-info' },
+            { extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> ', titleAttr: 'Exportar a Excel', className: 'btn btn-success', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
+            { extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> ', titleAttr: 'Exportar a PDF', className: 'btn btn-danger', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
+            { extend: 'print', text: '<i class="fa fa-print"></i> ', titleAttr: 'Imprimir', className: 'btn btn-info', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
         ],
+
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
         columnDefs: [{ className: 'text-center', targets: '_all' }, { orderable: false, targets: [2, 6] }, { searchable: false, targets: [1, 6] }],
         pageLength: 5,

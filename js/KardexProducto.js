@@ -125,44 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
           mermaInputContainer.style.display = 'none';
       }
   });
-
-
-
-  
- //listado
-  /*
-  async function cargarProductos() {
-    try {
-        const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
-        const data = await response.json();
-
-        const tbody = document.getElementById("tbody-productos");
-        tbody.innerHTML = ""; // Limpiamos el contenido previo
-
-        data.forEach(item => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-              <td class="text-center">${item.ID}</td>
-              <td class="text-center">${item.Colaborador}</td>
-              <td class="text-center">${item.Producto}</td>
-              <td class="text-center">${item['Stock Actual']}</td>
-              <td class="text-center">${item['Motivo de Movimiento']}</td>
-              <td class="text-center">${item.Cantidad}</td>
-              <td class="text-center">${item.Creado}</td>
-              <td class="text-center">
-              <button class="btn btn-warning btn-sm btn-editar" data-id="<?= $row['id'] ?>">Editar</button>
-              </td>
-          `;
-          tbody.appendChild(tr);
-        });
-    } catch (error) {
-        console.error("Error al cargar productos:", error);
-    }
-}
-
- cargarProductos();
-  */
-
  
 });
 

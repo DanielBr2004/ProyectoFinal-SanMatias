@@ -114,24 +114,35 @@ const initDataTable = async () => {
                     text: '<i class="fas fa-file-excel"></i> ',
                     titleAttr: 'Exportar a Excel',
                     className: 'btn btn-success',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    }
                 },
                 {
                     extend: 'pdfHtml5',
                     text: '<i class="fas fa-file-pdf"></i> ',
                     titleAttr: 'Exportar a PDF',
                     className: 'btn btn-danger',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4] 
+                    }
                 },
                 {
                     extend: 'print',
                     text: '<i class="fa fa-print"></i> ',
                     titleAttr: 'Imprimir',
                     className: 'btn btn-info',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    }
                 },
             ],
             lengthMenu: [5, 10, 15, 20, 100, 200, 500],
             columnDefs: [
                 { className: 'text-center', targets: '_all' },
-                { orderable: false, targets: [4] }, 
+                { orderable: false, targets: [2] }, 
+                { searchable: false, targets: [1] },
+                { width: '20%', targets: [1] },
             ],
         });
         dataTableIsInitialized = true;
