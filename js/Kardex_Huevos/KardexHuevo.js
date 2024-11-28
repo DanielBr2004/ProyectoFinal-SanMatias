@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const tablaKardexHuevos = document.querySelector("#tbody-productos");
   const numLote = document.querySelector("#numLote");
 
+  let prodregistrada = false;
+
   idhuevo.addEventListener("change", () => {
     const huevo = idhuevo.value;
     if (huevo) {
@@ -16,22 +18,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   numLote.addEventListener("change", async () => {
     const idlote = numLote.value;
-    await ExisteProduccionRegistrada(idlote);
+    const idhuevoValue = idhuevo.value;
+    await ValidacionRegistro(idhuevoValue, idlote);
   });
 
-  numLote.addEventListener("change", async () => { 
-    const idlote = numLote.value;
-    if(idhuevo.value){
-      HuevoRegistrado(idhuevo.value, idlote);
-    }
-  })
   idhuevo.addEventListener("change", async () => {
     const idlote = numLote.value;
-    if(idlote){
-      HuevoRegistrado(idhuevo.value, idlote);
-    }
-  })
-  
+    const idhuevoValue = idhuevo.value;
+    await ValidacionRegistro(idhuevoValue, idlote);
+  });
 
   async function ShowStockActual(idhuevo) {
     try {
@@ -47,14 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=HasProduccion&idlote=${idlote}`);
       const data = await response.json();
-      if(data.length === 0){
+      if (data.length === 0) {
         showToast("Falta Registrar producción", "INFO", 3000);
         document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
-      }else{
-        document.querySelector("#registrar-colaborador").removeAttribute("disabled");
+        prodregistrada = false;
+        return false;
+      } else {
+        prodregistrada = true;
+        return true;
       }
     } catch (error) {
       console.error(error);
+      return false;
     }
   }
 
@@ -62,10 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=huevoRegistrado&idhuevo=${idhuevo}&idlote=${idlote}`);
       const data = await response.json();
-      if(data.length > 0){
-        showToast("El tipo de Huevo ya se registro en la produccion del dia", "INFO", 3000);
+      if (data.length > 0) {
+        showToast("El tipo de Huevo ya se registró en la producción del día", "INFO", 3000);
         document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
-      }else{
+      } else {
         document.querySelector("#registrar-colaborador").removeAttribute("disabled");
       }
     } catch (error) {
@@ -73,32 +72,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function ValidacionRegistro(idhuevo, idlote) {
+    if (idlote && idhuevo) {
+      const produccionExiste = await ExisteProduccionRegistrada(idlote);
+      if (produccionExiste) {
+        await HuevoRegistrado(idhuevo, idlote);
+      }
+    }
+  }
 
   if (idhuevo.value) {
     ShowStockActual(idhuevo.value);
   }
 
-  if(numLote.value){
+  if (numLote.value) {
     ExisteProduccionRegistrada(numLote.value);
   }
-  if(idhuevo.value && numLote.value){
+
+  if (idhuevo.value && numLote.value) {
     HuevoRegistrado(idhuevo.value, numLote.value);
   }
 
   (() => {
     fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
-        .then(response => response.json())
-        .then(data => {
-            const numlote = document.querySelector("#numLote")
-            data.forEach(row => {
-                const tagOption = document.createElement("option")
-                tagOption.value = row.idlote
-                tagOption.innerHTML = `Lote N° ${row.numLote}`
-                numlote.appendChild(tagOption)
-            });
-        })
-        .catch(e => { console.error(e) })
-})();
+      .then(response => response.json())
+      .then(data => {
+        const numlote = document.querySelector("#numLote");
+        data.forEach(row => {
+          const tagOption = document.createElement("option");
+          tagOption.value = row.idlote;
+          tagOption.innerHTML = `Lote N° ${row.numLote}`;
+          numlote.appendChild(tagOption);
+        });
+      })
+      .catch(e => { console.error(e) });
+  })();
 
   function ValidarCantidadSalida() {
     if (Motivomovimiento.value === 'S') {
@@ -141,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
         obtenerStocksProductos();
         actualizarTablaKardex();
-        
       })
       .catch(e => { console.error(e) });
   }
@@ -157,8 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ValidarCantidadSalida()) {
         return;
       }
-      
-      if(await ask("Estas Registrando aprox " + (Math.floor(CantidadEntrada.value / 180)) + " Paquetes, ¿Deseas Confirmar?" )) {
+
+      if (await ask("Estas Registrando aprox " + (Math.floor(CantidadEntrada.value / 180)) + " Paquetes, ¿Deseas Confirmar?")) {
         GuardarKardex();
         actualizarTablaKardex();
       }
@@ -187,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { id: "4", inputId: "hdobleyema" },
       { id: "5", inputId: "hmargarito" }
     ];
-  
+
     for (const producto of productos) {
       try {
         const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${producto.id}`);
@@ -211,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       const tbody = document.querySelector("#tbody-productos");
       tbody.innerHTML = ""; // Limpiar la tabla
-  
+
       data.forEach(item => {
         const tr = document.createElement("tr");
         tr.innerHTML = `

@@ -13,7 +13,7 @@ BEGIN
     DECLARE _alimentoAve DECIMAL(6,2);
 
     -- Inicializar _AvesInicio desde la tabla numLote
-    SELECT CantInicio INTO _AvesInicio FROM numLote WHERE idlote = _idlote ORDER BY create_at DESC LIMIT 1;
+    SELECT numaves  INTO _AvesInicio FROM controlLote WHERE idlote = _idlote ORDER BY create_at DESC LIMIT 1;
 
     -- Inicializar _numaves con _AvesInicio
     SET _numaves = _AvesInicio;
