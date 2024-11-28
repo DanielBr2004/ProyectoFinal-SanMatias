@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.clientes}</td>
                         <td class="text-center">${item.estado}</td>
                         <td class="text-center">
-                            <button class="btn btn-primary btn-sm" onclick="editarCliente(${item.idcliente})">
+                            <button class="btn btn-warning btn-sm" onclick="editarCliente(${item.idcliente})">
                                 <i class="fa-solid fa-pencil"></i>
                             </button>
                             <button class="btn btn-danger btn-sm" onclick="eliminarCliente(${item.idcliente})">
