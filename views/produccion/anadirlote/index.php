@@ -7,7 +7,7 @@
                   <h3 class="text-start"><i class="fa-solid fa-chevron-left" id="back-button" style="cursor: pointer;"></i></h3>
                   </div>
                   <div class="col-md-11">
-                    <h1 class="text-center">Lotes de la granja </h1>
+                    <h1 class="text-center">Lotes De la Granja </h1>
                   </div>
                 </div>
             </div>

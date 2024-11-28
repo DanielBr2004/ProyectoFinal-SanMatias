@@ -6,7 +6,7 @@
         <h5 class="text-end"><strong>Encargado:</strong>  <?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['apematerno'] ?> <?= $_SESSION['login']['nombres'] ?></h5>
     </div>   
     <div class="text-center mt-5">
-        <h1>Control de Inventario del Almacen de Huevos</h1>
+        <h1>Control de Inventario del Almacén de Huevos</h1>
     </div>
     <br>
     <br>
@@ -189,7 +189,7 @@
 <div class="container mt-5">
     <div class="card">
     <br>
-        <h2 class="text-center" style="color: #007bff;">Almacen Huevos</h2>
+        <h2 class="text-center" style="color: #007bff;">Almacén Huevos</h2>
     <div class="card-body">
     <div class="table-responsive"> 
     <table class="table table-bordered table-striped table-hover" id="tabla-listproductos">

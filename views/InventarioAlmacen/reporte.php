@@ -123,8 +123,7 @@ try {
 
         <!-- Footer -->
         <div class="footer">
-            <p>Reporte generado automáticamente El Sistema 2024 Granja Avícola "San Matias" S.A.C. - VERSION 1.0.0</p>
-            
+            <p> Reporte Sistematizado por el Sistema S.M Granja Avícola "San Matias" S.A.C. 2024 - VERSION 1.0.0</p>
         </div>
     </page>
     <?php

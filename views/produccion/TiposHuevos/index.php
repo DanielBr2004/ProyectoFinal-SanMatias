@@ -6,7 +6,7 @@
                   <h3 class="text-start"><i class="fa-solid fa-chevron-left" id="back-button" style="cursor: pointer;"></i></h3>
                   </div>
                   <div class="col-md-11">
-                    <h1 class="text-center">Productos de Comercializacion</h1>
+                    <h1 class="text-center">Productos de Comercialización</h1>
                   </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                         <!-- Tabla de Listado de Huevos Comerciales -->
     <div class="container mt-5">
         <div class="card">
-        <h2 class="text-center" style="color: #007bff;">Listado</h2>
+        <h2 class="text-center" style="color: #007bff;">Listado de Huevos</h2>
         <div class="card-body">
         <div class="table-responsive">
             <table id="tabla-tiposHuevos" class="table table-bordered table-striped table-hover">

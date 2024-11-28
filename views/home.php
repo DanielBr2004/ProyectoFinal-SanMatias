@@ -11,14 +11,14 @@
                 <div class="col-md-6 mb-3">
                     <div class="card" >
                         <div class="card-header text">
-                            <h4 class="text-center">Productos que necesita compra urgente</h4>
+                            <h4 class="text-center">Productos que Necesita Comprar Urgente</h4>
                         </div>
                         <div class="card-body" style="height: 382px; overflow-y: auto;">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                     <th scope="col">Producto</th>
-                                    <th scope="col">Stock En Almacen</th>
+                                    <th scope="col">Stock En Almacén</th>
                                     </tr>
                                 </thead>
                                 <tbody id="productos-tbody">
@@ -55,7 +55,7 @@
                 <div class="col">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="text-center">grafico del mes de produccion</h4>
+                                <h4 class="text-center">Grafico del Mes de Producción</h4>
                             </div>
                             <div class="card-body">
                                 <div class="card-body">

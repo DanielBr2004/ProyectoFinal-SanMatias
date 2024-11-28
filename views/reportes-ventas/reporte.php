@@ -156,7 +156,6 @@ try {
             <table class="details-table">
                 <thead>
                     <tr>
-                        <th>ID Detalle</th>
                         <th>Nombre del Producto</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
@@ -166,7 +165,6 @@ try {
                 <tbody>
                     <?php foreach ($detalles as $detalle): ?>
                     <tr>
-                        <td><?= $detalle['ID Detalle'] ?></td>
                         <td><?= $detalle['Nombre Huevo'] ?></td>
                         <td><?= $detalle['Cantidad'] ?></td>
                         <td><?= $detalle['Precio Venta'] ?></td>
@@ -179,7 +177,7 @@ try {
 
         <!-- Footer -->
         <div class="footer">
-            <p>Reporte generado automáticamente El Sistema 2024 Granja Avícola "San Matias" S.A.C. - VERSION 1.0.0</p>
+            <p> Reporte Sistematizado por el Sistema S.M Granja Avícola "San Matias" S.A.C. 2024 - VERSION 1.0.0</p>
         </div>
     </page>
 

@@ -2,7 +2,7 @@
         <!-- Page content-->
         <div class="container">
             <div class="text-center mt-5">
-                <h1>PRODUCCION</h1>
+                <h1>PRODUCCIÓN</h1>
             </div>
             <br>
             <div class="card mb-3"> 
@@ -16,7 +16,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Registrar Produccion del dia 
+                        Registrar Producción del día 
                     </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -67,7 +67,7 @@
 
             <div class="card">
                         <div class="card-body">
-                            <h3>Buscar Produccion Del Lote</h3>
+                            <h3>Buscar Producción Del Lote</h3>
                             <br>
                             <div class="row" style="width: 75%;">
                                 
@@ -91,7 +91,7 @@
                         <!-- Tabla de Listado de Producción -->
         <div class="container mt-5">
         <div class="card">
-        <h2 class="text-center" style="color: #007bff;">Listado</h2>
+        <h2 class="text-center" style="color: #007bff;">Listado de Lotes</h2>
         <div class="card-body">
         <div class="table-responsive">
             <table id="tabla-controllote" class="table table-bordered table-striped table-hover">
