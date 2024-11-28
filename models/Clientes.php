@@ -53,4 +53,31 @@ class Cliente extends Conexion{
         die($e->getMessage());
         }
       }
+          // Función para editar un cliente
+    public function edit($params = []): bool {
+      try {
+          $query = $this->pdo->prepare("CALL spu_cliente_editar(?, ?, ?, ?)");
+          $query->execute(array(
+              $params['idcliente'],
+              $params['nrodocumento'],
+              $params['tipodocumento'],
+              $params['cliente_nombre']
+          ));
+          return true;
+      } catch (Exception $e) {
+          return false;
+      }
+  }
+
+    // Función para eliminar un cliente
+    public function delete($idcliente): bool {
+      try {
+          $query = $this->pdo->prepare("CALL spu_cliente_eliminar(?)");
+          $query->execute(array($idcliente));
+          return true;
+      } catch (Exception $e) {
+          return false;
+      }
+  }
+    
   }

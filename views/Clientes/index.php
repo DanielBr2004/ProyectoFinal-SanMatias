@@ -129,7 +129,46 @@
         </div>
 
         
-
+        <!-- Modal para Editar Cliente -->
+        <div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarClienteModalLabel">Editar Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-editar-cliente">
+                            <input type="hidden" id="idcliente-edit">
+                            <div class="mb-3">
+                                <label for="nrodocumento-edit" class="form-label">N° Documento</label>
+                                <input type="text" class="form-control" id="nrodocumento-edit" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="razonsocial-edit" class="form-label">Razón Social</label>
+                                <input type="text" class="form-control" id="razonsocial-edit" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="direccion-edit" class="form-label">Dirección Fiscal</label>
+                                <input type="text" class="form-control" id="direccion-edit" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email-edit" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email-edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono-edit" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="telefono-edit" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         
         <!-- Bootstrap core JS-->

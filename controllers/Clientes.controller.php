@@ -7,7 +7,6 @@ header("Content-type: application/json; charset=utf-8");
 
 $cliente = new Cliente();
 
-  //Función de Registrar Colaborador, guardando el id
   if(isset($_POST['operacion'])){
 
     switch($_POST['operacion']){
@@ -25,6 +24,31 @@ $cliente = new Cliente();
             //Lo retonará en la vista como un JSON
             echo json_encode(["idcliente" => $idobtenido]);
             break;
+
+            case 'edit':
+              $datos = [
+                  "idcliente"       => $cliente->limpiarCadena($_POST['idcliente']),
+                  "nrodocumento"    => $cliente->limpiarCadena($_POST['nrodocumento']),
+                  "tipodocumento"   => $cliente->limpiarCadena($_POST['tipodocumento']),
+                  "cliente_nombre"  => $cliente->limpiarCadena($_POST['cliente_nombre'])
+              ];
+              $resultado = $cliente->edit($datos);
+              if ($resultado) {
+                  echo json_encode(["mensaje" => "Cliente actualizado correctamente."]);
+              } else {
+                  echo json_encode(["mensaje" => "Error al actualizar el cliente."]);
+              }
+              break;
+
+              case 'delete':
+                $idcliente = $cliente->limpiarCadena($_POST['idcliente']);
+                $resultado = $cliente->delete($idcliente);
+                if ($resultado) {
+                    echo json_encode(["mensaje" => "Cliente eliminado correctamente."]);
+                } else {
+                    echo json_encode(["mensaje" => "Error al eliminar el cliente."]);
+                }
+                break;
     }
   }
 

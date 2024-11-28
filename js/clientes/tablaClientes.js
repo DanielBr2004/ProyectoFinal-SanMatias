@@ -3,57 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let dataTableIsInitialized = false;
 
     const dataTableOptions = {
-        dom: 'Bfrtilp',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel"></i> ',
-                titleAttr: 'Exportar a Excel',
-                className: 'btn btn-success',
-            },
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf"></i> ',
-                titleAttr: 'Exportar a PDF',
-                className: 'btn btn-danger',
-            },
-            {
-                extend: 'print',
-                text: '<i class="fa fa-print"></i> ',
-                titleAttr: 'Imprimir',
-                className: 'btn btn-info',
-            },
-        ],
-        lengthMenu: [5, 10, 15, 20, 100, 200, 500],
-        columnDefs: [
-            { className: 'text-center', targets: '_all' },
-            { orderable: false, targets: [4, 5] },
-            { searchable: false, targets: [4, 5] },
-            { width: '20%', targets: [1] },
-        ],
-        pageLength: 5,
-        destroy: true,
-        language: {
-            processing: 'Procesando...',
-            lengthMenu: 'Mostrar _MENU_ registros',
-            zeroRecords: 'No se encontraron resultados',
-            emptyTable: 'Ningún dato disponible en esta tabla',
-            info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-            infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
-            infoFiltered: '(filtrado de un total de _MAX_ registros)',
-            search: 'Buscar:',
-            paginate: {
-                first: 'Primero',
-                last: 'Último',
-                next: 'Siguiente',
-                previous: 'Anterior',
-            },
-            buttons: {
-                excel: 'Excel',
-                pdf: 'PDF',
-                print: 'Imprimir',
-            },
-        },
+        // Configuración de DataTable (como ya la tienes)
     };
 
     const desplegarDatos = async () => {
@@ -69,12 +19,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.nrodocumento}</td>
                         <td class="text-center">${item.tipodocumento}</td>
                         <td class="text-center">${item.clientes}</td>
-                        <td class="text-center"></td>
+                        <td class="text-center">${item.estado}</td>
                         <td class="text-center">
-                            <a href="EditarUsuario.php?id=${item.idcolaborador}" class="btn btn-primary">
+                            <button class="btn btn-primary btn-sm" onclick="editarCliente(${item.idcliente})">
                                 <i class="fa-solid fa-pencil"></i>
-                            </a>
-                            <button class="btn btn-danger" onclick="eliminarUsuario(${item.idcolaborador})">
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarCliente(${item.idcliente})">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
