@@ -18,6 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const idlote = numLote.value;
     await ExisteProduccionRegistrada(idlote);
   });
+
+  numLote.addEventListener("change", async () => { 
+    const idlote = numLote.value;
+    if(idhuevo.value){
+      HuevoRegistrado(idhuevo.value, idlote);
+    }
+  })
+  idhuevo.addEventListener("change", async () => {
+    const idlote = numLote.value;
+    if(idlote){
+      HuevoRegistrado(idhuevo.value, idlote);
+    }
+  })
   
 
   async function ShowStockActual(idhuevo) {
@@ -45,6 +58,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function HuevoRegistrado(idhuevo, idlote) {
+    try {
+      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=huevoRegistrado&idhuevo=${idhuevo}&idlote=${idlote}`);
+      const data = await response.json();
+      if(data.length > 0){
+        showToast("El tipo de Huevo ya se registro en la produccion del dia", "INFO", 3000);
+        document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
+      }else{
+        document.querySelector("#registrar-colaborador").removeAttribute("disabled");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   if (idhuevo.value) {
     ShowStockActual(idhuevo.value);
@@ -52,6 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if(numLote.value){
     ExisteProduccionRegistrada(numLote.value);
+  }
+  if(idhuevo.value && numLote.value){
+    HuevoRegistrado(idhuevo.value, numLote.value);
   }
 
   (() => {

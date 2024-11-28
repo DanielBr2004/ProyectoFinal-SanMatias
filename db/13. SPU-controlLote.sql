@@ -109,6 +109,7 @@ BEGIN
 END;
 
 
+-- ------------------------------------------- Validar Producción -----------------------------------------------------
 CREATE PROCEDURE spu_validar_produccion
 (
     IN _idlote INT
@@ -118,4 +119,18 @@ BEGIN
     FROM controlLote 
     WHERE idlote =  _idlote
     AND DATE(create_at) = CURRENT_DATE();
+END;
+
+-- ------------------------------------------- Validar Produccto Registrado -----------------------------------------------------
+CREATE PROCEDURE spu_validar_producc_registrado
+(
+    IN _idHuevo INT,
+    IN _idlote INT
+)
+BEGIN
+    SELECT idHuevo, idlote, creado 
+    FROM KardexAlmHuevo 
+    WHERE idHuevo = _idHuevo
+    AND idlote = _idlote 
+    AND DATE(creado) = CURRENT_DATE();
 END;

@@ -57,7 +57,24 @@ class KardexHuevo extends Conexion{
         catch(Exception $e){
         die($e->getMessage());
         }
-      }
+    }
+    public function huevoRegistrado($params = []): array {
+        try {
+            $query = $this->pdo->prepare("CALL spu_validar_producc_registrado(?,?)");
+            
+            // Combine parameters into single array
+            $parameters = [
+                $params['idhuevo'],
+                $params['idlote']
+            ];
+            
+            $query->execute($parameters);
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
     public function getAll():array{
         return parent::getData('spu_vista_kardexhuevo');

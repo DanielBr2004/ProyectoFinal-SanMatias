@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             extend: 'pdfHtml5',
             text: '<i class="fas fa-file-pdf"></i>',
             titleAttr: 'Exportar a PDF',
+            download: 'open',
             className: 'btn btn-danger',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7] // Only include first 8 columns
+            },
         },
         {
             extend: 'print',
