@@ -5,12 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const CantidadEntrada = document.querySelector("#cantidad");
   const Motivomovimiento = document.querySelector("#Motivomovimiento");
   const tablaKardexHuevos = document.querySelector("#tbody-productos");
+  const numLote = document.querySelector("#numLote");
 
   idhuevo.addEventListener("change", () => {
     const huevo = idhuevo.value;
     if (huevo) {
       ShowStockActual(huevo);
     }
+  });
+
+  numLote.addEventListener("change", async () => {
+    const idlote = numLote.value;
+    await ExisteProduccionRegistrada(idlote);
   });
   
 
@@ -24,8 +30,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function ExisteProduccionRegistrada(idlote) {
+    try {
+      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=HasProduccion&idlote=${idlote}`);
+      const data = await response.json();
+      if(data.length === 0){
+        showToast("Falta Registrar producción", "INFO", 3000);
+        document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
+      }else{
+        document.querySelector("#registrar-colaborador").removeAttribute("disabled");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   if (idhuevo.value) {
     ShowStockActual(idhuevo.value);
+  }
+
+  if(numLote.value){
+    ExisteProduccionRegistrada(numLote.value);
   }
 
   (() => {

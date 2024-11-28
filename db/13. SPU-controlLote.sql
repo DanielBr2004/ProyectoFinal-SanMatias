@@ -107,3 +107,15 @@ BEGIN
     AND nl.estado = 'A';
 
 END;
+
+
+CREATE PROCEDURE spu_validar_produccion
+(
+    IN _idlote INT
+)
+BEGIN
+    SELECT * 
+    FROM controlLote 
+    WHERE idlote =  _idlote
+    AND DATE(create_at) = CURRENT_DATE();
+END;

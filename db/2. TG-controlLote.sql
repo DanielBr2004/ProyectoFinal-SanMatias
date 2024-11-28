@@ -3,6 +3,7 @@ USE granjasanmatias;
 
  drop trigger if exists `trg_sumar_cantidad_kardex`;
 
+-- Trigger para sumar la cantidad de huevos en el último registro de controlLote
 CREATE TRIGGER trg_sumar_cantidad_kardex
 AFTER INSERT ON KardexAlmHuevo
 FOR EACH ROW
@@ -20,37 +21,6 @@ BEGIN
     ORDER BY idcontrollote DESC
     LIMIT 1;
 END;
-/*
-CREATE TRIGGER trg_sumar_prod_kardex
-    AFTER UPDATE ON controlLote
-    FOR EACH ROW
-    BEGIN
-    DECLARE numAves INT;
-    DECLARE porcentajeproduccion DECIMAL(6,2);
-
-    -- Obtener el número de aves del último registro en controlLote
-    SELECT numaves INTO numAves
-    FROM controlLote
-    WHERE idlote = NEW.idlote
-    ORDER BY idcontrollote DESC
-    LIMIT 1;
-
-    -- Calcular la producción solo si numAves es mayor que 0
-    IF numAves > 0 THEN
-        SET porcentajeproduccion = (totalCantidad / numAves) * 100;
-    ELSE
-        SET porcentajeproduccion = 0;
-    END IF;
-
-    -- Actualizar la columna produccion en el último registro de controlLote
-    UPDATE controlLote
-    SET produccion = porcentajeproduccion
-    WHERE idlote = NEW.idlote
-    ORDER BY idcontrollote DESC
-    LIMIT 1;
-END;
-*/
-
 
 
 
