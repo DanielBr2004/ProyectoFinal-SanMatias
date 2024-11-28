@@ -1,12 +1,147 @@
+// Variables globales
+let dataTable;
+let dataTableIsInitialized = false;
+let desplegarDatos;
+
+// Función eliminar cliente
+const eliminarCliente = async (idcliente) => {
+    try {
+        const confirmacion = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas eliminar este cliente?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (confirmacion.isConfirmed) {
+            const params = new FormData();
+            params.append("operacion", "delete");
+            params.append("idcliente", idcliente);
+
+            const response = await fetch('../../controllers/Clientes.controller.php', {
+                method: 'POST',
+                body: params
+            });
+            
+            const result = await response.json();
+            
+            if (result.mensaje) {
+                showToast(result.mensaje, "SUCCESS", 1500);
+                await desplegarDatos();
+            }
+        }
+    } catch (error) {
+        console.error('Error en la eliminación:', error);
+        showToast("Error al eliminar el cliente", "ERROR", 1500);
+    }
+};
+
+// Función editar cliente
+const editarCliente = async (idcliente) => {
+    try {
+        const response = await fetch('../../controllers/Clientes.controller.php?operacion=getAllClient');
+        const clientes = await response.json();
+        const cliente = clientes.find((item) => item.idcliente === idcliente);
+
+        if (cliente) {
+            document.querySelector('#idcliente-edit').value = cliente.idcliente;
+            document.querySelector('#nrodocumento-edit').value = cliente.nrodocumento;
+            document.querySelector('#tipodoc-edit').value = cliente.tipodocumento;
+            document.querySelector('#nomcliente-edit').value = cliente.clientes;
+
+            const modal = new bootstrap.Modal(document.getElementById('editarClienteModal'));
+            modal.show();
+        } else {
+            showToast("No se encontró el cliente", "ERROR", 1500);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showToast("Error al cargar los datos del cliente", "ERROR", 1500);
+    }
+};
+    // Event listener para el formulario de edición
+    document.querySelector('#form-editar-cliente').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        try {
+            const params = new FormData();
+            params.append('operacion', 'edit');
+            params.append('idcliente', document.querySelector('#idcliente-edit').value);
+            params.append('nrodocumento', document.querySelector('#nrodocumento-edit').value);
+            params.append('tipodocumento', document.querySelector('#tipodoc-edit').value);
+            params.append('cliente_nombre', document.querySelector('#nomcliente-edit').value);
+
+            const response = await fetch('../../controllers/Clientes.controller.php', {
+                method: 'POST',
+                body: params
+            });
+            
+            const result = await response.json();
+
+            if (result.mensaje) {
+                showToast(result.mensaje, 'SUCCESS', 1500);
+                await initDataTable();
+                const modalElement = document.getElementById('editarClienteModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+            }
+        } catch (error) {
+            console.error('Error en la edición:', error);
+            showToast('Error al editar el cliente', 'ERROR', 1500);
+        }
+    });
+
+// Función para inicializar DataTable
+const initDataTable = async () => {
+    if (dataTableIsInitialized) {
+        dataTable.destroy();
+    }
+
+    await desplegarDatos();
+
+    setTimeout(() => {
+        dataTable = $('#tabla-client').DataTable({
+            // Tus opciones de DataTable aquí
+            responsive: true,
+            dom: 'Bfrtilp',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fas fa-file-excel"></i> ',
+                    titleAttr: 'Exportar a Excel',
+                    className: 'btn btn-success',
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fas fa-file-pdf"></i> ',
+                    titleAttr: 'Exportar a PDF',
+                    className: 'btn btn-danger',
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fa fa-print"></i> ',
+                    titleAttr: 'Imprimir',
+                    className: 'btn btn-info',
+                },
+            ],
+            lengthMenu: [5, 10, 15, 20, 100, 200, 500],
+            columnDefs: [
+                { className: 'text-center', targets: '_all' },
+                { orderable: false, targets: [4] }, 
+            ],
+        });
+        dataTableIsInitialized = true;
+    }, 200);
+};
+
+// Evento DOMContentLoaded
 document.addEventListener('DOMContentLoaded', async function() {
-    let dataTable;
-    let dataTableIsInitialized = false;
-
-    const dataTableOptions = {
-        // Configuración de DataTable (como ya la tienes)
-    };
-
-    const desplegarDatos = async () => {
+    // Definición de desplegarDatos
+    desplegarDatos = async () => {
         try {
             const response = await fetch('../../controllers/Clientes.controller.php?operacion=getAllClient');
             const data = await response.json();
@@ -34,26 +169,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             const tbodyElement = document.getElementById('tbody-clientes');
             if (tbodyElement) {
                 tbodyElement.innerHTML = content;
-            } else {
-                console.error("El elemento con ID 'tbody-clientes' no se encontró en el DOM.");
             }
         } catch (error) {
-            console.error('Error al cargar los datos de los clientes:', error);
+            console.error('Error al cargar los datos:', error);
         }
     };
 
-    const initDataTable = async () => {
-        if (dataTableIsInitialized) {
-            dataTable.destroy();
-        }
 
-        await desplegarDatos();
-
-        setTimeout(() => {
-            dataTable = $('#tabla-client').DataTable(dataTableOptions);
-            dataTableIsInitialized = true;
-        }, 200); // Delay initialization
-    };
-
+    // Inicializar la tabla
     await initDataTable();
 });

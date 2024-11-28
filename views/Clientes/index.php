@@ -112,7 +112,7 @@
                         
                         <thead>
                             <tr>
-                                <th class="text-center">#</th>
+                                <th class="text-center">ID</th>
                                 <th class="text-center">N° Documento</th>
                                 <th class="text-center">Tipo Documento</th>
                                 <th class="text-center">Cliente</th>
@@ -142,27 +142,18 @@
                             <input type="hidden" id="idcliente-edit">
                             <div class="mb-3">
                                 <label for="nrodocumento-edit" class="form-label">N° Documento</label>
-                                <input type="text" class="form-control" id="nrodocumento-edit" required>
+                                <input type="number" class="form-control" id="nrodocumento-edit" required>
                             </div>
                             <div class="mb-3">
-                                <label for="razonsocial-edit" class="form-label">Razón Social</label>
-                                <input type="text" class="form-control" id="razonsocial-edit" required>
+                                <label for="tipodoc-edit" class="form-label">Tipo Documento</label>
+                                <input type="text" class="form-control" id="tipodoc-edit">
                             </div>
                             <div class="mb-3">
-                                <label for="direccion-edit" class="form-label">Dirección Fiscal</label>
-                                <input type="text" class="form-control" id="direccion-edit" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email-edit" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email-edit">
-                            </div>
-                            <div class="mb-3">
-                                <label for="telefono-edit" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono-edit" required>
+                                <label for="nomcliente-edit" class="form-label">Cliente</label>
+                                <input type="text" class="form-control" id="nomcliente-edit" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
