@@ -133,6 +133,7 @@ telefono			CHAR(9) NULL,
 tipodocumento		CHAR(3) NOT NULL,
 razonsocial			VARCHAR(90) NULL,
 direccion			VARCHAR(90) NULL,
+estado            CHAR(1) DEFAULT 'A',
 email             VARCHAR(90) NULL,  
 CONSTRAINT fk_idpersona_cliente FOREIGN KEY (idpersona) REFERENCES personas(idpersona)
 )engine = InnoDB;
