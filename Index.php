@@ -24,7 +24,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                 <div class="row d-flex justify-content-center align-items-center">
                 <div class=" presentacion col-md-6 ">
                         <h2>Bienvenidos!</h2 >
-                            <h3>Granja San Matias SAC</h3>
+                            <h3>Granja San Matías SAC</h3>
                             <p>La Granja tiene como finalidad 
                                 la produccion de huevos
                                 ecoamigables con fines 
@@ -44,7 +44,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                         </div>
                         <div>
                             <a href="views/registro.php" style="color: white; font-weight: bold; display: block; text-align: right;">
-                                Olvide mi contraseña
+                                Olvidé mi contraseña
                             </a>
                         </div>
                         <div class="check">

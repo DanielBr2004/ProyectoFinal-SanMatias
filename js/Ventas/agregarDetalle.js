@@ -84,7 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </td>
             <td class="text-center">
-                <input type="number" id="cantidadVenta" minlength="0" class="form-control cantidad-venta" required>
+                <div class="d-flex align-items-center">
+                    <input type="number" id="cantidadVenta" minlength="0" class="form-control cantidad-venta" required>
+                    <label class="ms-2 unidad-label"></label>
+                </div>
             </td>
             <td class="text-center">
                 <input type="number" id="pesoTotal" minlength="0" step="0.01" class="form-control pesoTotal-venta" required>
@@ -125,10 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         unidadMedida.addEventListener("change", async () => {
-            precioUnitario.value = "";
             cantidadVenta.value = "";
+            const unidadLabel = tr.querySelector(".unidad-label");
+            unidadLabel.textContent = unidadMedida.value === 'Pq' ? 'paq' : 'unid';
             
-            // Don't clear product if selected, just update stock display
             if (producto.value) {
                 await ShowStockActual(producto.value, stockLabel, unidadMedida);
             } else {
