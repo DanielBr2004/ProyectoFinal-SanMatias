@@ -108,8 +108,8 @@
                         <input type="text" class="form-control" id="huevo-editar" required>
                     </div>
                     <div class="mb-3">
-                        <label for="precio-editar" class="form-label">Precio KG</label>
-                        <input type="number" class="form-control" id="precio-editar" step="any" required>
+                      <label for="precio-editar" class="form-label">Precio KG</label>
+                      <input type="number" class="form-control" id="precio-editar" step="0.01" min="0" required>
                     </div>
                     <div class="mb-3">
                         <label for="descripcion-editar" class="form-label">Descripcion</label>

@@ -36,20 +36,20 @@ header("Content-type: application/json; charset=utf-8");
             echo json_encode(["idtipohuevo" => $idobtenido]);
             break;
 
-          case 'editar':
-              if (isset($_POST['idhuevo']) && isset($_POST['tiposHuevos']) && trim($_POST['tiposHuevos']) != '' && isset($_POST['PrecioKg'])) {
-                  $datos = [
-                      "idhuevo" => $_POST['idhuevo'],
-                      "tiposHuevos" => $tipohuevo->limpiarCadena($_POST['tiposHuevos']),
-                      "PrecioKg" => (int)$_POST['PrecioKg'],  
-                      "descripcion" => $tipohuevo->limpiarCadena($_POST['descripcion'])
-                  ];
-                  $tipohuevo->editarTipoHuevos($datos);
-                  echo json_encode(["status" => "success", "message" => "Tipo de huevo actualizado exitosamente."]);
-              } else {
-                  echo json_encode(["status" => "error", "message" => "Datos incompletos para editar el tipo de huevo."]);
-              }
-              break;
+            case 'editar':
+                if (isset($_POST['idhuevo']) && isset($_POST['tiposHuevos']) && trim($_POST['tiposHuevos']) != '' && isset($_POST['PrecioKg'])) {
+                    $datos = [
+                        "idhuevo" => $_POST['idhuevo'],
+                        "tiposHuevos" => $tipohuevo->limpiarCadena($_POST['tiposHuevos']),
+                        "PrecioKg" => floatval($_POST['PrecioKg']), // Cambiar (int) por floatval()
+                        "descripcion" => $tipohuevo->limpiarCadena($_POST['descripcion'])
+                    ];
+                    $tipohuevo->editarTipoHuevos($datos);
+                    echo json_encode(["status" => "success", "message" => "Tipo de huevo actualizado exitosamente."]);
+                } else {
+                    echo json_encode(["status" => "error", "message" => "Datos incompletos para editar el tipo de huevo."]);
+                }
+                break;
 
           case 'eliminar':
               if (isset($_POST['idhuevo'])) {

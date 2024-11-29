@@ -99,7 +99,7 @@ function $$(selector = null) {
           <tr data-id="${item.idhuevo}">
             <td class="text-center">${index + 1}</td>
             <td class="text-center">${item.tiposHuevos}</td>
-            <td class="text-center">${item.PrecioKg}</td>
+            <td class="text-center">${parseFloat(item.PrecioKg).toFixed(2)}</td>
             <td class="text-center">${item.descripcion}</td>
             <td class="text-center">
               <button class="btn btn-warning btn-sm" onclick="editarTipoHuevo(${item.idhuevo})">
