@@ -78,6 +78,5 @@ class Cliente extends Conexion{
       } catch (Exception $e) {
           return false;
       }
-  }
-    
+  }  
   }

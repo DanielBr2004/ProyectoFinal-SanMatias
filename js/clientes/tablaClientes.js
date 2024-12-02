@@ -94,7 +94,7 @@ const editarCliente = async (idcliente) => {
             showToast('Error al editar el cliente', 'ERROR', 1500);
         }
     });
-
+    
 // Función para inicializar DataTable
 const initDataTable = async () => {
     if (dataTableIsInitialized) {
