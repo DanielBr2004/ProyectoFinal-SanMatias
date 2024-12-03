@@ -115,7 +115,7 @@ const initDataTable = async () => {
                     titleAttr: 'Exportar a Excel',
                     className: 'btn btn-success',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4]  // Asegúrate de incluir la nueva columna
+                        columns: [0, 1, 2, 3]  // Asegúrate de incluir la nueva columna
                     }
                 },
                 {
@@ -124,7 +124,7 @@ const initDataTable = async () => {
                     titleAttr: 'Exportar a PDF',
                     className: 'btn btn-danger',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4]  // Asegúrate de incluir la nueva columna
+                        columns: [0, 1, 2, 3]  // Asegúrate de incluir la nueva columna
                     }
                 },
                 {
@@ -133,7 +133,7 @@ const initDataTable = async () => {
                     titleAttr: 'Imprimir',
                     className: 'btn btn-info',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4]  // Asegúrate de incluir la nueva columna
+                        columns: [0, 1, 2, 3]  // Asegúrate de incluir la nueva columna
                     }
                 },
             ],
