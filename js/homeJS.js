@@ -161,10 +161,34 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         }
                     });
+
+                    // Mapeo de claves a nombres personalizados
+                    const keyMap = {
+                        numLote: 'N° Lote',
+                        cantidad_inicial: 'N° Gallinas',
+                        mortalidad_acumulada: 'Mortalidad',
+                        edad_ave: 'Edad (Semanas)',
+                        create_at: 'Fecha de Recepcion',
+                        ratio: 'Porcentaje Mortalidad',
+                        // Agrega más mapeos según sea necesario
+                    };
+
+                    // Actualiza el div con la clase detalles
+                    var detallesDiv = document.querySelector('.detalles');
+                    detallesDiv.innerHTML = ''; // Limpia el contenido anterior
+                    let isFirst = true;
+                    for (const [key, value] of Object.entries(record)) {
+                        var detailItem = document.createElement('div');
+                        var displayKey = keyMap[key] || key; // Usa el nombre personalizado si existe, de lo contrario usa la clave original
+                        if (isFirst) {
+                            detailItem.innerHTML = `<br><strong>${displayKey}:</strong><br><span class="value">${value}</span>`;
+                            isFirst = false;
+                        } else {
+                            detailItem.innerHTML = `<strong>${displayKey}:</strong><br><span class="value">${value}</span>`;
+                        }
+                        detallesDiv.appendChild(detailItem);
+                    }
                 })
                 .catch(error => console.error('Error al obtener datos:', error));
         }
-
-        
-        
 });

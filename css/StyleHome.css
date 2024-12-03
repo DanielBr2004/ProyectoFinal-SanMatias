@@ -10,3 +10,8 @@
   font-size: 12px; /* Tamaño de fuente pequeño */
   display: inline-block; /* Mostrar como bloque en línea */
 }
+
+.detalles .value {
+  display: block;
+  margin-left: 0.5em; /* Sangría de 2 espacios */
+}

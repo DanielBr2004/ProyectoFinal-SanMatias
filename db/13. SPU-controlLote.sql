@@ -83,12 +83,15 @@ BEGIN
     DECLARE _cantInicio INT;
     DECLARE _mortalidadTotal INT;
     DECLARE _cantActual INT;
+    DECLARE _edadAve INT;
+    DECLARE _ratio DECIMAL(10, 2);
 
-    -- Get initial quantity only for active lots
-    SELECT CantInicio INTO _cantInicio
+    -- Get initial quantity and age only for active lots
+    SELECT CantInicio, edadAve INTO _cantInicio, _edadAve
     FROM numLote 
     WHERE idlote = _idlote 
     AND estado = 'A';
+
     -- Calculate total mortality
     SELECT IFNULL(SUM(mortalidad), 0) INTO _mortalidadTotal
     FROM controlLote
@@ -97,17 +100,26 @@ BEGIN
     -- Calculate current quantity
     SET _cantActual = _cantInicio - _mortalidadTotal;
 
+    -- Calculate ratio
+    IF _mortalidadTotal > 0 THEN
+        SET _ratio = (_mortalidadTotal / _cantInicio) * 100;
+    ELSE
+        SET _ratio = 0;
+    END IF;
+
     -- Return results
     SELECT 
         nl.numLote,
         _cantInicio AS cantidad_inicial,
-        _mortalidadTotal AS mortalidad_acumulada
+        _mortalidadTotal AS mortalidad_acumulada,
+        _edadAve AS edad_ave,
+        DATE(nl.create_at) AS create_at,
+        _ratio AS ratio
     FROM numLote nl
     WHERE nl.idlote = _idlote 
     AND nl.estado = 'A';
 
 END;
-
 
 -- ------------------------------------------- Validar Producción -----------------------------------------------------
 CREATE PROCEDURE spu_validar_produccion

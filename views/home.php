@@ -43,9 +43,14 @@
                                     <label for="idlote"><i class="fa-solid fa-chart-line"></i> Lote a Filtrar</label>
                                 </div>
                             </div>
-                                <div style="width: 300px; height: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+                            <div class="row">
+                            <div class="col-md-8" style="width: 300px; height: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
                                     <canvas id="myPieChart"></canvas>
                                 </div>
+                                <div class="col-md-4 detalles">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
