@@ -10,6 +10,7 @@ $cliente = new Cliente();
   if(isset($_POST['operacion'])){
 
     switch($_POST['operacion']){
+        // AGREGAR CLIENTE
         case 'add':
             $datos = [
                 "idpersona"       => $cliente->limpiarCadena($_POST['idpersona']),
@@ -24,7 +25,7 @@ $cliente = new Cliente();
             //Lo retonará en la vista como un JSON
             echo json_encode(["idcliente" => $idobtenido]);
             break;
-
+            // EDITAR CLIENTE
             case 'edit':
               $datos = [
                   "idcliente"       => $cliente->limpiarCadena($_POST['idcliente']),
@@ -39,7 +40,7 @@ $cliente = new Cliente();
                   echo json_encode(["mensaje" => "Error al actualizar el cliente."]);
               }
               break;
-
+              // ELIMINAR CLIENTE
               case 'delete':
                 $idcliente = $cliente->limpiarCadena($_POST['idcliente']);
                 $resultado = $cliente->delete($idcliente);

@@ -119,3 +119,6 @@ BEGIN
     DELETE FROM cliente
     WHERE idcliente = _idcliente;
 END;
+
+-- -------------------- DESACTIVAR Y ACTIVAR CLIENTE --------------------
+

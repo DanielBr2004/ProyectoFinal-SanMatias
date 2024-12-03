@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function() {
               titleAttr: 'Exportar a Excel',
               className: 'btn btn-success',
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5, 6] // Only include first 8 columns
+                columns: [0, 1, 2, 3, 4, 5] // Only include first 8 columns
             }
           },
           {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
               titleAttr: 'Exportar a PDF',
               className: 'btn btn-danger',
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5, 6] // Only include first 8 columns
+                columns: [0, 1, 2, 3, 4, 5] // Only include first 8 columns
             }
           },
           {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
               titleAttr: 'Imprimir',
               className: 'btn btn-info',
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5, 6] // Only include first 8 columns
+                columns: [0, 1, 2, 3, 4, 5] // Only include first 8 columns
             }
           },
       ],
@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                       <td class="text-center">${item.apematerno}</td>
                       <td class="text-center">${item.nombres}</td>
                       <td class="text-center">${item.nomusuario}</td>
-                      <td class="text-center">${item.estado}</td>
                       <td class="text-center">
                           <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idcolaborador}, '${item.apepaterno}', '${item.apematerno}', '${item.nombres}')"><i class="fa-solid fa-pen-to-square"></i></button>
                            <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${item.idcolaborador})"><i class="fa-solid fa-trash-can"></i></button>

@@ -94,7 +94,6 @@
                                 <th>Apellido Materno</th>
                                 <th>Nombres</th>
                                 <th>Nombre de Usuario</th>
-                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
