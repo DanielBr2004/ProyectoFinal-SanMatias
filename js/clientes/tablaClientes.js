@@ -115,7 +115,7 @@ const initDataTable = async () => {
                     titleAttr: 'Exportar a Excel',
                     className: 'btn btn-success',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
+                        columns: [0, 1, 2, 3, 4]  // Asegúrate de incluir la nueva columna
                     }
                 },
                 {
@@ -124,7 +124,7 @@ const initDataTable = async () => {
                     titleAttr: 'Exportar a PDF',
                     className: 'btn btn-danger',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4] 
+                        columns: [0, 1, 2, 3, 4]  // Asegúrate de incluir la nueva columna
                     }
                 },
                 {
@@ -133,14 +133,14 @@ const initDataTable = async () => {
                     titleAttr: 'Imprimir',
                     className: 'btn btn-info',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
+                        columns: [0, 1, 2, 3, 4]  // Asegúrate de incluir la nueva columna
                     }
                 },
             ],
             lengthMenu: [5, 10, 15, 20, 100, 200, 500],
             columnDefs: [
                 { className: 'text-center', targets: '_all' },
-                { orderable: false, targets: [2] }, 
+                { orderable: false, targets: [2, 4] }, // No ordenable la columna de Botón de Estado
                 { searchable: false, targets: [1] },
                 { width: '20%', targets: [1] },
             ],
@@ -165,7 +165,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.nrodocumento}</td>
                         <td class="text-center">${item.tipodocumento}</td>
                         <td class="text-center">${item.clientes}</td>
-                        <td class="text-center">${item.estado}</td>
                         <td class="text-center">
                             <button class="btn btn-warning btn-sm" onclick="editarCliente(${item.idcliente})">
                                 <i class="fa-solid fa-pencil"></i>

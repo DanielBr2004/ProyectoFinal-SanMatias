@@ -43,21 +43,22 @@ BEGIN
 END;
  -- ------------------------------------------- Listar Clientes ----------------------------------------------------- 
  drop procedure if exists `spu_listar_cliente`;
+delimiter $$
 CREATE PROCEDURE spu_listar_cliente()
 BEGIN
-	SELECT 
-		CLI.idcliente,
-		PER.nrodocumento,
+    SELECT 
+        CLI.idcliente,
+        PER.nrodocumento,
         CLI.tipodocumento,
         CASE
-        WHEN CLI.tipodocumento ="RUC" THEN CLI.razonsocial
-        WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PER.nombres,' ',PER.apematerno, ' ',PER.apepaterno)
-		END AS clientes
-		FROM cliente CLI
-        INNER JOIN personas PER
-        ON PER.idpersona = CLI.idpersona ORDER BY idcliente DESC;
+            WHEN CLI.tipodocumento = "RUC" THEN CLI.razonsocial
+            WHEN CLI.tipodocumento = "DNI" THEN CONCAT(PER.nombres, ' ', PER.apematerno, ' ', PER.apepaterno)
+        END AS clientes
+    FROM cliente CLI
+    INNER JOIN personas PER
+        ON PER.idpersona = CLI.idpersona 
+    ORDER BY idcliente DESC;
 END;
-
 -- -------------------------------- editar ----------------------------------
 DROP PROCEDURE IF EXISTS `spu_cliente_editar`;
 
@@ -119,6 +120,3 @@ BEGIN
     DELETE FROM cliente
     WHERE idcliente = _idcliente;
 END;
-
--- -------------------- DESACTIVAR Y ACTIVAR CLIENTE --------------------
-

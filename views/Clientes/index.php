@@ -116,7 +116,6 @@
                                 <th class="text-center">N° Documento</th>
                                 <th class="text-center">Tipo Documento</th>
                                 <th class="text-center">Cliente</th>
-                                <th class="text-center">Estado</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
