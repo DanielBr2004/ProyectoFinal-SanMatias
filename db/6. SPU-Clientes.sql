@@ -43,7 +43,6 @@ BEGIN
 END;
  -- ------------------------------------------- Listar Clientes ----------------------------------------------------- 
  drop procedure if exists `spu_listar_cliente`;
-delimiter $$
 CREATE PROCEDURE spu_listar_cliente()
 BEGIN
     SELECT 
