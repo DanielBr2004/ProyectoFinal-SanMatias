@@ -39,26 +39,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(response => response.json())
                 .then(data => {
                     // Crear el gráfico de líneas
+
+                    const response = data[0];
+
+                    console.log(response);
+
                     const ctx = document.getElementById('myLineChart').getContext('2d');
                     const labels = data.map(producto => producto.fecha); // Asegúrate de que 'fecha' es el campo correcto
                     const stockData = data.map(producto => producto.produccion); // Asegúrate de que 'produccion' es el campo correcto
-        
+                    const alimentoData = data.map(producto => producto.alimentoAve); // Asegúrate de que 'alimentoAve' es el campo correcto
+
                     // Destruir el gráfico existente si ya existe
                     if (window.myLineChart && typeof window.myLineChart.destroy === 'function') {
                         window.myLineChart.destroy();
                     }
-        
+
                     window.myLineChart = new Chart(ctx, {
                         type: 'line',
                         data: {
                             labels: labels,
-                            datasets: [{
-                                label: 'Producción',
-                                data: stockData,
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderWidth: 1
-                            }]
+                            datasets: [
+                                {
+                                    label: 'Producción',
+                                    data: stockData,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Alimento Ave',
+                                    data: alimentoData,
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderWidth: 1
+                                }
+                            ]
                         },
                         options: {
                             scales: {

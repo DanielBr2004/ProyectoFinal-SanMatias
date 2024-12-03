@@ -48,6 +48,7 @@ BEGIN
     WHERE idlote = _idlote;
 END;    
 
+-- ------------------------------------------- Listar Producción Lote -----------------------------------------------------
 CREATE PROCEDURE spu_listar_produccionLote(
     IN _numLote INT
 )
@@ -55,6 +56,7 @@ BEGIN
     SELECT * FROM (
         SELECT 
             cl.idlote,
+            cl.alimentoAve,
             DATE(cl.create_at) AS fecha,
             CONCAT(ROUND((cl.cantHuevos / cl.numaves) * 100, 2)) AS produccion
         FROM 
