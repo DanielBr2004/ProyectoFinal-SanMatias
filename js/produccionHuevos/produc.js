@@ -163,7 +163,7 @@ window.eliminarTipoHuevo = async function (idhuevo) {
       }
     } else {
       // Tercer paso: Si el usuario cancela
-      showToast('La eliminación ha sido cancelada.', 'INFO');
+      showToast('La eliminación ha sido cancelada.', 'WARNING');
     }
   });
 };
@@ -241,7 +241,7 @@ document.querySelector('#form-editar-huevo').addEventListener('submit', async (e
                 console.error('Error al editar el tipo de huevo:', error);
             }
         } else {
-            showToast('Cambios cancelados.', 'info'); // Mensaje si cancela
+            showToast('Cambios cancelados.', 'WARNING'); // Mensaje si cancela
         }
     });
 });

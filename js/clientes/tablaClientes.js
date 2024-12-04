@@ -13,7 +13,7 @@ const eliminarCliente = async (idcliente) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí',
+            confirmButtonText: 'Aceptar',
             cancelButtonText: 'Cancelar'
         });
 
@@ -33,6 +33,9 @@ const eliminarCliente = async (idcliente) => {
                 showToast(result.mensaje, "SUCCESS", 1500);
                 await desplegarDatos();
             }
+        } else {
+            // Si el usuario cancela la eliminación
+            showToast("Eliminación Cancelada", "WARNING", 1500);
         }
     } catch (error) {
         console.error('Error en la eliminación:', error);
@@ -48,11 +51,13 @@ const editarCliente = async (idcliente) => {
         const cliente = clientes.find((item) => item.idcliente === idcliente);
 
         if (cliente) {
+            // Rellenar los campos del formulario
             document.querySelector('#idcliente-edit').value = cliente.idcliente;
             document.querySelector('#nrodocumento-edit').value = cliente.nrodocumento;
             document.querySelector('#tipodoc-edit').value = cliente.tipodocumento;
             document.querySelector('#nomcliente-edit').value = cliente.clientes;
 
+            // Mostrar el modal
             const modal = new bootstrap.Modal(document.getElementById('editarClienteModal'));
             modal.show();
         } else {
@@ -63,11 +68,25 @@ const editarCliente = async (idcliente) => {
         showToast("Error al cargar los datos del cliente", "ERROR", 1500);
     }
 };
-    // Event listener para el formulario de edición
-    document.querySelector('#form-editar-cliente').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        
-        try {
+
+// Evento para el formulario de edición (cuando se hace clic en "guardar cambios")
+document.querySelector('#form-editar-cliente').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+    try {
+        // Confirmación de que los cambios son correctos
+        const confirmacion = await Swal.fire({
+            title: '¿Estás seguro de que deseas guardar los cambios?',
+            text: "Se actualizarán los datos del cliente.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, guardar cambios',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (confirmacion.isConfirmed) {
             const params = new FormData();
             params.append('operacion', 'edit');
             params.append('idcliente', document.querySelector('#idcliente-edit').value);
@@ -83,17 +102,25 @@ const editarCliente = async (idcliente) => {
             const result = await response.json();
 
             if (result.mensaje) {
+                // Mostrar un toast de éxito
                 showToast(result.mensaje, 'SUCCESS', 1500);
-                await initDataTable();
+                await initDataTable();  // Recargar datos de la tabla
                 const modalElement = document.getElementById('editarClienteModal');
                 const modal = bootstrap.Modal.getInstance(modalElement);
                 modal.hide();
+            } else {
+                // Si ocurre un error al guardar los cambios
+                showToast('Error al guardar los cambios', 'ERROR', 1500);
             }
-        } catch (error) {
-            console.error('Error en la edición:', error);
-            showToast('Error al editar el cliente', 'ERROR', 1500);
+        } else {
+            // Si el usuario cancela la acción
+            showToast("Edición cancelada", "WARNING", 1500);
         }
-    });
+    } catch (error) {
+        console.error('Error en la edición:', error);
+        showToast('Error al editar el cliente', 'ERROR', 1500);
+    }
+});
     
 // Función para inicializar DataTable
 const initDataTable = async () => {
