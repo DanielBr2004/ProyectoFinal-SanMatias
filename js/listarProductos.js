@@ -39,29 +39,48 @@ function $$(object = null) {
     }
   }
   
-  // Función global para eliminar un producto
-  window.eliminarProducto = async function(idproducto) {
-    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+// Función global para eliminar un producto con confirmación de SweetAlert2
+window.eliminarProducto = async function(idproducto) {
+    // Usamos SweetAlert2 para la confirmación
+    Swal.fire({
+      title: '¿Estás seguro de que deseas eliminar este producto?',
+      text: "¡Este proceso no puede deshacerse!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      // Si el usuario acepta la eliminación
+      if (result.isConfirmed) {
         const params = new FormData();
         params.append("operacion", "eliminar");
         params.append("idproducto", idproducto);
   
         const options = {
-            method: 'POST',
-            body: params
+          method: 'POST',
+          body: params
         };
   
         const response = await fetch('../../controllers/producto.controller.php', options);
         const result = await response.json();
   
         if (result.status === "success") {
-            showToast("Producto eliminado correctamente", "SUCCESS", 1000);
-            listarProductos(); // Refresca la lista de productos
+          // Usamos showToast para mostrar el mensaje de éxito
+          showToast("Producto eliminado correctamente", "SUCCESS", 1000);
+          listarProductos(); // Refresca la lista de productos
         } else {
-            showToast("Error al eliminar el producto", "ERROR", 1000);
+          // Usamos showToast para mostrar el mensaje de error
+          showToast("Error al eliminar el producto", "ERROR", 1000);
         }
-    }
+      } else {
+        // Si el usuario cancela la eliminación, mostramos el mensaje de cancelación con showToast
+        showToast("Eliminación cancelada", "WARNING", 1000);
+      }
+    });
   }
+  
   
   // Función global para editar un producto y mostrar el modal
   window.editarProducto = async function(idproducto) {
@@ -82,45 +101,65 @@ function $$(object = null) {
     }
   }
   
-  // Manejador del formulario de edición
-  document.querySelector("#form-editar-producto").addEventListener("submit", async (event) => {
+// Manejador del formulario de edición con confirmación de SweetAlert2
+document.querySelector("#form-editar-producto").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const idproducto = document.querySelector("#idproducto-editar").value;
-    const params = new FormData();
-    params.append("operacion", "editar");
-    params.append("idproducto", idproducto);
-    params.append("Producto", document.querySelector("#Producto-editar").value);
-    params.append("descripcion", document.querySelector("#descripcion-editar").value);
-    params.append("stockminimo", document.querySelector("#stockminimo-editar").value);
-  
-    const options = {
-        method: 'POST',
-        body: params
-    };
-  
-    const response = await fetch('../../controllers/producto.controller.php', options);
-    const result = await response.json();
-  
-    if (result.status === "success") {
-        showToast("Producto actualizado correctamente", "SUCCESS", 1000);
-  
-        // Actualizar la fila específica sin recargar toda la tabla
-        const filaProducto = document.querySelector(`tr[data-id="${idproducto}"]`);
-        if (filaProducto) {
-            filaProducto.children[1].textContent = document.querySelector("#Producto-editar").value;
-            filaProducto.children[2].textContent = document.querySelector("#stockminimo-editar").value;
-            filaProducto.children[3].textContent = document.querySelector("#descripcion-editar").value;
+
+    // Mostrar SweetAlert2 para confirmar
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Deseas guardar los cambios realizados al producto?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, procede con la actualización
+            const idproducto = document.querySelector("#idproducto-editar").value;
+            const params = new FormData();
+            params.append("operacion", "editar");
+            params.append("idproducto", idproducto);
+            params.append("Producto", document.querySelector("#Producto-editar").value);
+            params.append("descripcion", document.querySelector("#descripcion-editar").value);
+            params.append("stockminimo", document.querySelector("#stockminimo-editar").value);
+
+            const options = {
+                method: 'POST',
+                body: params
+            };
+
+            const response = await fetch('../../controllers/producto.controller.php', options);
+            const result = await response.json();
+
+            if (result.status === "success") {
+                showToast("Producto actualizado correctamente", "SUCCESS", 1000);
+
+                // Actualizar la fila específica sin recargar toda la tabla
+                const filaProducto = document.querySelector(`tr[data-id="${idproducto}"]`);
+                if (filaProducto) {
+                    filaProducto.children[1].textContent = document.querySelector("#Producto-editar").value;
+                    filaProducto.children[2].textContent = document.querySelector("#stockminimo-editar").value;
+                    filaProducto.children[3].textContent = document.querySelector("#descripcion-editar").value;
+                }
+
+                // Cierra el modal después de la actualización de la fila
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditarProducto'));
+                if (modal) {
+                    modal.hide();
+                }
+            } else {
+                showToast("Error al actualizar el producto", "ERROR", 1000);
+            }
+        } else {
+            // Si el usuario cancela, muestra un mensaje de cancelación
+            showToast("Actualización del producto cancelada", "WARNING", 1000);
         }
-  
-        // Cierra el modal después de la actualización de la fila
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditarProducto'));
-        if (modal) {
-            modal.hide();
-        }
-    } else {
-        showToast("Error al actualizar el producto", "ERROR", 1000);
-    }
-  });
+    });
+});
+
   
   document.addEventListener('DOMContentLoaded', async function() {
     let dataTable;
