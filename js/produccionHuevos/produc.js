@@ -123,33 +123,50 @@ function $$(selector = null) {
     }
   };
   
-  // Función para eliminar un tipo de huevo
-  window.eliminarTipoHuevo = async function (idhuevo) {
-    if (confirm('¿Estás seguro de que deseas eliminar este tipo de huevo?')) {
+// Función para eliminar un tipo de huevo
+window.eliminarTipoHuevo = async function (idhuevo) {
+  // Primer paso: confirmación inicial
+  Swal.fire({
+    title: '¿Estás seguro de que deseas eliminar este tipo de huevo?',
+    text: "¡Esta acción no se puede deshacer!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then(async (result) => {
+    // Si el usuario acepta eliminar
+    if (result.isConfirmed) {
       try {
         const params = new FormData();
         params.append('operacion', 'eliminar');
         params.append('idhuevo', idhuevo);
-  
+
         const options = {
           method: 'POST',
           body: params,
         };
-  
+
         const response = await fetch('../../../controllers/tipohuevo.controller.php', options);
         const result = await response.json();
-  
+
+        // Segundo paso: Confirmación de eliminación exitosa
         if (result.status === 'success') {
-          showToast('Tipo de huevo eliminado correctamente.', 'success');
+          showToast('Tipo de huevo eliminado correctamente.', 'SUCCESS');
           initDataTable(); // Refresca la tabla con DataTable
         } else {
-          showToast('Error al eliminar el tipo de huevo.', 'error');
+          showToast('Error al eliminar el tipo de huevo.', 'ERROR');
         }
       } catch (error) {
         console.error('Error al eliminar el tipo de huevo:', error);
       }
+    } else {
+      // Tercer paso: Si el usuario cancela
+      showToast('La eliminación ha sido cancelada.', 'INFO');
     }
-  };
+  });
+};
   
   // Función para mostrar el modal y cargar los datos en él
   window.editarTipoHuevo = async function (idhuevo) {
@@ -169,7 +186,7 @@ function $$(selector = null) {
         const modal = new bootstrap.Modal($$('#modalEditarHuevo'));
         modal.show();
       } else {
-        showToast('Error al cargar los datos del producto.', 'error');
+        showToast('Error al cargar los datos del producto.', 'ERROR');
       }
     } catch (error) {
       console.error('Error al cargar los datos para editar:', error);
