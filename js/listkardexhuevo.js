@@ -124,7 +124,7 @@ const cargarlist = async () => {
         console.error('Error al cargar los productos:', error);
     }
 };
- // abrirModalEditar
+
   window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote) {
     console.log("Abriendo modal con:", idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote);
     
@@ -155,7 +155,7 @@ document.getElementById('formEditarKardex').addEventListener('submit', async fun
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, guardar cambios',
+        confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar'
     }).then(async (result) => {
         if (result.isConfirmed) {
@@ -191,7 +191,6 @@ document.getElementById('formEditarKardex').addEventListener('submit', async fun
     });
 });
 
-
 window.eliminarKardex = async function(idAlmacenHuevos) {
     // Usamos SweetAlert2 para la confirmación
     Swal.fire({
@@ -201,7 +200,7 @@ window.eliminarKardex = async function(idAlmacenHuevos) {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
+        confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar'
     }).then(async (result) => {
         if (result.isConfirmed) {

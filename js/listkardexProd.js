@@ -127,61 +127,92 @@ document.addEventListener('DOMContentLoaded', async function() {
   };
 
   document.getElementById('formEditarProducto').addEventListener('submit', async function(event) {
-      event.preventDefault();
+    event.preventDefault();
 
-      const idAlmacenProducto = document.getElementById('editIdAlmacenProducto').value;
-      const motivomovimiento = document.getElementById('editMotivomovimiento').value;
-      const cantidad = document.getElementById('editCantidad').value;
+    // Show SweetAlert2 confirmation dialog
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Deseas guardar los cambios realizados al kardex?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            const idAlmacenProducto = document.getElementById('editIdAlmacenProducto').value;
+            const motivomovimiento = document.getElementById('editMotivomovimiento').value;
+            const cantidad = document.getElementById('editCantidad').value;
 
-      try {
-          const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams({
-                  operacion: 'edit',
-                  idAlmacenProducto,
-                  motivomovimiento,
-                  cantidad
-              })
-          });
+            try {
+                const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        operacion: 'edit',
+                        idAlmacenProducto,
+                        motivomovimiento,
+                        cantidad
+                    })
+                });
 
-          const result = await response.json();
-          if (result.estado) {
-              alert('Registro actualizado correctamente');
-              $('#editarModal').modal('hide');
-              await cargarProductos();
-          } else {
-              alert('Error al actualizar el registro');
-          }
-      } catch (error) {
-          console.error('Error al actualizar el registro:', error);
-      }
-  });
-
-  window.eliminarProducto = async function(idAlmacenProducto) {
-    const confirmacion = confirm("¿Estás seguro de que deseas eliminar este registro?");
-    if (!confirmacion) return;
-
-    try {
-        const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                operacion: 'delete',
-                idAlmacenProducto
-            })
-        });
-
-        const result = await response.json();
-        if (result.estado) {
-            alert('Registro eliminado correctamente');
-            await cargarProductos(); // Recargar la lista después de eliminar
+                const result = await response.json();
+                if (result.estado) {
+                    showToast("Registro actualizado correctamente", "SUCCESS", 1000);
+                    $('#editarModal').modal('hide');
+                    await cargarProductos();
+                } else {
+                    showToast("Error al actualizar el registro", "ERROR", 1000);
+                }
+            } catch (error) {
+                console.error('Error al actualizar el registro:', error);
+                showToast("Error al actualizar el registro", "ERROR", 1000);
+            }
         } else {
-            alert('Error al eliminar el registro');
+            showToast("Actualización del kardex cancelada", "WARNING", 1000);
         }
-    } catch (error) {
-        console.error('Error al eliminar el registro:', error);
-    }
+    });
+});
+
+  // funcion eliminar producto
+  window.eliminarProducto = async function(idAlmacenProducto) {
+    Swal.fire({
+        title: '¿Estás seguro de que deseas eliminar este registro?',
+        text: "¡Este proceso no puede deshacerse!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        operacion: 'delete',
+                        idAlmacenProducto
+                    })
+                });
+
+                const result = await response.json();
+                if (result.estado) {
+                    showToast("Registro eliminado correctamente", "SUCCESS", 1000);
+                    await cargarProductos();
+                } else {
+                    showToast("Error al eliminar el registro", "ERROR", 1000);
+                }
+            } catch (error) {
+                console.error('Error al eliminar el registro:', error);
+                showToast("Error en la operación", "ERROR", 1000);
+            }
+        } else {
+            showToast("Eliminación cancelada", "WARNING", 1000);
+        }
+    });
 };
 
   const initDataTable = async () => {
