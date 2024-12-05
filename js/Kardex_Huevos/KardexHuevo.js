@@ -127,6 +127,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const valueitem = itemselecionado.selectedIndex;
     const motivoselecionado = itemselecionado.options[valueitem].text;
 
+    // Get description based on movement type
+    let descripcion = document.querySelector("#mermaInput").value;
+    
+    // Set default descriptions for specific movement types
+    if (motivoselecionado === 'Entrada por Producción') {
+        descripcion = 'Ingreso de producción del día';
+    } else if (motivoselecionado === 'Entrada por Compra') {
+        descripcion = 'Ingreso por compra de huevos';
+    } else if (motivoselecionado === 'Salida por Merma') {
+        descripcion = 'Salida por merma de huevos';
+    }
+
     const params = new FormData();
     params.append("operacion", "add");
     params.append("idcolaborador", document.querySelector("#idcolaborador").value);
@@ -135,23 +147,23 @@ document.addEventListener("DOMContentLoaded", () => {
     params.append("motivomovimiento", motivoselecionado);
     params.append("idlote", document.querySelector("#numLote").value);
     params.append("cantidad", document.querySelector("#cantidad").value);
-    params.append("descripcion", document.querySelector("#mermaInput").value);
+    params.append("descripcion", descripcion);
 
     const options = {
-      method: 'POST',
-      body: params
+        method: 'POST',
+        body: params
     };
 
     fetch(`../../controllers/kardexAlmacenHuevo.controller.php`, options)
-      .then(response => response.json())
-      .then(data => {
-        document.querySelector("#form-kardex-huevos").reset();
-        showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
-        obtenerStocksProductos();
-        actualizarTablaKardex();
-      })
-      .catch(e => { console.error(e) });
-  }
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector("#form-kardex-huevos").reset();
+            showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
+            obtenerStocksProductos();
+            actualizarTablaKardex();
+        })
+        .catch(e => { console.error(e) });
+}
 
   document.querySelector("#form-kardex-huevos").addEventListener("submit", async (event) => {
     event.preventDefault();
