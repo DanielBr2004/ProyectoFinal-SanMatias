@@ -67,39 +67,53 @@ document.addEventListener('DOMContentLoaded', async function() {
   };
 
   const cargarProductos = async () => {
-      try {
-          const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
-          const data = await response.json();
-      
-          let content = '';
-          data.forEach(item => {
-              content += `
-                  <tr>
-                      <td class="text-center">${item.ID}</td>
-                      <td class="text-center">${item.Colaborador}</td>
-                      <td class="text-center">${item.Producto}</td>
-                      <td class="text-center">${item['Stock Actual']}</td>
-                      <td class="text-center">${item['Motivo de Movimiento']}</td>
-                      <td class="text-center">${item.Cantidad}</td>
-                      <td class="text-center">${item.Creado}</td>
-                      <td class="text-center">
-                      <div style="display: inline-flex; gap: 5px;">
-                          <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})"><i class="fa-solid fa-pen-to-square"></i></button>
-                           <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})"><i class="fa-solid fa-trash-can"></i></button>
-                      </td>
-                  </tr>`;
-          });
-      
-          const tbodyElement = document.getElementById('tbody-listarproductos');
-          if (tbodyElement) {
-              tbodyElement.innerHTML = content;
-          } else {
-              console.error("El elemento con ID 'tbody-listarproductos' no se encontró en el DOM.");
-          }
-      } catch (error) {
-          console.error('Error al cargar los productos:', error);
-      }
-  };
+    try {
+        const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
+        const data = await response.json();
+        
+        // Sort data by ID to find the latest record
+        const sortedData = [...data].sort((a, b) => b.ID - a.ID);
+        const latestId = sortedData[0]?.ID;
+        
+        let content = '';
+        data.forEach(item => {
+            // Only show edit/delete buttons for the latest record
+            const showControls = item.ID === latestId;
+            
+            content += `
+                <tr>
+                    <td class="text-center">${item.ID}</td>
+                    <td class="text-center">${item.Colaborador}</td>
+                    <td class="text-center">${item.Producto}</td>
+                    <td class="text-center">${item['Stock Actual']}</td>
+                    <td class="text-center">${item['Motivo de Movimiento']}</td>
+                    <td class="text-center">${item.Cantidad}</td>
+                    <td class="text-center">${item.Creado}</td>
+                    <td class="text-center">
+                    <div style="display: inline-flex; gap: 5px;">
+                        ${showControls ? `
+                            <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                    </td>
+                </tr>`;
+        });
+    
+        const tbodyElement = document.getElementById('tbody-listarproductos');
+        if (tbodyElement) {
+            tbodyElement.innerHTML = content;
+        } else {
+            console.error("El elemento con ID 'tbody-listarproductos' no se encontró en el DOM.");
+        }
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
+    }
+};
 
   window.abrirModalEditar = function(idAlmacenProducto, motivomovimiento, cantidad) {
       console.log("Abriendo modal con:", idAlmacenProducto, motivomovimiento, cantidad);

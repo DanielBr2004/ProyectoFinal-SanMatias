@@ -70,13 +70,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     },
 };
 
-  const cargarlist = async () => {
-      try {
-          const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php?operacion=getAlls');
-          const data = await response.json();
+const cargarlist = async () => {
+    try {
+        const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php?operacion=getAlls');
+        const data = await response.json();
 
-          let content = '';
-          data.forEach(item => {
+        // Sort data by idAlmacenHuevos to find the latest record
+        const sortedData = [...data].sort((a, b) => b.idAlmacenHuevos - a.idAlmacenHuevos);
+        const latestId = sortedData[0]?.idAlmacenHuevos;
+
+        let content = '';
+        data.forEach(item => {
+            // Only show edit/delete buttons for the latest record
+            const showControls = item.idAlmacenHuevos === latestId;
+            
             content += `
             <tr>
                 <td class="text-center">${item.idAlmacenHuevos}</td>
@@ -89,26 +96,34 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td class="text-center">${item.num_lote}</td>
                 <td class="text-center">
                     <div style="display: inline-flex; gap: 5px;">
-                        <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})"><i class="fa-solid fa-trash-can"></i></button>
+                        ${showControls ? `
+                            <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        ` : ''}
                     </div>
                 </td>
                 <td class="text-center">
-                    <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idAlmacenHuevos})"><i class="fa-solid fa-file-pdf"></i></button>
+                    <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idAlmacenHuevos})">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </button>
                 </td>              
             </tr>`;
-          });
+        });
 
-          const tbodyElement = document.getElementById('tbody-listproductos');
-          if (tbodyElement) {
-              tbodyElement.innerHTML = content;
-          } else {
-              console.error("El elemento con ID 'tbody-listproductos' no se encontró en el DOM.");
-          }
-      } catch (error) {
-          console.error('Error al cargar los productos:', error);
-      }
-  };
+        const tbodyElement = document.getElementById('tbody-listproductos');
+        if (tbodyElement) {
+            tbodyElement.innerHTML = content;
+        } else {
+            console.error("El elemento con ID 'tbody-listproductos' no se encontró en el DOM.");
+        }
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
+    }
+};
 
   window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote) {
     console.log("Abriendo modal con:", idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote);
