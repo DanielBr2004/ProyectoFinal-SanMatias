@@ -124,7 +124,7 @@ const cargarlist = async () => {
         console.error('Error al cargar los productos:', error);
     }
 };
-
+ // abrirModalEditar
   window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote) {
     console.log("Abriendo modal con:", idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote);
     
@@ -147,57 +147,91 @@ document.getElementById('formEditarKardex').addEventListener('submit', async fun
     const descripcion = document.getElementById('editDescripcion').value;
     const num_lote = document.getElementById('editNumLote').value; // Obtener el Nº Lote
 
-    try {
-        const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                operacion: 'editarKardex',
-                idAlmacenHuevos,
-                motivomovimiento,
-                cantidad,
-                descripcion,
-                idlote: num_lote // Enviar el Nº Lote al backend
-            })
-        });
+    // Confirmación con SweetAlert2
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Deseas guardar los cambios realizados al Kardex?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, guardar cambios',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        operacion: 'editarKardex',
+                        idAlmacenHuevos,
+                        motivomovimiento,
+                        cantidad,
+                        descripcion,
+                        idlote: num_lote // Enviar el Nº Lote al backend
+                    })
+                });
 
-        const result = await response.json();
-        if (result.estado) {
-            alert('Registro actualizado correctamente');
-            $('#editarModal').modal('hide');
-            await cargarlist();
+                const result = await response.json();
+                if (result.estado) {
+                    showToast("Kardex actualizado correctamente", "SUCCESS", 1000);
+                    $('#editarModal').modal('hide');
+                    await cargarlist();
+                } else {
+                    showToast("Error al actualizar el Kardex", "ERROR", 1000);
+                }
+            } catch (error) {
+                console.error('Error al actualizar el Kardex:', error);
+                showToast("Error al actualizar el Kardex", "ERROR", 1000);
+            }
         } else {
-            alert('Error al actualizar el registro');
+            showToast("Actualización del Kardex cancelada", "WARNING", 1000);
         }
-    } catch (error) {
-        console.error('Error al actualizar el registro:', error);
-    }
+    });
 });
 
-  window.eliminarKardex = async function(idAlmacenHuevos) {
-    const confirmacion = confirm("¿Estás seguro de que deseas eliminar este registro?");
-    if (!confirmacion) return;
 
-    try {
-        const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                operacion: 'eliminarKardex',
-                idAlmacenHuevos
-            })
-        });
+window.eliminarKardex = async function(idAlmacenHuevos) {
+    // Usamos SweetAlert2 para la confirmación
+    Swal.fire({
+        title: '¿Estás seguro de que deseas eliminar este registro?',
+        text: "¡Este proceso no puede deshacerse!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                // Realizar la solicitud de eliminación al servidor
+                const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        operacion: 'eliminarKardex',
+                        idAlmacenHuevos
+                    })
+                });
 
-        const result = await response.json();
-        if (result.estado) {
-            alert('Registro eliminado correctamente');
-            await cargarlist(); // Recargar la lista
+                const result = await response.json();
+
+                if (result.estado) {
+                    showToast('Registro eliminado correctamente', 'SUCCESS', 1000);
+                    await cargarlist(); // Recargar la lista después de la eliminación
+                } else {
+                    showToast('Error al eliminar el registro', 'ERROR', 1000);
+                }
+            } catch (error) {
+                console.error('Error al eliminar el registro:', error);
+                showToast('Error al eliminar el registro', 'ERROR', 1000);
+            }
         } else {
-            alert('Error al eliminar el registro');
+            showToast('Eliminación cancelada', 'WARNING', 1000);
         }
-    } catch (error) {
-        console.error('Error al eliminar el registro:', error);
-    }
+    });
 };
 
   const initDataTable = async () => {
