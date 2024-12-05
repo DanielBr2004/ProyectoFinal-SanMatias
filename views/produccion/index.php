@@ -41,11 +41,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md">
-                                    <div class="form-floating">
-                                        <input type="number" class="form-control" id="alimento" required>
-                                        <label for="alimento">Cantidad de Alimento</label>
-                                    </div>
-                                </div>
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="alimento" step="any" min="0" required>
+                                <label for="alimento">Cantidad de Alimento</label>
+                            </div>
+                        </div>
                             </div>
                             <hr>
                             <br>
