@@ -127,10 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const valueitem = itemselecionado.selectedIndex;
     const motivoselecionado = itemselecionado.options[valueitem].text;
 
-    // Get description based on movement type
     let descripcion = document.querySelector("#mermaInput").value;
     
-    // Set default descriptions for specific movement types
     if (motivoselecionado === 'Entrada por Producción') {
         descripcion = 'Ingreso de producción del día';
     } else if (motivoselecionado === 'Entrada por Compra') {
@@ -149,20 +147,25 @@ document.addEventListener("DOMContentLoaded", () => {
     params.append("cantidad", document.querySelector("#cantidad").value);
     params.append("descripcion", descripcion);
 
-    const options = {
+    fetch(`../../controllers/kardexAlmacenHuevo.controller.php`, {
         method: 'POST',
         body: params
-    };
-
-    fetch(`../../controllers/kardexAlmacenHuevo.controller.php`, options)
-        .then(response => response.json())
-        .then(data => {
-            document.querySelector("#form-kardex-huevos").reset();
-            showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
-            obtenerStocksProductos();
-            actualizarTablaKardex();
-        })
-        .catch(e => { console.error(e) });
+    })
+    .then(response => response.json())
+    .then(async data => {
+        document.querySelector("#form-kardex-huevos").reset();
+        showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
+        obtenerStocksProductos();
+        
+        // Actualizar la tabla llamando a initDataTable del otro archivo
+        if (typeof window.initDataTable === 'function') {
+            await window.initDataTable();
+        }
+    })
+    .catch(e => { 
+        console.error(e);
+        showToast("Error al guardar", "ERROR", 3000);
+    });
 }
 
   document.querySelector("#form-kardex-huevos").addEventListener("submit", async (event) => {

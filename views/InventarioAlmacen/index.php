@@ -331,9 +331,9 @@
 
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="../../js/Kardex_Huevos/KardexHuevo.js"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>/js/listkardexhuevo.js"></script>
+        <script src="<?= $host ?>/js/Kardex_Huevos/listkardexhuevo.js"></script>
+        <script src="<?= $host ?>/js/Kardex_Huevos/KardexHuevo.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">
