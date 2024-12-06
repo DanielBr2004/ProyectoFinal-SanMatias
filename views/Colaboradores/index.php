@@ -200,9 +200,9 @@
 
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="<?= $host ?>/js/Colaboradores/Colaboradores.js"></script>
-        <script src="<?= $host ?>/js/Colaboradores/DatosUsuarios.js"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
+        <script src="<?= $host ?>/js/Colaboradores/DatosUsuarios.js"></script>
+        <script src="<?= $host ?>/js/Colaboradores/Colaboradores.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">
