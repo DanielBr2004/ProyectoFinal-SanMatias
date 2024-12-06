@@ -119,6 +119,7 @@ try {
             <tr><th>Cantidad:</th><td><?= $detalle['cantidad'] ?></td></tr>
             <tr><th>Descripción:</th><td><?= $detalle['descripcion'] ?></td></tr>
             <tr><th>Nº Lote:</th><td><?= $detalle['num_lote'] ?></td></tr>
+            <tr><th>Nº Lote:</th><td><?= $detalle['fecha_creacion'] ?></td></tr>
         </table>
 
         <!-- Footer -->

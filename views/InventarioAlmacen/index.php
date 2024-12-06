@@ -203,6 +203,7 @@
                     <th>Cantidad</th>
                     <th>Descripción</th>
                     <th>Nº de Lote</th>
+                    <th>Fecha</th>
                     <th>Operaciones</th>
                     <th>Reporte</th>
                 </tr>

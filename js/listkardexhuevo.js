@@ -41,9 +41,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     lengthMenu: [5, 10, 15, 20, 100, 200, 500],
     columnDefs: [
         { className: 'text-center', targets: '_all' },
-        { orderable: false, targets: [2] }, 
+        { orderable: false, targets: [2] },
         { searchable: false, targets: [1] },
         { width: '20%', targets: [1] },
+        { orderable: true, targets: [8] } // Added configuration for the new date column
     ],
     pageLength: 5,
     destroy: true,
@@ -94,6 +95,7 @@ const cargarlist = async () => {
                 <td class="text-center">${item.cantidad}</td>
                 <td class="text-center">${item.descripcion}</td>
                 <td class="text-center">${item.num_lote}</td>
+                <td class="text-center">${item.fecha_creacion}</td>
                 <td class="text-center">
                     <div style="display: inline-flex; gap: 5px;">
                         ${showControls ? `
