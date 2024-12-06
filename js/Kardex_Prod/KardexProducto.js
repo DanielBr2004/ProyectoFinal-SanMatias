@@ -58,59 +58,59 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
     }
   
-    function GuardarKardex(){
-  
-      const itemselecionado = document.getElementById('Motivomovimiento');
-      const valueitem = itemselecionado.selectedIndex;
-      const motivoselecionado = itemselecionado.options[valueitem].text;
-  
-  
-      const params = new FormData()
-      params.append("operacion", "add")
-      params.append("idcolaborador", document.querySelector("#idcolaborador").value)
-      params.append("idproducto", document.querySelector("#idproducto").value)
-      params.append("tipomovimiento", document.querySelector("#Motivomovimiento").value)
-      params.append("motivomovimiento", motivoselecionado)
-      params.append("cantidad", document.querySelector("#cantidad").value)
-      params.append("descripcion", document.querySelector("#mermaInput").value)
-  
-      const options = {
-          'method' : 'POST',
-          'body'   : params
+// En KardexProducto.js
+function GuardarKardex(){
+  const itemselecionado = document.getElementById('Motivomovimiento');
+  const valueitem = itemselecionado.selectedIndex;
+  const motivoselecionado = itemselecionado.options[valueitem].text;
+
+  const params = new FormData()
+  params.append("operacion", "add")
+  params.append("idcolaborador", document.querySelector("#idcolaborador").value)
+  params.append("idproducto", document.querySelector("#idproducto").value)
+  params.append("tipomovimiento", document.querySelector("#Motivomovimiento").value)
+  params.append("motivomovimiento", motivoselecionado)
+  params.append("cantidad", document.querySelector("#cantidad").value)
+  params.append("descripcion", document.querySelector("#mermaInput").value)
+
+  fetch(`../../controllers/kardexAlmacenProducto.controller.php`, {
+      method: 'POST',
+      body: params
+  })
+  .then(response => response.json())
+  .then(async data => {
+      document.querySelector("#form-kardex-Productos").reset();
+      showToast("Kardex registrado correctamente", "SUCCESS", 3000);
+      
+      // Llamar a initDataTable para actualizar la tabla
+      if (typeof window.initDataTable === 'function') {
+          await window.initDataTable();
       }
+  })
+  .catch(e => {
+      console.error(e);
+      showToast("Error al registrar", "ERROR", 3000);
+  });
+}
   
-      //Ejecutamos el envío asíncrono
-      fetch(`../../controllers/kardexAlmacenProducto.controller.php`, options)
-          .then(response => response.json())
-          .then(data => {
-              //Limpiar el formulario
-              document.querySelector("#form-kardex-Productos").reset();
-              showToast("Kardex registrado correctamente", "SUCCESS", 3000)
-          })
-          .catch( e => { console.error(e) })
-    }
-  
-    document.querySelector("#form-kardex-Productos").addEventListener("submit", async (event) => {
-      event.preventDefault();
-  
-      const ValorIngresado = parseFloat(CantidadEntrada.value);
-  
-      if(ValorIngresado < 0){
-          event.preventDefault();
-          showToast("La cantidad no puede ser negativa", "ERROR");
-      }else{
-                //Si la cantidad es mayor que el stock actual
-          if(!ValidarCantidadSalida()){
-            return;
-          }
-  
-          if(await ask("¿Está seguro de registrar el Kardex?")){
-            GuardarKardex();
-          }
-      }
-  
-  
-    });
+document.querySelector("#form-kardex-Productos").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const ValorIngresado = parseFloat(CantidadEntrada.value);
+
+  if(ValorIngresado < 0){
+      showToast("La cantidad no puede ser negativa", "ERROR");
+      return;
+  }
+
+  if(!ValidarCantidadSalida()){
+      return;
+  }
+
+  if(await ask("¿Está seguro de registrar el Kardex?")){
+      await GuardarKardex();
+  }
+});
   
     Motivomovimiento.addEventListener('change', function() {
       var mermaInputContainer = document.getElementById('mermaInputContainer');

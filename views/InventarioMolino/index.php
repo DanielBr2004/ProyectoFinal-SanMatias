@@ -228,9 +228,9 @@
 
         <!-- JS del Proyecto-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="../../js/KardexProducto.js"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>/js/listkardexProd.js"></script>
+        <script src="<?= $host ?>/js/Kardex_Prod/listkardexProd.js"></script>
+        <script src="<?= $host ?>/js/Kardex_Prod/KardexProducto.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">
