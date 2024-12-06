@@ -1,10 +1,44 @@
 // Variables globales
 let dataTable;
 let dataTableIsInitialized = false;
-let desplegarDatos;
+
+// Hacer desplegarDatos accesible globalmente
+window.desplegarDatos = async () => {
+    try {
+        const response = await fetch('../../controllers/Clientes.controller.php?operacion=getAllClient');
+        const data = await response.json();
+
+        let content = '';
+        data.forEach((item, index) => {
+            content += `
+                <tr>
+                    <td class="text-center">${index + 1}</td>
+                    <td class="text-center">${item.nrodocumento}</td>
+                    <td class="text-center">${item.tipodocumento}</td>
+                    <td class="text-center">${item.clientes}</td>
+                    <td class="text-center">
+                        <button class="btn btn-warning btn-sm" onclick="editarCliente(${item.idcliente})">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarCliente(${item.idcliente})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>`;
+        });
+
+        const tbodyElement = document.getElementById('tbody-clientes');
+        if (tbodyElement) {
+            tbodyElement.innerHTML = content;
+        }
+    } catch (error) {
+        console.error('Error al cargar los datos:', error);
+        showToast("Error al cargar los clientes", "ERROR", 1500);
+    }
+};
 
 // Función eliminar cliente
-const eliminarCliente = async (idcliente) => {
+window.eliminarCliente = async (idcliente) => {
     try {
         const confirmacion = await Swal.fire({
             title: '¿Estás seguro?',
@@ -31,10 +65,9 @@ const eliminarCliente = async (idcliente) => {
             
             if (result.mensaje) {
                 showToast(result.mensaje, "SUCCESS", 1500);
-                await desplegarDatos();
+                await window.initDataTable();
             }
         } else {
-            // Si el usuario cancela la eliminación
             showToast("Eliminación Cancelada", "WARNING", 1500);
         }
     } catch (error) {
@@ -44,20 +77,18 @@ const eliminarCliente = async (idcliente) => {
 };
 
 // Función editar cliente
-const editarCliente = async (idcliente) => {
+window.editarCliente = async (idcliente) => {
     try {
         const response = await fetch('../../controllers/Clientes.controller.php?operacion=getAllClient');
         const clientes = await response.json();
         const cliente = clientes.find((item) => item.idcliente === idcliente);
 
         if (cliente) {
-            // Rellenar los campos del formulario
             document.querySelector('#idcliente-edit').value = cliente.idcliente;
             document.querySelector('#nrodocumento-edit').value = cliente.nrodocumento;
             document.querySelector('#tipodoc-edit').value = cliente.tipodocumento;
             document.querySelector('#nomcliente-edit').value = cliente.clientes;
 
-            // Mostrar el modal
             const modal = new bootstrap.Modal(document.getElementById('editarClienteModal'));
             modal.show();
         } else {
@@ -69,70 +100,16 @@ const editarCliente = async (idcliente) => {
     }
 };
 
-// Evento para el formulario de edición (cuando se hace clic en "guardar cambios")
-document.querySelector('#form-editar-cliente').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    
-    try {
-        // Confirmación de que los cambios son correctos
-        const confirmacion = await Swal.fire({
-            title: '¿Estás seguro de que deseas guardar los cambios?',
-            text: "Se actualizarán los datos del cliente.",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, guardar cambios',
-            cancelButtonText: 'Cancelar'
-        });
-
-        if (confirmacion.isConfirmed) {
-            const params = new FormData();
-            params.append('operacion', 'edit');
-            params.append('idcliente', document.querySelector('#idcliente-edit').value);
-            params.append('nrodocumento', document.querySelector('#nrodocumento-edit').value);
-            params.append('tipodocumento', document.querySelector('#tipodoc-edit').value);
-            params.append('cliente_nombre', document.querySelector('#nomcliente-edit').value);
-
-            const response = await fetch('../../controllers/Clientes.controller.php', {
-                method: 'POST',
-                body: params
-            });
-            
-            const result = await response.json();
-
-            if (result.mensaje) {
-                // Mostrar un toast de éxito
-                showToast(result.mensaje, 'SUCCESS', 1500);
-                await initDataTable();  // Recargar datos de la tabla
-                const modalElement = document.getElementById('editarClienteModal');
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                modal.hide();
-            } else {
-                // Si ocurre un error al guardar los cambios
-                showToast('Error al guardar los cambios', 'ERROR', 1500);
-            }
-        } else {
-            // Si el usuario cancela la acción
-            showToast("Edición cancelada", "WARNING", 1500);
-        }
-    } catch (error) {
-        console.error('Error en la edición:', error);
-        showToast('Error al editar el cliente', 'ERROR', 1500);
-    }
-});
-    
-// Función para inicializar DataTable
-const initDataTable = async () => {
+// Hacer initDataTable globalmente accesible
+window.initDataTable = async () => {
     if (dataTableIsInitialized) {
         dataTable.destroy();
     }
 
-    await desplegarDatos();
+    await window.desplegarDatos();
 
     setTimeout(() => {
         dataTable = $('#tabla-client').DataTable({
-            // Tus opciones de DataTable aquí
             responsive: true,
             dom: 'Bfrtilp',
             buttons: [
@@ -142,7 +119,7 @@ const initDataTable = async () => {
                     titleAttr: 'Exportar a Excel',
                     className: 'btn btn-success',
                     exportOptions: {
-                        columns: [0, 1, 2, 3]  // Asegúrate de incluir la nueva columna
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
@@ -151,7 +128,7 @@ const initDataTable = async () => {
                     titleAttr: 'Exportar a PDF',
                     className: 'btn btn-danger',
                     exportOptions: {
-                        columns: [0, 1, 2, 3]  // Asegúrate de incluir la nueva columna
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
@@ -160,59 +137,88 @@ const initDataTable = async () => {
                     titleAttr: 'Imprimir',
                     className: 'btn btn-info',
                     exportOptions: {
-                        columns: [0, 1, 2, 3]  // Asegúrate de incluir la nueva columna
+                        columns: [0, 1, 2, 3]
                     }
-                },
+                }
             ],
             lengthMenu: [5, 10, 15, 20, 100, 200, 500],
             columnDefs: [
                 { className: 'text-center', targets: '_all' },
-                { orderable: false, targets: [2, 4] }, // No ordenable la columna de Botón de Estado
+                { orderable: false, targets: [2, 4] },
                 { searchable: false, targets: [1] },
-                { width: '20%', targets: [1] },
+                { width: '20%', targets: [1] }
             ],
+            language: {
+                processing: "Procesando...",
+                lengthMenu: "Mostrar _MENU_ registros",
+                zeroRecords: "No se encontraron resultados",
+                emptyTable: "Ningún dato disponible en esta tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                search: "Buscar:",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior"
+                }
+            }
         });
         dataTableIsInitialized = true;
     }, 200);
 };
 
-// Evento DOMContentLoaded
-document.addEventListener('DOMContentLoaded', async function() {
-    // Definición de desplegarDatos
-    desplegarDatos = async () => {
+// Evento para el formulario de edición
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#form-editar-cliente').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
         try {
-            const response = await fetch('../../controllers/Clientes.controller.php?operacion=getAllClient');
-            const data = await response.json();
-
-            let content = '';
-            data.forEach((item, index) => {
-                content += `
-                    <tr>
-                        <td class="text-center">${index + 1}</td>
-                        <td class="text-center">${item.nrodocumento}</td>
-                        <td class="text-center">${item.tipodocumento}</td>
-                        <td class="text-center">${item.clientes}</td>
-                        <td class="text-center">
-                            <button class="btn btn-warning btn-sm" onclick="editarCliente(${item.idcliente})">
-                                <i class="fa-solid fa-pencil"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarCliente(${item.idcliente})">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>`;
+            const confirmacion = await Swal.fire({
+                title: '¿Estás seguro de que deseas guardar los cambios?',
+                text: "Se actualizarán los datos del cliente.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
             });
 
-            const tbodyElement = document.getElementById('tbody-clientes');
-            if (tbodyElement) {
-                tbodyElement.innerHTML = content;
+            if (confirmacion.isConfirmed) {
+                const params = new FormData();
+                params.append('operacion', 'edit');
+                params.append('idcliente', document.querySelector('#idcliente-edit').value);
+                params.append('nrodocumento', document.querySelector('#nrodocumento-edit').value);
+                params.append('tipodocumento', document.querySelector('#tipodoc-edit').value);
+                params.append('cliente_nombre', document.querySelector('#nomcliente-edit').value);
+
+                const response = await fetch('../../controllers/Clientes.controller.php', {
+                    method: 'POST',
+                    body: params
+                });
+                
+                const result = await response.json();
+
+                if (result.mensaje) {
+                    showToast(result.mensaje, 'SUCCESS', 1500);
+                    await window.initDataTable();
+                    const modalElement = document.getElementById('editarClienteModal');
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    modal.hide();
+                } else {
+                    showToast('Error al guardar los cambios', 'ERROR', 1500);
+                }
+            } else {
+                showToast("Edición cancelada", "WARNING", 1500);
             }
         } catch (error) {
-            console.error('Error al cargar los datos:', error);
+            console.error('Error en la edición:', error);
+            showToast('Error al editar el cliente', 'ERROR', 1500);
         }
-    };
+    });
 
-
-    // Inicializar la tabla
-    await initDataTable();
+    // Inicializar la tabla al cargar la página
+    window.initDataTable();
 });

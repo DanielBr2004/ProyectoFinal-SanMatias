@@ -103,44 +103,39 @@ nrodocumento.addEventListener("input", async (event) => {
       }
   }
 
-  document.querySelector("#form-registro-clientes").addEventListener("submit", async (event) => {
-      event.preventDefault();
+// In registrarCliente.js - Modify the submit event listener:
 
-      if(await ask("¿Estás seguro de registrar al Cliente?")){
+document.querySelector("#form-registro-clientes").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-          //Control de Personas
-          let response1;
-          //Control de Usuarios 
-          let response2;
+    if(await ask("¿Estás seguro de registrar al Cliente?")){
+        let response1;
+        let response2;
 
-          //¿Y si la persona ya fue creada?
-          if(datosNuevos){
-              response1 = await registrarPersona(); //Registramos nueva persona
-              console.log(response1);
-              idpersona = response1.idpersona;      //Obtenemos el ID de la nueva persona
-          }
+        if(datosNuevos){
+            response1 = await registrarPersona();
+            idpersona = response1.idpersona;
+        }
 
-          
-          
-
-          //¿El idpersona es correcto?
-          if(idpersona == -1){
-              showToast("Error en Registrar al Cliente", "ERROR", 1500);
-          }else{
-              //Tenemos idpersona
-              response2 = await registrarCliente(idpersona);
-              console.log(response2);
-              if(response2.idcliente == -1){
-                  showToast("Error en Registrar al Cliente", "ERROR", 1500);
-              }else{
-                 showToast("Cliente Registrado", "SUCCESS", 1500);
-                  //Ambos procesos han finalizado correctamente
-                  document.querySelector("#form-registro-clientes").reset();
-                  adUsuario();
-              }
-          }
-      }
-  });
+        if(idpersona == -1){
+            showToast("Error en Registrar al Cliente", "ERROR", 1500);
+        }else{
+            response2 = await registrarCliente(idpersona);
+            if(response2.idcliente == -1){
+                showToast("Error en Registrar al Cliente", "ERROR", 1500);
+            }else{
+                showToast("Cliente Registrado", "SUCCESS", 1500);
+                document.querySelector("#form-registro-clientes").reset();
+                adUsuario();
+                
+                // Refresh table after successful registration
+                if (typeof window.initDataTable === 'function') {
+                    await window.initDataTable();
+                }
+            }
+        }
+    }
+});
 
 
 
