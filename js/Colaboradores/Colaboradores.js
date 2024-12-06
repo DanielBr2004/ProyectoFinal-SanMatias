@@ -171,39 +171,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   document.querySelector("#form-registro-usuarios").addEventListener("submit", async (event) => {
-      event.preventDefault();
+    event.preventDefault();
 
-      if( await ask("¿Está seguro de registrar al Colaborador?", "Colaboradores")){
+    if(await ask("¿Está seguro de registrar al Colaborador?", "Colaboradores")){
+        let response1;
+        let response2;
 
-          //Control de Personas
-          let response1;
-          //Control de Usuarios 
-          let response2;
+        if(datosNuevos){
+            response1 = await registrarPersona();
+            idpersona = response1.idpersona;
+        }
 
-          //¿Y si la persona ya fue creada?
-          if(datosNuevos){
-              response1 = await registrarPersona(); //Registramos nueva persona
-              idpersona = response1.idpersona;      //Obtenemos el ID de la nueva persona
-          }
-
-          //¿El idpersona es correcto?
-          if(idpersona == -1){
+        if(idpersona == -1){
+            showToast("Error en Registrar al Usuario", "ERROR", 1500);
+        }else{
+            response2 = await registrarUsuario(idpersona);
+            if(response2.idcolaborador == -1){
                 showToast("Error en Registrar al Usuario", "ERROR", 1500);
-          }else{
-              //Tenemos idpersona
-              response2 = await registrarUsuario(idpersona);
-              if(response2.idcolaborador == -1){
-                  showToast("Error en Registrar al Usuario", "ERROR", 1500);
-              }else{
-                  showToast("Colaborador Registrado", "SUCCESS", 1500);
-                  adPersona();  
-                  adUsuario();
-                  //Ambos procesos han finalizado correctamente
-                  document.querySelector("#form-registro-usuarios").reset();
-              }
-          }
-      }
-  });
+            }else{
+                showToast("Colaborador Registrado", "SUCCESS", 1500);
+                adPersona();  
+                adUsuario();
+                document.querySelector("#form-registro-usuarios").reset();
+                
+                // Actualizar la tabla
+                if (typeof window.cargarUsuarios === 'function') {
+                    await window.cargarUsuarios();
+                }
+            }
+        }
+    }
+});
 
   //Cancelar 
   document.querySelector("#cancelar").addEventListener("click", async () => {

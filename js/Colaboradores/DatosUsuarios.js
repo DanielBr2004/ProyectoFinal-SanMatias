@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', async function() {
     let dataTable;
     let dataTableIsInitialized = false;
-  
+
+    // Configuración de DataTables
     const dataTableOptions = {
         dom: 'Bfrtilp',
         buttons: [
@@ -11,8 +12,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 titleAttr: 'Exportar a Excel',
                 className: 'btn btn-success',
                 exportOptions: {
-                  columns: [0, 1, 2, 3, 4, 5]
-              }
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
             },
             {
                 extend: 'pdfHtml5',
@@ -20,8 +21,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 titleAttr: 'Exportar a PDF',
                 className: 'btn btn-danger',
                 exportOptions: {
-                  columns: [0, 1, 2, 3, 4, 5]
-              }
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
             },
             {
                 extend: 'print',
@@ -29,16 +30,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 titleAttr: 'Imprimir',
                 className: 'btn btn-info',
                 exportOptions: {
-                  columns: [0, 1, 2, 3, 4, 5]
-              }
-            },
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            }
         ],
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
         columnDefs: [
             { className: 'text-center', targets: '_all' },
             { orderable: false, targets: [2] },
             { searchable: false, targets: [1] },
-            { width: '20%', targets: [1] },
+            { width: '20%', targets: [1] }
         ],
         pageLength: 5,
         destroy: true,
@@ -55,21 +56,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 first: 'Primero',
                 last: 'Último',
                 next: 'Siguiente',
-                previous: 'Anterior',
+                previous: 'Anterior'
             },
             buttons: {
                 excel: 'Excel',
                 pdf: 'PDF',
-                print: 'Imprimir',
-            },
-        },
+                print: 'Imprimir'
+            }
+        }
     };
-  
+
+    // Función para cargar usuarios
     const cargarUsuarios = async () => {
         try {
             const response = await fetch('../../controllers/colaborador.controller.php?operacion=getAllUser');
             const data = await response.json();
-  
+
             let content = '';
             data.forEach((item, index) => {
                 content += `
@@ -81,56 +83,53 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.nombres}</td>
                         <td class="text-center">${item.nomusuario}</td>
                         <td class="text-center">
-                            <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idcolaborador}, '${item.apepaterno}', '${item.apematerno}', '${item.nombres}')"><i class="fa-solid fa-pen-to-square"></i></button>
-                             <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${item.idcolaborador})"><i class="fa-solid fa-trash-can"></i></button>
+                            <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idcolaborador}, '${item.apepaterno}', '${item.apematerno}', '${item.nombres}')">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${item.idcolaborador})">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
                         </td>
                     </tr>`;
             });
-  
+
             const tbodyElement = document.getElementById('tbody-usuarios');
             if (tbodyElement) {
                 tbodyElement.innerHTML = content;
-            } else {
-                console.error("El elemento con ID 'tbody-usuarios' no se encontró en el DOM.");
             }
         } catch (error) {
             console.error('Error al cargar los usuarios:', error);
         }
     };
-  
+
+    // Función para abrir modal de edición
     window.abrirModalEditar = function(idcolaborador, apepaterno, apematerno, nombres) {
-      console.log("Abriendo modal con:", idcolaborador, apepaterno, apematerno, nombres);
-  
-      // Asignar valores a los campos del modal
-      document.getElementById('editIdColaborador').value = idcolaborador;
-      document.getElementById('editApePaterno').value = apepaterno;
-      document.getElementById('editApeMaterno').value = apematerno;
-      document.getElementById('editNombres').value = nombres;
-  
-      // Agregar validación para permitir solo letras y espacios
-      document.getElementById('editApePaterno').addEventListener('input', restrictToLetters);
-      document.getElementById('editApeMaterno').addEventListener('input', restrictToLetters);
-      document.getElementById('editNombres').addEventListener('input', restrictToLetters);
-  
-      // Mostrar el modal
-      $('#editarColaboradorModal').modal('show');
+        document.getElementById('editIdColaborador').value = idcolaborador;
+        document.getElementById('editApePaterno').value = apepaterno;
+        document.getElementById('editApeMaterno').value = apematerno;
+        document.getElementById('editNombres').value = nombres;
+
+        document.getElementById('editApePaterno').addEventListener('input', restrictToLetters);
+        document.getElementById('editApeMaterno').addEventListener('input', restrictToLetters);
+        document.getElementById('editNombres').addEventListener('input', restrictToLetters);
+
+        $('#editarColaboradorModal').modal('show');
     };
-  
-    // Función para restringir la entrada a solo letras y espacios
+
+    // Función para restringir entrada a letras
     function restrictToLetters(event) {
-      event.target.value = event.target.value.replace(/[^a-zA-Z\s]/g, '');
+        event.target.value = event.target.value.replace(/[^a-zA-Z\s]/g, '');
     }
-  
+
+    // Manejar envío del formulario de edición
     document.getElementById('formEditarColaborador').addEventListener('submit', async function(event) {
         event.preventDefault();
-    
-        // Obtener los valores del formulario
+
         const idcolaborador = document.getElementById('editIdColaborador').value;
         const apepaterno = document.getElementById('editApePaterno').value;
         const apematerno = document.getElementById('editApeMaterno').value;
         const nombres = document.getElementById('editNombres').value;
-    
-        // Mostrar la confirmación antes de enviar
+
         const confirmacion = await Swal.fire({
             title: '¿Estás seguro?',
             text: "¡Estás a punto de editar los datos del colaborador!",
@@ -139,11 +138,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             confirmButtonText: 'Aceptar',
             cancelButtonText: 'Cancelar'
         });
-    
-        // Si se confirma la edición
+
         if (confirmacion.isConfirmed) {
-            console.log("Enviando datos:", { idcolaborador, apepaterno, apematerno, nombres });
-    
             try {
                 const response = await fetch('../../controllers/colaborador.controller.php', {
                     method: 'POST',
@@ -156,71 +152,70 @@ document.addEventListener('DOMContentLoaded', async function() {
                         nombres
                     })
                 });
-    
+
                 const result = await response.json();
-                console.log("Respuesta del servidor:", result);
-    
-                // Mostrar mensaje dependiendo del resultado
+
                 if (result.success) {
                     showToast('Colaborador actualizado correctamente', 'SUCCESS', 1000);
                     $('#editarColaboradorModal').modal('hide');
-                    await cargarUsuarios();  // Recarga la lista de usuarios después de editar
+                    await cargarUsuarios();
                 } else {
                     showToast('Error al actualizar el colaborador', 'ERROR', 1000);
                 }
             } catch (error) {
                 console.error('Error al actualizar el colaborador:', error);
             }
-        } else if (confirmacion.isDismissed) {
-            showToast('Actualización Cancelada', 'WARNING');
         }
     });
-    
-  
+
+    // Función para eliminar usuario
     window.eliminarUsuario = async function(idcolaborador) {
-      const confirmacion = await Swal.fire({
-          title: '¿Estás seguro?',
-          text: "¡Esta acción no se puede deshacer!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar'
-      });
-  
-      if (confirmacion.isConfirmed) {
-          try {
-              const response = await fetch('../../controllers/colaborador.controller.php', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                  body: new URLSearchParams({
-                      operacion: 'delete',
-                      idcolaborador
-                  })
-              });
-  
-              const result = await response.json();
-              if (result.success) {
-                  showToast('Colaborador eliminado correctamente', 'SUCCESS', 1000);
-                  await cargarUsuarios();
-              } else {
-                  showToast('Error al eliminar el colaborador', 'ERROR', 1000);
-              }
-          } catch (error) {
-              console.error('Error al eliminar el colaborador:', error);
-          }
-      } else if (confirmacion.isDismissed) {
-          showToast('Eliminación Cancelada', 'WARNING');
-      }
+        const confirmacion = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡Esta acción no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (confirmacion.isConfirmed) {
+            try {
+                const response = await fetch('../../controllers/colaborador.controller.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        operacion: 'delete',
+                        idcolaborador
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Colaborador eliminado correctamente', 'SUCCESS', 1000);
+                    await cargarUsuarios();
+                } else {
+                    showToast('Error al eliminar el colaborador', 'ERROR', 1000);
+                }
+            } catch (error) {
+                console.error('Error al eliminar el colaborador:', error);
+            }
+        }
     };
-  
+
+    // Inicialización de DataTable
     const initDataTable = async () => {
         if (dataTableIsInitialized) {
             dataTable.destroy();
         }
-        dataTable = $('#tablaUsuarios').DataTable(dataTableOptions);
+        await cargarUsuarios();
+        dataTable = $('#table-usuarios').DataTable(dataTableOptions);
         dataTableIsInitialized = true;
     };
-  
-    await cargarUsuarios();
-    initDataTable();
+
+    // Hacer cargarUsuarios accesible globalmente
+    window.cargarUsuarios = cargarUsuarios;
+
+    // Inicializar
+    await initDataTable();
 });
