@@ -202,7 +202,7 @@
                     <th>Stock Producto</th>
                     <th>Cantidad</th>
                     <th>Descripción</th>
-                    <th>Nº de Lote</th>
+                    <th>Nº Lote</th>
                     <th>Fecha</th>
                     <th>Operaciones</th>
                     <th>Reporte</th>
