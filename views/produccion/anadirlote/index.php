@@ -145,9 +145,8 @@
         
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>/js/numlote/numlote.js"></script>
         <script src="<?= $host ?>js/numlote/listnumLote.js"></script>
-
+        <script src="<?= $host ?>/js/numlote/numlote.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">
