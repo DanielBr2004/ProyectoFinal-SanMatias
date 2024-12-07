@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         ]
     };
 
-    async function listarControl(idlote) {
+    window.listarControl = async function(idlote) {
         try {
             const response = await fetch(`../../controllers/controlProduccion.controller.php`, {
                 method: 'POST',
@@ -96,26 +96,22 @@ document.addEventListener('DOMContentLoaded', async function() {
             const tbodyElement = document.getElementById('taba-control');
             if (tbodyElement) {
                 tbodyElement.innerHTML = content;
-            } else {
-                console.error("El elemento con ID 'taba-control' no se encontró en el DOM.");
             }
         } catch (error) {
             console.error('Error al cargar los productos:', error);
         }
     }
 
-    const initDataTable = async (idlote) => {
+    window.initDataTable = async (idlote) => {
         if (dataTableIsInitialized) {
             dataTable.destroy();
         }
 
-        await listarControl(idlote);
-  
+        await window.listarControl(idlote);
         dataTable = $('#tabla-controllote').DataTable(dataTableOptions);
         dataTableIsInitialized = true;
     };
 
-    // Cargar lista de lotes al inicio
     async function loadLotes() {
         const response = await fetch('../../controllers/controlProduccion.controller.php?operacion=listLotes');
         const lotes = await response.json();
@@ -131,19 +127,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     document.getElementById('numLote').addEventListener('change', function() {
         const selectedLote = this.value;
-        console.log("Lote seleccionado:", selectedLote); // Verifica que el ID del lote seleccionado aparece en la consola
         if (selectedLote) {
-            initDataTable(selectedLote);
+            window.initDataTable(selectedLote);
         }
     });
   
     await loadLotes();
-
-    // Evento para cargar el lote seleccionado
-    document.getElementById('numLote').addEventListener('change', function() {
-        const selectedLote = this.value;
-        if (selectedLote) {
-            initDataTable(selectedLote);
-        }
-    });
 });

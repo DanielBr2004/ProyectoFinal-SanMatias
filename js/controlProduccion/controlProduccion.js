@@ -1,78 +1,75 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let idproduccion = -1;
 
+  async function registrarProduccion() {
+      const params = new FormData();
+      params.append("operacion", "add");
+      params.append("idlote", document.querySelector("#idlote").value);
+      params.append("mortalidad", document.querySelector("#mortalidad").value);
+      params.append("alimento", document.querySelector("#alimento").value);
 
+      const options = {
+          method: 'POST',
+          body: params
+      }
 
-  let idproduccion  = -1;
-
-
-
-  async function  registrarProduccion() {
-    const params = new FormData();
-    params.append("operacion", "add");
-    params.append("idlote", document.querySelector("#idlote").value);
-    params.append("mortalidad", document.querySelector("#mortalidad").value);
-    params.append("alimento", document.querySelector("#alimento").value);
-
-
-    const options = {
-        method: 'POST',
-        body: params
-    }
-
-    const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
-    return response.json();
-
+      const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
+      return response.json();
   }
 
-  (() => {
-    fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
-        .then(response => response.json())
-        .then(data => {
-            const numlote = document.querySelector("#idlote")
-            data.forEach(row => {
-                const tagOption = document.createElement("option")
-                tagOption.value = row.idlote
-                tagOption.innerHTML = `Lote N° ${row.numLote}`
-                numlote.appendChild(tagOption)
-            });
-        })
-        .catch(e => { console.error(e) })
-})();
-
-(() => {
-  fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
-      .then(response => response.json())
-      .then(data => {
-          const loteselectmain = document.querySelector("#numLote")
-          data.forEach(row => {
-              const tagOption = document.createElement("option")
-              tagOption.value = row.idlote
-              tagOption.innerHTML = `Lote N° ${row.numLote}`
-              loteselectmain.appendChild(tagOption)
+  async function actualizarSelects() {
+      try {
+          const response = await fetch(`../../controllers/numlote.controller.php?operacion=getAll`);
+          const data = await response.json();
+          
+          ["#idlote", "#numLote"].forEach(selectId => {
+              const select = document.querySelector(selectId);
+              select.innerHTML = '<option value="">Selección</option>';
+              data.forEach(row => {
+                  const option = document.createElement("option");
+                  option.value = row.idlote;
+                  option.textContent = `Lote N° ${row.numLote}`;
+                  select.appendChild(option);
+              });
           });
-      })
-      .catch(e => { console.error(e) })
-})();
+      } catch (e) {
+          console.error(e);
+      }
+  }
 
-
+  // Cargar lotes inicialmente
+  (() => {
+      actualizarSelects();
+  })();
 
   document.querySelector("#form-produccion").addEventListener("submit", async (event) => {
-    event.preventDefault();
+      event.preventDefault();
 
-    if(await ask("¿Estás seguro de que deseas registrar esta producción?")){
-
-        let response2;
-        response2 =  registrarProduccion();
-        if(response2.idproduccion == -1){
-          showToast("Error al registrar la producción", "ERROR");
-
-    
-        }else{
-            showToast("Producción registrada correctamente", "SUCCESS");
-            
-            document.querySelector("#form-produccion").reset();
-            document.querySelector("#idlote").focus();
-        }
-    }
+      if(await ask("¿Estás seguro de que deseas registrar esta producción?")) {
+          try {
+              const response = await registrarProduccion();
+              
+              if(response.idproduccion == -1) {
+                  showToast("Error al registrar la producción", "ERROR");
+              } else {
+                  showToast("Producción registrada correctamente", "SUCCESS");
+                  document.querySelector("#form-produccion").reset();
+                  
+                  // Actualizar selects
+                  await actualizarSelects();
+                  
+                  // Actualizar tabla si hay un lote seleccionado
+                  const selectedLote = document.querySelector("#numLote").value;
+                  if (selectedLote && window.initDataTable) {
+                      await window.initDataTable(selectedLote);
+                  }
+                  
+                  document.querySelector("#idlote").focus();
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              showToast("Error al registrar la producción", "ERROR");
+          }
+      }
   });
 });
