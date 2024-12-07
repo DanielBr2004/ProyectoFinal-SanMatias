@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 })
             });
             const data = await response.json();
-  
+    
             let content = '';
             data.forEach((item) => {
                 content += `
@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.mortalidad}</td>
                         <td class="text-center">${item.alimento}</td>
                         <td class="text-center">${item.alimentoAve}</td>
-                        <td class="text-center">${item.produccion}</td>
-                        <td class="text-center">${item.cantHuevos}</td>
+                        <td class="text-center">${item.produccion || ''}</td>
+                        <td class="text-center">${item.cantHuevos || ''}</td>
                     </tr>`;
             });
-  
+    
             const tbodyElement = document.getElementById('taba-control');
             if (tbodyElement) {
                 tbodyElement.innerHTML = content;
