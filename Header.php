@@ -70,9 +70,9 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= $host ?>views/home.php"><i class="fa-solid fa-house"></i> Home</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen"><i class="fa-regular fa-clipboard"></i> Inventario Almacen</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioAlmacen"><i class="fa-regular fa-clipboard"></i> Inventario Almacén</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/InventarioMolino"><i class="fa-solid fa-clipboard"></i> Inventario Molino</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/produccion"><i class="fa-solid fa-arrow-up-wide-short"></i> Produccion</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/produccion"><i class="fa-solid fa-arrow-up-wide-short"></i> Producción</a></li>
                         <li class="nav-item"><a class="nav-link active" href="<?= $host ?>/views/Venta"><i class="fa-solid fa-cart-shopping"></i> Venta</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bars"></i></a>
@@ -85,7 +85,7 @@ $host = "http://localhost/ProyectoFinal-SanMatias/";
                                 <li><a class="dropdown-item" href="<?= $host ?>/views/reportes-ventas"><i class="fa-brands fa-shopify"></i> Registro Ventas</a></li>
                                 
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item text-center" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy"> Cerrar sesion <br> <i class="fa-solid fa-power-off"></i></a></li>
+                                <li><a class="dropdown-item text-center" href="http://localhost/ProyectoFinal-SanMatias/controllers/login.controller.php?operacion=destroy"> Cerrar sesión <br> <i class="fa-solid fa-power-off"></i></a></li>
                             </ul>
                         </li>
                     </ul>
