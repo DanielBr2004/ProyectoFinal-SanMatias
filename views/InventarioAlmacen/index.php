@@ -23,12 +23,6 @@
                             <div class="form-floating">
                                 <select name="idhuevo" id="idhuevo" class="form-select" required>
                                     <option value="">Seleccione</option>
-                                    <option value="1">Comercial</option>
-                                    <option value="2">Pardo</option>
-                                    <option value="3">Sucio</option>
-                                    <option value="4">Doble Yema</option>
-                                    <option value="5">Margarito</option>
-                                    <option value="6">Merma</option>
                                 </select>
                                 <label for="idhuevo"><i class="fa-solid fa-box-open"></i> Producto</label>
                             </div>

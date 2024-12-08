@@ -108,6 +108,21 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(e => { console.error(e) });
   })();
 
+  (() => {
+    fetch(`../../controllers/tipohuevo.controller.php?operacion=getAllHuevos`)
+        .then(response => response.json())
+        .then(data => {
+            const tipohuevo = document.querySelector("#idhuevo")
+            data.forEach(row => {
+                const tagOption = document.createElement("option")
+                tagOption.value = row.idhuevo
+                tagOption.innerHTML = row.tiposHuevos
+                tipohuevo.appendChild(tagOption)
+            });
+        })
+        .catch(e => { console.error(e) })
+})();
+
   function ValidarCantidadSalida() {
     if (Motivomovimiento.value === 'S') {
       if (parseInt(CantidadEntrada.value) > parseInt(StockActual.value)) {
