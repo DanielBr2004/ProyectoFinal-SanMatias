@@ -13,7 +13,7 @@ $idVenta = $_GET['idventa'];
 $reporte = new ReportVentas();
 
 // Obtener datos desde los procedimientos almacenados
-$detalleVentas = $reporte->getDetalleVentas();
+$detalleVentas = $reporte->getDetalleVentas(['idventa' => $idVenta]);
 $ventas = $reporte->getVentas();
 
 // Filtrar datos específicos por `idventa`
@@ -159,6 +159,7 @@ try {
                     <tr>
                         <th>Nombre del Producto</th>
                         <th>Cantidad</th>
+                        <th>Peso Total</th>
                         <th>Precio</th>
                         <th>Unidad de Medida</th>
                     </tr>
@@ -168,11 +169,26 @@ try {
                     <tr>
                         <td><?= $detalle['Nombre Huevo'] ?></td>
                         <td><?= $detalle['Cantidad'] ?></td>
-                        <td><?= $detalle['Precio Venta'] ?></td>
+                        <td><?= $detalle['Peso Total']?></td>
+                        <td>s/.<?= $detalle['Precio Venta'] ?></td>
                         <td><?= $detalle['Unidad de Medida'] ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">IGV:</th>
+                        <td colspan="2">s/.<?= $detalle['IGV'] ?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Total:</th>
+                        <td colspan="2">s/.<?= $detalle['Total Venta'] ?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Total con IGV:</th>
+                        <td colspan="2">s/.<?= $detalle['Total con IGV'] ?></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
 

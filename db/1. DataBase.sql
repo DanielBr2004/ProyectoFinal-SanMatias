@@ -154,6 +154,7 @@ CREATE TABLE detalleventas
 iddetalleventa		INT AUTO_INCREMENT PRIMARY KEY,
 idventa				INT NOT NULL,
 idhuevo				INT NOT NULL,
+pesoTotal         DECIMAL(6,2) NOT NULL,
 cantidad			   INT NOT NULL,
 precioVenta 		DECIMAL(10, 2) NOT NULL,
 UnidadMedida		VARCHAR(30) NULL,

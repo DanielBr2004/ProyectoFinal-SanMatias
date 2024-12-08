@@ -12,10 +12,14 @@ class ReportVentas extends Conexion{
   }
 
     //reporte de Detalle de Ventas
-    public function getDetalleVentas() {
+    public function getDetalleVentas($params = []) : array {
         try {
-            $query = $this->pdo->prepare("CALL spu_detalleventas_pdf()");
-            $query->execute();
+            $query = $this->pdo->prepare("CALL spu_detalleventas_pdf(?)");
+            $query->execute(
+                array(
+                    $params['idventa']
+                )
+            );
             return $query->fetchAll(PDO::FETCH_ASSOC); 
         } catch (Exception $e) {
             die($e->getMessage()); 

@@ -12,12 +12,13 @@ class DetalleVenta extends Conexion{
   public function add($params = []):int{
     $idgenerado = null; 
     try{
-        $query = $this->pdo->prepare("call spu_registrar_Detalleventas(?,?,?,?,?)"); 
+        $query = $this->pdo->prepare("call spu_registrar_Detalleventas(?,?,?,?,?,?)"); 
         $query->execute(
             array(
                 // $params['idcolaborador'],
                 $params['idventa'],
                 $params['idhuevo'],
+                $params['pesoTotal'],
                 $params['cantidad'],
                 $params['unidadMedida'],
                 $params['precioVenta']

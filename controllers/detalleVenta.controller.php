@@ -18,6 +18,7 @@ if (isset($_POST['operacion'])) {
             $datosEnviar = [
               "idventa"        => $idventa,
               "idhuevo"        => $huevo['idhuevo'],
+              "pesoTotal"      => $huevo['pesoTotal'],
               "cantidad"       => $huevo['cantidad'],
               "unidadMedida" => $huevo['unidadMedida'],
               "precioVenta"      => $huevo['precioVenta']

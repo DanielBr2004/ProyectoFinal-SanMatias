@@ -61,11 +61,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Collect data from rows
     rows.forEach((row) => {
         const idhuevo = row.querySelector(".huevo-venta").value;
+        const pesototal = row.querySelector(".pesoTotal-venta").value;
         const unidadMedida = row.querySelector(".unidadMedida-venta").value;
         const cantidad = row.querySelector(".cantidad-venta").value;
         const precioKg = row.querySelector(".precioKg-venta").value;
 
-        if (!idhuevo || !cantidad || !unidadMedida || !precioKg) {
+        if (!idhuevo|| !pesototal || !cantidad || !unidadMedida || !precioKg) {
             throw new Error('Todos los campos son requeridos');
         }
 
@@ -81,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         huevos.push({
             idhuevo: idhuevo,
+            pesoTotal: pesototal,
             cantidad: finalCantidad,
             unidadMedida: unidadMedida,
             precioVenta: precioKgNum
