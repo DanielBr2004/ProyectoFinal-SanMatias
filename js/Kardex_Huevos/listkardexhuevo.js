@@ -73,44 +73,56 @@ document.addEventListener('DOMContentLoaded', async function() {
         const response = await fetch('../../controllers/kardexAlmacenHuevo.controller.php?operacion=getAlls');
         const data = await response.json();
         
-        const sortedData = [...data].sort((a, b) => b.idAlmacenHuevos - a.idAlmacenHuevos);
-        const latestId = sortedData[0]?.idAlmacenHuevos;
-        
+        // Group data by tipo_huevo
+        const groupedData = data.reduce((acc, item) => {
+          if (!acc[item.tipo_huevo]) {
+            acc[item.tipo_huevo] = [];
+          }
+          acc[item.tipo_huevo].push(item);
+          return acc;
+        }, {});
+    
         let content = '';
-        data.forEach(item => {
-          const showControls = item.idAlmacenHuevos === latestId;
+        Object.values(groupedData).forEach(huevoGroup => {
+          // Sort records for each egg type by ID in descending order
+          huevoGroup.sort((a, b) => b.idAlmacenHuevos - a.idAlmacenHuevos);
           
-          content += `
-            <tr>
-              <td class="text-center">${item.idAlmacenHuevos}</td>
-              <td class="text-center">${item.nombre_colaborador}</td>
-              <td class="text-center">${item.tipo_huevo}</td>
-              <td class="text-center">${item.motivomovimiento}</td>
-              <td class="text-center">${item.stockProducto}</td>
-              <td class="text-center">${item.cantidad}</td>
-              <td class="text-center">${item.descripcion}</td>
-              <td class="text-center">${item.num_lote}</td>
-              <td class="text-center">${item.fecha_creacion}</td>
-              <td class="text-center">
-                <div style="display: inline-flex; gap: 5px;">
-                  ${showControls ? `
-                    <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')">
-                      <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">
-                      <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                  ` : ''}
-                </div>
-              </td>
-              <td class="text-center">
-                <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idAlmacenHuevos})">
-                  <i class="fa-solid fa-file-pdf"></i>
-                </button>
-              </td>              
-            </tr>`;
+          huevoGroup.forEach((item, index) => {
+            // Show controls only for the latest record of each egg type (index 0)
+            const showControls = index === 0;
+            
+            content += `
+              <tr>
+                <td class="text-center">${item.idAlmacenHuevos}</td>
+                <td class="text-center">${item.nombre_colaborador}</td>
+                <td class="text-center">${item.tipo_huevo}</td>
+                <td class="text-center">${item.motivomovimiento}</td>
+                <td class="text-center">${item.stockProducto}</td>
+                <td class="text-center">${item.cantidad}</td>
+                <td class="text-center">${item.descripcion}</td>
+                <td class="text-center">${item.num_lote}</td>
+                <td class="text-center">${item.fecha_creacion}</td>
+                <td class="text-center">
+                  <div style="display: inline-flex; gap: 5px;">
+                    ${showControls ? `
+                      <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </button>
+                      <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </button>
+                    ` : ''}
+                  </div>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idAlmacenHuevos})">
+                    <i class="fa-solid fa-file-pdf"></i>
+                  </button>
+                </td>              
+              </tr>`;
+          });
         });
-  
+    
         const tbodyElement = document.getElementById('tbody-listproductos');
         if (tbodyElement) {
           tbodyElement.innerHTML = content;

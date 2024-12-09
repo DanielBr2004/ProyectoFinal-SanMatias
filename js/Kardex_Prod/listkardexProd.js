@@ -67,48 +67,60 @@ document.addEventListener('DOMContentLoaded', async function() {
     };
   
     const cargarProductos = async () => {
-      try {
-          const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
-          const data = await response.json();
-          
-          const sortedData = [...data].sort((a, b) => b.ID - a.ID);
-          const latestId = sortedData[0]?.ID;
-          
-          let content = '';
-          data.forEach(item => {
-              const showControls = item.ID === latestId;
-              
-              content += `
-                  <tr>
-                      <td class="text-center">${item.ID}</td>
-                      <td class="text-center">${item.Colaborador}</td>
-                      <td class="text-center">${item.Producto}</td>
-                      <td class="text-center">${item['Stock Actual']}</td>
-                      <td class="text-center">${item['Motivo de Movimiento']}</td>
-                      <td class="text-center">${item.Cantidad}</td>
-                      <td class="text-center">${item.Creado}</td>
-                      <td class="text-center">
-                      <div style="display: inline-flex; gap: 5px;">
-                          ${showControls ? `
-                              <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})">
-                                  <i class="fa-solid fa-pen-to-square"></i>
-                              </button>
-                              <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})">
-                                  <i class="fa-solid fa-trash-can"></i>
-                              </button>
-                          ` : ''}
-                      </div>
-                      </td>
-                  </tr>`;
-          });
+        try {
+            const response = await fetch('../../controllers/kardexAlmacenProducto.controller.php?operacion=getAll');
+            const data = await response.json();
+            
+            // Group data by Producto (product)
+            const groupedData = data.reduce((acc, item) => {
+                if (!acc[item.Producto]) {
+                    acc[item.Producto] = [];
+                }
+                acc[item.Producto].push(item);
+                return acc;
+            }, {});
       
-          document.getElementById('tbody-listarproductos').innerHTML = content;
-      } catch (error) {
-          console.error('Error al cargar los productos:', error);
-          showToast("Error al cargar los productos", "ERROR", 3000);
-      }
-    };
-  
+            let content = '';
+            Object.values(groupedData).forEach(productGroup => {
+                // Sort records for each product by ID in descending order
+                productGroup.sort((a, b) => b.ID - a.ID);
+                
+                productGroup.forEach((item, index) => {
+                    // Show controls only for the latest record of each product (index 0)
+                    const showControls = index === 0;
+                    
+                    content += `
+                        <tr>
+                            <td class="text-center">${item.ID}</td>
+                            <td class="text-center">${item.Colaborador}</td>
+                            <td class="text-center">${item.Producto}</td>
+                            <td class="text-center">${item['Stock Actual']}</td>
+                            <td class="text-center">${item['Motivo de Movimiento']}</td>
+                            <td class="text-center">${item.Cantidad}</td>
+                            <td class="text-center">${item.Creado}</td>
+                            <td class="text-center">
+                            <div style="display: inline-flex; gap: 5px;">
+                                ${showControls ? `
+                                    <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.ID}, '${item['Motivo de Movimiento']}', ${item.Cantidad})">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${item.ID})">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                            </td>
+                        </tr>`;
+                });
+            });
+        
+            document.getElementById('tbody-listarproductos').innerHTML = content;
+        } catch (error) {
+            console.error('Error al cargar los productos:', error);
+            showToast("Error al cargar los productos", "ERROR", 3000);
+        }
+      };
+      
     window.abrirModalEditar = function(idAlmacenProducto, motivomovimiento, cantidad) {
         document.getElementById('editIdAlmacenProducto').value = idAlmacenProducto;
         document.getElementById('editMotivomovimiento').value = motivomovimiento;
