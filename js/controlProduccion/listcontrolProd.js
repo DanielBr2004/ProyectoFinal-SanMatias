@@ -112,18 +112,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         dataTableIsInitialized = true;
     };
 
-    async function loadLotes() {
-        const response = await fetch('../../controllers/controlProduccion.controller.php?operacion=listLotes');
-        const lotes = await response.json();
-        const selectLote = document.getElementById('numLote');
-        
-        lotes.forEach(lote => {
-            const option = document.createElement('option');
-            option.value = lote.id;
-            option.text = `Lote Nº ${lote.id}`;
-            selectLote.appendChild(option);
-        });
-    }
 
     document.getElementById('numLote').addEventListener('change', function() {
         const selectedLote = this.value;
@@ -132,5 +120,4 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
   
-    await loadLotes();
 });

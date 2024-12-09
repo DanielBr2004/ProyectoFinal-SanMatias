@@ -24,11 +24,6 @@ if(isset($_POST['operacion'])){
                 $result = $controlLote->list($idlote);
                 echo json_encode($result);
                 break;
-
-            case 'listLotes':
-                $lotes = $controlLote->getAllLotes(); // Asumiendo que esta función retorna todos los lotes
-                echo json_encode($lotes);
-                break;
     }
 }
 
@@ -40,5 +35,9 @@ if(isset($_GET['operacion'])){
         case 'ChartLotes2':
             echo json_encode($controlLote->ChartLotes2(['idlote2' => $_GET['idlote2']]));
           break;
+        case 'listLotes':
+            $lotes = $controlLote->getAllLotes(); // Asumiendo que esta función retorna todos los lotes
+            echo json_encode($lotes);
+        break;
     }
 }

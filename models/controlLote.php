@@ -40,6 +40,7 @@ public function list($idlote): array {
   }
 }
 
+
   public function ChartLotes($params = []):array{
     try{
     $query = $this->pdo->prepare("CALL spu_listar_produccionLote(?)");
@@ -72,7 +73,7 @@ public function list($idlote): array {
 
 public function getAllLotes(): array {
   try {
-      $query = $this->pdo->prepare("SELECT id, nombre FROM lotes"); // Ajusta según la estructura de tu tabla
+      $query = $this->pdo->prepare("SELECT idlote, numLote FROM numLote"); // Ajusta según la estructura de tu tabla
       $query->execute();
       return $query->fetchAll(PDO::FETCH_ASSOC);
   } catch (Exception $e) {
