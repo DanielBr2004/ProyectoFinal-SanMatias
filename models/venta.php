@@ -53,6 +53,15 @@ public function update($params = []): bool {
     }
 }
 
-
+public function delete($idventa): bool {
+    try {
+        $query = $this->pdo->prepare("CALL sp_eliminar_venta(?)");
+        $query->execute([$idventa]);
+        return true;
+    } catch (Exception $e) {
+        error_log("Error en delete: " . $e->getMessage());
+        return false;
+    }
+}
 
 }

@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             { extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> ', titleAttr: 'Exportar a PDF', className: 'btn btn-danger', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
             { extend: 'print', text: '<i class="fa fa-print"></i> ', titleAttr: 'Imprimir', className: 'btn btn-info', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
         ],
-
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
         columnDefs: [{ className: 'text-center', targets: '_all' }, { orderable: false, targets: [2, 6] }, { searchable: false, targets: [1, 6] }],
         pageLength: 5,
@@ -49,12 +48,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.fecha}</td>
                         <td class="text-center">${item.estado}</td>
                         <td class="text-center">
-                        <div style="display: inline-flex; gap: 5px;">
-                            <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idventa}, '${item.estado}', '${item.direccion}')"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.idventa}"><i class="fa-solid fa-trash-can"></i></button>
+                            <div style="display: inline-flex; gap: 5px;">
+                                <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idventa}, '${item.estado}')">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.idventa}">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idventa})"><i class="fa-solid fa-file-pdf"></i></button>
+                            <button class="btn btn-primary btn-sm" onclick="generarPDF(${item.idventa})">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </button>
                         </td>
                     </tr>`;
             });
@@ -74,40 +80,106 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.getElementById('editIdVenta').value = idventa;
         document.getElementById('editEstado').value = estado;
 
-        // Limitar entrada a solo letras para el campo "estado"
         document.getElementById('editEstado').addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ''); // Permitir solo letras y espacios
+            e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
         });
 
         $('#editarVentaModal').modal('show');
     };
 
+    // editar venta 
     document.getElementById('formEditarVenta').addEventListener('submit', async function(event) {
         event.preventDefault();
-
+    
         const idventa = document.getElementById('editIdVenta').value;
         const estado = document.getElementById('editEstado').value;
-        try {
-            const response = await fetch('../../controllers/venta.controller.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    operacion: 'update',
-                    idventa,
-                    estado
-                })
-            });
-
-            const result = await response.json();
-            if (result.success) {
-                alert('Venta actualizada correctamente');
-                $('#editarVentaModal').modal('hide');
-                await cargarVentas();
-            } else {
-                alert('Error al actualizar la venta');
+    
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas guardar los cambios realizados a la venta?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        });
+    
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('../../controllers/venta.controller.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        operacion: 'update',
+                        idventa,
+                        estado
+                    })
+                });
+    
+                const data = await response.json();
+                if (data.success) {
+                    showToast('Venta actualizada correctamente', 'SUCCESS', 1000);
+                    $('#editarVentaModal').modal('hide');
+                    await cargarVentas();
+                } else {
+                    showToast('Error al actualizar la venta', 'ERROR', 1000);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Error al actualizar la venta', 'ERROR', 1000);
             }
-        } catch (error) {
-            console.error('Error al actualizar la venta:', error);
+        }
+    });
+
+    // eliminar venta
+
+    document.getElementById('tbody-ReporVenta').addEventListener('click', async function(e) {
+        if (e.target.closest('.eliminar-btn')) {
+            const button = e.target.closest('.eliminar-btn');
+            const idventa = button.dataset.id;
+            
+            const result = await Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Deseas eliminar esta venta?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            });
+    
+            if (result.isConfirmed) {
+                try {
+                    const response = await fetch('../../controllers/venta.controller.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            'operacion': 'delete',
+                            'idventa': idventa
+                        })
+                    });
+    
+                    const data = await response.json();
+                    if (data.success) {
+                        showToast('Venta eliminada correctamente', 'SUCCESS', 1000);
+                        if (dataTableIsInitialized) {
+                            dataTable.destroy();
+                        }
+                        await cargarVentas();
+                        dataTable = $('#tabla-ReporVenta').DataTable(dataTableOptions);
+                        dataTableIsInitialized = true;
+                    } else {
+                        showToast('Error al eliminar la venta', 'ERROR', 1000);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showToast('Error al eliminar la venta', 'ERROR', 1000);
+                }
+            }
         }
     });
 
@@ -123,5 +195,4 @@ document.addEventListener('DOMContentLoaded', async function() {
     };
 
     await initDataTable();
-
 });

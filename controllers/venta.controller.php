@@ -28,6 +28,12 @@ if(isset($_POST['operacion'])){
             echo json_encode(["success" => $resultado]);
             break;
 
+            case 'delete':
+              $idventa = $venta->limpiarCadena($_POST['idventa']);
+              $resultado = $venta->delete($idventa);
+              echo json_encode(["success" => $resultado]);
+              break;
+
   }
 }
 
