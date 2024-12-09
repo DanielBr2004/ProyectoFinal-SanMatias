@@ -27,9 +27,10 @@ async function registrarTipoHuevo() {
         response2 =  registrarTipoHuevo();
         if(response2.idtipohuevo == -1){
           showToast("Error al registrar el tipo de huevo", "ERROR");
-    
+          
         }else{
             showToast("Tipo de huevo registrado correctamente", "SUCCESS");
+              await initDataTable();
             //producto creado se limpia el formulario
             document.querySelector("#form-registro-huevos").reset();
         }

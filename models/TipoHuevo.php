@@ -57,7 +57,7 @@ public function eliminarProducto($idproducto = 0){
           )
       );
       $row = $query->fetch(PDO::FETCH_ASSOC);
-      $idtipohuevo = $row['idtipohuevo'];
+      $idtipohuevo = $row['idhuevo'];
   }
   catch(Exception $e){
       $idtipohuevo = -1;

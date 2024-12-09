@@ -11,6 +11,7 @@ BEGIN
 	INSERT INTO numLote 
 		(numLote, CantInicio,  descripcion) VALUES 
         (_numlote,_CantInicio, _descripcion);
+    SELECT @@last_insert_id 'idlote';
 END;
  -- ------------------------------------------- Validar lote -----------------------------------------------------
  drop procedure if exists `spu_existe_lote`;
@@ -20,13 +21,14 @@ BEGIN
     SELECT * FROM numLote WHERE numLote = _numlote;
 END;
 -- --------------------------------- LISTAR ------------------------------
+/*
 DROP PROCEDURE IF EXISTS `spu_listar_numLote`;
 
 CREATE PROCEDURE spu_listar_numLote()
 BEGIN
     SELECT * FROM numLote;
 END;
-
+*/
 -- --------------------------------- LISTAR lotes ------------------------------
 
 DROP PROCEDURE IF EXISTS `spu_listar_numLote`;
@@ -44,9 +46,10 @@ BEGIN
             ELSE '❔'          -- Opcional: símbolo para estados desconocidos
         END AS estado_icono,
         descripcion,
-        create_at
+        create_at 
     FROM 
-        numLote;
+        numLote
+    ORDER BY create_at DESC;
 END;
 
 -- --------------------------------- destivar lote ------------------------------

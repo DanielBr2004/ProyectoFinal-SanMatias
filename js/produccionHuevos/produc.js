@@ -21,6 +21,7 @@ function $$(selector = null) {
   
   const dataTableOptions = {
     dom: 'Bfrtip',
+    order: [[0, 'desc']],
     buttons: [
       {
         extend: 'excelHtml5',

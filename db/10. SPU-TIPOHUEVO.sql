@@ -17,6 +17,7 @@ CREATE PROCEDURE spu_insertar_tipoHuevo(
 BEGIN
     INSERT INTO tipoHuevo (tiposHuevos, PrecioKg, descripcion)
     VALUES (_tiposHuevos, _PrecioKg, _descripcion);
+    SELECT @@last_insert_id 'idhuevo';
 END;
  -- ------------------------------------------- listar productos ----------------------------------------------------- 
 CREATE PROCEDURE spu_listado_tipoHuevo()

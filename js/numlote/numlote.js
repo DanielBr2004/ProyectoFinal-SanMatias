@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
               }else{
                   showToast("Lote registrado correctamente", "SUCCESS");
+                  await initDataTable();
                   //producto creado se limpia el formulario
                   document.querySelector("#form-registro-lotes").reset();
               }
