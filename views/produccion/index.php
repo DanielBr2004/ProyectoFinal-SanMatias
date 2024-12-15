@@ -105,6 +105,7 @@
                         <th>Alimentación del Ave</th>
                         <th>Producción</th>
                         <th>Cantidad de Huevos</th>
+                        <th>Operaciones</th>
                     </tr>
                 </thead>
                 <tbody id="taba-control">

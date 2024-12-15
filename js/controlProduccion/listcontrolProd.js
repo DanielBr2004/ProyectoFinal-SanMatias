@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         lengthMenu: [5, 10, 15, 20, 100, 200, 500],
         columnDefs: [
             { className: 'text-center', targets: '_all' },
-            { orderable: false, targets: [4] },
+            { orderable: false, targets: [4, 8] },
         ],
         pageLength: 5,
         destroy: true,
@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             { title: "Alimento" },
             { title: "Alimentación del Ave" },
             { title: "Producción" },
-            { title: "Cantidad de Huevos" }
+            { title: "Cantidad de Huevos" },
+            { title: "Operaciones" } 
         ]
     };
 
@@ -91,6 +92,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.alimentoAve}</td>
                         <td class="text-center">${item.produccion || ''}</td>
                         <td class="text-center">${item.cantHuevos || ''}</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-warning" onclick="editarRegistro(${item.idlote})">
+                            <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarRegistro(${item.idlote})">
+                            <i class="fas fa-trash"></i>
+                            </button>
+                         </td>
                     </tr>`;
             });
     
