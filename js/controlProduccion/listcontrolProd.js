@@ -93,10 +93,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.produccion || ''}</td>
                         <td class="text-center">${item.cantHuevos || ''}</td>
                         <td class="text-center">
-                            <button class="btn btn-sm btn-warning" onclick="editarRegistro(${item.idlote})">
+                            <button class="btn btn-sm btn-warning" onclick="editarRegistro(${item.ID})">
                             <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-sm btn-danger" onclick="eliminarRegistro(${item.idlote})">
+                            <button class="btn btn-sm btn-danger" onclick="eliminarRegistro(${item.ID})">
                             <i class="fas fa-trash"></i>
                             </button>
                          </td>

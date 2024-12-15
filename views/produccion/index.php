@@ -117,8 +117,47 @@
        </div>
      </div>
 
+    <!--modal para editar-->
+<!-- Modal para editar control -->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarLabel">Editar Control de Lote</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEditar">
+          <input type="hidden" id="idlote">
+          <input type="hidden" id="create_at">
+          
+          <div class="mb-3">
+            <label for="numaves" class="form-label">Número de Aves</label>
+            <input type="number" class="form-control" id="numaves" required>
+          </div>
 
+          <div class="mb-3">
+            <label for="mortalidad" class="form-label">Mortalidad</label>
+            <input type="number" class="form-control" id="mortalidad" required>
+          </div>
 
+          <div class="mb-3">
+            <label for="alimento" class="form-label">Alimento (kg)</label>
+            <input type="number" step="0.01" class="form-control" id="alimento" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="cantHuevos" class="form-label">Cantidad de Huevos</label>
+            <input type="number" class="form-control" id="cantHuevos" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnGuardarEdicion">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
     
 
 

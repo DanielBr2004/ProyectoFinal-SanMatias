@@ -32,7 +32,7 @@ BEGIN
 END;
 
 -- ------------------------------------------- Listar Control Lote -----------------------------------------------------
-
+DROP PROCEDURE IF EXISTS SPU_LISTAR_CONTROLLOTE;
 CREATE PROCEDURE SPU_LISTAR_CONTROLLOTE(IN _idlote INT)
 BEGIN
     SELECT
@@ -47,7 +47,6 @@ BEGIN
     FROM controlLote
     WHERE idlote = _idlote;
 END;    
-
 -- ------------------------------------------- Listar Producción Lote -----------------------------------------------------
 CREATE PROCEDURE spu_listar_produccionLote(
     IN _numLote INT
@@ -183,3 +182,5 @@ BEGIN
     -- Devolver el resultado
     SELECT totalCantidad AS CantInicio, NumGallinas AS NumGallinas, resultado;
 END;
+
+-- 15/12/24
