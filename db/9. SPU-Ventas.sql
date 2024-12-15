@@ -49,12 +49,15 @@ END;
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  
    DROP PROCEDURE IF EXISTS `sp_eliminar_venta`;
-
-
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )
 BEGIN
+    -- Eliminar primero los detalles de la venta
+    DELETE FROM detalleventas
+    WHERE idventa = p_idventa;
+
+    -- Luego, eliminar la venta
     DELETE FROM ventas
     WHERE idventa = p_idventa;
 END;
