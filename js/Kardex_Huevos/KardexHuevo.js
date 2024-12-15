@@ -41,7 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
   async function ExisteProduccionRegistrada(idlote) {
     try {
       const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=HasProduccion&idlote=${idlote}`);
+      const response2 = await ValidarCantidadLote(numLote.value);
       const data = await response.json();
+
+      if(response2[0].resultado == 1){
+        showToast("Lote Con 0 Gallinas", "ERROR", 3000);
+        document.querySelector("#registrar-colaborador").disabled = true;
+    }else{
       if (data.length === 0) {
         showToast("Falta Registrar producción", "INFO", 3000);
         document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
@@ -51,11 +57,27 @@ document.addEventListener("DOMContentLoaded", () => {
         prodregistrada = true;
         return true;
       }
+    }
     } catch (error) {
       console.error(error);
       return false;
     }
   }
+    async function ValidarCantidadLote($idlote) {
+      const params = new FormData();
+      params.append("operacion", "ValidarLote");
+      params.append("idlote", $idlote);
+
+      const options = {
+          method: 'POST',
+          body: params
+      }
+
+      const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
+      return response.json();
+  }
+
+
 
   async function HuevoRegistrado(idhuevo, idlote) {
     try {

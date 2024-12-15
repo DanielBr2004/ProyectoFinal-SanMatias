@@ -93,7 +93,6 @@
                 <div class="text-end mt-2">
                     <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm"><i class="fa-regular fa-bookmark"></i> Actualizar Kardex</button>
                     <button type="reset" id="" class="btn btn-secondary btn-sm"><i class="fa-regular fa-rectangle-xmark"></i> Cancelar Proceso</button>
-                    <button type="button" id="filtrarBtn" class="btn btn-secondary btn-sm">Filtrar</button>
                 </div>
             </form>        
         </div>
