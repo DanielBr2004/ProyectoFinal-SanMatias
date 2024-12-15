@@ -285,6 +285,27 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error al actualizar la tabla de Kardex:", error);
     }
   }
+// Add after existing IIFE
+function cargarLotesModal(){
+  fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
+    .then(response => response.json())
+    .then(data => {
+      const modalNumLote = document.querySelector("#editNumLote");
+      modalNumLote.innerHTML = '<option value="">Seleccione...</option>';
+      data.forEach(row => {
+        const tagOption = document.createElement("option");
+        tagOption.value = row.idlote;
+        tagOption.innerHTML = `Lote N° ${row.numLote}`; 
+        modalNumLote.appendChild(tagOption);
+      });
+    })
+    .catch(e => console.error(e));
+}
+
+// Add modal show event listener
+document.getElementById('editarModal').addEventListener('show.bs.modal', function () {
+  cargarLotesModal();
+});
 
   obtenerStocksProductos();
 });

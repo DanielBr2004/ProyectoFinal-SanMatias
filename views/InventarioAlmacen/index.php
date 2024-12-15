@@ -229,7 +229,6 @@
                             <option value="">Seleccione...</option>
                             <option value="Entrada por Producción">Entrada por Producción</option>
                             <option value="Entrada por Compra">Entrada por Compra</option>
-                            <option value="Salida por Venta">Salida por Venta</option>
                             <option value="Salida por Merma">Salida por Merma</option>
                             <option value="Salida por Contingencia">Salida por Contingencia</option>
                         </select>
@@ -249,9 +248,11 @@
 
                     <!-- Nº Lote -->
                     <div class="mb-3">
-                        <label for="editNumLote" class="form-label">Nº Lote</label>
-                        <input type="text" class="form-control" id="editNumLote" required>
-                    </div>
+    <label for="editNumLote" class="form-label">Nº Lote</label>
+    <select class="form-select" id="editNumLote" required>
+        <option value="">Seleccione...</option>
+    </select>
+</div>
 
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>

@@ -153,11 +153,31 @@ document.addEventListener('DOMContentLoaded', async function() {
   
     // Modal Edit Function
     window.abrirModalEditar = function(idAlmacenHuevos, motivomovimiento, cantidad, descripcion, num_lote) {
+      // Cargar los lotes antes de mostrar el modal
+      fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
+        .then(response => response.json())
+        .then(data => {
+          const modalNumLote = document.getElementById('editNumLote');
+          modalNumLote.innerHTML = '<option value="">Seleccione...</option>';
+          data.forEach(row => {
+            const tagOption = document.createElement("option");
+            tagOption.value = row.idlote;
+            tagOption.innerHTML = `Lote N° ${row.numLote}`;
+            // Seleccionar el lote correspondiente
+            if(row.idlote == num_lote) {
+              tagOption.selected = true;
+            }
+            modalNumLote.appendChild(tagOption);
+          });
+        })
+        .catch(e => console.error(e));
+    
+      // Establecer los demás valores
       document.getElementById('editIdAlmacenHuevos').value = idAlmacenHuevos;
       document.getElementById('editMotivomovimiento').value = motivomovimiento;
       document.getElementById('editCantidad').value = cantidad;
       document.getElementById('editDescripcion').value = descripcion;
-      document.getElementById('editNumLote').value = num_lote;
+      
       $('#editarModal').modal('show');
     };
   
