@@ -29,6 +29,26 @@ if(isset($_POST['operacion'])){
                 $result = $controlLote->ValidarLote($idlote);
                 echo json_encode($result);
                 break;
+                case 'edit':
+                    $datosRecibidos = [
+                        "idlote"        => $_POST["idlote"],
+                        "idcontrollote" => $_POST["idcontrollote"],
+                        "mortalidad"    => $_POST["mortalidad"],
+                        "alimento"      => $_POST["alimento"]
+                    ];
+                    $result = $controlLote->edit($datosRecibidos);
+                    echo json_encode([
+                        "status" => $result,
+                        "message" => $result ? "Control lote actualizado" : "Error al actualizar"
+                    ]);
+                    break;
+                    case 'delete':
+                        $result = $controlLote->delete($_POST["idlote"], $_POST["idcontrollote"]);
+                        echo json_encode([
+                            "status" => $result,
+                            "message" => $result ? "Control lote eliminado" : "Error al eliminar"
+                        ]);
+                        break;
     }
 }
 

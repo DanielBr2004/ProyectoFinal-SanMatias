@@ -91,6 +91,32 @@ public function getAllLotes(): array {
       die($e->getMessage());
   }
 }
-
+  // Editar
+public function edit($params = []): bool {
+  try {
+      $query = $this->pdo->prepare("CALL SPU_EDITAR_CONTROLLOTE(?,?,?,?)");
+      $status = $query->execute([
+          $params['idlote'],
+          $params['idcontrollote'], 
+          $params['mortalidad'],
+          $params['alimento']
+      ]);
+      return $status;
+  }
+  catch(Exception $e) {
+      die($e->getMessage());
+  }
+}
+  // Eliminar
+public function delete($idlote, $idcontrollote): bool {
+  try {
+      $query = $this->pdo->prepare("CALL SPU_ELIMINAR_CONTROLLOTE(?,?)");
+      $status = $query->execute([$idlote, $idcontrollote]);
+      return $status;
+  }
+  catch(Exception $e) {
+      die($e->getMessage());
+  }
+}
 
 }

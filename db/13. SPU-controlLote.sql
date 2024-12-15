@@ -36,6 +36,7 @@ DROP PROCEDURE IF EXISTS SPU_LISTAR_CONTROLLOTE;
 CREATE PROCEDURE SPU_LISTAR_CONTROLLOTE(IN _idlote INT)
 BEGIN
     SELECT
+        idcontrollote,          -- Agregado el campo idcontrollote para el orden
         create_at,
         idlote,
         numaves,
@@ -45,8 +46,9 @@ BEGIN
         CONCAT(ROUND((cantHuevos / numaves) * 100, 2), '%') AS produccion,
         cantHuevos
     FROM controlLote
-    WHERE idlote = _idlote;
-END;    
+    WHERE idlote = _idlote
+    ORDER BY create_at DESC;  -- Puedes ordenar por la fecha de creación o por cualquier otra columna
+END;
 -- ------------------------------------------- Listar Producción Lote -----------------------------------------------------
 CREATE PROCEDURE spu_listar_produccionLote(
     IN _numLote INT
@@ -184,3 +186,45 @@ BEGIN
 END;
 
 -- 15/12/24
+-- EDITAR ------------------------------------------
+DROP PROCEDURE IF EXISTS SPU_EDITAR_CONTROLLOTE;
+CREATE PROCEDURE SPU_EDITAR_CONTROLLOTE(
+    IN _idlote INT,
+    IN _idcontrollote INT,
+    IN _mortalidad INT,
+    IN _alimento DECIMAL(6,2)
+)
+BEGIN
+    DECLARE _numaves INT;
+    DECLARE _avesActuales INT;
+    DECLARE _alimentoAve DECIMAL(6,2);
+
+    -- Obtener el número de aves de la última entrada para el lote
+    SELECT numaves INTO _numaves 
+    FROM controlLote
+    WHERE idlote = _idlote AND idcontrollote = _idcontrollote
+    ORDER BY create_at DESC LIMIT 1;
+
+    -- Calcular las aves actuales
+    SET _avesActuales = _numaves - _mortalidad;
+    SET _alimentoAve = (_alimento * 1000) / _numaves;
+
+    -- Actualizar el registro en la tabla controlLote (sin modificar cantHuevos)
+    UPDATE controlLote
+    SET 
+        mortalidad = _mortalidad,
+        alimento = _alimento,
+        alimentoAve = _alimentoAve
+    WHERE idlote = _idlote AND idcontrollote = _idcontrollote;
+END;
+-- ELIMINAR ------------------------------------
+DROP PROCEDURE IF EXISTS SPU_ELIMINAR_CONTROLLOTE;
+CREATE PROCEDURE SPU_ELIMINAR_CONTROLLOTE(
+    IN _idlote INT,
+    IN _idcontrollote INT
+)
+BEGIN
+    -- Eliminar el registro de controlLote especificado
+    DELETE FROM controlLote
+    WHERE idlote = _idlote AND idcontrollote = _idcontrollote;
+END;
