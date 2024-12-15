@@ -24,6 +24,11 @@ if(isset($_POST['operacion'])){
                 $result = $controlLote->list($idlote);
                 echo json_encode($result);
                 break;
+            case 'ValidarLote':
+                $idlote = intval($_POST['idlote']);
+                $result = $controlLote->ValidarLote($idlote);
+                echo json_encode($result);
+                break;
     }
 }
 

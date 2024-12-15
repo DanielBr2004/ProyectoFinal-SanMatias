@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Mapeo de claves a nombres personalizados
                     const keyMap = {
                         numLote: 'N° Lote',
-                        cantidad_inicial: 'N° Gallinas',
+                        cantidad_inicial: 'N° Gallinas Inicial',
                         mortalidad_acumulada: 'Mortalidad',
                         edad_ave: 'Edad (Semanas)',
                         create_at: 'Fecha de Recepcion',

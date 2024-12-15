@@ -148,3 +148,38 @@ BEGIN
     AND idlote = _idlote 
     AND DATE(creado) = CURRENT_DATE();
 END;
+
+
+-- ------------------------------------------- Comparar Mortalidad -----------------------------------------------------
+
+DROP PROCEDURE IF EXISTS spu_comparar_mortalidad;
+
+CREATE PROCEDURE spu_comparar_mortalidad(IN _idLote INT)
+BEGIN
+    DECLARE totalCantidad INT;
+    DECLARE NumGallinas INT;
+    DECLARE resultado BOOLEAN; -- Declarar la variable resultado
+
+    -- Inicializar la variable resultado
+    SET resultado = FALSE;
+
+    -- Sumar la cantidad de todos los registros que coincidan con el idlote
+    SELECT SUM(mortalidad) INTO totalCantidad
+    FROM controlLote
+    WHERE idlote = _idLote;
+
+    -- Obtener CantInicio de la tabla numLote
+    SELECT CantInicio INTO NumGallinas
+    FROM numLote
+    WHERE idlote = _idLote;
+
+    -- Comparar totalCantidad con cantInicio
+    IF totalCantidad = NumGallinas THEN
+        SET resultado = 1;
+    ELSE
+        SET resultado = 0;
+    END IF;
+
+    -- Devolver el resultado
+    SELECT totalCantidad AS CantInicio, NumGallinas AS NumGallinas, resultado;
+END;

@@ -192,6 +192,7 @@ CONSTRAINT FK_numLote_controllote FOREIGN KEY (idlote) REFERENCES numLote(idlote
 
 
 
+
    
    
    

@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   let idproduccion = -1;
 
+
+
+  const idlote = document.querySelector("#idlote");
+
   async function registrarProduccion() {
       const params = new FormData();
       params.append("operacion", "add");
@@ -16,6 +20,34 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
       return response.json();
   }
+
+  async function ValidarCantidadLote($idlote) {
+      const params = new FormData();
+      params.append("operacion", "ValidarLote");
+      params.append("idlote", $idlote);
+
+      const options = {
+          method: 'POST',
+          body: params
+      }
+
+      const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
+      return response.json();
+  }
+
+  idlote.addEventListener("change", async () => {
+    if(idlote){
+        const response = await ValidarCantidadLote(idlote.value);
+        console.log(response[0].resultado);
+
+        if(response[0].resultado == 1){
+            showToast("Lote Con 0 Gallinas", "ERROR", 3000);
+            document.querySelector("#registrar-producto").disabled = true;
+        }else{
+            document.querySelector("#registrar-producto").disabled = false;
+        }
+    }
+  });
 
   async function actualizarSelects() {
       try {
@@ -48,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if(await ask("¿Estás seguro de que deseas registrar esta producción?")) {
           try {
               const response = await registrarProduccion();
+              
               
               if(response.idproduccion == -1) {
                   showToast("Error al registrar la producción", "ERROR");

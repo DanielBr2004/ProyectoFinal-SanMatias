@@ -40,6 +40,17 @@ public function list($idlote): array {
   }
 }
 
+// Listar por idlote
+public function ValidarLote($idlote): array {
+  try {
+      $query = $this->pdo->prepare("CALL spu_comparar_mortalidad(?)");
+      $query->execute([$idlote]);
+      return $query->fetchAll(PDO::FETCH_ASSOC);
+  } catch (Exception $e) {
+      die($e->getMessage());
+  }
+}
+
 
   public function ChartLotes($params = []):array{
     try{
