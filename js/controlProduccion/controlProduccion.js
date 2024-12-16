@@ -20,6 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
       return response.json();
   }
+  async function ValidadHasproduccion(idhuevo) {
+    try {
+      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=HasProduccion&idlote=${idhuevo}`);
+        return response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function ValidarCantidadLote($idlote) {
       const params = new FormData();
@@ -37,14 +45,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   idlote.addEventListener("change", async () => {
     if(idlote){
+        const responseProducion = await ValidadHasproduccion(idlote.value);
         const response = await ValidarCantidadLote(idlote.value);
         console.log(response[0].resultado);
+        console.log(responseProducion);
 
         if(response[0].resultado == 1){
             showToast("Lote Con 0 Gallinas", "ERROR", 3000);
             document.querySelector("#registrar-producto").disabled = true;
         }else{
-            document.querySelector("#registrar-producto").disabled = false;
+
+            if(responseProducion.length === 0){
+                document.querySelector("#registrar-producto").disabled = false;
+            }else{
+                showToast("Ya se ha registrado la producción de este lote", "INFO", 3000);
+                document.querySelector("#registrar-producto").disabled = true;
+            }
         }
     }
   });
