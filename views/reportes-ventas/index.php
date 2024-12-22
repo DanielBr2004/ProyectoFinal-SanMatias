@@ -42,9 +42,13 @@
 
                     <!-- Estado -->
                     <div class="mb-3">
-                        <label for="editEstado" class="form-label">Estado</label>
-                        <input type="text" class="form-control" id="editEstado" required>
-                    </div>
+                      <label for="editEstado" class="form-label">Estado</label>
+                      <select class="form-control" id="editEstado" required>
+                      <option value="">Seleccione un estado</option>
+                      <option value="Entregado">Entregado</option>
+                      <option value="Por entregar">Por entregar</option>
+                    </select>
+                  </div>
 
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>

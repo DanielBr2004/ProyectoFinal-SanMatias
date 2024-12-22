@@ -79,11 +79,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     window.abrirModalEditar = function(idventa, estado) {
         document.getElementById('editIdVenta').value = idventa;
         document.getElementById('editEstado').value = estado;
-
-        document.getElementById('editEstado').addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-        });
-
+        
+        // Remove the input event listener since we're using a select now
         $('#editarVentaModal').modal('show');
     };
 
