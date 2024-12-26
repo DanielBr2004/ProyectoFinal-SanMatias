@@ -135,4 +135,4 @@ BEGIN
     WHERE idventa = p_idventa;
 END;
 CALL spu_listar_ventas();
-CALL sp_eliminar_venta(2);
+CALL sp_eliminar_venta();
