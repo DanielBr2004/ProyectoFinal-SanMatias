@@ -58,3 +58,87 @@ BEGIN
     INNER JOIN 
         tipoHuevo t ON d.idhuevo = t.idhuevo;  -- Realizamos el JOIN para obtener el tipo de huevo
 END;
+
+-- elimianr -------------------------------------------------------------------------------
+DROP PROCEDURE IF EXISTS `spu_eliminar_Detalleventas`;
+DELIMITER $$
+CREATE PROCEDURE spu_eliminar_Detalleventas(
+    IN _iddetalleventa INT
+)
+BEGIN
+    -- Declarar variables para almacenar los datos de la venta a eliminar
+    DECLARE _idventa INT;
+    DECLARE _idhuevo INT;
+    DECLARE _cantidad INT;
+    DECLARE _stockProducto DECIMAL(6, 2);
+    DECLARE _iduser INT;
+
+    -- Obtener los datos del detalle de venta antes de eliminar
+    SELECT 
+        d.idventa, 
+        d.idhuevo, 
+        d.cantidad 
+    INTO 
+        _idventa, 
+        _idhuevo, 
+        _cantidad
+    FROM 
+        detalleventas d
+    WHERE 
+        d.iddetalleventa = _iddetalleventa;
+
+    -- Obtener el stock actual del producto
+    SELECT 
+        stockProducto 
+    INTO 
+        _stockProducto
+    FROM 
+        KardexAlmHuevo 
+    WHERE 
+        idhuevo = _idhuevo 
+    ORDER BY 
+        creado DESC 
+    LIMIT 1;
+
+    -- Obtener el colaborador relacionado con la venta
+    SELECT 
+        idcolaborador 
+    INTO 
+        _iduser
+    FROM 
+        ventas 
+    WHERE 
+        idventa = _idventa;
+
+    -- Actualizar el stock sumando la cantidad eliminada
+    SET _stockProducto = _stockProducto + _cantidad;
+
+    -- Registrar el movimiento de entrada en el Kardex
+    INSERT INTO KardexAlmHuevo (
+        idcolaborador, 
+        idhuevo, 
+        tipomovimiento, 
+        motivomovimiento, 
+        stockProducto, 
+        cantidad, 
+        descripcion, 
+        creado
+    )
+    VALUES (
+        _iduser, 
+        _idhuevo, 
+        'E',  -- Movimiento de Entrada
+        'Entrada por eliminación de detalle de venta', 
+        _stockProducto, 
+        _cantidad, 
+        NULL, 
+        NOW()
+    );
+
+    -- Eliminar el detalle de venta
+    DELETE FROM detalleventas 
+    WHERE 
+        iddetalleventa = _iddetalleventa;
+END;
+call spu_listar_Detalleventas();
+call spu_eliminar_Detalleventas(1);

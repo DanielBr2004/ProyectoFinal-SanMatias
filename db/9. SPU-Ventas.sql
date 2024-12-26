@@ -49,6 +49,7 @@ END;
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  
    DROP PROCEDURE IF EXISTS `sp_eliminar_venta`;
+   DELIMITER $$
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )
@@ -62,4 +63,76 @@ BEGIN
     WHERE idventa = p_idventa;
 END;
 
+-- ELIMINAR NUEVO ----------------------
+DROP PROCEDURE IF EXISTS sp_eliminar_venta;
+DELIMITER $$
+CREATE PROCEDURE sp_eliminar_venta(
+    IN p_idventa INT
+)
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_idhuevo INT;
+    DECLARE v_cantidad INT;
+    DECLARE v_stockProducto INT;
 
+    -- Cursor para iterar sobre los detalles de la venta
+    DECLARE cur_detalle CURSOR FOR
+        SELECT idhuevo, cantidad
+        FROM detalleventas
+        WHERE idventa = p_idventa;
+
+    -- Manejador de excepciones del cursor
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Abrimos el cursor
+    OPEN cur_detalle;
+
+    -- Iteramos sobre cada detalle de la venta
+    read_loop: LOOP
+        FETCH cur_detalle INTO v_idhuevo, v_cantidad;
+
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Actualizamos el stock en el Kardex devolviendo los productos
+        INSERT INTO KardexAlmHuevo(
+            idcolaborador,
+            idhuevo,
+            tipomovimiento,
+            motivomovimiento,
+            idlote,
+            stockProducto,
+            cantidad,
+            descripcion,
+            creado
+        )
+        SELECT 
+            (SELECT idcolaborador FROM ventas WHERE idventa = p_idventa),
+            v_idhuevo,
+            'E', -- Tipo de movimiento 'Entrada'
+            'Devolución por eliminación de venta',
+            idlote,
+            stockProducto + v_cantidad,
+            v_cantidad,
+            'Devolución al stock',
+            NOW()
+        FROM KardexAlmHuevo
+        WHERE idhuevo = v_idhuevo
+        ORDER BY creado DESC
+        LIMIT 1;
+    END LOOP;
+
+    -- Cerramos el cursor
+    CLOSE cur_detalle;
+
+    -- Eliminamos primero los detalles de la venta
+    DELETE FROM detalleventas
+    WHERE idventa = p_idventa;
+
+    -- Luego, eliminamos la venta
+    DELETE FROM ventas
+    WHERE idventa = p_idventa;
+END;
+CALL spu_listar_ventas();
+CALL sp_eliminar_venta(2);
