@@ -34,7 +34,7 @@ BEGIN
     ORDER BY VEN.idventa DESC;
 END;
  -- ------------------------------------------- editar ventas ----------------------------------------------------- 
-  DROP PROCEDURE IF EXISTS `sp_editar_venta`;
+DROP PROCEDURE IF EXISTS `sp_editar_venta`;
 CREATE PROCEDURE sp_editar_venta(
     IN p_idventa INT,
     IN p_estado VARCHAR(30)
@@ -53,12 +53,9 @@ CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )
 BEGIN
-    -- Eliminar primero los detalles de la venta
-    DELETE FROM detalleventas
-    WHERE idventa = p_idventa;
-
     -- Luego, eliminar la venta
-    DELETE FROM ventas
+    UPDATE ventas
+    SET estado = 'Anulado'
     WHERE idventa = p_idventa;
 END;
 
@@ -124,11 +121,8 @@ BEGIN
     -- Cerramos el cursor
     CLOSE cur_detalle;
 
-    -- Eliminamos primero los detalles de la venta
-    DELETE FROM detalleventas
-    WHERE idventa = p_idventa;
-
     -- Luego, eliminamos la venta
-    DELETE FROM ventas
+        UPDATE ventas
+    SET estado = 'Anulado'
     WHERE idventa = p_idventa;
 END;

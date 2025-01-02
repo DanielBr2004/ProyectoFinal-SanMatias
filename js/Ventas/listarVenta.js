@@ -49,10 +49,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="text-center">${item.estado}</td>
                         <td class="text-center">
                             <div style="display: inline-flex; gap: 5px;">
-                                <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idventa}, '${item.estado}')">
+                                <button class="btn btn-warning btn-sm" 
+                                        onclick="abrirModalEditar(${item.idventa}, '${item.estado}')"
+                                        ${(item.estado === 'Entregado' || item.estado === 'Anulado') ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''}>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${item.idventa}">
+                                <button class="btn btn-danger btn-sm eliminar-btn" 
+                                        data-id="${item.idventa}"
+                                        ${(item.estado === 'Entregado' || item.estado === 'Anulado') ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </div>
