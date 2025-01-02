@@ -60,8 +60,9 @@ BEGIN
 END;
 
 -- elimianr -------------------------------------------------------------------------------
+
+
 DROP PROCEDURE IF EXISTS `spu_eliminar_Detalleventas`;
-DELIMITER $$
 CREATE PROCEDURE spu_eliminar_Detalleventas(
     IN _iddetalleventa INT
 )
@@ -140,5 +141,3 @@ BEGIN
     WHERE 
         iddetalleventa = _iddetalleventa;
 END;
-call spu_listar_Detalleventas();
-call spu_eliminar_Detalleventas(1);

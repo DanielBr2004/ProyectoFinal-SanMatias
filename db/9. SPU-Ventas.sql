@@ -48,8 +48,7 @@ END;
 
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  
-   DROP PROCEDURE IF EXISTS `sp_eliminar_venta`;
-   DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_eliminar_venta`;
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )
@@ -65,7 +64,6 @@ END;
 
 -- ELIMINAR NUEVO ----------------------
 DROP PROCEDURE IF EXISTS sp_eliminar_venta;
-DELIMITER $$
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )
@@ -134,5 +132,3 @@ BEGIN
     DELETE FROM ventas
     WHERE idventa = p_idventa;
 END;
-CALL spu_listar_ventas();
-CALL sp_eliminar_venta();
