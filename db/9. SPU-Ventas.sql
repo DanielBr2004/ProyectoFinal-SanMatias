@@ -69,7 +69,6 @@ BEGIN
     DECLARE v_idhuevo INT;
     DECLARE v_cantidad INT;
     DECLARE v_stockProducto INT;
-    DECLARE v_idlote INT;
 
     -- Cursor para iterar sobre los detalles de la venta
     DECLARE cur_detalle CURSOR FOR
@@ -91,20 +90,6 @@ BEGIN
             LEAVE read_loop;
         END IF;
 
-        -- Obtenemos el último registro del kardex para este producto con idlote no nulo
-        SELECT idlote, stockProducto 
-        INTO v_idlote, v_stockProducto
-        FROM KardexAlmHuevo 
-        WHERE idhuevo = v_idhuevo 
-        AND idlote IS NOT NULL
-        ORDER BY creado DESC 
-        LIMIT 1;
-
-        -- Si no encontramos un lote, usamos una cadena vacía
-        IF v_idlote IS NULL THEN
-            SET v_idlote = ''; -- Usar cadena vacía en lugar de NULL
-        END IF;
-
         -- Actualizamos el stock en el Kardex devolviendo los productos
         INSERT INTO KardexAlmHuevo(
             idcolaborador,
@@ -117,24 +102,27 @@ BEGIN
             descripcion,
             creado
         )
-        VALUES (
+        SELECT 
             (SELECT idcolaborador FROM ventas WHERE idventa = p_idventa),
             v_idhuevo,
             'E', -- Tipo de movimiento 'Entrada'
             'Devolución por eliminación de venta',
-            v_idlote,
-            v_stockProducto + v_cantidad,
+            idlote,
+            stockProducto + v_cantidad,
             v_cantidad,
             'Devolución al stock',
             NOW()
-        );
+        FROM KardexAlmHuevo
+        WHERE idhuevo = v_idhuevo
+        ORDER BY creado DESC
+        LIMIT 1;
     END LOOP;
 
     -- Cerramos el cursor
     CLOSE cur_detalle;
 
-    -- Actualizamos el estado de la venta a 'Anulado'
-    UPDATE ventas
+    -- Luego, eliminamos la venta
+        UPDATE ventas
     SET estado = 'Anulado'
     WHERE idventa = p_idventa;
 END;
