@@ -94,19 +94,19 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             content += `
               <tr>
-                <td class="text-center">${item.idAlmacenHuevos}</td>
-                <td class="text-center">${item.nombre_colaborador}</td>
-                <td class="text-center">${item.tipo_huevo}</td>
-                <td class="text-center">${item.motivomovimiento}</td>
-                <td class="text-center">${item.stockProducto}</td>
-                <td class="text-center">${item.cantidad}</td>
-                <td class="text-center">${item.descripcion}</td>
-                <td class="text-center">${item.num_lote}</td>
-                <td class="text-center">${item.fecha_creacion}</td>
+                <td class="text-center">${item.idAlmacenHuevos || ''}</td>
+                <td class="text-center">${item.nombre_colaborador || ''}</td>
+                <td class="text-center">${item.tipo_huevo || ''}</td>
+                <td class="text-center">${item.motivomovimiento || ''}</td>
+                <td class="text-center">${item.stockProducto || ''}</td>
+                <td class="text-center">${item.cantidad || ''}</td>
+                <td class="text-center">${item.descripcion || ''}</td>
+                <td class="text-center">${item.num_lote || ''}</td>
+                <td class="text-center">${item.fecha_creacion || ''}</td>
                 <td class="text-center">
                   <div style="display: inline-flex; gap: 5px;">
                     ${showControls ? `
-                      <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento}', ${item.cantidad}, '${item.descripcion}', '${item.num_lote}')">
+                      <button class="btn btn-warning btn-sm" onclick="abrirModalEditar(${item.idAlmacenHuevos}, '${item.motivomovimiento || ''}', ${item.cantidad || 0}, '${item.descripcion || ''}', '${item.num_lote || ''}')">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </button>
                       <button class="btn btn-danger btn-sm" onclick="eliminarKardex(${item.idAlmacenHuevos})">

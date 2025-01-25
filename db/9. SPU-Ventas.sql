@@ -48,19 +48,9 @@ END;
 
  -- ------------------------------------------- listar ventas ----------------------------------------------------- 
  
-DROP PROCEDURE IF EXISTS `sp_eliminar_venta`;
-CREATE PROCEDURE sp_eliminar_venta(
-    IN p_idventa INT
-)
-BEGIN
-    -- Luego, eliminar la venta
-    UPDATE ventas
-    SET estado = 'Anulado'
-    WHERE idventa = p_idventa;
-END;
-
 -- ELIMINAR NUEVO ----------------------
 DROP PROCEDURE IF EXISTS sp_eliminar_venta;
+delimiter $$
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )
