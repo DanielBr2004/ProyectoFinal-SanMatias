@@ -20,7 +20,7 @@ function $$(selector = null) {
   let dataTableIsInitialized = false;
   
   const dataTableOptions = {
-    dom: 'Bfrtip',
+    dom: 'Bfrtilp', // Changed from 'Bfrtip' to 'Bfrtilp'
     order: [[0, 'desc']],
     buttons: [
       {
@@ -51,7 +51,7 @@ function $$(selector = null) {
         }
       },
     ],
-    lengthMenu: [5, 10, 15, 20],
+    lengthMenu: [5, 10, 15, 20, 100],
     columnDefs: [
       { className: 'text-center', targets: '_all' },
       { orderable: false, targets: [4] },

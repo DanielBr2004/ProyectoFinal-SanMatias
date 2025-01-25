@@ -2,7 +2,6 @@ USE granjasanmatias;
 
  -- ------------------------------------------- Registrar Detalleventas ----------------------------------------------------- 
  drop procedure if exists `spu_registrar_Detalleventas`;
-
 CREATE PROCEDURE spu_registrar_Detalleventas
 (
     IN _idventa       		INT,
@@ -32,7 +31,7 @@ BEGIN
     
      -- Registramos el kardex 
     INSERT INTO KardexAlmHuevo (idcolaborador, idhuevo, tipomovimiento, motivomovimiento, stockProducto, cantidad, descripcion, creado)
-    VALUES (_iduser, _idhuevo, 'S', 'Salida por Venta', _stockProducto, _cantidad, NULL, NOW());
+    VALUES (_iduser, _idhuevo, 'S', 'Salida por Venta', _stockProducto, _cantidad, 'Venta Realizada', NOW());
     
     -- registramos en detalle venta
     INSERT INTO detalleventas(idventa, idhuevo, pesoTotal,  cantidad, precioVenta, UnidadMedida)
