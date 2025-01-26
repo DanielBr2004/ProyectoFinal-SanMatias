@@ -15,3 +15,11 @@ if (isset($_GET['operacion'])) {
           break;
   }
 }
+
+if (isset($_GET['operacion'])) {
+  switch ($_GET['operacion']) {
+      case 'list':
+          echo json_encode($historial->getAllHistorialProductos());
+          break;
+  }
+}

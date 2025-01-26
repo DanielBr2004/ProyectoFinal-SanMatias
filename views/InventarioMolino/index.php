@@ -96,6 +96,45 @@
             </div>
         </div>
 
+
+
+<!-- Add this button above the table -->
+<div class="container mt-5">
+    <button type="button" class="btn btn-primary mb-3" id="showHistoryBtn">
+        <i class="fas fa-history"></i> Ver Historial
+    </button>
+    <div class="card">
+    <!-- ... existing table code ... -->
+</div>
+
+<!-- Add this modal window -->
+<div class="modal fade" id="historyModales" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Historial de Cambios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <table id="historyprodTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID Producto</th>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Datos Anteriores</th>
+            <th>Datos Nuevos</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+</table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
         <!--LISTADO-->
         <div class="container mt-5">
     <div class="card">
@@ -231,6 +270,7 @@
         <script src="<?= $host ?>/js/swalcustom.js"></script>
         <script src="<?= $host ?>/js/Kardex_Prod/listkardexProd.js"></script>
         <script src="<?= $host ?>/js/Kardex_Prod/KardexProducto.js"></script>
+        <script src="<?= $host ?>/js/Historial/historialproducto.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">

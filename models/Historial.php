@@ -20,4 +20,12 @@ class Historial extends Conexion{
             die($e->getMessage());
         }
     }
+    public function getAllHistorialProductos(): array {
+        try {
+            $consulta = $this->pdo->query("call spu_ver_historial_producto()");
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 }

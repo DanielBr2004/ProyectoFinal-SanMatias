@@ -188,6 +188,15 @@ CREATE TABLE HistorialKardexHuevo (
     fecha_accion DATETIME DEFAULT NOW()
 );
 
+CREATE TABLE HistorialKardexProducto (
+    idHistorial INT AUTO_INCREMENT PRIMARY KEY,
+    idAlmacenProducto INT,
+    idcolaborador INT,
+    accion VARCHAR(20),
+    datos_anteriores TEXT,
+    datos_nuevos TEXT,
+    fecha_accion DATETIME DEFAULT NOW()
+);
 
 
 
