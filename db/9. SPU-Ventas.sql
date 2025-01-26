@@ -50,7 +50,6 @@ END;
  
 -- ELIMINAR NUEVO ----------------------
 DROP PROCEDURE IF EXISTS sp_eliminar_venta;
-delimiter $$
 CREATE PROCEDURE sp_eliminar_venta(
     IN p_idventa INT
 )

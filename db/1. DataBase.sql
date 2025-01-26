@@ -178,7 +178,15 @@ create_at				DATE NOT NULL,
 CONSTRAINT FK_numLote_controllote FOREIGN KEY (idlote) REFERENCES numLote(idlote)
 )ENGINE = INNODB;
 
-
+CREATE TABLE HistorialKardexHuevo (
+    idHistorial INT AUTO_INCREMENT PRIMARY KEY,
+    idAlmacenHuevos INT,
+    idcolaborador INT,
+    accion VARCHAR(20),
+    datos_anteriores TEXT,
+    datos_nuevos TEXT,
+    fecha_accion DATETIME DEFAULT NOW()
+);
 
 
 
