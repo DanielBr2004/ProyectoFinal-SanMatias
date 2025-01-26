@@ -3,7 +3,6 @@ USE granjasanmatias;
 
 -- ---------------------- TGR EDICION --------------------
  drop trigger if exists `tr_kardex_producto_after_update`;
-DELIMITER $$
 CREATE TRIGGER tr_kardex_producto_after_update
 AFTER UPDATE ON KardexAlmProducto
 FOR EACH ROW
@@ -32,7 +31,6 @@ END;
 
 -- ---------------------- TGR ELIMINACION  --------------------
  drop trigger if exists `tr_kardex_producto_before_delete`;
-DELIMITER $$
 CREATE TRIGGER tr_kardex_producto_before_delete
 BEFORE DELETE ON KardexAlmProducto
 FOR EACH ROW
@@ -57,7 +55,6 @@ BEGIN
 END;
 
 --  ------------------ PROCEDIMIENTO HISTORIAL --------------------
-delimiter $$
 CREATE PROCEDURE spu_ver_historial_producto()
 BEGIN
     SELECT 
@@ -72,4 +69,3 @@ BEGIN
     INNER JOIN colaboradores c ON h.idcolaborador = c.idcolaborador
     ORDER BY h.fecha_accion DESC;
 END;
-call spu_ver_historial_producto();
