@@ -68,3 +68,4 @@ BEGIN
     INNER JOIN colaboradores c ON h.idcolaborador = c.idcolaborador
     ORDER BY h.fecha_accion DESC;
 END;
+call spu_ver_historial();
