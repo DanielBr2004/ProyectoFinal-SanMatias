@@ -178,16 +178,15 @@
                     </div>
     </div>
 
-<!-- Add this button above the table -->
+<!-- boton -->
 <div class="container mt-5">
     <button type="button" class="btn btn-primary mb-3" id="showHistoryBtn">
         <i class="fas fa-history"></i> Ver Historial
     </button>
     <div class="card">
-    <!-- ... existing table code ... -->
 </div>
 
-<!-- Add this modal window -->
+<!-- tabla historial -->
 <div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -200,6 +199,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>ID Huevo</th>
             <th>Usuario</th>
             <th>Acción</th>
             <th>Datos Anteriores</th>
