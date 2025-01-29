@@ -98,16 +98,15 @@
 
 
 
-<!-- Add this button above the table -->
+<!-- boton -->
 <div class="container mt-5">
     <button type="button" class="btn btn-primary mb-3" id="showHistoryBtn">
         <i class="fas fa-history"></i> Ver Historial
     </button>
     <div class="card">
-    <!-- ... existing table code ... -->
 </div>
 
-<!-- Add this modal window -->
+<!-- tabla historiak -->
 <div class="modal fade" id="historyModales" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">

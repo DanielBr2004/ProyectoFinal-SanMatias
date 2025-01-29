@@ -58,6 +58,7 @@ CREATE PROCEDURE spu_ver_historial()
 BEGIN
     SELECT 
         h.idHistorial,
+        h.idAlmacenHuevos,
         c.nomusuario AS usuario,
         h.accion,
         h.datos_anteriores,

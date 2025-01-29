@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: data,
                 columns: [
                     { data: 'idHistorial' },
+                    { data: 'idAlmacenHuevos' },
                     { data: 'usuario' },
                     { data: 'accion' },
                     { data: 'datos_anteriores' },
