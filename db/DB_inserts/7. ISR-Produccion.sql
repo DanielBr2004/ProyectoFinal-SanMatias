@@ -2316,6 +2316,42 @@ INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, can
 INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6012, 2, 650.00, 108.14, 4144, '2024-11-23');
 INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6011, 1, 650.00, 108.15, 4252, '2024-11-24');
 INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6009, 2, 650.00, 108.19, 4388, '2024-11-25');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6008, 1, 650.00, 108.19, 4423, '2024-11-26');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6008, 0, 650.00, 108.19, 4568, '2024-11-27');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6007, 1, 650.00, 108.19, 4755, '2024-11-28');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6007, 0, 650.00, 108.19, 4775, '2024-11-29');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6006, 1, 650.00, 108.19, 4886, '2024-11-30');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6006, 1, 650.00, 108.19, 4886, '2024-12-01');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6004, 2, 652.00, 108.59, 4890, '2024-12-02');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6002, 2, 654.00, 108.96, 4892, '2024-12-03');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 6000, 2, 656.00, 109.33, 4895, '2024-12-04');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5998, 2, 658.00, 109.70, 4898, '2024-12-05');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5996, 2, 660.00, 110.07, 4900, '2024-12-06');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5993, 3, 662.00, 110.46, 4902, '2024-12-07');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5990, 3, 664.00, 110.85, 4905, '2024-12-08');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5987, 3, 666.00, 111.24, 4908, '2024-12-09');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5984, 3, 668.00, 111.63, 4910, '2024-12-10');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5981, 3, 670.00, 112.02, 4912, '2024-12-11');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5978, 3, 672.00, 112.41, 4915, '2024-12-12');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5974, 4, 674.00, 112.82, 4918, '2024-12-13');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5970, 4, 676.00, 113.23, 4920, '2024-12-14');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5966, 4, 678.00, 113.64, 4922, '2024-12-15');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5962, 4, 680.00, 114.05, 4925, '2024-12-16');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5958, 4, 682.00, 114.46, 4928, '2024-12-17');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5954, 4, 684.00, 114.87, 4930, '2024-12-18');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5949, 5, 686.00, 115.31, 4932, '2024-12-19');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5944, 5, 688.00, 115.75, 4935, '2024-12-20');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5939, 5, 690.00, 116.19, 4938, '2024-12-21');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5934, 5, 692.00, 116.63, 4940, '2024-12-22');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5929, 5, 694.00, 117.07, 4942, '2024-12-23');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5924, 5, 696.00, 117.51, 4945, '2024-12-24');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5918, 6, 698.00, 117.97, 4948, '2024-12-25');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5912, 6, 700.00, 118.43, 4950, '2024-12-26');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5906, 6, 702.00, 118.89, 4952, '2024-12-27');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5900, 6, 704.00, 119.35, 4955, '2024-12-28');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5894, 6, 706.00, 119.81, 4958, '2024-12-29');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5888, 6, 708.00, 120.27, 4960, '2024-12-30');
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, cantHuevos, create_at) VALUES (10, 5882, 6, 710.00, 120.73, 4962, '2024-12-31');
 
 
 ALTER TABLE controlLote

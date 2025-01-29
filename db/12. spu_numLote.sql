@@ -10,7 +10,7 @@ IN _descripcion VARCHAR(60))
 BEGIN
 	INSERT INTO numLote 
 		(numLote, CantInicio,  descripcion) VALUES 
-        (_numlote,_CantInicio, _descripcion);
+        (_numlote,_CantInicio, 'lote en Proceso');
     SELECT @@last_insert_id 'idlote';
 END;
  -- ------------------------------------------- Validar lote -----------------------------------------------------
