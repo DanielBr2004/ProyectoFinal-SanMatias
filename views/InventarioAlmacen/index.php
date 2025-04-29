@@ -6,7 +6,7 @@
         <h5 class="text-end"><strong>Encargado:</strong>  <?= $_SESSION['login']['apepaterno'] ?> <?= $_SESSION['login']['apematerno'] ?> <?= $_SESSION['login']['nombres'] ?></h5>
     </div>   
     <div class="text-center mt-5">
-        <h1>Control de Inventario del Almacen de Huevos</h1>
+        <h1>Control de Inventario del Almacén de Huevos</h1>
     </div>
     <br>
     <br>
@@ -23,12 +23,6 @@
                             <div class="form-floating">
                                 <select name="idhuevo" id="idhuevo" class="form-select" required>
                                     <option value="">Seleccione</option>
-                                    <option value="1">Comercial</option>
-                                    <option value="2">Pardo</option>
-                                    <option value="3">Sucio</option>
-                                    <option value="4">Doble Yema</option>
-                                    <option value="5">Margarito</option>
-                                    <option value="6">Merma</option>
                                 </select>
                                 <label for="idhuevo"><i class="fa-solid fa-box-open"></i> Producto</label>
                             </div>
@@ -61,7 +55,6 @@
                                 <option value="">Seleccione...</option>
                                 <option value="E">Entrada por Producción</option>
                                 <option value="E">Entrada por Compra</option>
-                                <option value="S">Salida por Venta</option>
                                 <option value="S">Salida por Merma</option>
                                 <option value="S">Salida por Contingencia</option>
                             </select>
@@ -100,7 +93,6 @@
                 <div class="text-end mt-2">
                     <button type="submit" id="registrar-colaborador" class="btn btn-primary btn-sm"><i class="fa-regular fa-bookmark"></i> Actualizar Kardex</button>
                     <button type="reset" id="" class="btn btn-secondary btn-sm"><i class="fa-regular fa-rectangle-xmark"></i> Cancelar Proceso</button>
-                    <button type="button" id="filtrarBtn" class="btn btn-secondary btn-sm">Filtrar</button>
                 </div>
             </form>        
         </div>
@@ -186,11 +178,46 @@
                     </div>
     </div>
 
+<!-- boton -->
+<div class="container mt-5">
+    <button type="button" class="btn btn-primary mb-3" id="showHistoryBtn">
+        <i class="fas fa-history"></i> Ver Historial
+    </button>
+    <div class="card">
+</div>
+
+<!-- tabla historial -->
+<div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Historial de Cambios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <table id="historyTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID Huevo</th>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Datos Anteriores</th>
+            <th>Datos Nuevos</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+</table>
+            </div>
+        </div>
+    </div>
+</div>
+
         <!-- Tabla de Listado -->
 <div class="container mt-5">
     <div class="card">
     <br>
-        <h2 class="text-center" style="color: #007bff;">Almacen Huevos</h2>
+        <h2 class="text-center" style="color: #007bff;">Almacén Huevos</h2>
     <div class="card-body">
     <div class="table-responsive"> 
     <table class="table table-bordered table-striped table-hover" id="tabla-listproductos">
@@ -203,8 +230,10 @@
                     <th>Stock Producto</th>
                     <th>Cantidad</th>
                     <th>Descripción</th>
-                    <th>Nº de Lote</th>
+                    <th>Nº Lote</th>
+                    <th>Fecha</th>
                     <th>Operaciones</th>
+                    <th>Reporte</th>
                 </tr>
             </thead>
             <tbody id="tbody-listproductos">
@@ -235,7 +264,6 @@
                             <option value="">Seleccione...</option>
                             <option value="Entrada por Producción">Entrada por Producción</option>
                             <option value="Entrada por Compra">Entrada por Compra</option>
-                            <option value="Salida por Venta">Salida por Venta</option>
                             <option value="Salida por Merma">Salida por Merma</option>
                             <option value="Salida por Contingencia">Salida por Contingencia</option>
                         </select>
@@ -255,9 +283,11 @@
 
                     <!-- Nº Lote -->
                     <div class="mb-3">
-                        <label for="editNumLote" class="form-label">Nº Lote</label>
-                        <input type="text" class="form-control" id="editNumLote" required>
-                    </div>
+    <label for="editNumLote" class="form-label">Nº Lote</label>
+    <select class="form-select" id="editNumLote" required>
+        <option value="">Seleccione...</option>
+    </select>
+</div>
 
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>
@@ -330,9 +360,10 @@
 
         <!-- Core theme JS-->
         <script src="<?= $host ?>/js/scripts.js"></script>
-        <script src="../../js/Kardex_Huevos/KardexHuevo.js"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>/js/listkardexhuevo.js"></script>
+        <script src="<?= $host ?>/js/Kardex_Huevos/listkardexhuevo.js"></script>
+        <script src="<?= $host ?>/js/Kardex_Huevos/KardexHuevo.js"></script>
+        <script src="<?= $host ?>/js/Historial/historialhuevo.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">

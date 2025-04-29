@@ -5,24 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
     */
     function $(object = null) {
         return document.querySelector(object);
-      }
+    }
 
-      const detallesContainer = $(".tabla-detalle tbody");
-
+    const detallesContainer = $(".tabla-detalle tbody");
 
     const buttonAgregar = document.querySelector("#agregar-item");
     const tablaDetalles = document.querySelector(".tabla-detalle tbody");
     const labelTotalVenta = document.querySelector("#total_venta");
     const labelIGV = document.querySelector("#igv_venta");
     const labelSubTotal = document.querySelector("#subtotal_venta");
-    const opciones = [
-        { value: "1", text: "Comercial" },
-        { value: "2", text: "Pardo" },
-        { value: "3", text: "Sucio" },
-        { value: "4", text: "Doble Yema" },
-        { value: "5", text: "Margarito" },
-        { value: "6", text: "Merma" }
-    ];
+    let opciones = [];
     let seleccionados = [];
 
     if (!buttonAgregar || !tablaDetalles) {
@@ -30,12 +22,42 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    buttonAgregar.addEventListener("click", renderTabla);
+    // First modify cargarOpciones to validate data
+    async function cargarOpciones() {
+        try {
+            const response = await fetch('../../controllers/tipohuevo.controller.php?operacion=getTiposHuevos');
+            const data = await response.json();
+            
+            // Validate data structure
+            if (!Array.isArray(data)) {
+                console.error('Los datos recibidos no son un array:', data);
+                return [];
+            }
+
+            // Validate each item has required properties
+            opciones = data.filter(item => {
+                const isValid = item && typeof item === 'object' && 'idhuevo' in item && 'tiposhuevos' in item;
+                if (!isValid) {
+                    console.warn('Elemento inválido:', item);
+                }
+                return isValid;
+            });
+
+            console.log('Opciones cargadas:', opciones);
+        } catch (error) {
+            console.error('Error al cargar las opciones:', error);
+        }
+    }
+
+    // Llamar a la función cargarOpciones al cargar la página
+    cargarOpciones().then(() => {
+        buttonAgregar.addEventListener("click", renderTabla);
+    });
 
     function renderTabla() {
         // Verificar si el número de filas generadas es menor que el número de opciones disponibles
         if (tablaDetalles.children.length >= opciones.length) {
-            showToast("ah alcanzado el limite de opciones", "WARNING", 1500);
+            showToast("Ha alcanzado el límite de opciones", "WARNING", 1500);
             return;
         }
 
@@ -43,24 +65,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tr.innerHTML = `
             <td class="text-center">
+                <div>
+                    <select name="unidadMedida" id="unidadMedida" class="form-select unidadMedida-venta" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Kg">Kilogramos</option>
+                        <option value="Pq">Paquetes</option>
+                    </select>
+                </div>
+            </td>
+            <td class="text-center">
                 <label id="stock-label" class="stock-label">0</label>
             </td>
             <td class="text-center huevo-detalle">
                 <div>
                     <select name="idhuevo" id="idhuevo" class="form-select huevo-venta" required>
                         <option value="">Seleccione...</option>
-                        ${opciones.map(opcion => `<option value="${opcion.value}">${opcion.text}</option>`).join('')}
                     </select>
                 </div>
             </td>
             <td class="text-center">
-                <input type="number" id="cantidadVenta"  minlength="0" class="form-control cantidad-venta" required>
+                <div class="d-flex align-items-center">
+                    <input type="number" id="cantidadVenta" minlength="0" class="form-control cantidad-venta" required>
+                    <label class="ms-2 unidad-label"></label>
+                </div>
             </td>
             <td class="text-center">
                 <input type="number" id="pesoTotal" minlength="0" step="0.01" class="form-control pesoTotal-venta" required>
             </td>
             <td class="text-center">
-                <input type="number" id="precioUnitario" minlength="0" step="0.01" class="form-control precioUnitario-venta" required>        
+                <input type="number" id="precioKg" minlength="0" step="0.01" class="form-control precioKg-venta" required>        
             </td>
             <td class="text-center">
                 <input type="number" id="totalVenta" minlength="0" step="0.01" class="form-control totalventa-venta" disabled>
@@ -74,40 +107,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Añadir eventos a los nuevos inputs
         const stockLabel = tr.querySelector(".stock-label");
-        const precioUnitario = tr.querySelector(".precioUnitario-venta");
+        const precioUnitario = tr.querySelector(".precioKg-venta");
         const pesoTotal = tr.querySelector(".pesoTotal-venta");
         const cantidadVenta = tr.querySelector(".cantidad-venta");
         const totalVenta = tr.querySelector(".totalventa-venta");
+        const unidadMedida = tr.querySelector("#unidadMedida");
         const producto = tr.querySelector(".huevo-venta");
+        console.log('producto:', producto);
 
-        producto.addEventListener("change", async () => {
-            cantidadVenta.value = "";
-            pesoTotal.value = "";
-            precioUnitario.value = "";
-            totalVenta.value = "";
-            cantidadVenta.focus();
+        // First verify opciones has data
+        console.log('opciones:', opciones);
 
-            const huevo = producto.value;
-            if (huevo) {
-                await ShowStockActual(huevo, stockLabel);
-            }
+        // Then modify the options creation
+        opciones.forEach(opcion => {
+            const optionElement = document.createElement("option");
+            optionElement.value = opcion?.idhuevo || '';
+            optionElement.text = opcion?.tiposhuevos || 'Sin nombre';
+            producto.appendChild(optionElement);
+            console.log('opcion:', optionElement);
         });
 
+        unidadMedida.addEventListener("change", async () => {
+            cantidadVenta.value = "";
+            const unidadLabel = tr.querySelector(".unidad-label");
+            unidadLabel.textContent = unidadMedida.value === 'Pq' ? 'paq' : 'unid';
+            
+            if (producto.value) {
+                await ShowStockActual(producto.value, stockLabel, unidadMedida);
+            } else {
+                stockLabel.textContent = "0";
+            }
+        });
+        
+        producto.addEventListener("change", async () => {
+            const huevo = producto.value;
+            if (huevo) {
+                await ShowStockActual(huevo, stockLabel, unidadMedida);
+                
+                const opcionSeleccionada = opciones.find(op => op.idhuevo == huevo);
+                
+                if (opcionSeleccionada && opcionSeleccionada.PrecioKg) {
+                    precioUnitario.value = opcionSeleccionada.PrecioKg;
+                }
+            }
+            
+            cantidadVenta.value = "";
+            pesoTotal.value = "";
+            totalVenta.value = "";
+            cantidadVenta.focus();
+        });
 
         pesoTotal.addEventListener("input", async () => {
-        await calcularTotalVenta(tr); 
-        actualizarTotalVenta();
+            await calcularTotalVenta(tr); 
+            actualizarTotalVenta();
         });
 
         cantidadVenta.addEventListener("input", () => {
             validarCantidad(cantidadVenta, stockLabel);
-          });
-
-        precioUnitario.addEventListener("input", async () => {
-        await calcularTotalVenta(tr);
-        actualizarTotalVenta();
         });
 
+        precioUnitario.addEventListener("input", async () => {
+            await calcularTotalVenta(tr);
+            actualizarTotalVenta();
+        });
 
         // Añadir evento de eliminación al botón
         tr.querySelector(".btn-eliminar").addEventListener("click", () => {
@@ -118,48 +180,53 @@ document.addEventListener("DOMContentLoaded", () => {
             actualizarTotalVenta();
         });
 
-        // Añadir evento de cambio al select
-        tr.querySelector(".huevo-venta").addEventListener("change", (event) => {
-            const value = event.target.value;
-            if (value) {
-                seleccionados.push(value);
-                actualizarOpciones();
-            }
-        });
-
         tablaDetalles.appendChild(tr);
         actualizarOpciones();
         actualizarTotalVenta();
     }
 
     function actualizarOpciones() {
-        const selects = document.querySelectorAll(".huevo-venta");
-        selects.forEach(select => {
-            const selectedValue = select.value;
-            select.innerHTML = `<option value="">Seleccione...</option>`;
+        const selectores = document.querySelectorAll(".huevo-venta");
+        
+        // Obtener valores seleccionados actuales
+        seleccionados = Array.from(selectores)
+            .map(select => select.value)
+            .filter(value => value !== "");
+
+        selectores.forEach(selector => {
+            const valorSeleccionado = selector.value;
+            selector.innerHTML = `<option value="">Seleccione...</option>`;
+            
             opciones.forEach(opcion => {
-                if (!seleccionados.includes(opcion.value) || opcion.value === selectedValue) {
-                    const optionElement = document.createElement("option");
-                    optionElement.value = opcion.value;
-                    optionElement.text = opcion.text;
-                    if (opcion.value === selectedValue) {
-                        optionElement.selected = true;
-                    }
-                    select.appendChild(optionElement);
-                }
+                // Debug para ver la estructura exacta de cada opción
+                console.log('Opción:', opcion);
+                
+                const elementoOpcion = document.createElement("option");
+                // Convertir a string para comparación segura
+                elementoOpcion.value = String(opcion.idhuevo);
+                elementoOpcion.textContent = opcion.tiposhuevos || opcion.tiposHuevos;
+                
+                // Deshabilitar solo si está seleccionado en otro select
+                const estaSeleccionadoEnOtro = seleccionados.includes(String(opcion.idhuevo)) && 
+                                             String(opcion.idhuevo) !== valorSeleccionado;
+                
+                elementoOpcion.disabled = estaSeleccionadoEnOtro;
+                elementoOpcion.selected = String(opcion.idhuevo) === valorSeleccionado;
+                
+                selector.appendChild(elementoOpcion);
             });
         });
     }
 
-      // Define la función CalcularTotalVenta como asíncrona
+    // Define la función calcularTotalVenta como asíncrona
     async function calcularTotalVenta(row) {
         const pesoTotalElement = row.querySelector(".pesoTotal-venta");
-        const precioUnitarioElement = row.querySelector(".precioUnitario-venta");
+        const precioUnitarioElement = row.querySelector(".precioKg-venta");
         const totalVentaElement = row.querySelector(".totalventa-venta");
 
         if (!pesoTotalElement || !precioUnitarioElement || !totalVentaElement) {
-        console.error("Uno o más elementos no existen en el DOM");
-        return;
+            console.error("Uno o más elementos no existen en el DOM");
+            return;
         }
 
         const pesoTotal = parseFloat(pesoTotalElement.value) || 0;
@@ -169,45 +236,51 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("precioUnitario:", precioUnitario);
 
         if (pesoTotal > 0 && precioUnitario > 0) {
-        const precioTotal = pesoTotal * precioUnitario;
-        totalVentaElement.value = precioTotal.toFixed(2);
-        console.log("precioTotal:", precioTotal);
-        } else if( pesoTotal < 0 || precioUnitario < 0) {
-        showToast("Los campos Peso Total o Precio Unitario deben ser mayores a 0", "WARNING", 1500);
+            const precioTotal = pesoTotal * precioUnitario;
+            totalVentaElement.value = precioTotal.toFixed(2);
+            console.log("precioTotal:", precioTotal);
+        } else if (pesoTotal < 0 || precioUnitario < 0) {
+            showToast("Los campos Peso Total o Precio Unitario deben ser mayores a 0", "WARNING", 1500);
         }
     }
 
-    async function ShowStockActual(idhuevo, stockLabel) {
+    async function ShowStockActual(idhuevo, stockLabel, unitSelect) {
         try {
-          const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${idhuevo}`);
-          const stock = await response.json();
-          const stockDividido = Math.floor(stock / 180); // División entera de 180
-          stockLabel.textContent = stockDividido;
+            const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${idhuevo}`);
+            const stock = await response.json();
+            
+            if (unitSelect.value === 'Pq') {
+                const stockDividido = Math.floor(stock / 180);
+                stockLabel.textContent = stockDividido;
+            } else {
+                stockLabel.textContent = stock;
+            }
         } catch (error) {
-          console.error(error);
+            console.error(error);
+            stockLabel.textContent = "0";
         }
-      }
-      
-      function validarCantidad(cantidadVenta, stockLabel) {
+    }
+
+    function validarCantidad(cantidadVenta, stockLabel) {
         const cantidad = parseInt(cantidadVenta.value) || 0;
         const stock = parseInt(stockLabel.textContent) || 0;
-    
+
         if (cantidad > stock) {
-          showToast("La cantidad ingresada no puede ser mayor al stock disponible", "WARNING", 1500);
-          $("#registrar-venta").setAttribute("disabled", "disabled");
-        }else{
+            showToast("La cantidad ingresada no puede ser mayor al stock disponible", "WARNING", 1500);
+            $("#registrar-venta").setAttribute("disabled", "disabled");
+        } else {
             $("#registrar-venta").removeAttribute("disabled", "disabled");
         }
-      }
+    }
 
-      function actualizarTotalVenta() {
+    function actualizarTotalVenta() {
         const totalVentas = document.querySelectorAll(".totalventa-venta");
         let total = 0;
         let subtotal = 0;
         let igv = 0;
-    
+
         totalVentas.forEach((input) => {
-          total += parseFloat(input.value) || 0;
+            total += parseFloat(input.value) || 0;
         });
 
         igv = total * 0.18;
@@ -216,9 +289,9 @@ document.addEventListener("DOMContentLoaded", () => {
         labelIGV.textContent = `S/${(total * 0.18).toFixed(2)}`;
         labelSubTotal.textContent = `S/${(subtotal).toFixed(2)}`;
         labelTotalVenta.textContent = `S/${total.toFixed(2)}`;
-      }
-    
-      // Llamar a la función para actualizar el total de ventas al cargar la página
-      actualizarTotalVenta();
+    }
+
+    // Llamar a la función para actualizar el total de ventas al cargar la página
+    actualizarTotalVenta();
 
 });

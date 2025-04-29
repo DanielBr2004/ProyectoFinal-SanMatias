@@ -19,29 +19,44 @@ select * from KardexAlmHuevo;
 SELECT * FROM VENTAS;
 
 select * from  KardexAlmHuevo;
-
+CALL spu_insertar_tipoHuevo('Huevo rojo',5.2,'nuevo tipo');
 CALL spu_listar_tipohuevo();
 
 SELECT * FROM numLote WHERE estado = 'A';
 
 insert into numLote(numLote) VALUES(4);
-select * from numLote;
 
-call spu_registrar_numLote(6,7200,null);
+
+call spu_registrar_numLote(1,7200,null);
 select * from tipoHuevo;
 select * from colaboradores;
 
 call spu_registrar_controlLote(1,4,925);
 
-
+INSERT INTO controlLote (idlote, numaves, mortalidad, alimento, alimentoAve, produccion, cantHuevos, create_at)
+VALUES (2, 100, 2, 50.00, 0.50, NULL, 500, '2023-10-01');
 SELECT *  FROM controlLote;
 
+select * from vista_productos_stock_minimo;
+SELECT * FROM Productos;
+
+call spu_listar_produccionLote();
+
 select * from KardexAlmProducto;
+
+CALL SPU_LISTAR_CONTROLLOTE(1);
 
 select * from personas;
 
 select * from productos;
 
+CALL spu_listar_produccionLote(9);
+
+
+select * from numLote;
+
+SELECT numlote  FROM numLote ORDER BY idlote DESC LIMIT 1;
+call spu_listar_ultimo_numLote();
 select * from cliente;
 
 CALL spu_registrar_Ventas(2,1,'nose donde');

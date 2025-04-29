@@ -18,10 +18,11 @@ if (isset($_POST['operacion'])) {
             $datosEnviar = [
               "idventa"        => $idventa,
               "idhuevo"        => $huevo['idhuevo'],
+              "pesoTotal"      => $huevo['pesoTotal'],
               "cantidad"       => $huevo['cantidad'],
-              "PesoTotal"      => $huevo['PesoTotal'],
-              "precioUnitario" => $huevo['precioUnitario'],
-              "precioTotal"    => $huevo['precioTotal']
+              "unidadMedida" => $huevo['unidadMedida'],
+              "precioVenta"      => $huevo['precioVenta']
+              
             ];
             $dato = $detalleVenta->add($datosEnviar);
             $datos[] = $dato;

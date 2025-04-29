@@ -1,6 +1,6 @@
 USE granjasanmatias;
 
-
+DROP PROCEDURE IF EXISTS `GenerateKardexAlmHuevolote1`;
 CREATE PROCEDURE GenerateKardexAlmHuevolote1()
 BEGIN
     DECLARE i INT DEFAULT 1;
@@ -11,11 +11,11 @@ BEGIN
             1,
             FLOOR(1 + RAND() * 6), -- Genera un idhuevo entre 1 y 6
             IF(RAND() > 0.5, 'S', 'E'), -- Genera tipomovimiento aleatorio entre 'S' o 'E'
-            CONCAT('Movimiento de prueba ', i),
+            CONCAT('Ingreso de Produccion ', i),
             1,
             FLOOR(900 + RAND() * 100), -- Genera un stockProducto aleatorio entre 900 y 1000
             FLOOR(10 + RAND() * 50), -- Genera una cantidad aleatoria entre 10 y 50
-            'Movimiento de prueba',
+            'Ingreso',
             DATE_ADD('2017-03-01', INTERVAL FLOOR(RAND() * 471) DAY) -- Genera una fecha aleatoria entre 2017-03-01 y 2018-06-15
         );
         SET i = i + 1;
@@ -32,11 +32,11 @@ BEGIN
             1,
             FLOOR(1 + RAND() * 6), -- Genera un idhuevo entre 1 y 6
             IF(RAND() > 0.5, 'S', 'E'), -- Genera tipomovimiento aleatorio entre 'S' o 'E'
-            CONCAT('Movimiento de prueba ', i),
+            CONCAT('Ingreso de produccion ', i),
             2, -- idlote establecido en 2
             FLOOR(900 + RAND() * 100), -- Genera un stockProducto aleatorio entre 900 y 1000
             FLOOR(10 + RAND() * 50), -- Genera una cantidad aleatoria entre 10 y 50
-            'Movimiento de prueba',
+            'Ingreso',
             DATE_ADD('2018-06-15', INTERVAL FLOOR(RAND() * 452) DAY) -- Genera una fecha aleatoria entre 2018-06-15 y 2019-09-10
         );
         SET i = i + 1;

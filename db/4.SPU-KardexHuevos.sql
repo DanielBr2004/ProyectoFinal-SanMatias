@@ -33,8 +33,6 @@ BEGIN
 END;
 -- ----------------------- LISTAR -----------------------
 DROP PROCEDURE IF EXISTS `spu_listar_kardexhuevo`;
-
-
 CREATE PROCEDURE spu_listar_kardexhuevo()
 BEGIN
     SELECT 
@@ -45,7 +43,8 @@ BEGIN
         kh.stockProducto,
         kh.cantidad,
         kh.descripcion,
-        nl.numLote AS num_lote  -- Traemos el campo numLote de la tabla numLote
+        nl.numLote AS num_lote,  -- Traemos el campo numLote de la tabla numLote
+        kh.creado AS fecha_creacion  -- Añadimos la fecha de creación
     FROM KardexAlmHuevo kh
     JOIN colaboradores c ON kh.idcolaborador = c.idcolaborador
     JOIN tipoHuevo th ON kh.idhuevo = th.idhuevo
@@ -71,8 +70,20 @@ BEGIN
 
     -- Obtener el stock actual antes de la actualización
     SELECT stockProducto INTO _stockProducto 
-    FROM KardexAlmHuevo 
-    WHERE idAlmacenHuevos = _idAlmacenHuevos;
+    FROM (
+        SELECT stockProducto,
+               ROW_NUMBER() OVER (ORDER BY idAlmacenHuevos DESC) as rn
+        FROM KardexAlmHuevo 
+        WHERE idAlmacenHuevos < _idAlmacenHuevos
+    ) ranked
+    WHERE rn = 1;
+
+    -- If no penultimate value exists, use the current stock
+    IF _stockProducto IS NULL THEN
+        SELECT stockProducto INTO _stockProducto 
+        FROM KardexAlmHuevo 
+        WHERE idAlmacenHuevos = _idAlmacenHuevos;
+    END IF;
 
     -- Ajustar el stock según el tipo de movimiento
     IF _motivomovimiento LIKE 'Salida%' THEN

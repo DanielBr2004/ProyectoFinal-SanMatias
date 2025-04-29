@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /**
-   * Función para seleccionar cualquier elemento por su id
-   */
   function $(object = null) {
     return document.querySelector(object);
   }
@@ -10,129 +7,162 @@ document.addEventListener("DOMContentLoaded", () => {
   let idventas = -1;
   let datosNuevos = true;
 
-  const labelTotalVenta = document.querySelector("#total_venta");
-  const labelIGV = document.querySelector("#igv_venta");
-  const labelSubTotal = document.querySelector("#subtotal_venta");
+  const labelTotalVenta = $("#total_venta");
+  const labelIGV = $("#igv_venta");
+  const labelSubTotal = $("#subtotal_venta");
 
   async function buscarDocumento() {
+    const nrodocumento = $("#nrodocumento").value.trim();
+    if (!nrodocumento) throw new Error('Número de documento requerido');
+
     const params = new URLSearchParams();
     params.append("operacion", "searchByDoc");
-    params.append("nrodocumento", $("#nrodocumento").value);
+    params.append("nrodocumento", nrodocumento);
 
     const response = await fetch(`../../controllers/Clientes.controller.php?${params}`);
-    return response.json();
+    const data = await response.json();
+    if (!data || !data.length) throw new Error('Cliente no encontrado');
+    return data;
   }
 
   async function registrarVenta(idcliente) {
-    const params = new FormData();
-    params.append(
-    "operacion", "add");
-    params.append("idcliente", idcliente);
-    params.append("idcolaborador", $("#idcolaborador").value);
-    params.append("direccion", $("#direccion").value);
+    if (!idcliente || idcliente === -1) throw new Error('Cliente no válido');
 
-    const options = {
-      method: "POST",
-      body: params
-    };
-    const response = await fetch(`../../controllers/venta.controller.php`, options);
-    return response.json();
-  }
+    const idcolaborador = $("#idcolaborador").value;
+    if (!idcolaborador) throw new Error('Colaborador requerido');
 
-  async function registrarDetalleVenta(idventa) {
-    const rows = document.querySelectorAll("#detalles tr");
     const params = new FormData();
     params.append("operacion", "add");
-    params.append("idventa", idventa);
+    params.append("idcliente", idcliente);
+    params.append("idcolaborador", idcolaborador);
 
-    rows.forEach((row, index) => {
-      const idhuevo = row.querySelector(".huevo-venta")?.value || '';
-      let cantidad = row.querySelector(".cantidad-venta")?.value || '';
-      const pesoTotal = row.querySelector(".pesoTotal-venta")?.value || '';
-      const precioUnitario = row.querySelector(".precioUnitario-venta")?.value || '';
-      const precioTotal = row.querySelector(".totalventa-venta")?.value || '';
-
-      if (idhuevo && cantidad && pesoTotal && precioUnitario && precioTotal) {
-
-        cantidadHuevos = parseInt(cantidad) * 180; 
-
-
-        params.append(`huevos[${index}][idhuevo]`, idhuevo);
-        params.append(`huevos[${index}][cantidad]`, cantidadHuevos);
-        params.append(`huevos[${index}][PesoTotal]`, pesoTotal);
-        params.append(`huevos[${index}][precioUnitario]`, precioUnitario);
-        params.append(`huevos[${index}][precioTotal]`, precioTotal);
-      } else {
-        console.error(`Error en la fila ${index + 1}: Datos incompletos`);
-      }
-    });
-
-    const options = {
+    const response = await fetch(`../../controllers/venta.controller.php`, {
       method: "POST",
       body: params
-    };
+    });
+
+    const data = await response.json();
+    if (!data || !data.idventa) throw new Error('Error al registrar venta');
+    return data;
+  }
+
+  async function registrarDetalleVenta(idventas) {
+    if (!idventas) throw new Error('ID venta requerido');
+    
+    const rows = document.querySelectorAll("#detalles tr");
+    if (!rows.length) throw new Error('No hay detalles para registrar');
+
+    const params = new FormData();
+    params.append("operacion", "add");
+    params.append("idventa", idventas);
+
+    const huevos = [];
+    
+    // Collect data from rows
+    rows.forEach((row) => {
+        const idhuevo = row.querySelector(".huevo-venta").value;
+        const pesototal = row.querySelector(".pesoTotal-venta").value;
+        const unidadMedida = row.querySelector(".unidadMedida-venta").value;
+        const cantidad = row.querySelector(".cantidad-venta").value;
+        const precioKg = row.querySelector(".precioKg-venta").value;
+
+        if (!idhuevo|| !pesototal || !cantidad || !unidadMedida || !precioKg) {
+            throw new Error('Todos los campos son requeridos');
+        }
+
+        const cantidadNum = parseFloat(cantidad);
+        const precioKgNum = parseFloat(precioKg);
+
+        if (isNaN(cantidadNum) || isNaN(precioKgNum)) {
+            throw new Error('Cantidad y precio deben ser números válidos');
+        }
+
+        // Calculate final quantity based on unit
+        const finalCantidad = unidadMedida === 'Kg' ? cantidadNum : cantidadNum * 180;
+
+        huevos.push({
+            idhuevo: idhuevo,
+            pesoTotal: pesototal,
+            cantidad: finalCantidad,
+            unidadMedida: unidadMedida,
+            precioVenta: precioKgNum
+        });
+    });
+
+    // Add huevos array to FormData
+    huevos.forEach((huevo, index) => {
+        Object.entries(huevo).forEach(([key, value]) => {
+            params.append(`huevos[${index}][${key}]`, value);
+        });
+    });
+
+    console.log('Datos a enviar:', huevos);
 
     try {
-      const response = await fetch(`../../controllers/detalleVenta.controller.php`, options);
-      if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.statusText}`);
-      }
-      const data = await response.text();
-      console.log("data", data);
-      return data;
+        const response = await fetch('../../controllers/detalleVenta.controller.php', {
+            method: 'POST',
+            body: params
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        
+        console.log('Respuesta:', data);
+        return data;
+
     } catch (error) {
-      console.error("Error al registrar el detalle de la venta:", error);
-      return { error: error.message };
+        console.error('Error al registrar detalle:', error);
+        throw error;
     }
   }
 
   function limpiarFormulario() {
     $("#form-Venta").reset();
-    const tablaDetalles = document.querySelector(".tabla-detalle tbody");
-    while (tablaDetalles.firstChild) {
+    const tablaDetalles = $(".tabla-detalle tbody");
+    while (tablaDetalles?.firstChild) {
       tablaDetalles.removeChild(tablaDetalles.firstChild);
     }
-    $("#agregar-item").setAttribute("disabled", true);
-    $("#registrar-venta").setAttribute("disabled", true);
-    $("#nrodocumento").focus();
+    $("#agregar-item")?.setAttribute("disabled", true);
+    $("#registrar-venta")?.setAttribute("disabled", true);
+    $("#nrodocumento")?.focus();
     labelIGV.textContent = "S/0.00";
     labelSubTotal.textContent = "S/0.00";
     labelTotalVenta.textContent = "S/0.00";
   }
 
-  $("#form-Venta").addEventListener("submit", async (e) => {
+  $("#form-Venta")?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (await ask("¿Seguro que quieres registrar la venta?")) {
-      let responseDatos;
-      let responseVenta;
+    
+    try {
+      if (!await ask("¿Seguro que quieres registrar la venta?")) return;
 
-      try { 
-        responseDatos = await buscarDocumento();
-        console.log("responseDatos", responseDatos);
-        idcliente = responseDatos[0].idcliente;
+      const responseDatos = await buscarDocumento();
+      console.log("responseDatos:", responseDatos);
+      
+      idcliente = responseDatos[0].idcliente;
+      if (!datosNuevos) return;
 
-        if (datosNuevos) {
-          responseVenta = await registrarVenta(idcliente);
-          console.log("responseVenta", responseVenta);
-          idventas = responseVenta.idventa;
-          console.log("IDventa", idventas);
-          if (idventas != -1) {
-            const data = await registrarDetalleVenta(idventas);
-            console.log("IDdetalleVenta 1", data);
-            if (data.error) {
-              showToast("Error al registrar el detalle de la venta 2 ", "ERROR", 2000);
-            }else{
-              showToast("Venta registrada", "SUCCESS", 2000);
-              limpiarFormulario();
-            }
-          } else {
-            showToast("Venta no registrada", "ERROR", 2000);
-          }
-        }
-      } catch (error) {
-        console.error("Error durante el registro de la venta:", error);
-        showToast("Error en el registro de la venta", "ERROR", 2000);
-      }
+      const responseVenta = await registrarVenta(idcliente);
+      console.log("responseVenta:", responseVenta);
+      
+      idventas = responseVenta.idventa;
+      if (idventas === -1) throw new Error('ID venta no válido');
+
+      const data = await registrarDetalleVenta(idventas);
+      console.log("Respuesta detalle venta:", data);
+
+      showToast("Venta registrada exitosamente", "SUCCESS", 2000);
+      limpiarFormulario();
+
+    } catch (error) {
+      console.error("Error:", error);
+      showToast(error.message || "Error en el registro", "ERROR", 2000);
     }
   });
 });

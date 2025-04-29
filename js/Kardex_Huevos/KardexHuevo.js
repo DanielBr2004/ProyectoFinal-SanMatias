@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const CantidadEntrada = document.querySelector("#cantidad");
   const Motivomovimiento = document.querySelector("#Motivomovimiento");
   const tablaKardexHuevos = document.querySelector("#tbody-productos");
+  const numLote = document.querySelector("#numLote");
+
+  let prodregistrada = false;
 
   idhuevo.addEventListener("change", () => {
     const huevo = idhuevo.value;
@@ -12,7 +15,18 @@ document.addEventListener("DOMContentLoaded", () => {
       ShowStockActual(huevo);
     }
   });
-  
+
+  numLote.addEventListener("change", async () => {
+    const idlote = numLote.value;
+    const idhuevoValue = idhuevo.value;
+    await ValidacionRegistro(idhuevoValue, idlote);
+  });
+
+  idhuevo.addEventListener("change", async () => {
+    const idlote = numLote.value;
+    const idhuevoValue = idhuevo.value;
+    await ValidacionRegistro(idhuevoValue, idlote);
+  });
 
   async function ShowStockActual(idhuevo) {
     try {
@@ -24,20 +38,108 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function ExisteProduccionRegistrada(idlote) {
+    try {
+      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=HasProduccion&idlote=${idlote}`);
+      const response2 = await ValidarCantidadLote(numLote.value);
+      const data = await response.json();
+
+      if(response2[0].resultado == 1){
+        showToast("Lote Con 0 Gallinas", "ERROR", 3000);
+        document.querySelector("#registrar-colaborador").disabled = true;
+    }else{
+      if (data.length === 0) {
+        showToast("Falta Registrar producción", "INFO", 3000);
+        document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
+        prodregistrada = false;
+        return false;
+      } else {
+        prodregistrada = true;
+        return true;
+      }
+    }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+    async function ValidarCantidadLote($idlote) {
+      const params = new FormData();
+      params.append("operacion", "ValidarLote");
+      params.append("idlote", $idlote);
+
+      const options = {
+          method: 'POST',
+          body: params
+      }
+
+      const response = await fetch(`../../controllers/controlProduccion.controller.php`, options);
+      return response.json();
+  }
+
+
+
+  async function HuevoRegistrado(idhuevo, idlote) {
+    try {
+      const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=huevoRegistrado&idhuevo=${idhuevo}&idlote=${idlote}`);
+      const data = await response.json();
+      if (data.length > 0) {
+        showToast("El tipo de Huevo ya se registró en la producción del día", "INFO", 3000);
+        document.querySelector("#registrar-colaborador").setAttribute("disabled", true);
+      } else {
+        document.querySelector("#registrar-colaborador").removeAttribute("disabled");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function ValidacionRegistro(idhuevo, idlote) {
+    if (idlote && idhuevo) {
+      const produccionExiste = await ExisteProduccionRegistrada(idlote);
+      if (produccionExiste) {
+        await HuevoRegistrado(idhuevo, idlote);
+      }
+    }
+  }
+
   if (idhuevo.value) {
     ShowStockActual(idhuevo.value);
   }
 
+  if (numLote.value) {
+    ExisteProduccionRegistrada(numLote.value);
+  }
+
+  if (idhuevo.value && numLote.value) {
+    HuevoRegistrado(idhuevo.value, numLote.value);
+  }
+
   (() => {
     fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
+      .then(response => response.json())
+      .then(data => {
+        const numlote = document.querySelector("#numLote");
+        data.forEach(row => {
+          const tagOption = document.createElement("option");
+          tagOption.value = row.idlote;
+          tagOption.innerHTML = `Lote N° ${row.numLote}`;
+          numlote.appendChild(tagOption);
+        });
+      })
+      .catch(e => { console.error(e) });
+  })();
+
+  (() => {
+    fetch(`../../controllers/tipohuevo.controller.php?operacion=getAllHuevos`)
         .then(response => response.json())
         .then(data => {
-            const numlote = document.querySelector("#numLote")
+            const tipohuevo = document.querySelector("#idhuevo")
             data.forEach(row => {
                 const tagOption = document.createElement("option")
-                tagOption.value = row.idlote
-                tagOption.innerHTML = `Lote N° ${row.numLote}`
-                numlote.appendChild(tagOption)
+                tagOption.value = row.idhuevo
+                tagOption.innerHTML = row.tiposHuevos
+                tipohuevo.appendChild(tagOption)
             });
         })
         .catch(e => { console.error(e) })
@@ -62,6 +164,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const valueitem = itemselecionado.selectedIndex;
     const motivoselecionado = itemselecionado.options[valueitem].text;
 
+    let descripcion = document.querySelector("#mermaInput").value;
+    
+    if (motivoselecionado === 'Entrada por Producción') {
+        descripcion = 'Ingreso de producción del día';
+    } else if (motivoselecionado === 'Entrada por Compra') {
+        descripcion = 'Ingreso por compra de huevos';
+    } else if (motivoselecionado === 'Salida por Merma') {
+        descripcion = 'Salida por merma de huevos';
+    }
+
     const params = new FormData();
     params.append("operacion", "add");
     params.append("idcolaborador", document.querySelector("#idcolaborador").value);
@@ -70,24 +182,28 @@ document.addEventListener("DOMContentLoaded", () => {
     params.append("motivomovimiento", motivoselecionado);
     params.append("idlote", document.querySelector("#numLote").value);
     params.append("cantidad", document.querySelector("#cantidad").value);
-    params.append("descripcion", document.querySelector("#mermaInput").value);
+    params.append("descripcion", descripcion);
 
-    const options = {
-      method: 'POST',
-      body: params
-    };
-
-    fetch(`../../controllers/kardexAlmacenHuevo.controller.php`, options)
-      .then(response => response.json())
-      .then(data => {
+    fetch(`../../controllers/kardexAlmacenHuevo.controller.php`, {
+        method: 'POST',
+        body: params
+    })
+    .then(response => response.json())
+    .then(async data => {
         document.querySelector("#form-kardex-huevos").reset();
         showToast("Datos Guardados Correctamente", "SUCCESS", 3000);
         obtenerStocksProductos();
-        actualizarTablaKardex();
         
-      })
-      .catch(e => { console.error(e) });
-  }
+        // Actualizar la tabla llamando a initDataTable del otro archivo
+        if (typeof window.initDataTable === 'function') {
+            await window.initDataTable();
+        }
+    })
+    .catch(e => { 
+        console.error(e);
+        showToast("Error al guardar", "ERROR", 3000);
+    });
+}
 
   document.querySelector("#form-kardex-huevos").addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -100,8 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ValidarCantidadSalida()) {
         return;
       }
-      
-      if(await ask("Estas Registrando aprox " + (Math.floor(CantidadEntrada.value / 180)) + " Paquetes, ¿Deseas Confirmar?" )) {
+
+      if (await ask("Estas Registrando aprox " + (Math.floor(CantidadEntrada.value / 180)) + " Paquetes, ¿Deseas Confirmar?")) {
         GuardarKardex();
         actualizarTablaKardex();
       }
@@ -130,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { id: "4", inputId: "hdobleyema" },
       { id: "5", inputId: "hmargarito" }
     ];
-  
+
     for (const producto of productos) {
       try {
         const response = await fetch(`../../controllers/kardexAlmacenHuevo.controller.php?operacion=mostrarStockActual&idhuevo=${producto.id}`);
@@ -154,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       const tbody = document.querySelector("#tbody-productos");
       tbody.innerHTML = ""; // Limpiar la tabla
-  
+
       data.forEach(item => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -169,6 +285,27 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error al actualizar la tabla de Kardex:", error);
     }
   }
+// Add after existing IIFE
+function cargarLotesModal(){
+  fetch(`../../controllers/numlote.controller.php?operacion=getAll`)
+    .then(response => response.json())
+    .then(data => {
+      const modalNumLote = document.querySelector("#editNumLote");
+      modalNumLote.innerHTML = '<option value="">Seleccione...</option>';
+      data.forEach(row => {
+        const tagOption = document.createElement("option");
+        tagOption.value = row.idlote;
+        tagOption.innerHTML = `Lote N° ${row.numLote}`; 
+        modalNumLote.appendChild(tagOption);
+      });
+    })
+    .catch(e => console.error(e));
+}
+
+// Add modal show event listener
+document.getElementById('editarModal').addEventListener('show.bs.modal', function () {
+  cargarLotesModal();
+});
 
   obtenerStocksProductos();
 });

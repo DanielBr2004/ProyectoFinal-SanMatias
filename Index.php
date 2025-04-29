@@ -24,7 +24,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                 <div class="row d-flex justify-content-center align-items-center">
                 <div class=" presentacion col-md-6 ">
                         <h2>Bienvenidos!</h2 >
-                            <h3>Granja San Matias SAC</h3>
+                            <h3>Granja San Matías SAC</h3>
                             <p>La Granja tiene como finalidad 
                                 la produccion de huevos
                                 ecoamigables con fines 
@@ -41,6 +41,11 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                         <div class="form-floating mb-3">
                             <input class="form-control" id="inputPassword" type="password" placeholder="Password" required/>
                             <label for="inputPassword">Contraseña</label>
+                        </div>
+                        <div>
+                            <a href="views/registro.php" style="color: white; font-weight: bold; display: block; text-align: right;">
+                                Olvidé mi contraseña
+                            </a>
                         </div>
                         <div class="check">
                             <label> </label>
@@ -60,6 +65,14 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
 
     <script>
             document.addEventListener("DOMContentLoaded", () => {
+
+                const forgotPasswordLink = document.querySelector('a[href="views/registro.php"]');
+    
+                forgotPasswordLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Por Implementar' );
+                });
+                
                 document.querySelector("#form-login").addEventListener("submit", (event) => {
                     event.preventDefault();
 
@@ -76,7 +89,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']['permitido']){
                             if(!acceso.permitido){
                                 showToast(acceso.status, "ERROR", 1000);
                             }else{
-                                window.location.href = './home.php/'; 
+                                window.location.href = 'views/home.php'; 
                             }
                         })
                 });

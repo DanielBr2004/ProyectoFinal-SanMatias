@@ -55,6 +55,12 @@ if(isset($_GET['operacion'])){
       case 'getAll':
           echo json_encode($kardexhuevo->getAll());
         break;
+      case 'HasProduccion':
+          echo json_encode($kardexhuevo->HasProduccion(['idlote' => $_GET['idlote']]));
+          break;
+      case 'huevoRegistrado':
+          echo json_encode($kardexhuevo->huevoRegistrado(['idhuevo' => $_GET['idhuevo'], 'idlote' => $_GET['idlote']]));
+          break;
   }
 }
 

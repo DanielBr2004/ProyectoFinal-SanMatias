@@ -100,7 +100,7 @@
                 </div>
                     </form>
             </div>
-            <div class="card mb-4">
+            <div class=" card mb-4">
                 <div class="card-header">
                     Lista de Clientes Registrados
                 </div>
@@ -112,11 +112,10 @@
                         
                         <thead>
                             <tr>
-                                <th class="text-center">#</th>
+                                <th class="text-center">ID</th>
                                 <th class="text-center">N° Documento</th>
                                 <th class="text-center">Tipo Documento</th>
                                 <th class="text-center">Cliente</th>
-                                <th class="text-center">Estado</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -129,7 +128,37 @@
         </div>
 
         
-
+        <!-- Modal para Editar Cliente -->
+        <div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarClienteModalLabel">Editar Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-editar-cliente">
+                            <input type="hidden" id="idcliente-edit">
+                            <div class="mb-3">
+                                <label for="nrodocumento-edit" class="form-label">N° Documento</label>
+                                <input type="number" class="form-control" id="nrodocumento-edit" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tipodoc-edit" class="form-label">Tipo Documento</label>
+                                <input type="text" class="form-control" id="tipodoc-edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nomcliente-edit" class="form-label">Cliente</label>
+                                <input type="text" class="form-control" id="nomcliente-edit" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         
         <!-- Bootstrap core JS-->

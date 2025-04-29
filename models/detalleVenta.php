@@ -18,10 +18,10 @@ class DetalleVenta extends Conexion{
                 // $params['idcolaborador'],
                 $params['idventa'],
                 $params['idhuevo'],
+                $params['pesoTotal'],
                 $params['cantidad'],
-                $params['PesoTotal'],
-                $params['precioUnitario'],
-                $params['precioTotal']
+                $params['unidadMedida'],
+                $params['precioVenta']
             )
         );
         $row = $query->fetch(PDO::FETCH_ASSOC);

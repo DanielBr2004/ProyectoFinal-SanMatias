@@ -1,13 +1,20 @@
 <?php require_once '../../../Header.php'; ?>
         <!-- Page content-->
         <div class="container">
-            <div class="text-center mt-5">
-                <h1>Lotes de la granja </h1>
+            <div class="text-center mt-5">  
+                <div class="row">
+                  <div class="col-md-1">
+                  <h3 class="text-start"><i class="fa-solid fa-chevron-left" id="back-button" style="cursor: pointer;"></i></h3>
+                  </div>
+                  <div class="col-md-11">
+                    <h1 class="text-center">Lotes De la Granja </h1>
+                  </div>
+                </div>
             </div>
             <br>
             <hr>
             <br>
-            <div class="accordion accordion" id="" autocomplete="off">
+              <div class="accordion accordion" id="" autocomplete="off">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -45,11 +52,10 @@
                       </div>
                       
                   </form>
-
-                    </div>
+                  </div>
 
                     
-                    </div>
+              </div>
 
                     
                 </div>
@@ -139,9 +145,8 @@
         
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="<?= $host ?>/js/swalcustom.js"></script>
-        <script src="<?= $host ?>/js/numlote/numlote.js"></script>
         <script src="<?= $host ?>js/numlote/listnumLote.js"></script>
-
+        <script src="<?= $host ?>/js/numlote/numlote.js"></script>
         <footer>
             <div class="container">
                 <div class="text-center mt-5">

@@ -12,12 +12,11 @@ class Venta extends Conexion{
   public function add($params = []):int{
     $idgenerado = null; 
     try{
-        $query = $this->pdo->prepare("call spu_registrar_ventas(?,?,?)"); 
+        $query = $this->pdo->prepare("call spu_registrar_ventas(?,?)"); 
         $query->execute(
             array(
                 $params['idcliente'],
-                $params['idcolaborador'],
-                $params['direccion']
+                $params['idcolaborador']
             )
         );
         $row = $query->fetch(PDO::FETCH_ASSOC);
@@ -42,11 +41,10 @@ class Venta extends Conexion{
 
 public function update($params = []): bool {
     try {
-        $query = $this->pdo->prepare("CALL sp_editar_venta(?, ?, ?)");
+        $query = $this->pdo->prepare("CALL sp_editar_venta(?, ?);");
         $query->execute([
             $params['idventa'],
             $params['estado'],
-            $params['direccion']
         ]);
         return true;
     } catch (Exception $e) {
@@ -55,6 +53,15 @@ public function update($params = []): bool {
     }
 }
 
-
+public function delete($idventa): bool {
+    try {
+        $query = $this->pdo->prepare("CALL sp_eliminar_venta(?)");
+        $query->execute([$idventa]);
+        return true;
+    } catch (Exception $e) {
+        error_log("Error en delete: " . $e->getMessage());
+        return false;
+    }
+}
 
 }

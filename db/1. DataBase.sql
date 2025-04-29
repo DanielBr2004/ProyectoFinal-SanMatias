@@ -90,7 +90,8 @@ CREATE TABLE tipoHuevo
 (
 idhuevo			INT AUTO_INCREMENT PRIMARY KEY,
 tiposHuevos			VARCHAR(50),
-descripcion			VARCHAR(100)
+PrecioKg          DECIMAL(6,2) NOT NULL,
+descripcion			VARCHAR(250)
 )ENGINE = INNODB;
 
 -- NUMLOTE -- 
@@ -132,6 +133,7 @@ telefono			CHAR(9) NULL,
 tipodocumento		CHAR(3) NOT NULL,
 razonsocial			VARCHAR(90) NULL,
 direccion			VARCHAR(90) NULL,
+estado            CHAR(1) DEFAULT 'A',
 email             VARCHAR(90) NULL,  
 CONSTRAINT fk_idpersona_cliente FOREIGN KEY (idpersona) REFERENCES personas(idpersona)
 )engine = InnoDB;
@@ -142,8 +144,6 @@ idventa				INT AUTO_INCREMENT primary key ,
 idcliente			INT NOT NULL,
 idcolaborador		INT NOT NULL,
 fecha 				DATETIME DEFAULT NOW() NOT NULL,
-direccion			VARCHAR(50) NULL,
-PrecioVenta			DECIMAL(7,2) NULL,
 estado				VARCHAR(30) DEFAULT 'Por entregar' NOT NULL,
 CONSTRAINT fk_idcliente_venta FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
 CONSTRAINT fk_idcolaborador_venta FOREIGN KEY (idcolaborador) REFERENCES colaboradores(idcolaborador)
@@ -154,10 +154,10 @@ CREATE TABLE detalleventas
 iddetalleventa		INT AUTO_INCREMENT PRIMARY KEY,
 idventa				INT NOT NULL,
 idhuevo				INT NOT NULL,
-cantidad			INT NOT NULL,
-PesoTotal			DECIMAL(6,2) NOT NULL,
-precioUnitario		DECIMAL(10, 2) NOT NULL,
-precioTotal			DECIMAL(10, 2) NOT NULL,
+pesoTotal         DECIMAL(6,2) NOT NULL,
+cantidad			   INT NOT NULL,
+precioVenta 		DECIMAL(10, 2) NOT NULL,
+UnidadMedida		VARCHAR(30) NULL,
 CONSTRAINT fk_idhuevo_detalleventa FOREIGN KEY (idhuevo) REFERENCES tipoHuevo(idhuevo),
 CONSTRAINT fk_idventa_detalleventa FOREIGN KEY (idventa) REFERENCES ventas(idventa)
 )engine = innodb;
@@ -178,7 +178,27 @@ create_at				DATE NOT NULL,
 CONSTRAINT FK_numLote_controllote FOREIGN KEY (idlote) REFERENCES numLote(idlote)
 )ENGINE = INNODB;
 
+select * from kardexalmhuevo;
 
+CREATE TABLE HistorialKardexHuevo (
+    idHistorial INT AUTO_INCREMENT PRIMARY KEY,
+    idAlmacenHuevos INT,
+    idcolaborador INT,
+    accion VARCHAR(20),
+    datos_anteriores TEXT,
+    datos_nuevos TEXT,
+    fecha_accion DATETIME DEFAULT NOW()
+)ENGINE = INNODB;
+
+CREATE TABLE HistorialKardexProducto (
+    idHistorial INT AUTO_INCREMENT PRIMARY KEY,
+    idAlmacenProducto INT,
+    idcolaborador INT,
+    accion VARCHAR(20),
+    datos_anteriores TEXT,
+    datos_nuevos TEXT,
+    fecha_accion DATETIME DEFAULT NOW()
+)ENGINE = INNODB;
 
 
 

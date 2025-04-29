@@ -13,9 +13,9 @@
                     <th>Cliente</th>
                     <th>Colaborador</th>
                     <th>Fecha</th>
-                    <th>Direccion</th>
                     <th>Estado</th>
-                    <th>Operaciones</th> <!-- Nueva columna -->
+                    <th>Operaciones</th>
+                    <th>Reporte PDF</th>
                 </tr>
             </thead>
         <tbody id="tbody-ReporVenta">
@@ -42,15 +42,13 @@
 
                     <!-- Estado -->
                     <div class="mb-3">
-                        <label for="editEstado" class="form-label">Estado</label>
-                        <input type="text" class="form-control" id="editEstado" required>
-                    </div>
-
-                    <!-- Dirección -->
-                    <div class="mb-3">
-                        <label for="editDireccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="editDireccion" required>
-                    </div>
+                      <label for="editEstado" class="form-label">Estado</label>
+                      <select class="form-control" id="editEstado" required>
+                      <option value="">Seleccione un estado</option>
+                      <option value="Entregado">Entregado</option>
+                      <option value="Por entregar">Por entregar</option>
+                    </select>
+                  </div>
 
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>

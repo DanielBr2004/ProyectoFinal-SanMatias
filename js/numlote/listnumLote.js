@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 const dataTableOptions = {
     dom: 'Bfrtilp',
+    order: [[0, 'desc']],
     buttons: [
         { extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i>', titleAttr: 'Exportar a Excel', className: 'btn btn-success' },
         { extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i>', titleAttr: 'Exportar a PDF', className: 'btn btn-danger' },
