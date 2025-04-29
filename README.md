@@ -2,9 +2,9 @@
 ## PROYECTO 
 ### Integrantes Braulio Daniel Buleje Rojas - Emersson Alejandro Ortiz Jacobo
 
-## Base de Datos / backup
-- El backup se encuentra en la carpeta de BD.
-- Ejecutar el backup en mysqlmyadmin con el nombre de bd *granjasanmatias* 
+## Base de Datos
+- para ejecutar la db ir a esta direccion http://localhost/ProyectoFinal-SanMatias/test/
+- Ejecutar los archivos de CreateAllDataBase.php y InsertAllDates.php
 
 ## Completos todos los modulos
 - Kardexs Huevo/Molino 100% con sus operaciones editar / eliminar
